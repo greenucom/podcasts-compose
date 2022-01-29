@@ -3,6 +3,8 @@ object Dependencies {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
+    const val composeIconsExtended =
+        "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val composeJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
