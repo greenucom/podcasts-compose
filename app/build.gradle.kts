@@ -1,3 +1,7 @@
+import java.io.FileInputStream
+import java.io.IOException
+import java.util.*
+
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinAndroid)
@@ -11,6 +15,16 @@ androidGitVersion {
     format = "%tag%"
     hideBranches = listOf("demo")
 }
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+val keystoreExists = try {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    true
+} catch (e: IOException) {
+    false
+}
+println("Keystore exists: $keystoreExists")
 
 android {
     compileSdk = Versions.compileSdk
@@ -40,11 +54,13 @@ android {
     }
 
     signingConfigs {
-        create("defaultConfigs") {
-            storeFile = file(Keystore.storeFile)
-            storePassword = Keystore.storePassword
-            keyAlias = Keystore.keyAlias
-            keyPassword = Keystore.keyPassword
+        if (keystoreExists) {
+            create("defaultConfigs") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
         }
     }
 
@@ -76,7 +92,10 @@ android {
         }
 
         all {
-            signingConfig = signingConfigs.getByName("defaultConfigs")
+            if (keystoreExists) {
+                signingConfig = signingConfigs.getByName("defaultConfigs")
+            }
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
