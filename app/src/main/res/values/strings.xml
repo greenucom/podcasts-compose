@@ -1,3 +1,7 @@
 <resources>
 
+    <string name="home">Home</string>
+    <string name="discover">Discover</string>
+    <string name="library">Library</string>
+
 </resources>

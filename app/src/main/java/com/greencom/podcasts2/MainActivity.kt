@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun Light() {
+private fun Light() {
     PodcastsComposeTheme {
 
     }
@@ -29,7 +29,7 @@ fun Light() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun Dark() {
+private fun Dark() {
     PodcastsComposeTheme {
 
     }
