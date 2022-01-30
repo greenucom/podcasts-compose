@@ -1,15 +1,13 @@
 package com.greencom.podcasts2.ui.screens.app.components
 
 import android.content.res.Configuration
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,7 +21,11 @@ fun BottomNavBar(
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    BottomNavigation(modifier = modifier) {
+    BottomNavigation(
+        modifier = modifier,
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 2.dp,
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -31,6 +33,8 @@ fun BottomNavBar(
             BottomNavigationItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = null) },
                 label = { Text(stringResource(item.labelResId)) },
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.onSurface,
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
                     navController.navigate(item.route) {
