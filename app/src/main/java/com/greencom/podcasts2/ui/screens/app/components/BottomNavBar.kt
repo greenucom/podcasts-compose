@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.greencom.podcasts2.ui.screens.app.BottomNavItem
@@ -19,7 +19,7 @@ import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun BottomNavBar(
     modifier: Modifier = Modifier,
-    navController: NavController,
+    navController: NavHostController,
 ) {
     BottomNavigation(
         modifier = modifier,

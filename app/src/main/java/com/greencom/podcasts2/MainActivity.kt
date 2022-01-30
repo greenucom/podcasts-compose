@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.greencom.podcasts2.ui.screens.app.AppScreen
 import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PodcastsComposeTheme {
-
+                AppScreen()
             }
         }
     }
@@ -23,14 +24,14 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun Light() {
     PodcastsComposeTheme {
-
+        AppScreen()
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, locale = "ru")
 @Composable
 private fun Dark() {
     PodcastsComposeTheme {
-
+        AppScreen()
     }
 }
