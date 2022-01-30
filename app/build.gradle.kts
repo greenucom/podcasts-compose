@@ -7,6 +7,7 @@ plugins {
     id(Plugins.kotlinAndroid)
     kotlin(Plugins.kapt)
     id(Plugins.hilt)
+    kotlin(Plugins.serialization).version(Versions.kotlin)
 
     id(Plugins.androidGitVersion).version(Versions.androidGitVersion)
 }
@@ -164,6 +165,12 @@ dependencies {
     implementation(Dependencies.room)
     kapt(Dependencies.roomCompiler)
     implementation(Dependencies.roomKtx)
+
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofitLoggingInterceptor)
+    implementation(Dependencies.retrofitSerializationConverter)
+
+    implementation(Dependencies.serializationJson)
 
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)

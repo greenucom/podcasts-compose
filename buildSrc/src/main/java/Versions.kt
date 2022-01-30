@@ -26,6 +26,12 @@ object Versions {
 
     const val room = "2.4.1"
 
+    const val retrofit = "2.9.0"
+    const val retrofitLoggingInterceptor = "4.9.0"
+    const val retrofitSerializationConverter = "0.8.0"
+
+    const val serializationJson = "1.3.2"
+
     const val hilt = "2.40.5"
     const val hiltComposeNavigation = "1.0.0"
 
