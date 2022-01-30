@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.screens.app
+package com.greencom.android.podcasts2.ui.screens.app
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
@@ -6,7 +6,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.greencom.podcasts2.R
+import com.greencom.android.podcasts2.R
 
 sealed class BottomNavItem(
     val route: String,

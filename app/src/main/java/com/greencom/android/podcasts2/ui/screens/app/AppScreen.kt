@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.screens.app
+package com.greencom.android.podcasts2.ui.screens.app
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
@@ -8,11 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.greencom.podcasts2.ui.screens.app.components.BottomNavBar
-import com.greencom.podcasts2.ui.screens.discover.DiscoverScreen
-import com.greencom.podcasts2.ui.screens.home.HomeScreen
-import com.greencom.podcasts2.ui.screens.library.LibraryScreen
-import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.screens.app.components.BottomNavBar
+import com.greencom.android.podcasts2.ui.screens.discover.DiscoverScreen
+import com.greencom.android.podcasts2.ui.screens.home.HomeScreen
+import com.greencom.android.podcasts2.ui.screens.library.LibraryScreen
+import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {

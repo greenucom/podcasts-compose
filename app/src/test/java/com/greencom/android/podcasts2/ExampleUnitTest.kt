@@ -1,4 +1,4 @@
-package com.greencom.podcasts2
+package com.greencom.android.podcasts2
 
 import org.junit.Test
 

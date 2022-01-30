@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.theme
+package com.greencom.android.podcasts2.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

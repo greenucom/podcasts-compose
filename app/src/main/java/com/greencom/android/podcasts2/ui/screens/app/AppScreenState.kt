@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.screens.app
+package com.greencom.android.podcasts2.ui.screens.app
 
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState

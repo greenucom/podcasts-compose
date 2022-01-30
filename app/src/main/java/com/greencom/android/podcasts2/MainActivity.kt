@@ -1,4 +1,4 @@
-package com.greencom.podcasts2
+package com.greencom.android.podcasts2
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.greencom.podcasts2.ui.screens.app.AppScreen
-import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.screens.app.AppScreen
+import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.screens.discover
+package com.greencom.android.podcasts2.ui.screens.discover
 
 import android.content.res.Configuration
 import androidx.compose.material.Text
@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.greencom.podcasts2.R
-import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun DiscoverScreen(modifier: Modifier = Modifier) {

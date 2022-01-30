@@ -1,4 +1,4 @@
-package com.greencom.podcasts2.ui.screens.app.components
+package com.greencom.android.podcasts2.ui.screens.app.components
 
 import android.content.res.Configuration
 import androidx.compose.material.*
@@ -13,8 +13,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.greencom.podcasts2.ui.screens.app.BottomNavItem
-import com.greencom.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.screens.app.BottomNavItem
+import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun BottomNavBar(

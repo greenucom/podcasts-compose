@@ -33,7 +33,7 @@ android {
     val generatedVersionName = androidGitVersion.name()
 
     defaultConfig {
-        applicationId = "com.greencom.podcasts2"
+        applicationId = "com.greencom.android.podcasts2"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
         versionCode = generatedVersionCode
