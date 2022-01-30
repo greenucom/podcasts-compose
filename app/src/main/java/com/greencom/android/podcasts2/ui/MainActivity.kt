@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2
+package com.greencom.android.podcasts2.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
