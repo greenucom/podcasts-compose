@@ -27,6 +27,16 @@ val keystoreExists = try {
 }
 println("Keystore exists: $keystoreExists")
 
+val apiPropertiesFile = rootProject.file("api.properties")
+val apiProperties = Properties()
+val apiKeysExist = try {
+    apiProperties.load(FileInputStream(apiPropertiesFile))
+    true
+} catch (e: IOException) {
+    false
+}
+println("Api keys exist: $apiKeysExist")
+
 android {
     compileSdk = Versions.compileSdk
 
@@ -96,6 +106,18 @@ android {
             if (keystoreExists) {
                 signingConfig = signingConfigs.getByName("defaultConfigs")
             }
+
+            val apiKey: String
+            val apiSecret: String
+            if (apiKeysExist) {
+                apiKey = apiProperties.getProperty("apiKey", "")
+                apiSecret = apiProperties.getProperty("apiSecret", "")
+            } else {
+                apiKey = ""
+                apiSecret = ""
+            }
+            buildConfigField("String", "apiKey", "\"$apiKey\"")
+            buildConfigField("String", "apiSecret", "\"$apiSecret\"")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
