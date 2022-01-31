@@ -13,6 +13,6 @@ data class GetEpisodesByPodcastIdResponseDto(
     val count: Int? = null,
 
     @SerialName("items")
-    val episodes: List<EpisodeDto>? = null,
+    val episodes: List<EpisodeResponseDto>? = null,
 
 )

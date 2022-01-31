@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EpisodeDto(
+data class EpisodeResponseDto(
 
     @SerialName("id")
     val id: Long? = null,
