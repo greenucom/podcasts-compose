@@ -3,7 +3,7 @@ package com.greencom.android.podcasts2.ui.screens.app
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.greencom.android.podcasts2.ui.Screen
+import com.greencom.android.podcasts2.ui.common.Screen
 import com.greencom.android.podcasts2.ui.screens.app.components.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.screens.home.HomeScreen
 

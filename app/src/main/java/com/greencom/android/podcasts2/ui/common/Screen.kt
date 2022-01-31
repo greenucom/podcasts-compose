@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui
+package com.greencom.android.podcasts2.ui.common
 
 sealed class Screen(val route: String) {
 
