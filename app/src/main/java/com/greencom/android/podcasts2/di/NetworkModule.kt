@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.di
 
+import com.greencom.android.podcasts2.data.ApiAuthInterceptor
 import com.greencom.android.podcasts2.utils.addDebugLogger
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -32,8 +33,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(apiAuthInterceptor: ApiAuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(apiAuthInterceptor)
             .addDebugLogger()
             .build()
     }
