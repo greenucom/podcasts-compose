@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PodcastDto(
+data class PodcastResponseDto(
     
     @SerialName("id")
     val id: Long? = null,
@@ -39,6 +39,7 @@ data class PodcastDto(
     @SerialName("language")
     val language: String? = null,
 
-    // TODO: Add "categories"
+    @SerialName("categories")
+    val categories: Map<Int, String>? = null,
 
 )

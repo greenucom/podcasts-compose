@@ -16,6 +16,6 @@ data class SearchPodcastsResponseDto(
     val query: String? = null,
 
     @SerialName("feeds")
-    val podcasts: List<PodcastDto>? = null,
+    val podcasts: List<PodcastResponseDto>? = null,
 
 )

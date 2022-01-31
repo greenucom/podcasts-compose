@@ -50,6 +50,7 @@ data class GetTrendingPodcastResponseDto(
     @SerialName("language")
     val language: String? = null,
 
-    // TODO: Add "categories"
+    @SerialName("categories")
+    val categories: Map<Int, String>? = null,
     
 )
