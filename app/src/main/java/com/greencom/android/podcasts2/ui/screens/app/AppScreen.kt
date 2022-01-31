@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.greencom.android.podcasts2.ui.Screen
 import com.greencom.android.podcasts2.ui.screens.app.components.BottomNavBar
 import com.greencom.android.podcasts2.ui.screens.discover.DiscoverScreen
 import com.greencom.android.podcasts2.ui.screens.home.HomeScreen
@@ -26,11 +27,11 @@ fun AppScreen(modifier: Modifier = Modifier) {
         NavHost(
             modifier = Modifier.padding(innerPadding),
             navController = appScreenState.navController,
-            startDestination = BottomNavItem.Home.route,
+            startDestination = Screen.Home.route,
         ) {
-            composable(BottomNavItem.Home.route) { HomeScreen() }
-            composable(BottomNavItem.Discover.route) { DiscoverScreen() }
-            composable(BottomNavItem.Library.route) { LibraryScreen() }
+            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.Discover.route) { DiscoverScreen() }
+            composable(Screen.Library.route) { LibraryScreen() }
         }
     }
 }

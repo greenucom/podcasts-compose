@@ -13,7 +13,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.greencom.android.podcasts2.ui.screens.app.BottomNavItem
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
@@ -29,7 +28,7 @@ fun BottomNavBar(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        BottomNavItem.items.forEach { item ->
+        BottomNavBarItem.items.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = null) },
                 label = { Text(stringResource(item.labelResId)) },
