@@ -16,10 +16,10 @@ interface PodcastsService {
         language: String,
 
         @Query("cat")
-        inCategories: String = "",
+        inCategories: String,
 
         @Query("notcat")
-        notInCategories: String = "",
+        notInCategories: String,
 
     ) : GetTrendingResponseDto
 
