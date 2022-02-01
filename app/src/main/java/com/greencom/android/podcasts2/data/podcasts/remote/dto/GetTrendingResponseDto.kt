@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class GetTrendingResponseDto(
 
     @SerialName("status")
-    val status: Boolean? = null,
+    val status: String? = null,
 
     @SerialName("feeds")
     val podcasts: List<GetTrendingPodcastResponseDto>? = null,
