@@ -1,10 +1,12 @@
 package com.greencom.android.podcasts2.data.podcasts.remote.dto
 
+import com.greencom.android.podcasts2.domain.categories.Category
+import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetTrendingResponseDto(
+data class GetTrendingPodcastsResponseDto(
 
     @SerialName("status")
     val status: String? = null,
@@ -18,7 +20,11 @@ data class GetTrendingResponseDto(
     @SerialName("max")
     val max: Int? = null,
 
-)
+) {
+
+    fun toDomain(): List<TrendingPodcast> = podcasts?.map { it.toDomain() } ?: emptyList()
+
+}
 
 @Serializable
 data class GetTrendingPodcastResponseDto(
@@ -53,4 +59,21 @@ data class GetTrendingPodcastResponseDto(
     @SerialName("categories")
     val categories: Map<Int, String>? = null,
     
-)
+) {
+
+    fun toDomain(): TrendingPodcast = TrendingPodcast(
+        id = checkNotNull(id),
+        url = checkNotNull(url),
+        title = checkNotNull(title),
+        description = checkNotNull(description),
+        author = checkNotNull(author),
+        image = checkNotNull(image),
+        newestItemPublishedTime = checkNotNull(newestItemPublishedTime),
+        trendScore = checkNotNull(trendScore),
+        language = checkNotNull(language),
+        categories = categories?.mapTo(mutableListOf()) { (key, value) ->
+            Category(key, value)
+        } ?: emptyList()
+    )
+
+}
