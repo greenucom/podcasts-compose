@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.greencom.android.podcasts2">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PodcastsApplication"
         android:allowBackup="true"
