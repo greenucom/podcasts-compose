@@ -68,8 +68,8 @@ data class GetTrendingPodcastResponseDto(
         description = checkNotNull(description),
         author = checkNotNull(author),
         image = checkNotNull(image),
-        newestItemPublishedTime = checkNotNull(newestItemPublishedTime),
-        trendScore = checkNotNull(trendScore),
+        newestItemPublishedTime = newestItemPublishedTime ?: 0,
+        trendScore = trendScore ?: 0,
         language = checkNotNull(language),
         categories = categories?.mapTo(mutableListOf()) { (key, value) ->
             Category(key, value)
