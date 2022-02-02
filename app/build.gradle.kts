@@ -198,6 +198,7 @@ dependencies {
     kapt(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltComposeNavigation)
 
+    implementation(Dependencies.coil)
     implementation(Dependencies.timber)
 
     debugImplementation(Dependencies.leakCanary)

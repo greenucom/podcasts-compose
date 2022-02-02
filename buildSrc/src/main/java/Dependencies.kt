@@ -46,6 +46,7 @@ object Dependencies {
     const val hiltComposeNavigation =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltComposeNavigation}"
 
+    const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"

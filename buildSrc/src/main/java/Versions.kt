@@ -35,6 +35,7 @@ object Versions {
     const val hilt = "2.40.5"
     const val hiltComposeNavigation = "1.0.0"
 
+    const val coil = "1.4.0"
     const val timber = "5.0.1"
 
     const val leakCanary = "2.8.1"
