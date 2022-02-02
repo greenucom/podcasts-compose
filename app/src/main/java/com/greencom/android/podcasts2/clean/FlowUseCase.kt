@@ -6,15 +6,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
-abstract class FlowUseCase<in P, out R>(private val coroutineDispatcher: CoroutineDispatcher) {
+abstract class FlowUseCase<in P, out R>(private val dispatcher: CoroutineDispatcher) {
 
-    operator fun invoke(parameters: P): Flow<Result<R>> = execute(parameters)
+    operator fun invoke(params: P): Flow<Result<R>> = execute(params)
         .catch { e ->
-            Timber.e("Exception executing UseCase $this with parameters $parameters")
+            Timber.e("Exception executing UseCase $this with parameters $params")
             Timber.e(e)
             emit(Result.failure(e))
         }
-        .flowOn(coroutineDispatcher)
+        .flowOn(dispatcher)
 
     protected abstract fun execute(parameters: P): Flow<Result<R>>
 
