@@ -20,6 +20,6 @@ abstract class UseCase<in P, out R>(private val dispatcher: CoroutineDispatcher)
         }
     }
 
-    protected abstract fun execute(parameters: P): R
+    protected abstract suspend fun execute(params: P): R
 
 }
