@@ -32,8 +32,8 @@ class ApiAuthInterceptor @Inject constructor(): Interceptor {
         return "$USER_AGENT_NAME/$version ($USER_AGENT_LANGUAGE; $USER_AGENT_PLATFORM)"
     }
 
-    private fun createAuthSha1Hash(epochMillis: String): String {
-        val input = apiKey + apiSecret + epochMillis
+    private fun createAuthSha1Hash(epochSeconds: String): String {
+        val input = apiKey + apiSecret + epochSeconds
         val bytes = MessageDigest
             .getInstance(SHA_1)
             .digest(input.toByteArray())
