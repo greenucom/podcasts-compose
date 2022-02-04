@@ -50,16 +50,20 @@ fun BottomNavBar(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 private fun Light() {
     PodcastsComposeTheme {
         BottomNavBar(navController = rememberNavController())
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, locale = "ru")
 @Composable
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "ru",
+)
 private fun Dark() {
     PodcastsComposeTheme {
         BottomNavBar(navController = rememberNavController())

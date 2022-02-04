@@ -72,8 +72,8 @@ data class GetTrendingPodcastResponseDto(
         trendScore = trendScore ?: 0,
         language = checkNotNull(language),
         categories = categories?.mapTo(mutableListOf()) { (key, value) ->
-            Category(key, value)
-        } ?: emptyList()
+            Category(id = key, name = value)
+        } ?: emptyList(),
     )
 
 }

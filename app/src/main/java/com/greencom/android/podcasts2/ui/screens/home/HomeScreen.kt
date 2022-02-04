@@ -14,16 +14,20 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Text(stringResource(R.string.home))
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 private fun Light() {
     PodcastsComposeTheme {
         HomeScreen()
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, locale = "ru")
 @Composable
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "ru",
+)
 private fun Dark() {
     PodcastsComposeTheme {
         HomeScreen()
