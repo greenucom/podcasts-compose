@@ -40,6 +40,9 @@ object Versions {
 
     const val leakCanary = "2.8.1"
 
+    const val googleServices = "4.3.10"
+    const val firebaseBom = "29.0.4"
+
     const val junit = "4.13.2"
     const val androidJunit = "1.1.3"
     const val androidEspresso = "3.4.0"

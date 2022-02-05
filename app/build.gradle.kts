@@ -8,6 +8,7 @@ plugins {
     kotlin(Plugins.kapt)
     id(Plugins.hilt)
     kotlin(Plugins.serialization).version(Versions.kotlin)
+    id(Plugins.googleService)
 
     id(Plugins.androidGitVersion).version(Versions.androidGitVersion)
 }
@@ -202,6 +203,8 @@ dependencies {
     implementation(Dependencies.timber)
 
     debugImplementation(Dependencies.leakCanary)
+
+    implementation(platform(Dependencies.firebaseBom))
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidJunit)

@@ -9,6 +9,7 @@ buildscript {
         classpath(BuildScriptPlugins.androidGradlePlugin)
         classpath(BuildScriptPlugins.kotlin)
         classpath(BuildScriptPlugins.hilt)
+        classpath(BuildScriptPlugins.googleServices)
     }
 
 }

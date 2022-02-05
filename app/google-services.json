@@ -1,0 +1,158 @@
+{
+  "project_info": {
+    "project_number": "1069203857423",
+    "project_id": "podcasts-compose",
+    "storage_bucket": "podcasts-compose.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069203857423:android:5361d432d1317eee60837a",
+        "android_client_info": {
+          "package_name": "com.greencom.android.podcasts2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069203857423-qeqq85ss5r8vse35eq1goo14heiabbfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greencom.android.podcasts2",
+            "certificate_hash": "a60e101578b2b375057d4426f3b434aa37f35017"
+          }
+        },
+        {
+          "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXiTsvAep5oFZcUiz1QoS08S-xiUux7s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069203857423:android:0042e13d311392b160837a",
+        "android_client_info": {
+          "package_name": "com.greencom.android.podcasts2.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069203857423-bnscnni0mg9u8suqumd5e30gv9p4sgrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greencom.android.podcasts2.debug",
+            "certificate_hash": "a60e101578b2b375057d4426f3b434aa37f35017"
+          }
+        },
+        {
+          "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXiTsvAep5oFZcUiz1QoS08S-xiUux7s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069203857423:android:0537a834130f636e60837a",
+        "android_client_info": {
+          "package_name": "com.greencom.android.podcasts2.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069203857423-amhruf8alg24lvmot2r21fag5qie02f2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greencom.android.podcasts2.demo",
+            "certificate_hash": "a60e101578b2b375057d4426f3b434aa37f35017"
+          }
+        },
+        {
+          "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXiTsvAep5oFZcUiz1QoS08S-xiUux7s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069203857423:android:aa9f2ad20adabf4060837a",
+        "android_client_info": {
+          "package_name": "com.greencom.android.podcasts2.qa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069203857423-il01nl3tjlgn6p748uds45lqg34vu989.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greencom.android.podcasts2.qa",
+            "certificate_hash": "a60e101578b2b375057d4426f3b434aa37f35017"
+          }
+        },
+        {
+          "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXiTsvAep5oFZcUiz1QoS08S-xiUux7s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069203857423-s1sfo934dbrd3gbtnjm13m69rkalon7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

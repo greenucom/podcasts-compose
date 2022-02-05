@@ -5,6 +5,7 @@ object Plugins {
     const val kapt = "kapt"
     const val hilt = "dagger.hilt.android.plugin"
     const val serialization = "plugin.serialization"
+    const val googleService = "com.google.gms.google-services"
 
     const val androidGitVersion = "com.gladed.androidgitversion"
 
