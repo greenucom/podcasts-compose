@@ -9,6 +9,7 @@ plugins {
     id(Plugins.hilt)
     kotlin(Plugins.serialization).version(Versions.kotlin)
     id(Plugins.googleService)
+    id(Plugins.crashlytics)
 
     id(Plugins.androidGitVersion).version(Versions.androidGitVersion)
 }

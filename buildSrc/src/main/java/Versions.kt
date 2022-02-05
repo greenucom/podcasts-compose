@@ -41,6 +41,7 @@ object Versions {
     const val leakCanary = "2.8.1"
 
     const val googleServices = "4.3.10"
+    const val crashlyticsPlugin = "2.8.1"
     const val firebaseBom = "29.0.4"
 
     const val junit = "4.13.2"

@@ -10,6 +10,7 @@ buildscript {
         classpath(BuildScriptPlugins.kotlin)
         classpath(BuildScriptPlugins.hilt)
         classpath(BuildScriptPlugins.googleServices)
+        classpath(BuildScriptPlugins.crashlytics)
     }
 
 }
