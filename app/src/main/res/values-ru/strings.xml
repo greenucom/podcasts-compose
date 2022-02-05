@@ -16,4 +16,7 @@
     <string name="technology">Технология</string>
     <string name="sports">Спорт</string>
 
+
+    <string name="loading_podcasts">Загрузка подкастов…</string>
+
 </resources>
