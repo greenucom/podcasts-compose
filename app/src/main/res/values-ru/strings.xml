@@ -5,4 +5,15 @@
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 
+
+    <!-- Trending categories -->
+    <string name="news">News</string>
+    <string name="politics">Политика</string>
+    <string name="society">Общество</string>
+    <string name="history">История</string>
+    <string name="education">Образования</string>
+    <string name="science">Наука</string>
+    <string name="technology">Технология</string>
+    <string name="sports">Спорт</string>
+
 </resources>

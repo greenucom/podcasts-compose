@@ -4,4 +4,15 @@
     <string name="discover">Discover</string>
     <string name="library">Library</string>
 
+
+    <!-- Trending categories -->
+    <string name="news">News</string>
+    <string name="politics">Politics</string>
+    <string name="society">Society</string>
+    <string name="history">History</string>
+    <string name="education">Education</string>
+    <string name="science">Science</string>
+    <string name="technology">Technology</string>
+    <string name="sports">Sports</string>
+
 </resources>
