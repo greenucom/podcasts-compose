@@ -52,6 +52,8 @@ object Dependencies {
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
 
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val analytics = "com.google.firebase:firebase-analytics-ktx"
+    const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val androidJunit = "androidx.test.ext:junit:${Versions.androidJunit}"

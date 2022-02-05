@@ -205,6 +205,8 @@ dependencies {
     debugImplementation(Dependencies.leakCanary)
 
     implementation(platform(Dependencies.firebaseBom))
+    implementation(Dependencies.analytics)
+    implementation(Dependencies.crashlytics)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidJunit)
