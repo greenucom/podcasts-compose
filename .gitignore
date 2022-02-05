@@ -16,4 +16,4 @@
 local.properties
 keystore.properties
 api.properties
-/app/src/main/java/com/greencom/android/podcasts2/domain/categories/categories.json
+/app/src/main/java/com/greencom/android/podcasts2/json
