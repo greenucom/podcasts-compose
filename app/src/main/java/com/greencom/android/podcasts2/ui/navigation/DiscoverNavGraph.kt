@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screens.app
+package com.greencom.android.podcasts2.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
