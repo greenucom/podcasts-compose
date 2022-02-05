@@ -16,6 +16,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PodcastsCompose">
 
             <intent-filter>
