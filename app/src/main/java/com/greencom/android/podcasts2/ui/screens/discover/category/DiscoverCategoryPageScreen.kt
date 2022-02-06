@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.categories.TrendingCategory
 import com.greencom.android.podcasts2.ui.common.components.LoadingScreen
+import com.greencom.android.podcasts2.ui.screens.discover.category.components.TrendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
@@ -34,7 +35,10 @@ fun DiscoverCategoryScreen(
                 }
 
                 is DiscoverCategoryPageViewModel.ViewState.TrendingPodcasts -> {
-
+                    TrendingPodcastList(
+                        podcasts = state.podcasts,
+                        onPodcastClicked = { /* TODO */ },
+                    )
                 }
 
                 DiscoverCategoryPageViewModel.ViewState.Error -> {}
