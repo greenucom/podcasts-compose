@@ -4,10 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Done
@@ -19,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.ui.common.OutlinedButtonUtils
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
@@ -27,10 +25,21 @@ fun SubscribeButton(
     isSubscribed: Boolean,
     onClick: (isSubscribed: Boolean) -> Unit,
 ) {
+    val buttonColors = if (isSubscribed) {
+        ButtonDefaults.outlinedButtonColors(
+            backgroundColor = MaterialTheme.colors.primary.copy(
+                alpha = OutlinedButtonUtils.CHECKED_BACKGROUND_COLOR_ALPHA
+            )
+        )
+    } else {
+        ButtonDefaults.outlinedButtonColors()
+    }
+
     OutlinedButton(
         modifier = modifier,
         onClick = { onClick(!isSubscribed) },
         shape = RoundedCornerShape(50),
+        colors = buttonColors,
     ) {
         val icon: ImageVector
         val text: String
@@ -57,10 +66,12 @@ fun SubscribeButton(
 @Preview(showBackground = true)
 private fun LightSubscribe() {
     PodcastsComposeTheme {
-        SubscribeButton(
-            isSubscribed = false,
-            onClick = {},
-        )
+        Surface {
+            SubscribeButton(
+                isSubscribed = false,
+                onClick = {},
+            )
+        }
     }
 }
 
@@ -68,10 +79,12 @@ private fun LightSubscribe() {
 @Preview(showBackground = true)
 private fun LightSubscribed() {
     PodcastsComposeTheme {
-        SubscribeButton(
-            isSubscribed = true,
-            onClick = {},
-        )
+        Surface {
+            SubscribeButton(
+                isSubscribed = true,
+                onClick = {},
+            )
+        }
     }
 }
 
@@ -83,10 +96,12 @@ private fun LightSubscribed() {
 )
 private fun DarkSubscribe() {
     PodcastsComposeTheme {
-        SubscribeButton(
-            isSubscribed = false,
-            onClick = {},
-        )
+        Surface {
+            SubscribeButton(
+                isSubscribed = false,
+                onClick = {},
+            )
+        }
     }
 }
 
@@ -98,9 +113,11 @@ private fun DarkSubscribe() {
 )
 private fun DarkSubscribed() {
     PodcastsComposeTheme {
-        SubscribeButton(
-            isSubscribed = true,
-            onClick = {},
-        )
+        Surface {
+            SubscribeButton(
+                isSubscribed = true,
+                onClick = {},
+            )
+        }
     }
 }
