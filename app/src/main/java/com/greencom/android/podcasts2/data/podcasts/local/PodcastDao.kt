@@ -31,13 +31,6 @@ abstract class PodcastDao {
     @Query("DELETE FROM podcasts_temp")
     protected abstract suspend fun clearTemp()
 
-    @Query("""
-        SELECT id, title, description, author, image, is_subscribed
-        FROM podcasts
-        WHERE id IN (:ids)
-    """)
-    abstract suspend fun getTrendingPodcasts(ids: List<Long>): List<PodcastEntity>
-
     @Update
     abstract suspend fun update(podcast: PodcastEntity)
 

@@ -11,11 +11,7 @@ class PodcastsRepository @Inject constructor(
 ) {
 
     suspend fun getTrendingPodcasts(payload: GetTrendingPodcastsPayload): List<TrendingPodcast> {
-        val podcasts = remoteDataSource.getTrendingPodcasts(payload)
-        localDataSource.insert(podcasts)
-
-        val ids = podcasts.map { it.id }
-        return localDataSource.getTrendingPodcasts(ids)
+        return remoteDataSource.getTrendingPodcasts(payload)
     }
 
     suspend fun updatePodcast(podcast: IPodcast) {

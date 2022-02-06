@@ -7,21 +7,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.greencom.android.podcasts2.domain.podcasts.IPodcast
 import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
-import com.greencom.android.podcasts2.ui.common.components.PodcastItem
 
 @Composable
 fun TrendingPodcastList(
     modifier: Modifier = Modifier,
     podcasts: List<TrendingPodcast>,
     onPodcastClicked: (podcast: IPodcast) -> Unit,
-    onSubscriptionChanged: (podcast: IPodcast) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         items(items = podcasts, key = TrendingPodcast::id) { podcast ->
-            PodcastItem(
+            TrendingPodcastItem(
                 podcast = podcast,
                 onClick = onPodcastClicked,
-                onSubscriptionChanged = onSubscriptionChanged,
             )
 
             if (podcast != podcasts.lastOrNull()) {

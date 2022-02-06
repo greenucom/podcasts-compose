@@ -38,7 +38,6 @@ fun DiscoverCategoryScreen(
                     TrendingPodcastList(
                         podcasts = state.podcasts,
                         onPodcastClicked = { /* TODO */ },
-                        onSubscriptionChanged = pageViewModel::onSubscriptionChanged,
                     )
                 }
 

@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common.components
+package com.greencom.android.podcasts2.ui.screens.discover.category.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -25,11 +25,10 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PodcastItem(
+fun TrendingPodcastItem(
     modifier: Modifier = Modifier,
     podcast: IPodcast,
     onClick: (podcast: IPodcast) -> Unit,
-    onSubscriptionChanged: (podcast: IPodcast) -> Unit,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -72,18 +71,6 @@ fun PodcastItem(
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
             )
-
-            Spacer(Modifier.height(8.dp))
-
-            SubscribeButton(
-                isSubscribed = podcast.isSubscribed,
-                onSubscriptionChanged = { isSubscribed ->
-                    val newPodcast = when (podcast) {
-                        is TrendingPodcast -> podcast.copy(isSubscribed = isSubscribed)
-                    }
-                    onSubscriptionChanged(newPodcast)
-                },
-            )
         }
     }
 }
@@ -94,10 +81,9 @@ private fun Light(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        PodcastItem(
+        TrendingPodcastItem(
             podcast = podcast,
             onClick = {},
-            onSubscriptionChanged = {},
         )
     }
 }
@@ -112,10 +98,9 @@ private fun Dark(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        PodcastItem(
+        TrendingPodcastItem(
             podcast = podcast,
             onClick = {},
-            onSubscriptionChanged = {},
         )
     }
 }
