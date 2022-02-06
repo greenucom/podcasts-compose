@@ -23,7 +23,7 @@ data class PodcastEntity(
     @ColumnInfo(name = "image")
     val image: String,
 
-    @ColumnInfo(name = "is_subscribed")
+    @ColumnInfo(name = "is_subscribed", defaultValue = "0")
     val isSubscribed: Boolean,
 
 )
