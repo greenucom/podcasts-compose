@@ -13,15 +13,10 @@ class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcas
 
     private fun createShortPodcast(): TrendingPodcast = TrendingPodcast(
         id = 1,
-        url = "",
         title = "Short title",
         description = "Short description",
         author = "Short author",
         image = "",
-        newestItemPublishedTime = 0,
-        trendScore = 0,
-        language = "",
-        categories = emptyList(),
         isSubscribed = false,
     )
 
