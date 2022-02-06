@@ -38,7 +38,7 @@ fun SubscribeButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onClick(!isSubscribed) },
-        shape = RoundedCornerShape(50),
+        shape = RoundedCornerShape(percent = OutlinedButtonUtils.ROUNDED_CORNERS_PERCENT),
         colors = buttonColors,
     ) {
         val icon: ImageVector
