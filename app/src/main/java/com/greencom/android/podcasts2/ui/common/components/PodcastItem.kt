@@ -29,7 +29,7 @@ fun PodcastItem(
     modifier: Modifier = Modifier,
     podcast: IPodcast,
     onClick: (podcast: IPodcast) -> Unit,
-    onSubscribeClicked: (isSubscribed: Boolean) -> Unit,
+    onSubscriptionChanged: (podcast: IPodcast) -> Unit,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -77,7 +77,12 @@ fun PodcastItem(
 
             SubscribeButton(
                 isSubscribed = podcast.isSubscribed,
-                onClick = onSubscribeClicked,
+                onSubscriptionChanged = { isSubscribed ->
+                    val newPodcast = when (podcast) {
+                        is TrendingPodcast -> podcast.copy(isSubscribed = isSubscribed)
+                    }
+                    onSubscriptionChanged(newPodcast)
+                },
             )
         }
     }
@@ -92,7 +97,7 @@ private fun Light(
         PodcastItem(
             podcast = podcast,
             onClick = {},
-            onSubscribeClicked = {},
+            onSubscriptionChanged = {},
         )
     }
 }
@@ -110,7 +115,7 @@ private fun Dark(
         PodcastItem(
             podcast = podcast,
             onClick = {},
-            onSubscribeClicked = {},
+            onSubscriptionChanged = {},
         )
     }
 }

@@ -2,8 +2,10 @@ package com.greencom.android.podcasts2.ui.screens.discover.category
 
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.categories.TrendingCategory
+import com.greencom.android.podcasts2.domain.podcasts.IPodcast
 import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
 import com.greencom.android.podcasts2.domain.podcasts.payload.GetTrendingPodcastsPayload
+import com.greencom.android.podcasts2.domain.podcasts.usecases.ChangeSubscriptionUseCase
 import com.greencom.android.podcasts2.domain.podcasts.usecases.GetTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DiscoverCategoryPageViewModel @Inject constructor(
     private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
+    private val changeSubscriptionUseCase: ChangeSubscriptionUseCase,
 ) : BaseViewModel() {
 
     private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialLoading)
@@ -37,6 +40,10 @@ class DiscoverCategoryPageViewModel @Inject constructor(
 
     private fun onLoadTrendingPodcastsSuccess(podcasts: List<TrendingPodcast>) {
         _viewState.update { ViewState.TrendingPodcasts(podcasts) }
+    }
+
+    fun onSubscriptionChanged(podcast: IPodcast) = viewModelScope.launch {
+        changeSubscriptionUseCase(podcast)
     }
 
     sealed interface ViewState {

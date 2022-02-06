@@ -14,13 +14,14 @@ fun TrendingPodcastList(
     modifier: Modifier = Modifier,
     podcasts: List<TrendingPodcast>,
     onPodcastClicked: (podcast: IPodcast) -> Unit,
+    onSubscriptionChanged: (podcast: IPodcast) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         items(items = podcasts, key = TrendingPodcast::id) { podcast ->
             PodcastItem(
                 podcast = podcast,
                 onClick = onPodcastClicked,
-                onSubscribeClicked = { /* TODO */ },
+                onSubscriptionChanged = onSubscriptionChanged,
             )
 
             if (podcast != podcasts.lastOrNull()) {
