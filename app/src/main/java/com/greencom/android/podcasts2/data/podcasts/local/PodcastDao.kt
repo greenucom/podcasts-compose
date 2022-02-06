@@ -5,6 +5,9 @@ import androidx.room.*
 @Dao
 abstract class PodcastDao {
 
+    @Query("DELETE FROM podcasts_temp")
+    protected abstract suspend fun clearTemp()
+
     @Transaction
     open suspend fun insert(podcasts: List<PodcastEntity>) {
         insertToTemp(podcasts)
@@ -27,9 +30,6 @@ abstract class PodcastDao {
 
     @Update
     protected abstract suspend fun update(podcasts: List<PodcastEntity>)
-
-    @Query("DELETE FROM podcasts_temp")
-    protected abstract suspend fun clearTemp()
 
     @Update
     abstract suspend fun update(podcast: PodcastEntity)
