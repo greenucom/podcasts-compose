@@ -18,5 +18,8 @@
 
 
     <string name="loading_podcasts">Загрузка подкастов…</string>
+    <string name="podcast_cover">Обложка подкаста</string>
+    <string name="subscribe">Подписаться</string>
+    <string name="subscribed">Подписка оформлена</string>
 
 </resources>
