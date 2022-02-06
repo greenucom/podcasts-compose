@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screens.app.components
+package com.greencom.android.podcasts2.ui.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
