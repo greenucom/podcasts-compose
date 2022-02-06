@@ -25,7 +25,7 @@ abstract class PodcastDao {
     """)
     protected abstract suspend fun mergeTemp()
 
-    @Update(entity = PodcastEntity::class)
+    @Update
     protected abstract suspend fun update(podcasts: List<PodcastEntity>)
 
     @Query("DELETE FROM podcasts_temp")
@@ -37,5 +37,8 @@ abstract class PodcastDao {
         WHERE id IN (:ids)
     """)
     abstract suspend fun getTrendingPodcasts(ids: List<Long>): List<PodcastEntity>
+
+    @Update
+    abstract suspend fun update(podcast: PodcastEntity)
 
 }

@@ -19,4 +19,9 @@ class PodcastsLocalDataSource @Inject constructor(
         return podcastDao.getTrendingPodcasts(ids).map { it.toTrendingPodcast() }
     }
 
+    suspend fun update(podcast: IPodcast) {
+        val entity = PodcastEntity.fromDomain(podcast)
+        podcastDao.update(entity)
+    }
+
 }

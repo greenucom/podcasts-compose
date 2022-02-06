@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.data.podcasts
 
+import com.greencom.android.podcasts2.domain.podcasts.IPodcast
 import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
 import com.greencom.android.podcasts2.domain.podcasts.payload.GetTrendingPodcastsPayload
 import javax.inject.Inject
@@ -15,6 +16,10 @@ class PodcastsRepository @Inject constructor(
 
         val ids = podcasts.map { it.id }
         return localDataSource.getTrendingPodcasts(ids)
+    }
+
+    suspend fun updatePodcast(podcast: IPodcast) {
+        localDataSource.update(podcast)
     }
 
 }
