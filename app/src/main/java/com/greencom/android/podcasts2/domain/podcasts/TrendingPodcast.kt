@@ -3,14 +3,23 @@ package com.greencom.android.podcasts2.domain.podcasts
 import com.greencom.android.podcasts2.domain.categories.Category
 
 data class TrendingPodcast(
-    val id: Long,
-    val url: String,
-    val title: String,
-    val description: String,
-    val author: String,
-    val image: String,
+    override val id: Long,
+    override val url: String,
+    override val title: String,
+    override val description: String,
+    override val author: String,
+    override val image: String,
     val newestItemPublishedTime: Long,
     val trendScore: Int,
-    val language: String,
-    val categories: List<Category>,
+    override val language: String,
+    override val categories: List<Category>,
+) : IPodcast(
+    id = id,
+    url = url,
+    title = title,
+    description = description,
+    author = author,
+    image = image,
+    language = language,
+    categories = categories,
 )
