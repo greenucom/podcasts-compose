@@ -11,4 +11,5 @@ abstract class IPodcast(
     open val image: String,
     open val language: String,
     open val categories: List<ICategory>,
+    open val isSubscribed: Boolean,
 )

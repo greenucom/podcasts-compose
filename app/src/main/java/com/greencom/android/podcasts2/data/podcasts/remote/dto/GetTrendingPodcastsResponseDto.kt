@@ -74,6 +74,7 @@ data class GetTrendingPodcastResponseDto(
         categories = categories?.mapTo(mutableListOf()) { (key, value) ->
             Category(id = key, name = value)
         } ?: emptyList(),
+        isSubscribed = false,
     )
 
 }

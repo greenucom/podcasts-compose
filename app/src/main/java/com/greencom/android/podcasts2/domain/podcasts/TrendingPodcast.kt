@@ -13,6 +13,7 @@ data class TrendingPodcast(
     val trendScore: Int,
     override val language: String,
     override val categories: List<Category>,
+    override val isSubscribed: Boolean,
 ) : IPodcast(
     id = id,
     url = url,
@@ -22,4 +23,5 @@ data class TrendingPodcast(
     image = image,
     language = language,
     categories = categories,
+    isSubscribed = isSubscribed,
 )
