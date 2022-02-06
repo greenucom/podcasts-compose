@@ -4,10 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.greencom.android.podcasts2.data.podcasts.local.PodcastDao
 import com.greencom.android.podcasts2.data.podcasts.local.PodcastEntity
+import com.greencom.android.podcasts2.data.podcasts.local.PodcastEntityTemp
 
 @Database(
     entities = [
-        PodcastEntity::class
+        PodcastEntity::class,
+        PodcastEntityTemp::class,
     ],
     version = 1,
 )
