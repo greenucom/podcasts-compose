@@ -28,7 +28,7 @@ fun SubscribeButton(
     val buttonColors = if (isSubscribed) {
         ButtonDefaults.outlinedButtonColors(
             backgroundColor = MaterialTheme.colors.primary.copy(
-                alpha = OutlinedButtonUtils.CHECKED_BACKGROUND_COLOR_ALPHA
+                alpha = OutlinedButtonUtils.CheckedBackgroundColorAlpha
             )
         )
     } else {
@@ -38,7 +38,7 @@ fun SubscribeButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onSubscriptionChanged(!isSubscribed) },
-        shape = RoundedCornerShape(percent = OutlinedButtonUtils.ROUNDED_CORNERS_PERCENT),
+        shape = RoundedCornerShape(percent = OutlinedButtonUtils.RoundedCornersPercent),
         colors = buttonColors,
     ) {
         val icon: ImageVector
