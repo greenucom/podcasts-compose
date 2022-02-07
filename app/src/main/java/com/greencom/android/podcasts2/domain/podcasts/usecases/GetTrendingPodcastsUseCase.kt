@@ -14,7 +14,13 @@ class GetTrendingPodcastsUseCase @Inject constructor(
 ) : UseCase<GetTrendingPodcastsPayload, List<TrendingPodcast>>(dispatcher) {
 
     override suspend fun execute(params: GetTrendingPodcastsPayload): List<TrendingPodcast> {
-        return podcastsRepository.getTrendingPodcasts(params)
+        val (inCategories, max, language, notInCategories) = params
+        return podcastsRepository.getTrendingPodcasts(
+            max = max,
+            language = language,
+            inCategories = inCategories,
+            notInCategories = notInCategories,
+        )
     }
 
 }
