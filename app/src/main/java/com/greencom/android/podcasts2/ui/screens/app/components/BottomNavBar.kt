@@ -18,8 +18,8 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun BottomNavBar(
-    modifier: Modifier = Modifier,
     navController: NavHostController,
+    modifier: Modifier = Modifier,
 ) {
     CompositionLocalProvider(LocalElevationOverlay provides null) {
         BottomNavigation(
