@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common
+package com.greencom.android.podcasts2.ui.common.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
@@ -30,7 +30,7 @@ fun LoadingScreen(
             Text(
                 modifier = Modifier.padding(horizontal = 48.dp),
                 text = text,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.body1,
             )
         }
     }
