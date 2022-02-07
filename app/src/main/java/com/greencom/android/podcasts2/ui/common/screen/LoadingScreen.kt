@@ -25,12 +25,12 @@ fun LoadingScreen(
         ) {
             CircularProgressIndicator()
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
 
             Text(
                 modifier = Modifier.padding(horizontal = 48.dp),
                 text = text,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.body2,
             )
         }
     }
