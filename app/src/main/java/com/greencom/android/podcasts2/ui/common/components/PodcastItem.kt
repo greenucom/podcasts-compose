@@ -39,7 +39,7 @@ fun PodcastItem(
                 Image(
                     modifier = Modifier
                         .size(80.dp)
-                        .clip(RoundedCornerShape(16.dp)),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = rememberImagePainterWithCrossfadeAndPlaceholder(podcast.image),
                     contentDescription = stringResource(R.string.podcast_cover)
                 )
@@ -71,6 +71,7 @@ fun PodcastItem(
 
             Text(
                 text = podcast.description,
+                style = MaterialTheme.typography.body2,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
             )
