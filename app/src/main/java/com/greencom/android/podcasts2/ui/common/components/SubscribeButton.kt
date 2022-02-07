@@ -21,9 +21,9 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun SubscribeButton(
-    modifier: Modifier = Modifier,
     isSubscribed: Boolean,
     onSubscriptionChanged: (isSubscribed: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val buttonColors = if (isSubscribed) {
         ButtonDefaults.outlinedButtonColors(
