@@ -32,6 +32,7 @@ fun PodcastItem(
         modifier = modifier.fillMaxWidth(),
         onClick = { onPodcastClicked(podcast) },
         shape = RoundedCornerShape(16.dp),
+        elevation = 2.dp,
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row {

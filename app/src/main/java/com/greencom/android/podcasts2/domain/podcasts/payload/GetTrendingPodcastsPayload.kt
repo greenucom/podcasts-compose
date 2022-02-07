@@ -9,18 +9,6 @@ data class GetTrendingPodcastsPayload(
     val notInCategories: List<ICategory> = emptyList(),
 ) {
 
-    constructor(
-        inCategory: ICategory,
-        max: Int = MAX_DEFAULT,
-        language: String = RU,
-        notInCategories: List<ICategory> = emptyList(),
-    ) : this(
-        inCategories = listOf(inCategory),
-        max = max,
-        language = language,
-        notInCategories = notInCategories,
-    )
-
     companion object {
         private const val MAX_DEFAULT = 20
         private const val RU = "ru"
