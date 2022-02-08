@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
+import com.greencom.android.podcasts2.R
 
 @Composable
 fun rememberImagePainterWithCrossfadeAndPlaceholder(
@@ -15,6 +16,8 @@ fun rememberImagePainterWithCrossfadeAndPlaceholder(
     onExecute = onExecute,
 ) {
     crossfade(true)
-    // TODO: Add placeholders
+    // TODO
+    placeholder(R.drawable.ic_launcher_background)
+    error(R.drawable.ic_launcher_background)
     builder()
 }
