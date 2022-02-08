@@ -22,6 +22,7 @@ import com.greencom.android.podcasts2.ui.common.previewparams.TrendingPodcastPar
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterWithCrossfadeAndPlaceholder
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
+// TODO: Add elevation to image
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DiscoverPodcastItemPrimary(
