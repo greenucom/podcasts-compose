@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
@@ -23,20 +25,7 @@ fun SearchBar(
     onImeSearch: (value: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val textFieldColors = if (isSystemInDarkTheme()) {
-        val color = MaterialTheme.colors.onSurface.copy(
-            alpha = SearchBarUtils.DarkBackgroundColorAlpha
-        )
-        TextFieldDefaults.outlinedTextFieldColors(
-            backgroundColor = color,
-            focusedBorderColor = color,
-            unfocusedBorderColor = color,
-            disabledBorderColor = color,
-            errorBorderColor = color,
-        )
-    } else {
-        TextFieldDefaults.outlinedTextFieldColors()
-    }
+    val textFieldColors = SearchBarUtils.obtainTextFieldColors(isSystemInDarkTheme())
 
     OutlinedTextField(
         modifier = modifier,
