@@ -23,7 +23,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun SubscribeButton(
     isSubscribed: Boolean,
-    onSubscriptionChanged: (isSubscribed: Boolean) -> Unit,
+    onSubscriptionChange: (isSubscribed: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val buttonColors = if (isSubscribed) {
@@ -38,7 +38,7 @@ fun SubscribeButton(
 
     OutlinedButton(
         modifier = modifier,
-        onClick = { onSubscriptionChanged(!isSubscribed) },
+        onClick = { onSubscriptionChange(!isSubscribed) },
         shape = RoundedCornerShape(percent = OutlinedButtonUtils.CornerPercent),
         colors = buttonColors,
     ) {
@@ -70,7 +70,7 @@ private fun LightSubscribe() {
         Surface {
             SubscribeButton(
                 isSubscribed = false,
-                onSubscriptionChanged = {},
+                onSubscriptionChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -84,7 +84,7 @@ private fun LightSubscribed() {
         Surface {
             SubscribeButton(
                 isSubscribed = true,
-                onSubscriptionChanged = {},
+                onSubscriptionChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -102,7 +102,7 @@ private fun DarkSubscribe() {
         Surface {
             SubscribeButton(
                 isSubscribed = false,
-                onSubscriptionChanged = {},
+                onSubscriptionChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -120,7 +120,7 @@ private fun DarkSubscribed() {
         Surface {
             SubscribeButton(
                 isSubscribed = true,
-                onSubscriptionChanged = {},
+                onSubscriptionChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }

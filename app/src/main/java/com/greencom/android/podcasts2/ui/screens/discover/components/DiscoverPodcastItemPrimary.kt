@@ -27,12 +27,12 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun DiscoverPodcastItemPrimary(
     podcast: IPodcast,
-    onPodcastClicked: (podcast: IPodcast) -> Unit,
+    onPodcastClick: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier.width(320.dp),
-        onClick = { onPodcastClicked(podcast) },
+        onClick = { onPodcastClick(podcast) },
         shape = RoundedCornerShape(16.dp),
     ) {
         Column(modifier = Modifier.padding(bottom = 8.dp)) {
@@ -78,7 +78,7 @@ private fun Light(
     PodcastsComposeTheme {
         DiscoverPodcastItemPrimary(
             podcast = podcast,
-            onPodcastClicked = {},
+            onPodcastClick = {},
         )
     }
 }
@@ -95,7 +95,7 @@ private fun Dark(
     PodcastsComposeTheme {
         DiscoverPodcastItemPrimary(
             podcast = podcast,
-            onPodcastClicked = {},
+            onPodcastClick = {},
         )
     }
 }
