@@ -11,7 +11,7 @@ object Versions {
 
     const val coroutines = "1.6.0"
 
-    const val compose = "1.1.0-rc03"
+    const val compose = "1.1.0"
     const val composeMaterial3 = "1.0.0-alpha04"
 
     const val coreKtx = "1.7.0"
