@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.ui.common.OutlinedButtonUtils
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
@@ -29,7 +28,7 @@ fun SubscribeButton(
     val buttonColors = if (isSubscribed) {
         ButtonDefaults.outlinedButtonColors(
             backgroundColor = MaterialTheme.colors.primary.copy(
-                alpha = OutlinedButtonUtils.CheckedBackgroundColorAlpha
+                alpha = SubscribeButtonUtils.SubscribedBackgroundColorAlpha
             )
         )
     } else {
@@ -39,7 +38,7 @@ fun SubscribeButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onSubscriptionChange(!isSubscribed) },
-        shape = RoundedCornerShape(percent = OutlinedButtonUtils.CornerPercent),
+        shape = RoundedCornerShape(percent = SubscribeButtonUtils.CornerPercent),
         colors = buttonColors,
     ) {
         val icon: ImageVector
