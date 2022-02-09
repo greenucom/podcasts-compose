@@ -25,21 +25,15 @@ fun SubscribeButton(
     onSubscriptionChange: (isSubscribed: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val buttonColors = if (isSubscribed) {
-        ButtonDefaults.outlinedButtonColors(
-            backgroundColor = MaterialTheme.colors.primary.copy(
-                alpha = SubscribeButtonUtils.SubscribedBackgroundColorAlpha
-            )
-        )
-    } else {
-        ButtonDefaults.outlinedButtonColors()
-    }
+    val colors = SubscribeButtonUtils.colors(isSubscribed)
+    val border = SubscribeButtonUtils.border(isSubscribed)
 
     OutlinedButton(
         modifier = modifier,
         onClick = { onSubscriptionChange(!isSubscribed) },
         shape = RoundedCornerShape(percent = SubscribeButtonUtils.CornerPercent),
-        colors = buttonColors,
+        colors = colors,
+        border = border,
     ) {
         val icon: ImageVector
         val text: String
