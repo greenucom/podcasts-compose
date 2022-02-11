@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screens.discover.components
+package com.greencom.android.podcasts2.ui.common.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -24,7 +24,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DiscoverPodcastItemSecondary(
+fun PodcastItem(
     podcast: IPodcast,
     onPodcastClick: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
@@ -85,7 +85,7 @@ private fun Light(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        DiscoverPodcastItemSecondary(
+        PodcastItem(
             podcast = podcast,
             onPodcastClick = {},
         )
@@ -102,7 +102,7 @@ private fun Dark(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        DiscoverPodcastItemSecondary(
+        PodcastItem(
             podcast = podcast,
             onPodcastClick = {},
         )
