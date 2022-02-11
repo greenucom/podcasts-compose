@@ -2,15 +2,19 @@ package com.greencom.android.podcasts2.ui.screens.discover.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -22,50 +26,52 @@ import com.greencom.android.podcasts2.ui.common.previewparams.TrendingPodcastPar
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterWithCrossfadeAndPlaceholder
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
-// TODO: Add elevation to image
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DiscoverPodcastItemPrimary(
+fun PodcastCard(
     podcast: IPodcast,
     onPodcastClick: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier.width(320.dp),
+    Card(
+        modifier = modifier
+            .width(320.dp)
+            .aspectRatio(1f),
         onClick = { onPodcastClick(podcast) },
         shape = RoundedCornerShape(16.dp),
     ) {
-        Column(modifier = Modifier.padding(bottom = 8.dp)) {
+        Box(modifier = Modifier.fillMaxSize()) {
             Image(
-                modifier = Modifier
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(16.dp)),
+                modifier = Modifier.fillMaxSize(),
                 painter = rememberImagePainterWithCrossfadeAndPlaceholder(podcast.image),
                 contentDescription = stringResource(R.string.podcast_cover),
             )
 
-            Spacer(Modifier.height(8.dp))
+            val gradient = Brush.verticalGradient(
+                listOf(
+                    Color.Transparent,
+                    Color.Black.copy(alpha = 0.45f),
+                    Color.Black.copy(alpha = 0.7f),
+                )
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.4f)
+                    .align(Alignment.BottomCenter)
+                    .background(gradient),
+            )
 
             Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(16.dp),
                 text = podcast.title,
-                style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.W500,
+                color = Color.White,
+                style = MaterialTheme.typography.h5,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
-
-            Spacer(Modifier.height(4.dp))
-
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = podcast.author,
-                    style = MaterialTheme.typography.body2,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
         }
     }
 }
@@ -76,7 +82,8 @@ private fun Light(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        DiscoverPodcastItemPrimary(
+        PodcastCard(
+            modifier = Modifier.padding(16.dp),
             podcast = podcast,
             onPodcastClick = {},
         )
@@ -93,7 +100,8 @@ private fun Dark(
     @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
 ) {
     PodcastsComposeTheme {
-        DiscoverPodcastItemPrimary(
+        PodcastCard(
+            modifier = Modifier.padding(16.dp),
             podcast = podcast,
             onPodcastClick = {},
         )
