@@ -13,7 +13,7 @@ interface PodcastsService {
         max: Int,
 
         @Query("lang")
-        language: String,
+        languages: String,
 
         @Query("cat")
         inCategories: String,

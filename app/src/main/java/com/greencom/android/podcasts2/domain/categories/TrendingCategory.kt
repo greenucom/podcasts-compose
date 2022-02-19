@@ -20,7 +20,7 @@ sealed class TrendingCategory(
 
     companion object {
 
-        val categories = listOf(
+        val defaultCategories = listOf(
             News, Politics, Society, History, Education, Science, Technology, Sports,
         )
 
