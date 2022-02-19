@@ -23,33 +23,33 @@ val Inter = FontFamily(
 val Typography = Typography(
     h1 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W300,
-        fontSize = 93.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 96.sp,
     ),
     h2 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W300,
-        fontSize = 58.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 60.sp,
     ),
     h3 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W400,
-        fontSize = 47.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 48.sp,
     ),
     h4 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W400,
-        fontSize = 33.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 34.sp,
     ),
     h5 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W400,
-        fontSize = 23.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 24.sp,
     ),
     h6 = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.W500,
-        fontSize = 19.sp,
+        fontWeight = FontWeight.W600,
+        fontSize = 20.sp,
     ),
     subtitle1 = TextStyle(
         fontFamily = Inter,
