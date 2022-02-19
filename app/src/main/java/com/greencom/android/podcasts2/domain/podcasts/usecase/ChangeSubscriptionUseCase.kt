@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.domain.podcasts.usecases
+package com.greencom.android.podcasts2.domain.podcasts.usecase
 
 import com.greencom.android.podcasts2.clean.UseCase
 import com.greencom.android.podcasts2.data.podcasts.PodcastsRepository
