@@ -10,7 +10,6 @@ import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 object SubscribeButtonUtils {
 
-    const val CornerPercent = 50
     private const val SubscribedBackgroundColorAlpha = 0.08f
     private const val SubscribedBorderColorAlpha = 0.16f
 

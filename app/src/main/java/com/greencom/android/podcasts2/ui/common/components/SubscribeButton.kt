@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
@@ -18,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.theme.rounded
 
 @Composable
 fun SubscribeButton(
@@ -31,7 +31,7 @@ fun SubscribeButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onSubscriptionChange(!isSubscribed) },
-        shape = RoundedCornerShape(percent = SubscribeButtonUtils.CornerPercent),
+        shape = MaterialTheme.shapes.rounded,
         colors = colors,
         border = border,
     ) {
