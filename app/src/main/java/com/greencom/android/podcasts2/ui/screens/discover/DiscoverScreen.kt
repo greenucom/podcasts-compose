@@ -1,7 +1,6 @@
 package com.greencom.android.podcasts2.ui.screens.discover
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,16 +13,16 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    Surface(modifier = modifier.fillMaxSize()) {
 
-    }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun Light() {
     PodcastsComposeTheme {
-        DiscoverScreen()
+        Surface {
+            DiscoverScreen()
+        }
     }
 }
 
@@ -35,6 +34,8 @@ private fun Light() {
 )
 private fun Dark() {
     PodcastsComposeTheme {
-        DiscoverScreen()
+        Surface {
+            DiscoverScreen()
+        }
     }
 }
