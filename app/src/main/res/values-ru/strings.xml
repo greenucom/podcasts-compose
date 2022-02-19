@@ -22,4 +22,7 @@
     <string name="subscribe">Подписаться</string>
     <string name="subscribed">Подписка оформлена</string>
 
+
+    <string name="recommended">Рекомендации</string>
+
 </resources>
