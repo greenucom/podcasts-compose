@@ -28,8 +28,8 @@ fun SubscribeButton(
         modifier = modifier,
         onClick = { onSubscribedChange(!subscribed) },
         shape = MaterialTheme.shapes.small,
-        colors = SubscribeButtonUtils.colors(subscribed),
-        border = SubscribeButtonUtils.border(subscribed),
+        colors = OutlinedButtonUtils.colors(subscribed),
+        border = OutlinedButtonUtils.border(subscribed),
     ) {
         val icon: ImageVector
         val text: String

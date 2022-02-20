@@ -8,17 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
-object SubscribeButtonUtils {
+object OutlinedButtonUtils {
 
-    private const val SubscribedBackgroundColorAlpha = 0.08f
-    private const val SubscribedBorderColorAlpha = 0.16f
+    private const val CheckedBackgroundColorAlpha = 0.08f
+    private const val CheckedBorderColorAlpha = 0.16f
 
     @Composable
-    fun colors(subscribed: Boolean): ButtonColors {
-        return if (subscribed) {
+    fun colors(checked: Boolean): ButtonColors {
+        return if (checked) {
             ButtonDefaults.outlinedButtonColors(
                 backgroundColor = MaterialTheme.colors.primary.copy(
-                    alpha = SubscribedBackgroundColorAlpha
+                    alpha = CheckedBackgroundColorAlpha
                 ),
             )
         } else {
@@ -27,11 +27,11 @@ object SubscribeButtonUtils {
     }
 
     @Composable
-    fun border(subscribed: Boolean): BorderStroke {
-        return if (subscribed) {
+    fun border(checked: Boolean): BorderStroke {
+        return if (checked) {
             BorderStroke(
                 width = 1.dp,
-                color = MaterialTheme.colors.primary.copy(alpha = SubscribedBorderColorAlpha),
+                color = MaterialTheme.colors.primary.copy(alpha = CheckedBorderColorAlpha),
             )
         } else {
             BorderStroke(1.dp, MaterialTheme.colors.onSurfaceUtil)
