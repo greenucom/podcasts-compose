@@ -3,9 +3,9 @@ package com.greencom.android.podcasts2.ui.screens.discover.components
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -18,8 +18,10 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcasts.IPodcast
 import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
 import com.greencom.android.podcasts2.ui.common.previewparams.TrendingPodcastParameterProvider
-import com.greencom.android.podcasts2.ui.common.rememberImagePainterWithCrossfadeAndPlaceholder
+import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+
+private val MaxWidthDp = 320.dp
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -29,19 +31,19 @@ fun PodcastCard(
     modifier: Modifier = Modifier,
 ) {
     val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
-    val cardWidthDp = minOf(320.dp, screenWidthDp * 0.8f)
+    val cardWidthDp = minOf(MaxWidthDp, screenWidthDp * 0.8f)
 
     Card(
         modifier = modifier
             .width(cardWidthDp)
             .aspectRatio(1f),
         onClick = { onPodcastClick(podcast) },
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.large,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = rememberImagePainterWithCrossfadeAndPlaceholder(podcast.image) {
+                painter = rememberImagePainterCustom(podcast.image) {
                     scale(Scale.FILL)
                 },
                 contentDescription = stringResource(R.string.podcast_cover),

@@ -3,7 +3,6 @@ package com.greencom.android.podcasts2.ui.common.components
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -19,7 +18,7 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcasts.IPodcast
 import com.greencom.android.podcasts2.domain.podcasts.TrendingPodcast
 import com.greencom.android.podcasts2.ui.common.previewparams.TrendingPodcastParameterProvider
-import com.greencom.android.podcasts2.ui.common.rememberImagePainterWithCrossfadeAndPlaceholder
+import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -38,8 +37,8 @@ fun PodcastItem(
                 Image(
                     modifier = Modifier
                         .size(80.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    painter = rememberImagePainterWithCrossfadeAndPlaceholder(podcast.image),
+                        .clip(MaterialTheme.shapes.medium),
+                    painter = rememberImagePainterCustom(podcast.image),
                     contentDescription = stringResource(R.string.podcast_cover),
                 )
 

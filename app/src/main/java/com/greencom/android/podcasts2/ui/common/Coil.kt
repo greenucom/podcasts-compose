@@ -7,7 +7,7 @@ import coil.request.ImageRequest
 import com.greencom.android.podcasts2.R
 
 @Composable
-fun rememberImagePainterWithCrossfadeAndPlaceholder(
+fun rememberImagePainterCustom(
     data: Any?,
     onExecute: ImagePainter.ExecuteCallback = ImagePainter.ExecuteCallback.Default,
     builder: ImageRequest.Builder.() -> Unit = {},
@@ -16,8 +16,11 @@ fun rememberImagePainterWithCrossfadeAndPlaceholder(
     onExecute = onExecute,
 ) {
     crossfade(true)
-    // TODO
+
+    // TODO: Replace with actual placeholders
     placeholder(R.drawable.ic_launcher_background)
     error(R.drawable.ic_launcher_background)
+    fallback(R.drawable.ic_launcher_background)
+
     builder()
 }

@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
-import com.greencom.android.podcasts2.ui.theme.rounded
 
 @Composable
 fun SubscribeButton(
@@ -31,7 +30,7 @@ fun SubscribeButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onSubscriptionChange(!isSubscribed) },
-        shape = MaterialTheme.shapes.rounded,
+        shape = MaterialTheme.shapes.small,
         colors = colors,
         border = border,
     ) {

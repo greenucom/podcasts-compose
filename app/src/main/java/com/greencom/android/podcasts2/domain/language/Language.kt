@@ -2,8 +2,8 @@ package com.greencom.android.podcasts2.domain.language
 
 sealed class Language(val isoCode: String) {
 
-    object EN : Language("en")
-    object RU : Language("ru")
+    object En : Language("en")
+    object Ru : Language("ru")
 
 }
 
