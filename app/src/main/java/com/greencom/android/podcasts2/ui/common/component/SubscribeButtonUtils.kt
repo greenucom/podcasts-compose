@@ -14,8 +14,8 @@ object SubscribeButtonUtils {
     private const val SubscribedBorderColorAlpha = 0.16f
 
     @Composable
-    fun colors(isSubscribed: Boolean): ButtonColors {
-        return if (isSubscribed) {
+    fun colors(subscribed: Boolean): ButtonColors {
+        return if (subscribed) {
             ButtonDefaults.outlinedButtonColors(
                 backgroundColor = MaterialTheme.colors.primary.copy(
                     alpha = SubscribedBackgroundColorAlpha
@@ -27,8 +27,8 @@ object SubscribeButtonUtils {
     }
 
     @Composable
-    fun border(isSubscribed: Boolean): BorderStroke {
-        return if (isSubscribed) {
+    fun border(subscribed: Boolean): BorderStroke {
+        return if (subscribed) {
             BorderStroke(
                 width = 1.dp,
                 color = MaterialTheme.colors.primary.copy(alpha = SubscribedBorderColorAlpha),

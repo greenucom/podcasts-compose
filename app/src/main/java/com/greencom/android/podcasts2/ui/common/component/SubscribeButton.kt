@@ -20,24 +20,21 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun SubscribeButton(
-    isSubscribed: Boolean,
-    onSubscriptionChange: (isSubscribed: Boolean) -> Unit,
+    subscribed: Boolean,
+    onSubscribedChange: (isSubscribed: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val colors = SubscribeButtonUtils.colors(isSubscribed)
-    val border = SubscribeButtonUtils.border(isSubscribed)
-
     OutlinedButton(
         modifier = modifier,
-        onClick = { onSubscriptionChange(!isSubscribed) },
+        onClick = { onSubscribedChange(!subscribed) },
         shape = MaterialTheme.shapes.small,
-        colors = colors,
-        border = border,
+        colors = SubscribeButtonUtils.colors(subscribed),
+        border = SubscribeButtonUtils.border(subscribed),
     ) {
         val icon: ImageVector
         val text: String
         val textColor: Color
-        if (isSubscribed) {
+        if (subscribed) {
             icon = Icons.Outlined.Done
             text = stringResource(R.string.subscribed)
             textColor = MaterialTheme.colors.primary
@@ -61,8 +58,8 @@ private fun LightSubscribe() {
     PodcastsComposeTheme {
         Surface {
             SubscribeButton(
-                isSubscribed = false,
-                onSubscriptionChange = {},
+                subscribed = false,
+                onSubscribedChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -75,8 +72,8 @@ private fun LightSubscribed() {
     PodcastsComposeTheme {
         Surface {
             SubscribeButton(
-                isSubscribed = true,
-                onSubscriptionChange = {},
+                subscribed = true,
+                onSubscribedChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -93,8 +90,8 @@ private fun DarkSubscribe() {
     PodcastsComposeTheme {
         Surface {
             SubscribeButton(
-                isSubscribed = false,
-                onSubscriptionChange = {},
+                subscribed = false,
+                onSubscribedChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
@@ -111,8 +108,8 @@ private fun DarkSubscribed() {
     PodcastsComposeTheme {
         Surface {
             SubscribeButton(
-                isSubscribed = true,
-                onSubscriptionChange = {},
+                subscribed = true,
+                onSubscribedChange = {},
                 modifier = Modifier.padding(8.dp),
             )
         }
