@@ -22,7 +22,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun RecommendedPodcasts(
     podcasts: List<IPodcast>,
-    onPodcastClick: (podcast: IPodcast) -> Unit,
+    onPodcastClicked: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -45,7 +45,7 @@ fun RecommendedPodcasts(
             ) { podcast ->
                 PodcastCard(
                     podcast = podcast,
-                    onPodcastClick = onPodcastClick,
+                    onPodcastClicked = onPodcastClicked,
                 )
             }
         }
@@ -61,7 +61,7 @@ private fun Light(
         Surface {
             RecommendedPodcasts(
                 podcasts = podcasts,
-                onPodcastClick = {},
+                onPodcastClicked = {},
             )
         }
     }
@@ -80,7 +80,7 @@ private fun Dark(
         Surface {
             RecommendedPodcasts(
                 podcasts = podcasts,
-                onPodcastClick = {},
+                onPodcastClicked = {},
             )
         }
     }

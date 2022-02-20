@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 @Composable
 fun Chip(
     isSelected: Boolean,
-    onSelectedChange: (selected: Boolean) -> Unit,
+    onSelectedChanged: (selected: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
     OutlinedButton(
         modifier = modifier,
-        onClick = { onSelectedChange(!isSelected) },
+        onClick = { onSelectedChanged(!isSelected) },
         shape = MaterialTheme.shapes.small,
         colors = OutlinedButtonUtils.colors(isSelected),
         border = OutlinedButtonUtils.border(isSelected),

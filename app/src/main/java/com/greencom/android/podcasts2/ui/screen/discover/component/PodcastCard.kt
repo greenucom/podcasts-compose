@@ -27,7 +27,7 @@ private val MaxWidthDp = 320.dp
 @Composable
 fun PodcastCard(
     podcast: IPodcast,
-    onPodcastClick: (podcast: IPodcast) -> Unit,
+    onPodcastClicked: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
@@ -37,7 +37,7 @@ fun PodcastCard(
         modifier = modifier
             .width(cardWidthDp)
             .aspectRatio(1f),
-        onClick = { onPodcastClick(podcast) },
+        onClick = { onPodcastClicked(podcast) },
         shape = MaterialTheme.shapes.large,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -61,7 +61,7 @@ private fun Light(
         PodcastCard(
             modifier = Modifier.padding(16.dp),
             podcast = podcast,
-            onPodcastClick = {},
+            onPodcastClicked = {},
         )
     }
 }
@@ -79,7 +79,7 @@ private fun Dark(
         PodcastCard(
             modifier = Modifier.padding(16.dp),
             podcast = podcast,
-            onPodcastClick = {},
+            onPodcastClicked = {},
         )
     }
 }
