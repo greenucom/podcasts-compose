@@ -5,7 +5,7 @@ import com.greencom.android.podcasts2.data.podcast.local.PodcastEntity
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import javax.inject.Inject
 
-class PodcastsLocalDataSource @Inject constructor(
+class PodcastLocalDataSource @Inject constructor(
     private val podcastDao: PodcastDao,
 ) {
 

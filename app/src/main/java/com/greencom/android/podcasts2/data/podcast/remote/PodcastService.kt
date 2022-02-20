@@ -4,7 +4,7 @@ import com.greencom.android.podcasts2.data.podcast.remote.dto.GetTrendingPodcast
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface PodcastsService {
+interface PodcastService {
 
     @GET("podcasts/trending")
     suspend fun getTrendingPodcasts(

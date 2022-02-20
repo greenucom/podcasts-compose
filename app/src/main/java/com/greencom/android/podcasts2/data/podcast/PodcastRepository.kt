@@ -6,9 +6,9 @@ import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import javax.inject.Inject
 
-class PodcastsRepository @Inject constructor(
-    private val remoteDataSource: PodcastsRemoteDataSource,
-    private val localDataSource: PodcastsLocalDataSource,
+class PodcastRepository @Inject constructor(
+    private val remoteDataSource: PodcastRemoteDataSource,
+    private val localDataSource: PodcastLocalDataSource,
 ) {
 
     suspend fun getTrendingPodcasts(
