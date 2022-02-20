@@ -1,6 +1,6 @@
 package com.greencom.android.podcasts2.domain.podcast
 
-sealed class IPodcast(
+abstract class IPodcast(
     open val id: Long,
     open val title: String,
     open val description: String,
