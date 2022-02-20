@@ -14,8 +14,8 @@ object OutlinedButtonUtils {
     private const val CheckedBorderColorAlpha = 0.16f
 
     @Composable
-    fun colors(checked: Boolean): ButtonColors {
-        return if (checked) {
+    fun colors(isChecked: Boolean): ButtonColors {
+        return if (isChecked) {
             ButtonDefaults.outlinedButtonColors(
                 backgroundColor = MaterialTheme.colors.primary.copy(
                     alpha = CheckedBackgroundColorAlpha
@@ -27,8 +27,8 @@ object OutlinedButtonUtils {
     }
 
     @Composable
-    fun border(checked: Boolean): BorderStroke {
-        return if (checked) {
+    fun border(isChecked: Boolean): BorderStroke {
+        return if (isChecked) {
             BorderStroke(
                 width = 1.dp,
                 color = MaterialTheme.colors.primary.copy(alpha = CheckedBorderColorAlpha),
