@@ -1,7 +1,7 @@
 package com.greencom.android.podcasts2.di
 
 import com.greencom.android.podcasts2.data.ApiAuthInterceptor
-import com.greencom.android.podcasts2.data.podcasts.remote.PodcastsService
+import com.greencom.android.podcasts2.data.podcast.remote.PodcastsService
 import com.greencom.android.podcasts2.utils.addDebugLogger
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

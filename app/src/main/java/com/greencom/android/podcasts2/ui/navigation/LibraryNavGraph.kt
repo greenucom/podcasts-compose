@@ -3,7 +3,7 @@ package com.greencom.android.podcasts2.ui.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.greencom.android.podcasts2.ui.screens.library.LibraryScreen
+import com.greencom.android.podcasts2.ui.screen.library.LibraryScreen
 
 fun NavGraphBuilder.libraryNavGraph() {
     navigation(route = BottomNavBarItem.Library.route, startDestination = Screen.Library.route) {

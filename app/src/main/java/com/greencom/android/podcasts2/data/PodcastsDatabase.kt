@@ -2,9 +2,9 @@ package com.greencom.android.podcasts2.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.greencom.android.podcasts2.data.podcasts.local.PodcastDao
-import com.greencom.android.podcasts2.data.podcasts.local.PodcastEntity
-import com.greencom.android.podcasts2.data.podcasts.local.PodcastEntityTemp
+import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
+import com.greencom.android.podcasts2.data.podcast.local.PodcastEntity
+import com.greencom.android.podcasts2.data.podcast.local.PodcastEntityTemp
 
 @Database(
     entities = [

@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.greencom.android.podcasts2.data.PodcastsDatabase
-import com.greencom.android.podcasts2.data.podcasts.local.PodcastDao
+import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
 import com.greencom.android.podcasts2.utils.dataStore
 import dagger.Module
 import dagger.Provides
