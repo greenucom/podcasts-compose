@@ -154,8 +154,13 @@ android {
 
 }
 
-kotlin.sourceSets.all {
-    languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
+//kotlin.sourceSets.all {
+//    languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
+//}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+//    kotlinOptions.freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
+    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
 }
 
 kapt {
