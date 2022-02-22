@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
-fun TrendingPodcasts() {
+fun TrendingPodcastList() {
 
 }
 
@@ -16,7 +16,7 @@ fun TrendingPodcasts() {
 private fun Light() {
     PodcastsComposeTheme {
         Surface {
-            TrendingPodcasts()
+            TrendingPodcastList()
         }
     }
 }
@@ -30,7 +30,7 @@ private fun Light() {
 private fun Dark() {
     PodcastsComposeTheme {
         Surface {
-            TrendingPodcasts()
+            TrendingPodcastList()
         }
     }
 }
