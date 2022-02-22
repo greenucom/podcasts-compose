@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,10 +23,11 @@ fun TrendingCategorySelector(
     categories: List<SelectableTrendingCategory>,
     onCategoryClicked: (category: SelectableTrendingCategory) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     LazyRow(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(
@@ -36,7 +38,12 @@ fun TrendingCategorySelector(
                 isSelected = category.isSelected,
                 onSelectedChanged = { onCategoryClicked(category) },
             ) {
-                Text(category.category.displayName,)
+                val textColor = if (category.isSelected) {
+                    MaterialTheme.colors.primary
+                } else {
+                    MaterialTheme.colors.onSurface
+                }
+                Text(text = category.category.displayName, color = textColor)
             }
         }
     }
