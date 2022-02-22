@@ -8,12 +8,12 @@ class CategoryRepository @Inject constructor(
     private val localDataSource: CategoryLocalDataSource,
 ) {
 
-    suspend fun toggleSelectedTrendingCategoryId(id: Int) {
-        localDataSource.toggleSelectedTrendingCategoryId(id)
-    }
-
     fun getSelectedTrendingCategoriesIds(): Flow<Set<Int>> {
         return localDataSource.getSelectedTrendingCategoriesIds()
+    }
+
+    suspend fun toggleSelectedTrendingCategoryId(id: Int) {
+        localDataSource.toggleSelectedTrendingCategoryId(id)
     }
 
     fun getTrendingCategories(): List<TrendingCategory> {
