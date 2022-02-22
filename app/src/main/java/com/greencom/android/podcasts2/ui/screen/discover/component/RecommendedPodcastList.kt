@@ -20,7 +20,7 @@ import com.greencom.android.podcasts2.ui.common.previewparameter.TrendingPodcast
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
-fun RecommendedPodcasts(
+fun RecommendedPodcastList(
     podcasts: List<IPodcast>,
     onPodcastClicked: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
@@ -41,7 +41,7 @@ fun RecommendedPodcasts(
         ) {
             items(
                 items = podcasts,
-                key = IPodcast::id,
+                key = { it.id },
             ) { podcast ->
                 PodcastCard(
                     podcast = podcast,
@@ -59,7 +59,7 @@ private fun Light(
 ) {
     PodcastsComposeTheme {
         Surface {
-            RecommendedPodcasts(
+            RecommendedPodcastList(
                 podcasts = podcasts,
                 onPodcastClicked = {},
             )
@@ -78,7 +78,7 @@ private fun Dark(
 ) {
     PodcastsComposeTheme {
         Surface {
-            RecommendedPodcasts(
+            RecommendedPodcastList(
                 podcasts = podcasts,
                 onPodcastClicked = {},
             )
