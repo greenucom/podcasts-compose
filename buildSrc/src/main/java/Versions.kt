@@ -18,9 +18,9 @@ object Versions {
     const val appCompat = "1.4.1"
     const val activityCompose = "1.4.0"
 
-    const val lifecycle = "2.4.0"
+    const val lifecycle = "2.4.1"
 
-    const val navigation = "2.4.0"
+    const val navigation = "2.4.1"
 
     const val dataStore = "1.0.0"
 
