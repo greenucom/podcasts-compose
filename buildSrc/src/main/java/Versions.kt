@@ -11,7 +11,7 @@ object Versions {
 
     const val coroutines = "1.6.0"
 
-    const val compose = "1.1.0"
+    const val compose = "1.1.1"
     const val composeMaterial3 = "1.0.0-alpha04"
 
     const val coreKtx = "1.7.0"
@@ -24,7 +24,7 @@ object Versions {
 
     const val dataStore = "1.0.0"
 
-    const val room = "2.4.1"
+    const val room = "2.4.2"
 
     const val retrofit = "2.9.0"
     const val retrofitLoggingInterceptor = "4.9.0"
