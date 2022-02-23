@@ -28,7 +28,7 @@ class GetTrendingPodcastsUseCase @Inject constructor(
 
 data class GetTrendingPodcastsPayload(
     val max: Int = MAX_DEFAULT_VALUE,
-    val languages: List<Language> = listOf(Language.En, Language.Ru),
+    val languages: List<Language> = listOf(Language.Ru),
     val inCategories: List<ICategory> = emptyList(),
     val notInCategories: List<ICategory> = emptyList(),
 ) {
