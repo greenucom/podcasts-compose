@@ -1,7 +1,6 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.lifecycle.viewModelScope
-import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectedTrendingCategoryIdUseCase
@@ -12,14 +11,16 @@ import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    getTrendingCategoriesUseCase: GetTrendingCategoriesUseCase,
-    getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
+    private val getTrendingCategoriesUseCase: GetTrendingCategoriesUseCase,
+    private val getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
     private val toggleSelectedTrendingCategoryIdUseCase: ToggleSelectedTrendingCategoryIdUseCase,
     private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
 ) : BaseViewModel() {
@@ -28,42 +29,35 @@ class DiscoverViewModel @Inject constructor(
     val viewState = _viewState.asStateFlow()
 
     private var trendingPodcastsJob: Job? = null
-    private var lastSelectedTrendingCategoriesWithSuccessfulLoad: List<TrendingCategory>? = null
 
-    private val trendingCategories = MutableStateFlow<List<TrendingCategory>>(
-        getTrendingCategoriesUseCase(Unit)
-    )
-    private val selectedTrendingCategoriesIds: Flow<Set<Int>> =
-        getSelectedTrendingCategoriesIdsUseCase(Unit)
-    val selectableTrendingCategories: Flow<List<SelectableTrendingCategory>> = combine(
-        trendingCategories,
-        selectedTrendingCategoriesIds,
-    ) { categories, selectedCategoriesIds ->
-        categories.map { category ->
-            SelectableTrendingCategory(
-                isSelected = category.id in selectedCategoriesIds,
-                category = category,
-            )
-        }
-    }.onEach(::loadTrendingPodcastsForSelectedCategories)
+    init {
+        loadTrendingPodcasts()
+    }
 
-    fun onTrendingCategoryClicked(selectableCategory: SelectableTrendingCategory) {
-        viewModelScope.launch {
-            val id = selectableCategory.category.id
-            toggleSelectedTrendingCategoryIdUseCase(id)
+    private fun loadTrendingPodcasts() = viewModelScope.launch {
+        val trendingCategories = getTrendingCategoriesUseCase(Unit)
+        getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
+            val categories = trendingCategories.map { category ->
+                SelectableTrendingCategory(
+                    isSelected = category.id in ids,
+                    category = category,
+                )
+            }
+            _viewState.update { it.copy(trendingCategories = categories) }
+
+            loadTrendingPodcastsForSelectedCategories(categories)
         }
     }
 
     private fun loadTrendingPodcastsForSelectedCategories(
         categories: List<SelectableTrendingCategory>
     ) {
-        val selectedCategories = categories
-            .filter { it.isSelected }
-            .map { it.category }
-        if (selectedCategories == lastSelectedTrendingCategoriesWithSuccessfulLoad) return
-
         trendingPodcastsJob?.cancel()
         trendingPodcastsJob = viewModelScope.launch {
+            val selectedCategories = categories
+                .filter { it.isSelected }
+                .map { it.category }
+
             val max = if (selectedCategories.isEmpty()) {
                 TrendingPodcastCountMaxValue
             } else {
@@ -78,8 +72,13 @@ class DiscoverViewModel @Inject constructor(
             getTrendingPodcastsUseCase(params)
                 .onSuccess(::onLoadTrendingPodcastsSuccess)
                 .onFailure { /* TODO */ }
+        }
+    }
 
-            lastSelectedTrendingCategoriesWithSuccessfulLoad = selectedCategories
+    fun onTrendingCategoryClicked(selectableCategory: SelectableTrendingCategory) {
+        viewModelScope.launch {
+            val id = selectableCategory.category.id
+            toggleSelectedTrendingCategoryIdUseCase(id)
         }
     }
 

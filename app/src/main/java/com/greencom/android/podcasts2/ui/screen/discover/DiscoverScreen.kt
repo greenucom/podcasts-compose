@@ -32,9 +32,6 @@ fun DiscoverScreen(
 ) {
     val viewState by discoverViewModel.viewState.collectAsState()
 
-    val trendingCategories by discoverViewModel.selectableTrendingCategories
-        .collectAsState(emptyList())
-
     val trendingPodcasts = viewState.trendingPodcasts
     val trendingPodcastsAlpha by animateFloatAsState(
         if (trendingPodcasts.isNotEmpty()) 1f else 0f
@@ -45,7 +42,7 @@ fun DiscoverScreen(
         stickyHeader(key = KeyCategorySelector) {
             Surface {
                 TrendingCategorySelector(
-                    categories = trendingCategories,
+                    categories = viewState.trendingCategories,
                     onCategoryClicked = discoverViewModel::onTrendingCategoryClicked,
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
                 )
@@ -64,7 +61,10 @@ fun DiscoverScreen(
                 )
 
                 if (index != trendingPodcasts.lastIndex) {
-                    Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                    Divider(
+                        modifier = Modifier.alpha(trendingPodcastsAlpha),
+                        color = MaterialTheme.colors.onSurfaceUtil,
+                    )
                 }
             }
         }
