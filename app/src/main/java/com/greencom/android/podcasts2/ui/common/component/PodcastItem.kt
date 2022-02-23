@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
@@ -38,7 +39,9 @@ fun PodcastItem(
                     modifier = Modifier
                         .size(80.dp)
                         .clip(MaterialTheme.shapes.medium),
-                    painter = rememberImagePainterCustom(podcast.image),
+                    painter = rememberImagePainterCustom(podcast.image) {
+                        scale(Scale.FILL)
+                    },
                     contentDescription = stringResource(R.string.podcast_cover),
                 )
 
