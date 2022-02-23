@@ -43,7 +43,11 @@ fun TrendingCategorySelector(
                 } else {
                     MaterialTheme.colors.onSurface
                 }
-                Text(text = category.category.displayName, color = textColor)
+                Text(
+                    text = category.category.displayName,
+                    color = textColor,
+                    style = MaterialTheme.typography.body2,
+                )
             }
         }
     }
