@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Done
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,48 +35,50 @@ fun FilterChip(
     val backgroundColor = FilterChipUtils.backgroundColor(isSelected)
     val borderColor by animateColorAsState(
         targetValue = FilterChipUtils.borderColor(isSelected),
-        animationSpec = spring(stiffness = Spring.StiffnessLow),
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
     )
 
-    Surface(
-        modifier = modifier,
-        onClick = { onSelectedChanged(!isSelected) },
-        shape = MaterialTheme.shapes.small,
-        color = backgroundColor,
-        border = BorderStroke(width = 1.dp, color = borderColor),
-    ) {
-        val paddingStart by animateDpAsState(
-            FilterChipUtils.contentPaddingStart(isSelected)
-        )
-        val paddingValues = FilterChipUtils.contentPadding(paddingStart)
-
-        val textColor by animateColorAsState(
-            targetValue = FilterChipUtils.textColor(isSelected),
-            animationSpec = spring(stiffness = Spring.StiffnessLow),
-        )
-
-        Row(
-            modifier = Modifier
-                .padding(paddingValues)
-                .heightIn(min = FilterChipUtils.ContentHeightMinDp),
-            verticalAlignment = Alignment.CenterVertically,
+    CompositionLocalProvider(LocalRippleTheme provides FilterChipUtils.FilterChipRippleTheme) {
+        Surface(
+            modifier = modifier,
+            onClick = { onSelectedChanged(!isSelected) },
+            shape = MaterialTheme.shapes.small,
+            color = backgroundColor,
+            border = BorderStroke(width = 1.dp, color = borderColor),
         ) {
-            AnimatedContent(isSelected) { isSelected ->
-                if (isSelected) {
-                    Icon(
-                        modifier = Modifier.padding(end = 8.dp),
-                        imageVector = Icons.Outlined.Done,
-                        contentDescription = null,
-                        tint = MaterialTheme.colors.primary,
-                    )
-                }
-            }
-
-            Text(
-                text = text,
-                style = MaterialTheme.typography.body1,
-                color = textColor,
+            val paddingStart by animateDpAsState(
+                FilterChipUtils.contentPaddingStart(isSelected)
             )
+            val paddingValues = FilterChipUtils.contentPadding(paddingStart)
+
+            val textColor by animateColorAsState(
+                targetValue = FilterChipUtils.textColor(isSelected),
+                animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+            )
+
+            Row(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .heightIn(min = FilterChipUtils.ContentHeightMinDp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                AnimatedContent(isSelected) { isSelected ->
+                    if (isSelected) {
+                        Icon(
+                            modifier = Modifier.padding(end = 8.dp),
+                            imageVector = Icons.Outlined.Done,
+                            contentDescription = null,
+                            tint = MaterialTheme.colors.primary,
+                        )
+                    }
+                }
+
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.body1,
+                    color = textColor,
+                )
+            }
         }
     }
 }
