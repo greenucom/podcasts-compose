@@ -11,8 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.ui.screen.discover.component.RecommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+
+private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -27,6 +30,13 @@ fun DiscoverScreen(
     )
 
     LazyColumn(modifier = modifier) {
+
+        item(key = KeyRecommendedPodcastList) {
+            RecommendedPodcastList(
+                podcasts = viewState.trendingPodcasts,
+                onPodcastClicked = { /* TODO */ },
+            )
+        }
 
         trendingPodcastList(
             selectableTrendingCategories = viewState.trendingCategories,

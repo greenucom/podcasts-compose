@@ -27,7 +27,9 @@ fun RecommendedPodcastList(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 8.dp),
             text = stringResource(R.string.recommended),
             style = MaterialTheme.typography.h4,
         )
