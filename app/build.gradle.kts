@@ -205,6 +205,8 @@ dependencies {
     kapt(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltComposeNavigation)
 
+    implementation(Dependencies.accompanistSystemUi)
+
     implementation(Dependencies.coil)
     implementation(Dependencies.timber)
 
