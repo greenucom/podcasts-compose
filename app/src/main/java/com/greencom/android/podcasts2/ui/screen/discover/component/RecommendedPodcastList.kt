@@ -24,9 +24,7 @@ fun LazyListScope.recommendedPodcastList(
     item(key = KeyRecommendedPodcastList) {
         Column {
             Text(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(R.string.recommended),
                 style = MaterialTheme.typography.h4,
             )

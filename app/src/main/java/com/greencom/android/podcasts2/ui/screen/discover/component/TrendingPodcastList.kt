@@ -32,9 +32,7 @@ fun LazyListScope.trendingPodcastList(
 ) {
     item(key = KeyHeader) {
         Text(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(R.string.trending),
             style = MaterialTheme.typography.h4,
         )
