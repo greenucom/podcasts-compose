@@ -23,20 +23,21 @@ fun TrendingCategorySelector(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    LazyRow(
-        modifier = modifier,
-        contentPadding = contentPadding,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(
-            items = categories,
-            key = { it.category.id },
-        ) { selectableCategory ->
-            FilterChip(
-                isSelected = selectableCategory.isSelected,
-                onSelectedChanged = { onCategoryClicked(selectableCategory) },
-                text = selectableCategory.category.displayName,
-            )
+    Surface(modifier = modifier) {
+        LazyRow(
+            contentPadding = contentPadding,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(
+                items = categories,
+                key = { it.category.id },
+            ) { selectableCategory ->
+                FilterChip(
+                    isSelected = selectableCategory.isSelected,
+                    onSelectedChanged = { onCategoryClicked(selectableCategory) },
+                    text = selectableCategory.category.displayName,
+                )
+            }
         }
     }
 }
