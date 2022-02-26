@@ -10,8 +10,8 @@ import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 object OutlinedButtonUtils {
 
-    private const val CheckedBackgroundColorAlpha = 0.08f
-    private const val CheckedBorderColorAlpha = 0.16f
+    const val CheckedBackgroundColorAlpha = 0.08f
+    const val CheckedBorderColorAlpha = 0.16f
 
     @Composable
     fun colors(isChecked: Boolean): ButtonColors {

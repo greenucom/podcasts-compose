@@ -5,15 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.common.component.Chip
+import com.greencom.android.podcasts2.ui.common.component.FilterChip
 import com.greencom.android.podcasts2.ui.common.previewparameter.SelectableTrendingCategoriesParameterProvider
 import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -33,22 +31,12 @@ fun TrendingCategorySelector(
         items(
             items = categories,
             key = { it.category.id },
-        ) { category ->
-            Chip(
-                isSelected = category.isSelected,
-                onSelectedChanged = { onCategoryClicked(category) },
-            ) {
-                val textColor = if (category.isSelected) {
-                    MaterialTheme.colors.primary
-                } else {
-                    MaterialTheme.colors.onSurface
-                }
-                Text(
-                    text = category.category.displayName,
-                    color = textColor,
-                    style = MaterialTheme.typography.body2,
-                )
-            }
+        ) { selectableCategory ->
+            FilterChip(
+                isSelected = selectableCategory.isSelected,
+                onSelectedChanged = { onCategoryClicked(selectableCategory) },
+                text = selectableCategory.category.displayName,
+            )
         }
     }
 }
