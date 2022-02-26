@@ -1,5 +1,7 @@
 package com.greencom.android.podcasts2.ui.screen.discover.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,13 +16,13 @@ import com.greencom.android.podcasts2.domain.podcast.IPodcast
 
 private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
+@OptIn(ExperimentalAnimationApi::class)
 fun LazyListScope.recommendedPodcastList(
-    podcasts: List<IPodcast>,
-    onPodcastClicked: (podcast: IPodcast) -> Unit,
-    modifier: Modifier = Modifier,
+    recommendedPodcasts: List<IPodcast>,
+    onRecommendedPodcastClicked: (podcast: IPodcast) -> Unit,
 ) {
     item(key = KeyRecommendedPodcastList) {
-        Column(modifier = modifier.fillMaxWidth()) {
+        Column {
             Text(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -31,19 +33,23 @@ fun LazyListScope.recommendedPodcastList(
 
             Spacer(Modifier.height(8.dp))
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                items(
-                    items = podcasts,
-                    key = { it.id },
-                ) { podcast ->
-                    PodcastCard(
-                        podcast = podcast,
-                        onPodcastClicked = onPodcastClicked,
-                    )
+            AnimatedContent(recommendedPodcasts.isNotEmpty()) { isNotEmpty ->
+                if (isNotEmpty) {
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        items(
+                            items = recommendedPodcasts,
+                            key = { it.id },
+                        ) { podcast ->
+                            PodcastCard(
+                                podcast = podcast,
+                                onPodcastClicked = onRecommendedPodcastClicked,
+                            )
+                        }
+                    }
                 }
             }
         }

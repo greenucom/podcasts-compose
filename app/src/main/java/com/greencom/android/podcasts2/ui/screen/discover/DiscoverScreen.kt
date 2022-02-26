@@ -30,8 +30,8 @@ fun DiscoverScreen(
     LazyColumn(modifier = modifier) {
 
         recommendedPodcastList(
-            podcasts = viewState.trendingPodcasts,
-            onPodcastClicked = { /* TODO */ },
+            recommendedPodcasts = viewState.trendingPodcasts,
+            onRecommendedPodcastClicked = { /* TODO */ },
         )
 
         trendingPodcastList(
