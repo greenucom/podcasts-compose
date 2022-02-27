@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.ui.common.component.FilterChip
-import com.greencom.android.podcasts2.ui.common.previewparameter.SelectableTrendingCategoriesParameterProvider
+import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.SelectableTrendingCategoriesParameterProvider
 import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -46,7 +46,7 @@ fun TrendingCategorySelector(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(SelectableTrendingCategoriesParameterProvider::class)
-    categories: List<SelectableTrendingCategory>,
+    categories: List<SelectableTrendingCategory>
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -66,7 +66,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(SelectableTrendingCategoriesParameterProvider::class)
-    categories: List<SelectableTrendingCategory>,
+    categories: List<SelectableTrendingCategory>
 ) {
     PodcastsComposeTheme {
         Surface {

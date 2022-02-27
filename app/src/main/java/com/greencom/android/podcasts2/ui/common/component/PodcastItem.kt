@@ -18,7 +18,7 @@ import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
-import com.greencom.android.podcasts2.ui.common.previewparameter.TrendingPodcastParameterProvider
+import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -84,7 +84,8 @@ fun PodcastItem(
 @Composable
 @Preview(showBackground = true)
 private fun Light(
-    @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
+    @PreviewParameter(TrendingPodcastParameterProvider::class)
+    podcast: TrendingPodcast
 ) {
     PodcastsComposeTheme {
         PodcastItem(
@@ -101,7 +102,8 @@ private fun Light(
     locale = "ru",
 )
 private fun Dark(
-    @PreviewParameter(TrendingPodcastParameterProvider::class) podcast: TrendingPodcast,
+    @PreviewParameter(TrendingPodcastParameterProvider::class)
+    podcast: TrendingPodcast
 ) {
     PodcastsComposeTheme {
         PodcastItem(

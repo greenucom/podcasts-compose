@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common.previewparameter
+package com.greencom.android.podcasts2.ui.screen.discover.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.domain.category.TrendingCategory
@@ -8,20 +8,24 @@ class SelectableTrendingCategoriesParameterProvider :
     PreviewParameterProvider<List<SelectableTrendingCategory>> {
 
     override val values: Sequence<List<SelectableTrendingCategory>>
-        get() {
+        get() = sequenceOf(selectableTrendingCategories())
+
+    companion object {
+
+        fun selectableTrendingCategories(): List<SelectableTrendingCategory> {
             val news = TrendingCategory(1, "News", "News")
             val society = TrendingCategory(2, "Society", "Society")
             val education = TrendingCategory(3, "Education", "Education")
             val sports = TrendingCategory(4, "Sports", "Sports")
 
-            return sequenceOf(
-                listOf(
-                    SelectableTrendingCategory(isSelected = false, category = news),
-                    SelectableTrendingCategory(isSelected = true, category = society),
-                    SelectableTrendingCategory(isSelected = false, category = education),
-                    SelectableTrendingCategory(isSelected = true, category = sports),
-                )
+            return listOf(
+                SelectableTrendingCategory(isSelected = false, category = news),
+                SelectableTrendingCategory(isSelected = true, category = society),
+                SelectableTrendingCategory(isSelected = false, category = education),
+                SelectableTrendingCategory(isSelected = true, category = sports),
             )
         }
+
+    }
 
 }

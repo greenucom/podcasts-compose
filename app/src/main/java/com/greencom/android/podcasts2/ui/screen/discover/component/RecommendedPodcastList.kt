@@ -1,18 +1,27 @@
 package com.greencom.android.podcasts2.ui.screen.discover.component
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastsParameterProvider
+import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
@@ -54,36 +63,42 @@ fun LazyListScope.recommendedPodcastList(
     }
 }
 
-//@Composable
-//@Preview(showBackground = true)
-//private fun Light(
-//    @PreviewParameter(TrendingPodcastsParameterProvider::class) podcasts: List<TrendingPodcast>,
-//) {
-//    PodcastsComposeTheme {
-//        Surface {
-//            RecommendedPodcastList(
-//                podcasts = podcasts,
-//                onPodcastClicked = {},
-//            )
-//        }
-//    }
-//}
-//
-//@Composable
-//@Preview(
-//    showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES,
-//    locale = "ru",
-//)
-//private fun Dark(
-//    @PreviewParameter(TrendingPodcastsParameterProvider::class) podcasts: List<TrendingPodcast>,
-//) {
-//    PodcastsComposeTheme {
-//        Surface {
-//            RecommendedPodcastList(
-//                podcasts = podcasts,
-//                onPodcastClicked = {},
-//            )
-//        }
-//    }
-//}
+@Composable
+@Preview(showBackground = true)
+private fun Light(
+    @PreviewParameter(TrendingPodcastsParameterProvider::class)
+    podcasts: List<TrendingPodcast>
+) {
+    PodcastsComposeTheme {
+        Surface {
+            LazyColumn {
+                recommendedPodcastList(
+                    recommendedPodcasts = podcasts,
+                    onRecommendedPodcastClicked = {},
+                )
+            }
+        }
+    }
+}
+
+@Composable
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "ru",
+)
+private fun Dark(
+    @PreviewParameter(TrendingPodcastsParameterProvider::class)
+    podcasts: List<TrendingPodcast>
+) {
+    PodcastsComposeTheme {
+        Surface {
+            LazyColumn {
+                recommendedPodcastList(
+                    recommendedPodcasts = podcasts,
+                    onRecommendedPodcastClicked = {},
+                )
+            }
+        }
+    }
+}
