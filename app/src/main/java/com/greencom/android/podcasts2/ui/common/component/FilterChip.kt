@@ -73,7 +73,7 @@ fun FilterChip(
 
                 Text(
                     text = text,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.body2,
                     color = textColor,
                 )
             }
