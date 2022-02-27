@@ -40,7 +40,7 @@ fun FilterChip(
 
     CompositionLocalProvider(LocalRippleTheme provides FilterChipUtils.FilterChipRippleTheme) {
         Surface(
-            modifier = modifier,
+            modifier = modifier.heightIn(min = FilterChipUtils.MinHeightDp),
             onClick = { onSelectedChanged(!isSelected) },
             shape = MaterialTheme.shapes.small,
             color = backgroundColor,
@@ -57,9 +57,7 @@ fun FilterChip(
             )
 
             Row(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .heightIn(min = FilterChipUtils.ContentMinHeightDp),
+                modifier = Modifier.padding(paddingValues),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AnimatedContent(isSelected) { isSelected ->

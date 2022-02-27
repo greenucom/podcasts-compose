@@ -3,8 +3,7 @@ package com.greencom.android.podcasts2.ui.screen.discover
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -19,9 +18,6 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.SearchTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
-
-private const val KeyRecommendedPodcastListSpacer = "recommended_podcast_list_spacer"
-private const val KeyTrendingPodcastListSpacer = "trending_podcast_list_spacer"
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,23 +41,19 @@ fun DiscoverScreen(
             contentPadding = paddingValues,
         ) {
 
-            item(key = KeyRecommendedPodcastListSpacer) {
-                Spacer(Modifier.height(8.dp))
-            }
             recommendedPodcastList(
                 recommendedPodcasts = viewState.trendingPodcasts,
                 onRecommendedPodcastClicked = { /* TODO */ },
+                contentPadding = PaddingValues(top = 8.dp),
             )
 
-            item(key = KeyTrendingPodcastListSpacer) {
-                Spacer(Modifier.height(16.dp))
-            }
             trendingPodcastList(
                 selectableTrendingCategories = viewState.trendingCategories,
                 onSelectableTrendingCategoryClicked = discoverViewModel::onTrendingCategoryClicked,
                 trendingPodcasts = viewState.trendingPodcasts,
                 onTrendingPodcastClicked = { /* TODO */ },
                 contentAlpha = trendingPodcastsAlpha,
+                topPadding = 16.dp,
             )
 
         }

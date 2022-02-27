@@ -29,16 +29,15 @@ private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 fun LazyListScope.recommendedPodcastList(
     recommendedPodcasts: List<IPodcast>,
     onRecommendedPodcastClicked: (podcast: IPodcast) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     item(key = KeyRecommendedPodcastList) {
-        Column {
+        Column(modifier = Modifier.padding(contentPadding)) {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(R.string.recommended),
                 style = MaterialTheme.typography.h4,
             )
-
-            Spacer(Modifier.height(8.dp))
 
             AnimatedContent(recommendedPodcasts.isNotEmpty()) { isNotEmpty ->
                 if (isNotEmpty) {

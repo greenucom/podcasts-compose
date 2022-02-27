@@ -12,7 +12,7 @@ import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 object FilterChipUtils {
 
-    val ContentMinHeightDp = 24.dp
+    val MinHeightDp = 40.dp
 
     private val ContentPaddingVerticalDp = 8.dp
     private val ContentPaddingEndDp = 14.dp

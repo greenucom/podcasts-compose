@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
@@ -38,10 +39,13 @@ fun LazyListScope.trendingPodcastList(
     trendingPodcasts: List<TrendingPodcast>,
     onTrendingPodcastClicked: (podcast: IPodcast) -> Unit,
     contentAlpha: Float,
+    topPadding: Dp = 0.dp,
 ) {
     item(key = KeyHeader) {
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = topPadding),
             text = stringResource(R.string.trending),
             style = MaterialTheme.typography.h4,
         )
@@ -51,7 +55,7 @@ fun LazyListScope.trendingPodcastList(
         TrendingCategorySelector(
             categories = selectableTrendingCategories,
             onCategoryClicked = onSelectableTrendingCategoryClicked,
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
         )
     }
 
