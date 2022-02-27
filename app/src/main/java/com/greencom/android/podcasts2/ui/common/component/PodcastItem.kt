@@ -44,9 +44,7 @@ fun PodcastItem(
                     contentDescription = stringResource(R.string.podcast_cover),
                 )
 
-                Spacer(Modifier.width(16.dp))
-
-                Column {
+                Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
                         text = podcast.title,
                         style = PodcastItemUtils.TitleTextStyle,

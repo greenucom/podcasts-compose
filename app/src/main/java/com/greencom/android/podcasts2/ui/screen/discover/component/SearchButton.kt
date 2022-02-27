@@ -1,10 +1,8 @@
 package com.greencom.android.podcasts2.ui.screen.discover.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
@@ -35,10 +33,9 @@ fun SearchButton(
             contentDescription = null,
         )
 
-        Spacer(Modifier.width(8.dp))
-
         Text(
             modifier = Modifier
+                .padding(start = 8.dp)
                 .weight(1f)
                 .alpha(SearchButtonUtils.TextAlpha),
             text = stringResource(R.string.search_for_podcasts),
