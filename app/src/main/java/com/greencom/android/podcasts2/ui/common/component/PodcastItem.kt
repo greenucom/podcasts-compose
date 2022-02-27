@@ -9,7 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -18,8 +17,8 @@ import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
-import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
+import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -37,7 +36,7 @@ fun PodcastItem(
             Row {
                 Image(
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(PodcastItemUtils.ImageSizeDp)
                         .clip(MaterialTheme.shapes.medium),
                     painter = rememberImagePainterCustom(podcast.image) {
                         scale(Scale.FILL)
@@ -50,18 +49,16 @@ fun PodcastItem(
                 Column {
                     Text(
                         text = podcast.title,
-                        style = MaterialTheme.typography.body1,
-                        fontWeight = FontWeight.W500,
+                        style = PodcastItemUtils.TitleTextStyle,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    Spacer(Modifier.height(8.dp))
-
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
+                            modifier = Modifier.padding(top = 4.dp),
                             text = podcast.author,
-                            style = MaterialTheme.typography.body2,
+                            style = MaterialTheme.typography.caption,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -69,9 +66,8 @@ fun PodcastItem(
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
-
             Text(
+                modifier = Modifier.padding(top = 8.dp),
                 text = podcast.description,
                 style = MaterialTheme.typography.body2,
                 maxLines = 2,
