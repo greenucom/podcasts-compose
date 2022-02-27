@@ -13,3 +13,8 @@ val OnSurfaceUtilLight = Color(0xFFE0E0E0)
 val OnSurfaceUtilDark = Color(0xFF3D3D3D)
 val Colors.onSurfaceUtil: Color
     get() = if (isLight) OnSurfaceUtilLight else OnSurfaceUtilDark
+
+val SearchButtonBackgroundLight = Color(0xFFF0F0F0)
+val SearchButtonBackgroundDark = Color(0xFF373737)
+val Colors.searchButtonBackground: Color
+    get() = if (isLight) SearchButtonBackgroundLight else SearchButtonBackgroundDark

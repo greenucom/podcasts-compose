@@ -59,7 +59,7 @@ fun FilterChip(
             Row(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .heightIn(min = FilterChipUtils.ContentHeightMinDp),
+                    .heightIn(min = FilterChipUtils.ContentMinHeightDp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AnimatedContent(isSelected) { isSelected ->
