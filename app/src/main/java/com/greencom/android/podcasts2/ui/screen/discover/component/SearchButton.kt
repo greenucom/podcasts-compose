@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
-import com.greencom.android.podcasts2.ui.theme.searchButtonBackground
 
 @Composable
 fun SearchButton(
@@ -27,9 +26,8 @@ fun SearchButton(
         modifier = modifier.heightIn(SearchButtonUtils.MinHeightDp),
         onClick = onClick,
         shape = MaterialTheme.shapes.small,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.searchButtonBackground,
-        ),
+        colors = SearchButtonUtils.colors(),
+        elevation = SearchButtonUtils.elevation(),
     ) {
         Icon(
             modifier = Modifier.alpha(SearchButtonUtils.IconAlpha),
