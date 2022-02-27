@@ -37,7 +37,7 @@ fun PodcastCard(
             .aspectRatio(1f),
         onClick = { onPodcastClicked(podcast) },
         shape = MaterialTheme.shapes.large,
-        elevation = 2.dp,
+        elevation = 6.dp,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
