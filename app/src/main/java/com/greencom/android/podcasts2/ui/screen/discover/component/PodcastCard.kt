@@ -21,8 +21,6 @@ import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
-private val MaxWidthDp = 320.dp
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PodcastCard(
@@ -31,7 +29,7 @@ fun PodcastCard(
     modifier: Modifier = Modifier,
 ) {
     val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
-    val cardWidthDp = minOf(MaxWidthDp, screenWidthDp * 0.8f)
+    val cardWidthDp = minOf(PodcastCardUtils.MaxWidthDp, screenWidthDp * 0.8f)
 
     Card(
         modifier = modifier
@@ -39,6 +37,7 @@ fun PodcastCard(
             .aspectRatio(1f),
         onClick = { onPodcastClicked(podcast) },
         shape = MaterialTheme.shapes.large,
+        elevation = 2.dp,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
