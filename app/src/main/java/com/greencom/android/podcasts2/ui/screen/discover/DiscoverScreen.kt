@@ -53,7 +53,7 @@ fun DiscoverScreen(
                 trendingPodcasts = viewState.trendingPodcasts,
                 onTrendingPodcastClicked = { /* TODO */ },
                 contentAlpha = trendingPodcastsAlpha,
-                topPadding = 16.dp,
+                paddingTop = 16.dp,
             )
 
         }

@@ -39,13 +39,13 @@ fun LazyListScope.trendingPodcastList(
     trendingPodcasts: List<TrendingPodcast>,
     onTrendingPodcastClicked: (podcast: IPodcast) -> Unit,
     contentAlpha: Float,
-    topPadding: Dp = 0.dp,
+    paddingTop: Dp = 0.dp,
 ) {
     item(key = KeyHeader) {
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .padding(top = topPadding),
+                .padding(top = paddingTop, bottom = 4.dp),
             text = stringResource(R.string.trending),
             style = MaterialTheme.typography.h4,
         )
@@ -55,7 +55,7 @@ fun LazyListScope.trendingPodcastList(
         TrendingCategorySelector(
             categories = selectableTrendingCategories,
             onCategoryClicked = onSelectableTrendingCategoryClicked,
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 4.dp)
         )
     }
 
