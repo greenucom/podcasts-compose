@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.dp
 
 object SearchButtonUtils {
 
-    val MinHeightDp = 48.dp
+    val MinHeightDp = 40.dp
 
     const val IconAlpha = 0.60f
     const val TextAlpha = 0.74f
