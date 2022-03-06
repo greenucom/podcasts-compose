@@ -22,15 +22,15 @@ fun AppScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         scaffoldState = appScreenState.scaffoldState,
         bottomBar = { BottomNavBar(navController = appScreenState.navController) },
-    ) { innerPadding ->
+    ) { paddings ->
         NavHost(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(paddings),
             navController = appScreenState.navController,
             startDestination = BottomNavBarItem.Home.route,
         ) {
-            homeNavGraph()
-            discoverNavGraph()
-            libraryNavGraph()
+            homeNavGraph(appScreenState.navController)
+            discoverNavGraph(appScreenState.navController)
+            libraryNavGraph(appScreenState.navController)
         }
     }
 }

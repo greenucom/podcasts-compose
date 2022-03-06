@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.ui.screen.discover.component.SearchTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
@@ -22,6 +23,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DiscoverScreen(
+    onPodcastClicked: (podcast: IPodcast) -> Unit,
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -43,7 +45,7 @@ fun DiscoverScreen(
 
             recommendedPodcastList(
                 recommendedPodcasts = viewState.trendingPodcasts,
-                onRecommendedPodcastClicked = { /* TODO */ },
+                onRecommendedPodcastClicked = onPodcastClicked,
                 contentPadding = PaddingValues(top = 8.dp),
             )
 
@@ -51,7 +53,7 @@ fun DiscoverScreen(
                 selectableCategories = viewState.trendingCategories,
                 onSelectableCategoryClicked = discoverViewModel::onSelectableTrendingCategoryClicked,
                 trendingPodcasts = viewState.trendingPodcasts,
-                onTrendingPodcastClicked = { /* TODO */ },
+                onTrendingPodcastClicked = onPodcastClicked,
                 contentAlpha = trendingPodcastsAlpha,
                 paddingTop = 16.dp,
             )
@@ -65,7 +67,9 @@ fun DiscoverScreen(
 private fun Light() {
     PodcastsComposeTheme {
         Surface {
-            DiscoverScreen()
+            DiscoverScreen(
+                onPodcastClicked = {},
+            )
         }
     }
 }
@@ -79,7 +83,9 @@ private fun Light() {
 private fun Dark() {
     PodcastsComposeTheme {
         Surface {
-            DiscoverScreen()
+            DiscoverScreen(
+                onPodcastClicked = {},
+            )
         }
     }
 }
