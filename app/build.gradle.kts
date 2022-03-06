@@ -208,6 +208,7 @@ dependencies {
     implementation(Dependencies.accompanistSystemUi)
     implementation(Dependencies.accompanistInsets)
 //    implementation(Dependencies.accompanistInsetsUi)
+    implementation(Dependencies.accompanistSwipeRefresh)
 
     implementation(Dependencies.coil)
     implementation(Dependencies.timber)

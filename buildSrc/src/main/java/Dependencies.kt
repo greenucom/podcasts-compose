@@ -52,6 +52,8 @@ object Dependencies {
         "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
     const val accompanistInsetsUi =
         "com.google.accompanist:accompanist-insets-ui:${Versions.accompanist}"
+    const val accompanistSwipeRefresh =
+        "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
 
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
