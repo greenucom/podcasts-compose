@@ -48,8 +48,8 @@ fun DiscoverScreen(
             )
 
             trendingPodcastList(
-                selectableTrendingCategories = viewState.trendingCategories,
-                onSelectableTrendingCategoryClicked = discoverViewModel::onTrendingCategoryClicked,
+                selectableCategories = viewState.trendingCategories,
+                onSelectableCategoryClicked = discoverViewModel::onSelectableTrendingCategoryClicked,
                 trendingPodcasts = viewState.trendingPodcasts,
                 onTrendingPodcastClicked = { /* TODO */ },
                 contentAlpha = trendingPodcastsAlpha,

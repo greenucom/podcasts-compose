@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.lifecycle.viewModelScope
+import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectedTrendingCategoryIdUseCase
@@ -8,7 +9,7 @@ import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
-import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
+import com.greencom.android.podcasts2.ui.common.SelectableItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,26 +39,26 @@ class DiscoverViewModel @Inject constructor(
         val trendingCategories = getTrendingCategoriesUseCase(Unit)
         getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
             val categories = trendingCategories.map { category ->
-                SelectableTrendingCategory(
+                SelectableItem(
                     isSelected = category.id in ids,
-                    category = category,
+                    item = category,
                 )
             }
             _viewState.update { it.copy(trendingCategories = categories) }
 
-            loadTrendingPodcastsForSelectedCategories(categories)
+            val selectedCategories = categories
+                .filter { it.isSelected }
+                .map { it.item }
+
+            loadTrendingPodcastsForSelectedCategories(selectedCategories)
         }
     }
 
     private fun loadTrendingPodcastsForSelectedCategories(
-        categories: List<SelectableTrendingCategory>
+        selectedCategories: List<TrendingCategory>
     ) {
         trendingPodcastsJob?.cancel()
         trendingPodcastsJob = viewModelScope.launch {
-            val selectedCategories = categories
-                .filter { it.isSelected }
-                .map { it.category }
-
             val max = if (selectedCategories.isEmpty()) {
                 TrendingPodcastCountMaxValue
             } else {
@@ -75,9 +76,9 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    fun onTrendingCategoryClicked(selectableCategory: SelectableTrendingCategory) {
+    fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<TrendingCategory>) {
         viewModelScope.launch {
-            val id = selectableCategory.category.id
+            val id = selectableCategory.item.id
             toggleSelectedTrendingCategoryIdUseCase(id)
         }
     }
@@ -87,7 +88,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     data class ViewState(
-        val trendingCategories: List<SelectableTrendingCategory> = emptyList(),
+        val trendingCategories: List<SelectableItem<TrendingCategory>> = emptyList(),
         val trendingPodcasts: List<TrendingPodcast> = emptyList(),
     )
 

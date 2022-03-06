@@ -20,10 +20,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
-import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameter
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -34,8 +35,8 @@ private const val KeyCategorySelector = "trending_podcast_list_category_selector
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastList(
-    selectableTrendingCategories: List<SelectableTrendingCategory>,
-    onSelectableTrendingCategoryClicked: (category: SelectableTrendingCategory) -> Unit,
+    selectableCategories: List<SelectableItem<TrendingCategory>>,
+    onSelectableCategoryClicked: (selectableCategory: SelectableItem<TrendingCategory>) -> Unit,
     trendingPodcasts: List<TrendingPodcast>,
     onTrendingPodcastClicked: (podcast: IPodcast) -> Unit,
     contentAlpha: Float,
@@ -53,8 +54,8 @@ fun LazyListScope.trendingPodcastList(
 
     stickyHeader(key = KeyCategorySelector) {
         TrendingCategorySelector(
-            categories = selectableTrendingCategories,
-            onCategoryClicked = onSelectableTrendingCategoryClicked,
+            selectableCategories = selectableCategories,
+            onSelectableCategoryClicked = onSelectableCategoryClicked,
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 4.dp)
         )
     }
@@ -90,8 +91,8 @@ private fun Light(
         Surface {
             LazyColumn {
                 trendingPodcastList(
-                    selectableTrendingCategories = param.selectableTrendingCategories,
-                    onSelectableTrendingCategoryClicked = {},
+                    selectableCategories = param.selectableTrendingCategories,
+                    onSelectableCategoryClicked = {},
                     trendingPodcasts = param.trendingPodcasts,
                     onTrendingPodcastClicked = {},
                     contentAlpha = 1f,
@@ -115,8 +116,8 @@ private fun Dark(
         Surface {
             LazyColumn {
                 trendingPodcastList(
-                    selectableTrendingCategories = param.selectableTrendingCategories,
-                    onSelectableTrendingCategoryClicked = {},
+                    selectableCategories = param.selectableTrendingCategories,
+                    onSelectableCategoryClicked = {},
                     trendingPodcasts = param.trendingPodcasts,
                     onTrendingPodcastClicked = {},
                     contentAlpha = 1f,

@@ -11,15 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.greencom.android.podcasts2.domain.category.TrendingCategory
+import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.FilterChip
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.SelectableTrendingCategoriesParameterProvider
-import com.greencom.android.podcasts2.ui.screen.discover.model.SelectableTrendingCategory
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun TrendingCategorySelector(
-    categories: List<SelectableTrendingCategory>,
-    onCategoryClicked: (category: SelectableTrendingCategory) -> Unit,
+    selectableCategories: List<SelectableItem<TrendingCategory>>,
+    onSelectableCategoryClicked: (selectableCategory: SelectableItem<TrendingCategory>) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -29,13 +30,13 @@ fun TrendingCategorySelector(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
-                items = categories,
-                key = { it.category.id },
+                items = selectableCategories,
+                key = { it.item.id },
             ) { selectableCategory ->
                 FilterChip(
                     isSelected = selectableCategory.isSelected,
-                    onSelectedChanged = { onCategoryClicked(selectableCategory) },
-                    text = selectableCategory.category.displayName,
+                    onSelectedChanged = { onSelectableCategoryClicked(selectableCategory) },
+                    text = selectableCategory.item.displayName,
                 )
             }
         }
@@ -46,13 +47,13 @@ fun TrendingCategorySelector(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(SelectableTrendingCategoriesParameterProvider::class)
-    categories: List<SelectableTrendingCategory>
+    selectableCategories: List<SelectableItem<TrendingCategory>>
 ) {
     PodcastsComposeTheme {
         Surface {
             TrendingCategorySelector(
-                categories = categories,
-                onCategoryClicked = {},
+                selectableCategories = selectableCategories,
+                onSelectableCategoryClicked = {},
             )
         }
     }
@@ -66,13 +67,13 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(SelectableTrendingCategoriesParameterProvider::class)
-    categories: List<SelectableTrendingCategory>
+    selectableCategories: List<SelectableItem<TrendingCategory>>
 ) {
     PodcastsComposeTheme {
         Surface {
             TrendingCategorySelector(
-                categories = categories,
-                onCategoryClicked = {},
+                selectableCategories = selectableCategories,
+                onSelectableCategoryClicked = {},
             )
         }
     }
