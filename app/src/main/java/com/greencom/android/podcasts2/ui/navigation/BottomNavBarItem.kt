@@ -14,9 +14,23 @@ sealed class BottomNavBarItem(
     val icon: ImageVector
 ) {
 
-    object Home : BottomNavBarItem("homeGraph", R.string.home, Icons.Outlined.Home)
-    object Discover : BottomNavBarItem("discoverGraph", R.string.discover, Icons.Outlined.Search)
-    object Library : BottomNavBarItem("libraryGraph", R.string.library, Icons.Outlined.VideoLibrary)
+    object Home : BottomNavBarItem(
+        route = "homeGraph",
+        labelResId = R.string.home,
+        icon = Icons.Outlined.Home,
+    )
+
+    object Discover : BottomNavBarItem(
+        route = "discoverGraph",
+        labelResId = R.string.discover,
+        icon = Icons.Outlined.Search,
+    )
+
+    object Library : BottomNavBarItem(
+        route = "libraryGraph",
+        labelResId = R.string.library,
+        icon = Icons.Outlined.VideoLibrary,
+    )
 
     companion object {
         val items = listOf(Home, Discover, Library)
