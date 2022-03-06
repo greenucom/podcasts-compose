@@ -6,7 +6,7 @@ import timber.log.Timber
 abstract class BaseViewModel : ViewModel() {
 
     init {
-        Timber.i("${this.javaClass.simpleName} created")
+        Timber.i("${this.javaClass.simpleName} init")
     }
 
     override fun onCleared() {
