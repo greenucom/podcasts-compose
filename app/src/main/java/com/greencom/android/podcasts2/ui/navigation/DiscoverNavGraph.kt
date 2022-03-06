@@ -11,13 +11,17 @@ import com.greencom.android.podcasts2.ui.screen.podcast.PodcastScreen
 import com.greencom.android.podcasts2.ui.screen.podcast.PodcastViewModel
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
-    navigation(route = BottomNavBarItem.Discover.route, startDestination = Screen.Discover.route) {
+    navigation(
+        route = BottomNavBarItem.Discover.route,
+        startDestination = Screen.Discover.route,
+    ) {
 
         composable(Screen.Discover.route) {
             DiscoverScreen(
                 onPodcastClicked = { podcast ->
                     navController.navigate(Screen.Podcast.createRoute(podcast.id))
                 },
+                onSearchClicked = { /* TODO */ },
             )
         }
 

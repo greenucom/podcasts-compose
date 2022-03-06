@@ -24,6 +24,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun DiscoverScreen(
     onPodcastClicked: (podcast: IPodcast) -> Unit,
+    onSearchClicked: () -> Unit,
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -32,7 +33,7 @@ fun DiscoverScreen(
     Scaffold(
         scaffoldState = discoverScreenState.scaffoldState,
         topBar = {
-            SearchTopBar(onSearchClicked = { /*TODO*/ })
+            SearchTopBar(onSearchClicked = onSearchClicked)
         },
     ) { paddingValues ->
         val viewState by discoverViewModel.viewState.collectAsState()
@@ -74,6 +75,7 @@ private fun Light() {
         Surface {
             DiscoverScreen(
                 onPodcastClicked = {},
+                onSearchClicked = {},
             )
         }
     }
@@ -90,6 +92,7 @@ private fun Dark() {
         Surface {
             DiscoverScreen(
                 onPodcastClicked = {},
+                onSearchClicked = {},
             )
         }
     }
