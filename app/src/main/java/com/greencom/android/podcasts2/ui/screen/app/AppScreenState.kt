@@ -17,5 +17,8 @@ fun rememberAppScreenState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     navController: NavHostController = rememberNavController(),
 ) = remember(scaffoldState, navController) {
-    AppScreenState(scaffoldState, navController)
+    AppScreenState(
+        scaffoldState = scaffoldState,
+        navController = navController,
+    )
 }

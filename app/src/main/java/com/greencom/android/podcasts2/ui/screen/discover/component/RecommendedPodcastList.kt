@@ -4,10 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -27,6 +24,7 @@ private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
 @OptIn(ExperimentalAnimationApi::class)
 fun LazyListScope.recommendedPodcastList(
+    state: LazyListState,
     recommendedPodcasts: List<IPodcast>,
     onRecommendedPodcastClicked: (podcast: IPodcast) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -70,8 +68,10 @@ private fun Light(
 ) {
     PodcastsComposeTheme {
         Surface {
+            val state = rememberLazyListState()
             LazyColumn {
                 recommendedPodcastList(
+                    state = state,
                     recommendedPodcasts = podcasts,
                     onRecommendedPodcastClicked = {},
                 )
@@ -92,8 +92,10 @@ private fun Dark(
 ) {
     PodcastsComposeTheme {
         Surface {
+            val state = rememberLazyListState()
             LazyColumn {
                 recommendedPodcastList(
+                    state = state,
                     recommendedPodcasts = podcasts,
                     onRecommendedPodcastClicked = {},
                 )
