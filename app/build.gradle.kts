@@ -206,6 +206,8 @@ dependencies {
     implementation(Dependencies.hiltComposeNavigation)
 
     implementation(Dependencies.accompanistSystemUi)
+    implementation(Dependencies.accompanistInsets)
+//    implementation(Dependencies.accompanistInsetsUi)
 
     implementation(Dependencies.coil)
     implementation(Dependencies.timber)

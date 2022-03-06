@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
-import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
 import com.greencom.android.podcasts2.ui.navigation.homeNavGraph
 import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
+import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
