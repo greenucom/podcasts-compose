@@ -20,6 +20,9 @@ import com.greencom.android.podcasts2.ui.theme.placeholder
 
 private const val PlaceholderText = ""
 
+val PodcastCardPlaceholderLoadingStartDark = Color(0xFF4C4C4C)
+val PodcastCardPlaceholderLoadingEndDark = Color(0xFF585858)
+
 @Composable
 fun PodcastCardPlaceholder(
     color: Color,

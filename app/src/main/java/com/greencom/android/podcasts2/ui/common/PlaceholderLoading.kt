@@ -7,15 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import com.greencom.android.podcasts2.ui.theme.loadingEffectEnd
-import com.greencom.android.podcasts2.ui.theme.loadingEffectStart
+import com.greencom.android.podcasts2.ui.theme.placeholderLoadingEnd
+import com.greencom.android.podcasts2.ui.theme.placeholderLoadingStart
 
 private const val Duration = 1000
 
 @Composable
 fun rememberPlaceholderLoadingColor(
-    startColor: Color = MaterialTheme.colors.loadingEffectStart,
-    endColor: Color = MaterialTheme.colors.loadingEffectEnd,
+    startColor: Color = MaterialTheme.colors.placeholderLoadingStart,
+    endColor: Color = MaterialTheme.colors.placeholderLoadingEnd,
 ): State<Color> {
     val transition = rememberInfiniteTransition()
     return transition.animateColor(
@@ -33,8 +33,8 @@ fun rememberPlaceholderLoadingColor(
 
 @Composable
 fun PlaceholderLoadingEffect(
-    startColor: Color = MaterialTheme.colors.loadingEffectStart,
-    endColor: Color = MaterialTheme.colors.loadingEffectEnd,
+    startColor: Color = MaterialTheme.colors.placeholderLoadingStart,
+    endColor: Color = MaterialTheme.colors.placeholderLoadingEnd,
     onLoadingEffectChanged: @Composable (color: Color) -> Unit,
 ) {
     val color by rememberPlaceholderLoadingColor(

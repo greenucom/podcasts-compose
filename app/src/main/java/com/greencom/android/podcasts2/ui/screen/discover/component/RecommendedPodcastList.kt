@@ -2,6 +2,7 @@ package com.greencom.android.podcasts2.ui.screen.discover.component
 
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.MaterialTheme
@@ -21,6 +22,8 @@ import com.greencom.android.podcasts2.ui.common.rememberPlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastsParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.theme.placeholderLoadingEnd
+import com.greencom.android.podcasts2.ui.theme.placeholderLoadingStart
 
 private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
@@ -42,7 +45,18 @@ fun LazyListScope.recommendedPodcastList(
                 style = MaterialTheme.typography.h4,
             )
 
-            val placeholderColor by rememberPlaceholderLoadingColor()
+            val placeholderColor by rememberPlaceholderLoadingColor(
+                startColor = if (isSystemInDarkTheme()) {
+                    PodcastCardPlaceholderLoadingStartDark
+                } else {
+                    MaterialTheme.colors.placeholderLoadingStart
+                },
+                endColor = if (isSystemInDarkTheme()) {
+                    PodcastCardPlaceholderLoadingEndDark
+                } else {
+                    MaterialTheme.colors.placeholderLoadingEnd
+                },
+            )
 
             LazyRow(
                 modifier = modifier.fillMaxWidth(),
