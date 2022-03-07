@@ -30,6 +30,7 @@ fun DiscoverScreen(
     val screenState = rememberDiscoverScreenState()
 
     Scaffold(
+        modifier = modifier,
         scaffoldState = screenState.scaffoldState,
         topBar = {
             SearchTopBar(onSearchClicked = onSearchClicked)
@@ -40,7 +41,6 @@ fun DiscoverScreen(
         val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
         LazyColumn(
-            modifier = modifier,
             state = screenState.screenLazyColumnState,
             contentPadding = paddingValues,
         ) {
