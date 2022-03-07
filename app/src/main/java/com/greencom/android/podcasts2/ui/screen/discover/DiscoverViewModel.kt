@@ -110,7 +110,6 @@ class DiscoverViewModel @Inject constructor(
         val selectedCategories = trendingCategories.value
             .filter { it.isSelected }
             .map { it.item }
-
         loadTrendingPodcastsForSelectedCategories(selectedCategories)
     }
 
