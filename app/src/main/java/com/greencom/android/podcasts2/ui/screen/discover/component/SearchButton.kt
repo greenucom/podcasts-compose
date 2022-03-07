@@ -24,8 +24,8 @@ fun SearchButton(
         modifier = modifier.heightIn(SearchButtonUtils.MinHeightDp),
         onClick = onClick,
         shape = MaterialTheme.shapes.small,
-        colors = SearchButtonUtils.colors(),
-        elevation = SearchButtonUtils.elevation(),
+        colors = SearchButtonUtils.colors,
+        elevation = SearchButtonUtils.elevation,
     ) {
         Icon(
             modifier = Modifier.alpha(SearchButtonUtils.IconAlpha),

@@ -17,17 +17,17 @@ object SearchButtonUtils {
     const val IconAlpha = 0.60f
     const val TextAlpha = 0.74f
 
-    @Composable
-    fun colors(): ButtonColors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.searchBackground,
-    )
+    val colors: ButtonColors
+        @Composable get() = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.searchBackground,
+        )
 
-    @Composable
-    fun elevation(): ButtonElevation = ButtonDefaults.elevation(
-        defaultElevation = Elevation,
-        pressedElevation = Elevation,
-        hoveredElevation = Elevation,
-        focusedElevation = Elevation,
-    )
+    val elevation: ButtonElevation
+        @Composable get() = ButtonDefaults.elevation(
+            defaultElevation = Elevation,
+            pressedElevation = Elevation,
+            hoveredElevation = Elevation,
+            focusedElevation = Elevation,
+        )
 
 }
