@@ -9,6 +9,8 @@ import androidx.compose.ui.graphics.Color
 import com.greencom.android.podcasts2.ui.theme.loadingEffectEnd
 import com.greencom.android.podcasts2.ui.theme.loadingEffectStart
 
+private const val Duration = 1500
+
 @Composable
 fun LoadingEffect(
     onLoadingEffectChanged: @Composable (color: Color) -> Unit,
@@ -20,7 +22,7 @@ fun LoadingEffect(
         targetValue = MaterialTheme.colors.loadingEffectEnd,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = 1500,
+                durationMillis = Duration,
                 easing = LinearEasing,
             ),
             repeatMode = RepeatMode.Reverse,
