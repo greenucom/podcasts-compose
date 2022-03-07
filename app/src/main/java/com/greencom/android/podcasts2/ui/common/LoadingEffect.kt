@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.greencom.android.podcasts2.ui.theme.loadingEffectEnd
 import com.greencom.android.podcasts2.ui.theme.loadingEffectStart
 
-private const val Duration = 1500
+private const val Duration = 1000
 
 @Composable
 fun LoadingEffect(

@@ -2,16 +2,17 @@ package com.greencom.android.podcasts2.ui.screen.discover.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,9 +21,11 @@ import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.ui.common.LoadingEffect
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
+import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameter
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameterProvider
@@ -33,6 +36,8 @@ private const val KeyHeader = "trending_podcast_list_header"
 private const val KeyCategorySelector = "trending_podcast_list_category_selector"
 private const val KeyLoading = "trending_podcast_list_loading"
 private const val KeyError = "trending_podcast_list_error"
+
+private const val PlaceholderCount = 4
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastList(
@@ -79,13 +84,16 @@ fun LazyListScope.trendingPodcastList(
 
         DiscoverViewModel.TrendingPodcastsState.Loading -> {
             item(key = KeyLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 32.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CircularProgressIndicator()
+                LoadingEffect { color ->
+                    Column {
+                        repeat(PlaceholderCount) { index ->
+                            PodcastItemPlaceholder(color)
+
+                            if (index < PlaceholderCount - 1) {
+                                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                            }
+                        }
+                    }
                 }
             }
         }
