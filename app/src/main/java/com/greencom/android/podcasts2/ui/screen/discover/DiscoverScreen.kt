@@ -27,10 +27,10 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val discoverScreenState = rememberDiscoverScreenState()
+    val screenState = rememberDiscoverScreenState()
 
     Scaffold(
-        scaffoldState = discoverScreenState.scaffoldState,
+        scaffoldState = screenState.scaffoldState,
         topBar = {
             SearchTopBar(onSearchClicked = onSearchClicked)
         },
@@ -41,13 +41,13 @@ fun DiscoverScreen(
 
         LazyColumn(
             modifier = modifier,
-            state = discoverScreenState.screenLazyColumnState,
+            state = screenState.screenLazyColumnState,
             contentPadding = paddingValues,
         ) {
 
             recommendedPodcastList(
                 modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
-                lazyRowState = discoverScreenState.recommendedPodcastsLazyRowState,
+                lazyRowState = screenState.recommendedPodcastsLazyRowState,
                 recommendedPodcastsState = recommendedPodcastsState,
                 onRecommendedPodcastClicked = onPodcastClicked,
             )
