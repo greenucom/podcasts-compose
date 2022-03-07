@@ -13,13 +13,15 @@ private const val Duration = 1000
 
 @Composable
 fun LoadingEffect(
+    startColor: Color = MaterialTheme.colors.loadingEffectStart,
+    endColor: Color = MaterialTheme.colors.loadingEffectEnd,
     onLoadingEffectChanged: @Composable (color: Color) -> Unit,
 ) {
     val transition = rememberInfiniteTransition()
 
     val color by transition.animateColor(
-        initialValue = MaterialTheme.colors.loadingEffectStart,
-        targetValue = MaterialTheme.colors.loadingEffectEnd,
+        initialValue = startColor,
+        targetValue = endColor,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = Duration,
