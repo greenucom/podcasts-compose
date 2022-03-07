@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.ui.common.LoadingEffect
+import com.greencom.android.podcasts2.ui.common.PlaceholderLoadingEffect
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
@@ -84,7 +84,7 @@ fun LazyListScope.trendingPodcastList(
 
         DiscoverViewModel.TrendingPodcastsState.Loading -> {
             item(key = KeyLoading) {
-                LoadingEffect { color ->
+                PlaceholderLoadingEffect { color ->
                     Column {
                         repeat(PlaceholderCount) { index ->
                             PodcastItemPlaceholder(color)

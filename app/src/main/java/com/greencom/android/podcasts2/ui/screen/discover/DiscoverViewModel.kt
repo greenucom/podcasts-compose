@@ -28,8 +28,9 @@ class DiscoverViewModel @Inject constructor(
     private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
 ) : BaseViewModel() {
 
-    private val _recommendedPodcasts = MutableStateFlow<List<IPodcast>>(emptyList())
-    val recommendedPodcasts = _recommendedPodcasts.asStateFlow()
+    private val _recommendedPodcastsState =
+        MutableStateFlow<RecommendedPodcastsState>(RecommendedPodcastsState.Loading)
+    val recommendedPodcastsState = _recommendedPodcastsState.asStateFlow()
 
     private val _trendingCategories =
         MutableStateFlow<List<SelectableItem<TrendingCategory>>>(emptyList())
@@ -111,6 +112,11 @@ class DiscoverViewModel @Inject constructor(
             .map { it.item }
 
         loadTrendingPodcastsForSelectedCategories(selectedCategories)
+    }
+
+    sealed interface RecommendedPodcastsState {
+        data class Success(val recommendedPodcasts: List<IPodcast>) : RecommendedPodcastsState
+        object Loading : RecommendedPodcastsState
     }
 
     sealed interface TrendingPodcastsState {

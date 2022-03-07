@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.common.LoadingEffect
+import com.greencom.android.podcasts2.ui.common.PlaceholderLoadingEffect
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.placeholder
 
@@ -85,7 +85,7 @@ fun PodcastItemPlaceholder(
 private fun Light() {
     PodcastsComposeTheme {
         Surface {
-            LoadingEffect {
+            PlaceholderLoadingEffect {
                 PodcastItemPlaceholder(it)
             }
         }
@@ -101,7 +101,7 @@ private fun Light() {
 private fun Dark() {
     PodcastsComposeTheme {
         Surface {
-            LoadingEffect {
+            PlaceholderLoadingEffect {
                 PodcastItemPlaceholder(it)
             }
         }

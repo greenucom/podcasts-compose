@@ -35,7 +35,7 @@ fun DiscoverScreen(
             SearchTopBar(onSearchClicked = onSearchClicked)
         },
     ) { paddingValues ->
-        val recommendedPodcasts by discoverViewModel.recommendedPodcasts.collectAsState()
+        val recommendedPodcastsState by discoverViewModel.recommendedPodcastsState.collectAsState()
         val trendingCategories by discoverViewModel.trendingCategories.collectAsState()
         val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
@@ -48,7 +48,7 @@ fun DiscoverScreen(
             recommendedPodcastList(
                 modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
                 lazyRowState = discoverScreenState.recommendedPodcastsLazyRowState,
-                recommendedPodcasts = recommendedPodcasts,
+                recommendedPodcastsState = recommendedPodcastsState,
                 onRecommendedPodcastClicked = onPodcastClicked,
             )
 
