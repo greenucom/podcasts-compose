@@ -20,7 +20,6 @@ fun DiscoverSearchTopBar(
         Spacer(Modifier.statusBarsHeight())
 
         TopAppBar(
-            modifier = modifier,
             backgroundColor = Color.Transparent,
             elevation = 0.dp,
             contentPadding = PaddingValues(0.dp),
