@@ -23,7 +23,7 @@ val Colors.placeholderLoadingStart: Color
 val Colors.placeholderLoadingEnd: Color
     get() = if (isLight) PlaceholderLoadingEndLight else PlaceholderLoadingEndDark
 
-val SearchButtonBackgroundLight = Color(0xFFF0F0F0)
-val SearchButtonBackgroundDark = Color(0xFF373737)
-val Colors.searchButtonBackground: Color
-    get() = if (isLight) SearchButtonBackgroundLight else SearchButtonBackgroundDark
+val SearchBackgroundLight = Color(0xFFF0F0F0)
+val SearchBackgroundDark = Color(0xFF373737)
+val Colors.searchBackground: Color
+    get() = if (isLight) SearchBackgroundLight else SearchBackgroundDark

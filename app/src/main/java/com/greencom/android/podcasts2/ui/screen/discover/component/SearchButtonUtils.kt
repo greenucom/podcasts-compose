@@ -6,7 +6,7 @@ import androidx.compose.material.ButtonElevation
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.theme.searchButtonBackground
+import com.greencom.android.podcasts2.ui.theme.searchBackground
 
 object SearchButtonUtils {
 
@@ -19,7 +19,7 @@ object SearchButtonUtils {
 
     @Composable
     fun colors(): ButtonColors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.searchButtonBackground,
+        backgroundColor = MaterialTheme.colors.searchBackground,
     )
 
     @Composable
