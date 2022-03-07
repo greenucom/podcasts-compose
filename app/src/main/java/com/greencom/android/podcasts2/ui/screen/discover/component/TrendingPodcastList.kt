@@ -82,7 +82,7 @@ fun LazyListScope.trendingPodcastList(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
+                        .padding(top = 32.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
@@ -92,7 +92,10 @@ fun LazyListScope.trendingPodcastList(
 
         DiscoverViewModel.TrendingPodcastsState.Error -> {
             item(key = KeyError) {
-                ErrorMessage(onTryAgainClicked = onTryAgainClicked)
+                ErrorMessage(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onTryAgainClicked = onTryAgainClicked,
+                )
             }
         }
 
