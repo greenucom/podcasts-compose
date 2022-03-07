@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
 
 @Composable
-fun SearchTopBar(
+fun DiscoverSearchTopBar(
     onSearchClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.ui.screen.discover.component.SearchTopBar
+import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearchTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -32,9 +32,7 @@ fun DiscoverScreen(
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
-        topBar = {
-            SearchTopBar(onSearchClicked = onSearchClicked)
-        },
+        topBar = { DiscoverSearchTopBar(onSearchClicked = onSearchClicked) },
     ) { paddingValues ->
         val recommendedPodcastsState by discoverViewModel.recommendedPodcastsState.collectAsState()
         val trendingCategories by discoverViewModel.trendingCategories.collectAsState()
