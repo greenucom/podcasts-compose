@@ -18,7 +18,11 @@ fun rememberDiscoverScreenState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     screenLazyColumnState: LazyListState = rememberLazyListState(),
     recommendedPodcastsLazyRowState: LazyListState = rememberLazyListState(),
-) = remember {
+) = remember(
+    scaffoldState,
+    screenLazyColumnState,
+    recommendedPodcastsLazyRowState,
+) {
     DiscoverScreenState(
         scaffoldState = scaffoldState,
         screenLazyColumnState = screenLazyColumnState,
