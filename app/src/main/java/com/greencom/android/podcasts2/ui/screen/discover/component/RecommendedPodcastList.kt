@@ -24,38 +24,43 @@ private const val KeyRecommendedPodcastList = "recommended_podcast_list"
 
 @OptIn(ExperimentalAnimationApi::class)
 fun LazyListScope.recommendedPodcastList(
-    state: LazyListState,
+    lazyRowState: LazyListState,
     recommendedPodcasts: List<IPodcast>,
     onRecommendedPodcastClicked: (podcast: IPodcast) -> Unit,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+    modifier: Modifier = Modifier,
 ) {
     item(key = KeyRecommendedPodcastList) {
-        Column(modifier = Modifier.padding(contentPadding)) {
+
+        Column(modifier = modifier) {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(R.string.recommended),
                 style = MaterialTheme.typography.h4,
             )
 
-            AnimatedContent(recommendedPodcasts.isNotEmpty()) { isNotEmpty ->
+            AnimatedContent(targetState = recommendedPodcasts.isNotEmpty()) { isNotEmpty ->
                 if (isNotEmpty) {
-                    LazyRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    ) {
-                        items(
-                            items = recommendedPodcasts,
-                            key = { it.id },
-                        ) { podcast ->
-                            PodcastCard(
-                                podcast = podcast,
-                                onPodcastClicked = onRecommendedPodcastClicked,
-                            )
+                    Column(modifier = modifier) {
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            state = lazyRowState,
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        ) {
+                            items(
+                                items = recommendedPodcasts,
+                                key = { it.id },
+                            ) { podcast ->
+                                PodcastCard(
+                                    podcast = podcast,
+                                    onPodcastClicked = onRecommendedPodcastClicked,
+                                )
+                            }
                         }
                     }
                 }
             }
+
         }
     }
 }
@@ -71,7 +76,7 @@ private fun Light(
             val state = rememberLazyListState()
             LazyColumn {
                 recommendedPodcastList(
-                    state = state,
+                    lazyRowState = state,
                     recommendedPodcasts = podcasts,
                     onRecommendedPodcastClicked = {},
                 )
@@ -95,7 +100,7 @@ private fun Dark(
             val state = rememberLazyListState()
             LazyColumn {
                 recommendedPodcastList(
-                    state = state,
+                    lazyRowState = state,
                     recommendedPodcasts = podcasts,
                     onRecommendedPodcastClicked = {},
                 )

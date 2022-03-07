@@ -1,9 +1,8 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
 import android.content.res.Configuration
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -36,11 +35,9 @@ fun DiscoverScreen(
             SearchTopBar(onSearchClicked = onSearchClicked)
         },
     ) { paddingValues ->
-        val viewState by discoverViewModel.viewState.collectAsState()
-
-        val trendingPodcastsAlpha by animateFloatAsState(
-            if (viewState.trendingPodcasts.isNotEmpty()) 1f else 0f
-        )
+        val recommendedPodcasts by discoverViewModel.recommendedPodcasts.collectAsState()
+        val trendingCategories by discoverViewModel.trendingCategories.collectAsState()
+        val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
         LazyColumn(
             modifier = modifier,
@@ -49,19 +46,18 @@ fun DiscoverScreen(
         ) {
 
             recommendedPodcastList(
-                state = discoverScreenState.recommendedPodcastsLazyRowState,
-                recommendedPodcasts = viewState.trendingPodcasts,
+                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                lazyRowState = discoverScreenState.recommendedPodcastsLazyRowState,
+                recommendedPodcasts = recommendedPodcasts,
                 onRecommendedPodcastClicked = onPodcastClicked,
-                contentPadding = PaddingValues(top = 8.dp),
             )
 
             trendingPodcastList(
-                selectableCategories = viewState.trendingCategories,
+                selectableCategories = trendingCategories,
                 onSelectableCategoryClicked = discoverViewModel::onSelectableTrendingCategoryClicked,
-                trendingPodcasts = viewState.trendingPodcasts,
+                trendingPodcastsState = trendingPodcastsState,
                 onTrendingPodcastClicked = onPodcastClicked,
-                contentAlpha = trendingPodcastsAlpha,
-                paddingTop = 16.dp,
+                onTryAgainClicked = discoverViewModel::onTryAgainClicked,
             )
 
         }

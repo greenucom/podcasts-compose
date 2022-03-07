@@ -5,6 +5,7 @@ import com.greencom.android.podcasts2.domain.category.TrendingCategory
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectedTrendingCategoryIdUseCase
+import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsUseCase
@@ -26,8 +27,16 @@ class DiscoverViewModel @Inject constructor(
     private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
 ) : BaseViewModel() {
 
-    private val _viewState = MutableStateFlow(ViewState())
-    val viewState = _viewState.asStateFlow()
+    private val _recommendedPodcasts = MutableStateFlow<List<IPodcast>>(emptyList())
+    val recommendedPodcasts = _recommendedPodcasts.asStateFlow()
+
+    private val _trendingCategories =
+        MutableStateFlow<List<SelectableItem<TrendingCategory>>>(emptyList())
+    val trendingCategories = _trendingCategories.asStateFlow()
+
+    private val _trendingPodcastsState =
+        MutableStateFlow<TrendingPodcastsState>(TrendingPodcastsState.Loading)
+    val trendingPodcastsState = _trendingPodcastsState.asStateFlow()
 
     private var trendingPodcastsJob: Job? = null
 
@@ -44,7 +53,7 @@ class DiscoverViewModel @Inject constructor(
                     item = category,
                 )
             }
-            _viewState.update { it.copy(trendingCategories = categories) }
+            _trendingCategories.update { categories }
 
             val selectedCategories = categories
                 .filter { it.isSelected }
@@ -72,8 +81,12 @@ class DiscoverViewModel @Inject constructor(
             )
             getTrendingPodcastsUseCase(params)
                 .onSuccess(::onLoadTrendingPodcastsSuccess)
-                .onFailure { /* TODO */ }
+                .onFailure { _trendingPodcastsState.update { TrendingPodcastsState.Error } }
         }
+    }
+
+    private fun onLoadTrendingPodcastsSuccess(podcasts: List<TrendingPodcast>) {
+        _trendingPodcastsState.update { TrendingPodcastsState.Success(podcasts) }
     }
 
     fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<TrendingCategory>) {
@@ -83,14 +96,21 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun onLoadTrendingPodcastsSuccess(podcasts: List<TrendingPodcast>) {
-        _viewState.update { it.copy(trendingPodcasts = podcasts) }
+    fun onTryAgainClicked() {
+        _trendingPodcastsState.update { TrendingPodcastsState.Loading }
+
+        val selectedCategories = trendingCategories.value
+            .filter { it.isSelected }
+            .map { it.item }
+
+        loadTrendingPodcastsForSelectedCategories(selectedCategories)
     }
 
-    data class ViewState(
-        val trendingCategories: List<SelectableItem<TrendingCategory>> = emptyList(),
-        val trendingPodcasts: List<TrendingPodcast> = emptyList(),
-    )
+    sealed interface TrendingPodcastsState {
+        data class Success(val trendingPodcasts: List<TrendingPodcast>) : TrendingPodcastsState
+        object Loading : TrendingPodcastsState
+        object Error : TrendingPodcastsState
+    }
 
     companion object {
         private const val TrendingPodcastCountMaxValue = 40
