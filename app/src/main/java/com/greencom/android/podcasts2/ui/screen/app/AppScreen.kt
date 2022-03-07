@@ -16,21 +16,21 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
-    val appScreenState = rememberAppScreenState()
+    val screenState = rememberAppScreenState()
 
     Scaffold(
         modifier = modifier,
-        scaffoldState = appScreenState.scaffoldState,
-        bottomBar = { BottomNavBar(navController = appScreenState.navController) },
+        scaffoldState = screenState.scaffoldState,
+        bottomBar = { BottomNavBar(navController = screenState.navController) },
     ) { paddings ->
         NavHost(
             modifier = Modifier.padding(paddings),
-            navController = appScreenState.navController,
+            navController = screenState.navController,
             startDestination = BottomNavBarItem.Home.route,
         ) {
-            homeNavGraph(appScreenState.navController)
-            discoverNavGraph(appScreenState.navController)
-            libraryNavGraph(appScreenState.navController)
+            homeNavGraph(screenState.navController)
+            discoverNavGraph(screenState.navController)
+            libraryNavGraph(screenState.navController)
         }
     }
 }
