@@ -34,6 +34,10 @@
     <string name="subscribed">Subscribed</string>
 
 
+    <string name="something_went_wrong_check_internet_connection">
+        Something went wrong…\nCheck internet connection
+    </string>
+    <string name="try_again">Try again</string>
     <string name="search_for_podcasts">Search for podcasts</string>
     <string name="recommended">Recommended</string>
     <string name="trending">Trending</string>
