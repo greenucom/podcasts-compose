@@ -4,6 +4,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
 
 @Composable
 fun SearchScreen(
@@ -15,6 +16,13 @@ fun SearchScreen(
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
+        topBar = {
+            SearchTopBar(
+                searchValue = "",
+                onSearchValueChanged = {},
+                onSearch = {}
+            )
+        },
     ) { paddingValues ->
 
     }

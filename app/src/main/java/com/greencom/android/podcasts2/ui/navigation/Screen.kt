@@ -10,6 +10,8 @@ sealed class Screen(val route: String) {
     object Discover : Screen("discover")
     object Library : Screen("library")
 
+    object Search : Screen("search")
+
     object Podcast : Screen("podcasts/{podcastId}") {
         const val PodcastId = "podcastId"
 
