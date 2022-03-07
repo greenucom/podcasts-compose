@@ -12,6 +12,7 @@ import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcasts
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -81,12 +82,18 @@ class DiscoverViewModel @Inject constructor(
             )
             getTrendingPodcastsUseCase(params)
                 .onSuccess(::onLoadTrendingPodcastsSuccess)
-                .onFailure { _trendingPodcastsState.update { TrendingPodcastsState.Error } }
+                .onFailure(::onLoadTrendingPodcastsFailure)
         }
     }
 
     private fun onLoadTrendingPodcastsSuccess(podcasts: List<TrendingPodcast>) {
         _trendingPodcastsState.update { TrendingPodcastsState.Success(podcasts) }
+    }
+
+    private fun onLoadTrendingPodcastsFailure(e: Throwable) {
+        if (e !is CancellationException) {
+            _trendingPodcastsState.update { TrendingPodcastsState.Error }
+        }
     }
 
     fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<TrendingCategory>) {
