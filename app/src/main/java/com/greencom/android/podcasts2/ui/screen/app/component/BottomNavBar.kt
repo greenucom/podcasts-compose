@@ -1,6 +1,9 @@
 package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.navigationBarsHeight
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
+import com.greencom.android.podcasts2.ui.navigation.Screen
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
@@ -27,51 +31,66 @@ fun BottomNavBar(
     onItemReselected: (item: BottomNavBarItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = MaterialTheme.colors.surface
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestinationRoute = navBackStackEntry?.destination?.route
+    val showBottomNavBar = currentDestinationRoute == Screen.Home.route ||
+            currentDestinationRoute == Screen.Discover.route ||
+            currentDestinationRoute == Screen.Library.route
 
-    Column(modifier = modifier) {
+    val bottomNavBarItems = BottomNavBarItem.items
 
-        CompositionLocalProvider(LocalElevationOverlay provides null) {
-            BottomNavigation(backgroundColor = backgroundColor) {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = showBottomNavBar,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+    ) {
 
-                BottomNavBarItem.items.forEach { item ->
+        Column {
+            val backgroundColor = MaterialTheme.colors.surface
 
-                    val isSelected = currentDestination
-                        ?.hierarchy?.any { it.route == item.route } == true
+            CompositionLocalProvider(LocalElevationOverlay provides null) {
 
-                    BottomNavigationItem(
-                        icon = { Icon(imageVector = item.icon, contentDescription = null) },
-                        label = { Text(stringResource(item.labelResId)) },
-                        selectedContentColor = MaterialTheme.colors.primary,
-                        unselectedContentColor = MaterialTheme.colors.onSurface,
-                        selected = isSelected,
-                        onClick = {
-                            if (isSelected) {
-                                onItemReselected(item)
-                            } else {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
+                BottomNavigation(backgroundColor = backgroundColor) {
+
+                    bottomNavBarItems.forEach { item ->
+                        val isSelected = navBackStackEntry
+                            ?.destination
+                            ?.hierarchy
+                            ?.any { it.route == item.route } == true
+
+                        BottomNavigationItem(
+                            icon = { Icon(imageVector = item.icon, contentDescription = null) },
+                            label = { Text(stringResource(item.labelResId)) },
+                            selectedContentColor = MaterialTheme.colors.primary,
+                            unselectedContentColor = MaterialTheme.colors.onSurface,
+                            selected = isSelected,
+                            onClick = {
+                                if (isSelected) {
+                                    onItemReselected(item)
+                                } else {
+                                    navController.navigate(item.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
                                 }
-                            }
-                        },
-                    )
+                            },
+                        )
+                    }
                 }
             }
+
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsHeight()
+                    .background(backgroundColor)
+            )
+
         }
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .navigationBarsHeight()
-                .background(backgroundColor)
-        )
-
     }
 }
 
