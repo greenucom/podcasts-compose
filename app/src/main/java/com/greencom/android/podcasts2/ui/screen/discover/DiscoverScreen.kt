@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
+import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearchTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
@@ -24,6 +27,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 fun DiscoverScreen(
     onPodcastClicked: (podcast: IPodcast) -> Unit,
     onSearchClicked: () -> Unit,
+    appViewModel: AppViewModel,
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -37,6 +41,19 @@ fun DiscoverScreen(
         val recommendedPodcastsState by discoverViewModel.recommendedPodcastsState.collectAsState()
         val trendingCategories by discoverViewModel.trendingCategories.collectAsState()
         val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
+
+        val appState by appViewModel.appState.collectAsState()
+
+        LaunchedEffect(appState.reselectedBottomNavBarItem) {
+            if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
+                if (screenState.screenLazyColumnState.firstVisibleItemIndex == 0) {
+                    onSearchClicked()
+                } else {
+                    screenState.screenLazyColumnState.animateScrollToItem(0)
+                }
+                appViewModel.onReselectedBottomNavBarItemHandled()
+            }
+        }
 
         LazyColumn(
             state = screenState.screenLazyColumnState,
@@ -70,6 +87,7 @@ private fun Light() {
             DiscoverScreen(
                 onPodcastClicked = {},
                 onSearchClicked = {},
+                appViewModel = hiltViewModel(),
             )
         }
     }
@@ -87,6 +105,7 @@ private fun Dark() {
             DiscoverScreen(
                 onPodcastClicked = {},
                 onSearchClicked = {},
+                appViewModel = hiltViewModel(),
             )
         }
     }

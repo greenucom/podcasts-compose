@@ -38,7 +38,12 @@ fun AppScreen(
             startDestination = BottomNavBarItem.Home.route,
         ) {
             homeNavGraph(screenState.navController)
-            discoverNavGraph(screenState.navController)
+
+            discoverNavGraph(
+                navController = screenState.navController,
+                appViewModel = appViewModel,
+            )
+
             libraryNavGraph(screenState.navController)
         }
     }

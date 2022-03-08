@@ -6,12 +6,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.greencom.android.podcasts2.ui.common.requireLong
+import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
 import com.greencom.android.podcasts2.ui.screen.podcast.PodcastScreen
 import com.greencom.android.podcasts2.ui.screen.podcast.PodcastViewModel
 import com.greencom.android.podcasts2.ui.screen.search.SearchScreen
 
-fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.discoverNavGraph(
+    navController: NavHostController,
+    appViewModel: AppViewModel,
+) {
     navigation(
         route = BottomNavBarItem.Discover.route,
         startDestination = Screen.Discover.route,
@@ -23,6 +27,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
                     navController.navigate(Screen.Podcast.createRoute(podcast.id))
                 },
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
+                appViewModel = appViewModel,
             )
         }
 
