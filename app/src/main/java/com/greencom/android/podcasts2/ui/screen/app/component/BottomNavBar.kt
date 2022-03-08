@@ -25,6 +25,10 @@ import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.Screen
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
+private val RoutesWithBottomNavBar = setOf(
+    Screen.Home.route, Screen.Discover.route, Screen.Library.route,
+)
+
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
@@ -33,11 +37,7 @@ fun BottomNavBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestinationRoute = navBackStackEntry?.destination?.route
-    val showBottomNavBar = currentDestinationRoute == Screen.Home.route ||
-            currentDestinationRoute == Screen.Discover.route ||
-            currentDestinationRoute == Screen.Library.route
-
-    val bottomNavBarItems = BottomNavBarItem.items
+    val showBottomNavBar = currentDestinationRoute in RoutesWithBottomNavBar
 
     AnimatedVisibility(
         modifier = modifier,
@@ -53,7 +53,7 @@ fun BottomNavBar(
 
                 BottomNavigation(backgroundColor = backgroundColor) {
 
-                    bottomNavBarItems.forEach { item ->
+                    BottomNavBarItem.items.forEach { item ->
                         val isSelected = navBackStackEntry
                             ?.destination
                             ?.hierarchy
