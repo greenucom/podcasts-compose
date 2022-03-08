@@ -24,6 +24,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
+    onItemReselected: (item: BottomNavBarItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val backgroundColor = MaterialTheme.colors.surface
@@ -36,19 +37,27 @@ fun BottomNavBar(
                 val currentDestination = navBackStackEntry?.destination
 
                 BottomNavBarItem.items.forEach { item ->
+
+                    val isSelected = currentDestination
+                        ?.hierarchy?.any { it.route == item.route } == true
+
                     BottomNavigationItem(
                         icon = { Icon(imageVector = item.icon, contentDescription = null) },
                         label = { Text(stringResource(item.labelResId)) },
                         selectedContentColor = MaterialTheme.colors.primary,
                         unselectedContentColor = MaterialTheme.colors.onSurface,
-                        selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                        selected = isSelected,
                         onClick = {
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                            if (isSelected) {
+                                onItemReselected(item)
+                            } else {
+                                navController.navigate(item.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
                         },
                     )
@@ -70,7 +79,10 @@ fun BottomNavBar(
 @Preview(showBackground = true)
 private fun Light() {
     PodcastsComposeTheme {
-        BottomNavBar(navController = rememberNavController())
+        BottomNavBar(
+            navController = rememberNavController(),
+            onItemReselected = {},
+        )
     }
 }
 
@@ -82,6 +94,9 @@ private fun Light() {
 )
 private fun Dark() {
     PodcastsComposeTheme {
-        BottomNavBar(navController = rememberNavController())
+        BottomNavBar(
+            navController = rememberNavController(),
+            onItemReselected = {},
+        )
     }
 }

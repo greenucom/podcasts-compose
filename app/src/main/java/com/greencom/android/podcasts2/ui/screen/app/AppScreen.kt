@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
@@ -15,13 +16,21 @@ import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
-fun AppScreen(modifier: Modifier = Modifier) {
+fun AppScreen(
+    modifier: Modifier = Modifier,
+    appViewModel: AppViewModel = hiltViewModel(),
+) {
     val screenState = rememberAppScreenState()
 
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
-        bottomBar = { BottomNavBar(navController = screenState.navController) },
+        bottomBar = {
+            BottomNavBar(
+                navController = screenState.navController,
+                onItemReselected = appViewModel::onBottomNavBarItemReselected,
+            )
+        },
     ) { paddingValues ->
         NavHost(
             modifier = Modifier.padding(paddingValues),
