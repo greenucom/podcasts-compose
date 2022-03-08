@@ -61,7 +61,7 @@ fun DiscoverScreen(
         ) {
 
             recommendedPodcastList(
-                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
                 lazyRowState = screenState.recommendedPodcastsLazyRowState,
                 recommendedPodcastsState = recommendedPodcastsState,
                 onRecommendedPodcastClicked = onPodcastClicked,
