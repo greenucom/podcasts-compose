@@ -11,7 +11,7 @@ import com.greencom.android.podcasts2.R
 sealed class BottomNavBarItem(
     val route: String,
     @StringRes val labelResId: Int,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
 
     object Home : BottomNavBarItem(
