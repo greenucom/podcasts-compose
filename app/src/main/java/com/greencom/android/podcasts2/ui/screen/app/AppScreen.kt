@@ -1,12 +1,17 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
+import com.greencom.android.podcasts2.ui.common.copy
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
 import com.greencom.android.podcasts2.ui.navigation.homeNavGraph
@@ -30,10 +35,16 @@ fun AppScreen(
                 onItemReselected = appViewModel::onBottomNavBarItemReselected,
             )
         },
-    ) {
+    ) { paddingValues ->
 
-        // Do not set Scaffold PaddingValues to allow screen content be placed behind bottom nav bar
+        // Set bottom padding to 0 to allow screen content be placed behind bottom nav bar
+        val layoutDirection = LocalLayoutDirection.current
+        val paddingValues = remember(paddingValues) {
+            paddingValues.copy(layoutDirection, bottom = 0.dp)
+        }
+
         NavHost(
+            modifier = Modifier.padding(paddingValues),
             navController = screenState.navController,
             startDestination = BottomNavBarItem.Home.route,
         ) {

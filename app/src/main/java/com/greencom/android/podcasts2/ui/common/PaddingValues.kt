@@ -30,3 +30,11 @@ fun PaddingValues.plus(
     val bottom = this.calculateBottomPadding() + paddingValues.calculateBottomPadding()
     return PaddingValues(start, top, end, bottom)
 }
+
+fun PaddingValues.copy(
+    layoutDirection: LayoutDirection,
+    start: Dp = this.calculateStartPadding(layoutDirection),
+    top: Dp = this.calculateTopPadding(),
+    end: Dp = this.calculateEndPadding(layoutDirection),
+    bottom: Dp = this.calculateBottomPadding(),
+): PaddingValues = PaddingValues(start, top, end, bottom)
