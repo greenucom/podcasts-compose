@@ -21,6 +21,7 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearc
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -46,7 +47,10 @@ fun DiscoverScreen(
 
         LaunchedEffect(appState.reselectedBottomNavBarItem) {
             if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
-                if (screenState.screenLazyColumnState.firstVisibleItemIndex == 0) {
+                if (
+                    screenState.screenLazyColumnState.firstVisibleItemIndex == 0 &&
+                    screenState.screenLazyColumnState.firstVisibleItemScrollOffset == 0
+                ) {
                     onSearchClicked()
                 } else {
                     screenState.screenLazyColumnState.animateScrollToItem(0)
