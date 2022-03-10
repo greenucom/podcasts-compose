@@ -1,7 +1,6 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,9 +30,10 @@ fun AppScreen(
                 onItemReselected = appViewModel::onBottomNavBarItemReselected,
             )
         },
-    ) { paddingValues ->
+    ) {
+
+        // Do not set Scaffold PaddingValues to allow screen content be placed behind bottom nav bar
         NavHost(
-            modifier = Modifier.padding(paddingValues),
             navController = screenState.navController,
             startDestination = BottomNavBarItem.Home.route,
         ) {
