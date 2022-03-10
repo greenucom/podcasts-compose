@@ -21,7 +21,6 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearc
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastList
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -74,7 +73,7 @@ fun DiscoverScreen(
         ) {
 
             recommendedPodcastList(
-                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
                 lazyRowState = screenState.recommendedPodcastsLazyRowState,
                 recommendedPodcastsState = recommendedPodcastsState,
                 onRecommendedPodcastClicked = onPodcastClicked,
