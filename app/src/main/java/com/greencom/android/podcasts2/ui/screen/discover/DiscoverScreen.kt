@@ -6,15 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.ui.common.plus
+import com.greencom.android.podcasts2.ui.common.rememberTotalBottomBarsHeight
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearchTopBar
@@ -46,13 +46,25 @@ fun DiscoverScreen(
 
         LaunchedEffect(appState.reselectedBottomNavBarItem) {
             if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
-                if (screenState.screenLazyColumnState.firstVisibleItemIndex == 0) {
+                if (
+                    screenState.screenLazyColumnState.firstVisibleItemIndex == 0 &&
+                    screenState.screenLazyColumnState.firstVisibleItemScrollOffset == 0
+                ) {
                     onSearchClicked()
                 } else {
                     screenState.screenLazyColumnState.animateScrollToItem(0)
                 }
                 appViewModel.onReselectedBottomNavBarItemHandled()
             }
+        }
+
+        val totalBottomBarsHeight = rememberTotalBottomBarsHeight()
+        val layoutDirection = LocalLayoutDirection.current
+        val paddingValues = remember(paddingValues, totalBottomBarsHeight) {
+            paddingValues.plus(
+                bottom = totalBottomBarsHeight,
+                layoutDirection = layoutDirection,
+            )
         }
 
         LazyColumn(

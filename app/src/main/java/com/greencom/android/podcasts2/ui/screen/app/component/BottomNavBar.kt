@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -24,6 +25,8 @@ import com.google.accompanist.insets.navigationBarsHeight
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.Screen
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+
+val BottomNavBarHeight = 56.dp
 
 private val RoutesWithBottomNavBar = setOf(
     Screen.Home.route, Screen.Discover.route, Screen.Library.route,
