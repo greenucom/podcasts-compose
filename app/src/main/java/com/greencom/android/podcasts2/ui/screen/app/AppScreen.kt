@@ -39,7 +39,7 @@ fun AppScreen(
 
         // Set bottom padding to 0 to allow screen content be placed behind bottom nav bar
         val layoutDirection = LocalLayoutDirection.current
-        val paddingValues = remember(paddingValues) {
+        val paddingValues = remember(paddingValues, layoutDirection) {
             paddingValues.copy(layoutDirection, bottom = 0.dp)
         }
 

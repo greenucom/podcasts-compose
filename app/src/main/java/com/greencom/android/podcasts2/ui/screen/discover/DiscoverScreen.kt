@@ -51,7 +51,9 @@ fun DiscoverScreen(
 
         val totalBottomBarsHeight = rememberTotalBottomBarsHeight()
         val layoutDirection = LocalLayoutDirection.current
-        val paddingValues = remember(paddingValues, totalBottomBarsHeight) {
+        val paddingValues = remember(
+            paddingValues, totalBottomBarsHeight, layoutDirection,
+        ) {
             paddingValues.plus(
                 bottom = totalBottomBarsHeight,
                 layoutDirection = layoutDirection,
