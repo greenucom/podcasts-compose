@@ -15,7 +15,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.ui.common.plus
 import com.greencom.android.podcasts2.ui.common.rememberTotalBottomBarsHeight
-import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverSearchTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastList
@@ -31,7 +30,9 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier,
     discoverViewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val screenState = rememberDiscoverScreenState()
+    val screenState = rememberDiscoverScreenState(
+        onSearchClicked = onSearchClicked,
+    )
 
     Scaffold(
         modifier = modifier,
@@ -42,21 +43,27 @@ fun DiscoverScreen(
         val trendingCategories by discoverViewModel.trendingCategories.collectAsState()
         val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
-        val appState by appViewModel.appState.collectAsState()
-
-        LaunchedEffect(appState.reselectedBottomNavBarItem) {
-            if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
-                if (
-                    screenState.screenLazyColumnState.firstVisibleItemIndex == 0 &&
-                    screenState.screenLazyColumnState.firstVisibleItemScrollOffset == 0
-                ) {
-                    onSearchClicked()
-                } else {
-                    screenState.screenLazyColumnState.animateScrollToItem(0)
-                }
-                appViewModel.onReselectedBottomNavBarItemHandled()
+        LaunchedEffect(Unit) {
+            appViewModel.events.collect { event ->
+                screenState.handleAppEvent(event)
             }
         }
+
+//        val appState by appViewModel.appState.collectAsState()
+//
+//        LaunchedEffect(appState.reselectedBottomNavBarItem) {
+//            if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
+//                if (
+//                    screenState.screenLazyColumnState.firstVisibleItemIndex == 0 &&
+//                    screenState.screenLazyColumnState.firstVisibleItemScrollOffset == 0
+//                ) {
+//                    onSearchClicked()
+//                } else {
+//                    screenState.screenLazyColumnState.animateScrollToItem(0)
+//                }
+//                appViewModel.onReselectedBottomNavBarItemHandled()
+//            }
+//        }
 
         val totalBottomBarsHeight = rememberTotalBottomBarsHeight()
         val layoutDirection = LocalLayoutDirection.current
@@ -68,7 +75,7 @@ fun DiscoverScreen(
         }
 
         LazyColumn(
-            state = screenState.screenLazyColumnState,
+            state = screenState.lazyColumnState,
             contentPadding = paddingValues,
         ) {
 
