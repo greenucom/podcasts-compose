@@ -12,21 +12,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor() : BaseViewModel() {
 
-//    private val _appState = MutableStateFlow(AppState())
-//    val appState = _appState.asStateFlow()
-//
-//    fun onBottomNavBarItemReselected(item: BottomNavBarItem) {
-//        _appState.update { it.copy(reselectedBottomNavBarItem = item) }
-//    }
-//
-//    fun onReselectedBottomNavBarItemHandled() {
-//        _appState.update { it.copy(reselectedBottomNavBarItem = null) }
-//    }
-//
-//    data class AppState(
-//        val reselectedBottomNavBarItem: BottomNavBarItem? = null,
-//    )
-
     private val _events = Channel<Event>(Channel.UNLIMITED)
     val events = _events.receiveAsFlow()
 

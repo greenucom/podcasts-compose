@@ -49,22 +49,6 @@ fun DiscoverScreen(
             }
         }
 
-//        val appState by appViewModel.appState.collectAsState()
-//
-//        LaunchedEffect(appState.reselectedBottomNavBarItem) {
-//            if (appState.reselectedBottomNavBarItem == BottomNavBarItem.Discover) {
-//                if (
-//                    screenState.screenLazyColumnState.firstVisibleItemIndex == 0 &&
-//                    screenState.screenLazyColumnState.firstVisibleItemScrollOffset == 0
-//                ) {
-//                    onSearchClicked()
-//                } else {
-//                    screenState.screenLazyColumnState.animateScrollToItem(0)
-//                }
-//                appViewModel.onReselectedBottomNavBarItemHandled()
-//            }
-//        }
-
         val totalBottomBarsHeight = rememberTotalBottomBarsHeight()
         val layoutDirection = LocalLayoutDirection.current
         val paddingValues = remember(paddingValues, totalBottomBarsHeight) {
