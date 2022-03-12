@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.data.podcast.remote.dto
 
+import com.greencom.android.podcasts2.data.category.remote.dto.CategoriesDto
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -56,7 +57,7 @@ data class GetTrendingPodcastResponseDto(
     val language: String? = null,
 
     @SerialName("categories")
-    val categories: Map<Int, String>? = null,
+    val categories: CategoriesDto? = null,
     
 ) {
 
