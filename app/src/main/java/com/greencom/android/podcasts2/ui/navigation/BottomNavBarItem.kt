@@ -2,7 +2,7 @@ package com.greencom.android.podcasts2.ui.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -14,10 +14,10 @@ sealed class BottomNavBarItem(
     val icon: ImageVector,
 ) {
 
-    object Home : BottomNavBarItem(
-        route = "homeGraph",
-        labelResId = R.string.home,
-        icon = Icons.Outlined.Home,
+    object MyPodcasts : BottomNavBarItem(
+        route = "myPodcastsGraph",
+        labelResId = R.string.podcasts,
+        icon = Icons.Outlined.Apps,
     )
 
     object Discover : BottomNavBarItem(
@@ -33,7 +33,7 @@ sealed class BottomNavBarItem(
     )
 
     companion object {
-        val items = listOf(Home, Discover, Library)
+        val items = listOf(MyPodcasts, Discover, Library)
     }
 
 }

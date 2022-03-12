@@ -6,7 +6,7 @@ import androidx.navigation.navArgument
 
 sealed class Screen(val route: String) {
 
-    object Home : Screen("home")
+    object MyPodcasts : Screen("myPodcasts")
     object Discover : Screen("discover")
     object Library : Screen("library")
 

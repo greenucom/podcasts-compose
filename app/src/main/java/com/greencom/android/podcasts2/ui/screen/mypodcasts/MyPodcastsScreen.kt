@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.home
+package com.greencom.android.podcasts2.ui.screen.mypodcasts
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun MyPodcastsScreen(modifier: Modifier = Modifier) {
 
 }
 
@@ -15,7 +15,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 private fun Light() {
     PodcastsComposeTheme {
-        HomeScreen()
+        MyPodcastsScreen()
     }
 }
 
@@ -27,6 +27,6 @@ private fun Light() {
 )
 private fun Dark() {
     PodcastsComposeTheme {
-        HomeScreen()
+        MyPodcastsScreen()
     }
 }

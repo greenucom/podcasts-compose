@@ -29,7 +29,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 val BottomNavBarHeight = 56.dp
 
 private val RoutesWithBottomNavBar = setOf(
-    Screen.Home.route, Screen.Discover.route, Screen.Library.route,
+    Screen.MyPodcasts.route, Screen.Discover.route, Screen.Library.route,
 )
 
 @Composable

@@ -14,8 +14,8 @@ import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.common.copy
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
-import com.greencom.android.podcasts2.ui.navigation.homeNavGraph
 import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
+import com.greencom.android.podcasts2.ui.navigation.myPodcastsNavGraph
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -46,9 +46,9 @@ fun AppScreen(
         NavHost(
             modifier = Modifier.padding(paddingValues),
             navController = screenState.navController,
-            startDestination = BottomNavBarItem.Home.route,
+            startDestination = BottomNavBarItem.MyPodcasts.route,
         ) {
-            homeNavGraph(screenState.navController)
+            myPodcastsNavGraph(screenState.navController)
 
             discoverNavGraph(
                 navController = screenState.navController,
