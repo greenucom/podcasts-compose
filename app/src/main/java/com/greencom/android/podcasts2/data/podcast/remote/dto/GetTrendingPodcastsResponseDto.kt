@@ -1,6 +1,8 @@
 package com.greencom.android.podcasts2.data.podcast.remote.dto
 
 import com.greencom.android.podcasts2.data.category.remote.dto.CategoriesDto
+import com.greencom.android.podcasts2.data.category.remote.dto.toDomain
+import com.greencom.android.podcasts2.domain.category.usecase.GetCategoryDisplayNameUseCase
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,7 +24,11 @@ data class GetTrendingPodcastsResponseDto(
 
 ) {
 
-    fun toDomain(): List<TrendingPodcast> = podcasts?.map { it.toDomain() } ?: emptyList()
+    fun toDomain(
+        getCategoryDisplayNameUseCase: GetCategoryDisplayNameUseCase,
+    ): List<TrendingPodcast> {
+        return podcasts?.map { it.toDomain(getCategoryDisplayNameUseCase) } ?: emptyList()
+    }
 
 }
 
@@ -61,12 +67,15 @@ data class GetTrendingPodcastResponseDto(
     
 ) {
 
-    fun toDomain(): TrendingPodcast = TrendingPodcast(
+    fun toDomain(
+        getCategoryDisplayNameUseCase: GetCategoryDisplayNameUseCase,
+    ): TrendingPodcast = TrendingPodcast(
         id = checkNotNull(id),
         title = checkNotNull(title),
         description = checkNotNull(description),
         author = checkNotNull(author),
         image = checkNotNull(image),
+        categories = categories?.toDomain(getCategoryDisplayNameUseCase) ?: emptyList(),
         isSubscribed = false,
     )
 

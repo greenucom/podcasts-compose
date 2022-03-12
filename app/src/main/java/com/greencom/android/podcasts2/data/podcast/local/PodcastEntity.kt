@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 
 @Entity(tableName = "podcasts")
 data class PodcastEntity(
@@ -29,15 +28,6 @@ data class PodcastEntity(
     val isSubscribed: Boolean,
 
 ) {
-
-    fun toTrendingPodcast(): TrendingPodcast = TrendingPodcast(
-        id = id,
-        title = title,
-        description = description,
-        author = author,
-        image = image,
-        isSubscribed = isSubscribed,
-    )
 
     companion object {
 

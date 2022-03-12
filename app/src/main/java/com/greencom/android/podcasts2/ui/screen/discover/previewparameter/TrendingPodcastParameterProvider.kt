@@ -2,6 +2,7 @@ package com.greencom.android.podcasts2.ui.screen.discover.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.ui.common.previewparameter.CategoriesParameterProvider
 
 class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcast> {
 
@@ -16,6 +17,7 @@ class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcas
             description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             author = "Lorem Ipsum",
             image = "",
+            categories = CategoriesParameterProvider.categories(),
             isSubscribed = false,
         )
 
