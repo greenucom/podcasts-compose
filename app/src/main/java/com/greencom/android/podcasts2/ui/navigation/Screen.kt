@@ -9,6 +9,7 @@ sealed class Screen(val route: String) {
     object MyPodcasts : Screen("myPodcasts")
     object Discover : Screen("discover")
     object Library : Screen("library")
+    object Profile : Screen("profile")
 
     object Search : Screen("search")
 
@@ -18,9 +19,7 @@ sealed class Screen(val route: String) {
         fun createRoute(podcastId: Long): String = "podcasts/$podcastId"
 
         val arguments: List<NamedNavArgument>
-            get() = listOf(
-                navArgument(PodcastId) { type = NavType.LongType },
-            )
+            get() = listOf(navArgument(PodcastId) { type = NavType.LongType })
     }
 
 }

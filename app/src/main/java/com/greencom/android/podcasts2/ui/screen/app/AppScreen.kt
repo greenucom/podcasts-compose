@@ -12,10 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.common.copy
-import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
-import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
-import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
-import com.greencom.android.podcasts2.ui.navigation.myPodcastsNavGraph
+import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -56,6 +53,8 @@ fun AppScreen(
             )
 
             libraryNavGraph(screenState.navController)
+
+            profileNavGraph(screenState.navController)
         }
     }
 }

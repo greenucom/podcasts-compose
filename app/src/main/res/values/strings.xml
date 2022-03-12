@@ -3,6 +3,7 @@
     <string name="podcasts">Podcasts</string>
     <string name="discover">Discover</string>
     <string name="library">Library</string>
+    <string name="profile">Profile</string>
 
     <string name="podcast_cover">Podcast cover</string>
     <string name="subscribe">Subscribe</string>

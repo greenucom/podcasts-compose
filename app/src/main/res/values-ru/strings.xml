@@ -4,6 +4,7 @@
     <string name="podcasts">Подкасты</string>
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
+    <string name="profile">Профиль</string>
 
     <string name="podcast_cover">Обложка подкаста</string>
     <string name="subscribe">Подписаться</string>
