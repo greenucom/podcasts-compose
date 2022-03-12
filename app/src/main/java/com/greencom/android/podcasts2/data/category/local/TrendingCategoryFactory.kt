@@ -2,109 +2,109 @@ package com.greencom.android.podcasts2.data.category.local
 
 import android.content.Context
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.category.TrendingCategory
+import com.greencom.android.podcasts2.domain.category.Category
 import javax.inject.Inject
 
 class TrendingCategoryFactory @Inject constructor() {
 
-    fun getTrendingCategories(context: Context): List<TrendingCategory> {
+    fun getTrendingCategories(context: Context): List<Category> {
         return listOf(
-            TrendingCategory(
+            Category(
                 id = 55,
                 name = "News",
                 displayName = context.getString(R.string.news),
             ),
-            TrendingCategory(
+            Category(
                 id = 59,
                 name = "Politics",
                 displayName = context.getString(R.string.politics),
             ),
-            TrendingCategory(
+            Category(
                 id = 77,
                 name = "Society",
                 displayName = context.getString(R.string.society),
             ),
-            TrendingCategory(
+            Category(
                 id = 78,
                 name = "Culture",
                 displayName = context.getString(R.string.culture),
             ),
-            TrendingCategory(
+            Category(
                 id = 28,
                 name = "History",
                 displayName = context.getString(R.string.history),
             ),
-            TrendingCategory(
+            Category(
                 id = 103,
                 name = "True Crime",
                 displayName = context.getString(R.string.true_crime),
             ),
-            TrendingCategory(
+            Category(
                 id = 84,
                 name = "Travel",
                 displayName = context.getString(R.string.travel),
             ),
-            TrendingCategory(
+            Category(
                 id = 16,
                 name = "Comedy",
                 displayName = context.getString(R.string.comedy),
             ),
-            TrendingCategory(
+            Category(
                 id = 20,
                 name = "Education",
                 displayName = context.getString(R.string.education),
             ),
-            TrendingCategory(
+            Category(
                 id = 67,
                 name = "Science",
                 displayName = context.getString(R.string.science),
             ),
-            TrendingCategory(
+            Category(
                 id = 74,
                 name = "Nature",
                 displayName = context.getString(R.string.nature),
             ),
-            TrendingCategory(
+            Category(
                 id = 102,
                 name = "Technology",
                 displayName = context.getString(R.string.technology),
             ),
-            TrendingCategory(
+            Category(
                 id = 1,
                 name = "Arts",
                 displayName = context.getString(R.string.arts),
             ),
-            TrendingCategory(
+            Category(
                 id = 105,
                 name = "Film",
                 displayName = context.getString(R.string.film),
             ),
-            TrendingCategory(
+            Category(
                 id = 2,
                 name = "Books",
                 displayName = context.getString(R.string.books),
             ),
-            TrendingCategory(
+            Category(
                 id = 53,
                 name = "Music",
                 displayName = context.getString(R.string.music),
             ),
-            TrendingCategory(
+            Category(
                 id = 86,
                 name = "Sports",
                 displayName = context.getString(R.string.sports),
             ),
-            TrendingCategory(
+            Category(
                 id = 29,
                 name = "Health",
                 displayName = context.getString(R.string.health),
             ),
-            TrendingCategory(
+            Category(
                 id = 9,
                 name = "Business",
                 displayName = context.getString(R.string.business),
             ),
-            TrendingCategory(
+            Category(
                 id = 12,
                 name = "Investing",
                 displayName = context.getString(R.string.investing),

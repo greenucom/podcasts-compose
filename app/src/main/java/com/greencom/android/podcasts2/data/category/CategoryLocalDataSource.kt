@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.greencom.android.podcasts2.data.category.local.TrendingCategoryFactory
-import com.greencom.android.podcasts2.domain.category.TrendingCategory
+import com.greencom.android.podcasts2.domain.category.Category
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -61,7 +61,7 @@ class CategoryLocalDataSource @Inject constructor(
         }
     }
 
-    fun getTrendingCategories(): List<TrendingCategory> {
+    fun getTrendingCategories(): List<Category> {
         return trendingCategoryFactory.getTrendingCategories(context)
     }
 

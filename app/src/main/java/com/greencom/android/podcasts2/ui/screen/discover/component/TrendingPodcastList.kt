@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.category.TrendingCategory
+import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.ui.common.PlaceholderLoadingEffect
 import com.greencom.android.podcasts2.ui.common.SelectableItem
@@ -41,8 +41,8 @@ private const val PlaceholderCount = 4
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastList(
-    selectableCategories: List<SelectableItem<TrendingCategory>>,
-    onSelectableCategoryClicked: (selectableCategory: SelectableItem<TrendingCategory>) -> Unit,
+    selectableCategories: List<SelectableItem<Category>>,
+    onSelectableCategoryClicked: (selectableCategory: SelectableItem<Category>) -> Unit,
     trendingPodcastsState: DiscoverViewModel.TrendingPodcastsState,
     onTrendingPodcastClicked: (podcast: IPodcast) -> Unit,
     onTryAgainClicked: () -> Unit,

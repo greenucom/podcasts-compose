@@ -1,6 +1,6 @@
 package com.greencom.android.podcasts2.data.podcast
 
-import com.greencom.android.podcasts2.domain.category.ICategory
+import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
@@ -14,8 +14,8 @@ class PodcastRepository @Inject constructor(
     suspend fun getTrendingPodcasts(
         max: Int,
         languages: List<Language>,
-        inCategories: List<ICategory>,
-        notInCategories: List<ICategory>,
+        inCategories: List<Category>,
+        notInCategories: List<Category>,
     ): List<TrendingPodcast> {
         return remoteDataSource.getTrendingPodcasts(
             max = max,

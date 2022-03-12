@@ -1,3 +1,9 @@
 package com.greencom.android.podcasts2.domain.category
 
-data class Category(override val id: Int, override val name: String) : ICategory(id, name)
+data class Category(
+    val id: Int,
+    val name: String,
+    val displayName: String,
+)
+
+fun List<Category>.toCategoriesString(): String = this.joinToString(",") { it.name }

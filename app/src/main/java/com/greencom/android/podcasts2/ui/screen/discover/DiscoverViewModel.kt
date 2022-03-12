@@ -1,7 +1,7 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.lifecycle.viewModelScope
-import com.greencom.android.podcasts2.domain.category.TrendingCategory
+import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectedTrendingCategoryIdUseCase
@@ -33,7 +33,7 @@ class DiscoverViewModel @Inject constructor(
     val recommendedPodcastsState = _recommendedPodcastsState.asStateFlow()
 
     private val _trendingCategories =
-        MutableStateFlow<List<SelectableItem<TrendingCategory>>>(emptyList())
+        MutableStateFlow<List<SelectableItem<Category>>>(emptyList())
     val trendingCategories = _trendingCategories.asStateFlow()
 
     private val _trendingPodcastsState =
@@ -66,7 +66,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun loadTrendingPodcastsForSelectedCategories(
-        selectedCategories: List<TrendingCategory>
+        selectedCategories: List<Category>
     ) {
         trendingPodcastsJob?.cancel()
         trendingPodcastsJob = viewModelScope.launch {
@@ -97,7 +97,7 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<TrendingCategory>) {
+    fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<Category>) {
         viewModelScope.launch {
             val id = selectableCategory.item.id
             toggleSelectedTrendingCategoryIdUseCase(id)

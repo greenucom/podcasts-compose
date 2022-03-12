@@ -3,7 +3,7 @@ package com.greencom.android.podcasts2.domain.podcast.usecase
 import com.greencom.android.podcasts2.clean.UseCase
 import com.greencom.android.podcasts2.data.podcast.PodcastRepository
 import com.greencom.android.podcasts2.di.IODispatcher
-import com.greencom.android.podcasts2.domain.category.ICategory
+import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,8 +29,8 @@ class GetTrendingPodcastsUseCase @Inject constructor(
 data class GetTrendingPodcastsPayload(
     val max: Int = MAX_DEFAULT_VALUE,
     val languages: List<Language> = listOf(Language.Ru),
-    val inCategories: List<ICategory> = emptyList(),
-    val notInCategories: List<ICategory> = emptyList(),
+    val inCategories: List<Category> = emptyList(),
+    val notInCategories: List<Category> = emptyList(),
 ) {
 
     companion object {
