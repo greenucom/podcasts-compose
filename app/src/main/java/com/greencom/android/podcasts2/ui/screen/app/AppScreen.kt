@@ -1,17 +1,18 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import com.greencom.android.podcasts2.ui.common.copy
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -27,18 +28,21 @@ fun AppScreen(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
         bottomBar = {
-            BottomNavBar(
-                navController = screenState.navController,
-                onItemReselected = appViewModel::onBottomNavBarItemReselected,
-            )
+            val navBackStackEntry by screenState.navController.currentBackStackEntryAsState()
+            val currentDestinationRoute = navBackStackEntry?.destination?.route
+
+            AnimatedVisibility(
+                visible = screenState.shouldBottomNavBarBeVisible(currentDestinationRoute),
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it }),
+            ) {
+                BottomNavBar(
+                    navController = screenState.navController,
+                    onItemReselected = appViewModel::onBottomNavBarItemReselected,
+                )
+            }
         },
     ) { paddingValues ->
-
-        // Set bottom padding to 0 to allow screen content be placed behind bottom nav bar
-        val layoutDirection = LocalLayoutDirection.current
-        val paddingValues = remember(paddingValues, layoutDirection) {
-            paddingValues.copy(layoutDirection, bottom = 0.dp)
-        }
 
         NavHost(
             modifier = Modifier.padding(paddingValues),
