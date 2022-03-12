@@ -27,3 +27,7 @@ val SearchBackgroundLight = Color(0xFFF0F0F0)
 val SearchBackgroundDark = Color(0xFF373737)
 val Colors.searchBackground: Color
     get() = if (isLight) SearchBackgroundLight else SearchBackgroundDark
+
+val CategoryLabelBackground = Color(0xFFFFF2F5)
+val Colors.categoryLabelBackground: Color
+    get() = CategoryLabelBackground
