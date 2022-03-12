@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.greencom.android.podcasts2.data.category.local.CategoryDisplayNameResolver
 import com.greencom.android.podcasts2.data.category.local.TrendingCategoryFactory
 import com.greencom.android.podcasts2.domain.category.Category
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,9 +19,18 @@ import javax.inject.Inject
 
 class CategoryLocalDataSource @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val categoryDisplayNameResolver: CategoryDisplayNameResolver,
     private val trendingCategoryFactory: TrendingCategoryFactory,
     private val dataStore: DataStore<Preferences>,
 ) {
+
+    fun getCategoryDisplayName(categoryId: Int): String {
+        return categoryDisplayNameResolver.getDisplayName(categoryId, context)
+    }
+
+    fun getTrendingCategories(): List<Category> {
+        return trendingCategoryFactory.getTrendingCategories(context)
+    }
 
     private val SELECTED_TRENDING_CATEGORIES_IDS_KEY = stringPreferencesKey(
         SELECTED_TRENDING_CATEGORIES_IDS_KEY_NAME
@@ -59,10 +69,6 @@ class CategoryLocalDataSource @Inject constructor(
         } catch (e: NumberFormatException) {
             mutableSetOf()
         }
-    }
-
-    fun getTrendingCategories(): List<Category> {
-        return trendingCategoryFactory.getTrendingCategories(context)
     }
 
     companion object {
