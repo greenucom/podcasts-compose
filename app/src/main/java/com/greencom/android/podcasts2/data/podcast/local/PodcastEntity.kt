@@ -3,9 +3,13 @@ package com.greencom.android.podcasts2.data.podcast.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.greencom.android.podcasts2.data.category.local.CategoryEntitiesTypeConverter
+import com.greencom.android.podcasts2.data.category.local.CategoryEntity
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 
 @Entity(tableName = "podcasts")
+@TypeConverters(CategoryEntitiesTypeConverter::class)
 data class PodcastEntity(
 
     @PrimaryKey
@@ -24,6 +28,9 @@ data class PodcastEntity(
     @ColumnInfo(name = "image")
     val image: String,
 
+    @ColumnInfo(name = "categories")
+    val categories: List<CategoryEntity>,
+
     @ColumnInfo(name = "is_subscribed", defaultValue = "0")
     val isSubscribed: Boolean,
 
@@ -37,6 +44,7 @@ data class PodcastEntity(
             description = podcast.description,
             author = podcast.author,
             image = podcast.image,
+            categories = podcast.categories.map { CategoryEntity.fromDomain(it) },
             isSubscribed = podcast.isSubscribed,
         )
 
