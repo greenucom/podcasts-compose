@@ -5,35 +5,10 @@
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 
-
-    <!-- Trending categories -->
-    <string name="news">News</string>
-    <string name="politics">Политика</string>
-    <string name="society">Общество</string>
-    <string name="culture">Культура</string>
-    <string name="history">История</string>
-    <string name="true_crime">Тру-крайм</string>
-    <string name="travel">Путешествия</string>
-    <string name="comedy">Юмор</string>
-    <string name="education">Образование</string>
-    <string name="science">Наука</string>
-    <string name="nature">Природа</string>
-    <string name="technology">Технология</string>
-    <string name="arts">Искусство</string>
-    <string name="films">Фильмы</string>
-    <string name="books">Книги</string>
-    <string name="music">Музыка</string>
-    <string name="sports">Спорт</string>
-    <string name="health">Здоровье</string>
-    <string name="business">Бизнес</string>
-    <string name="investing">Инвестиции</string>
-
-
     <string name="loading_podcasts">Загрузка подкастов…</string>
     <string name="podcast_cover">Обложка подкаста</string>
     <string name="subscribe">Подписаться</string>
     <string name="subscribed">Подписка оформлена</string>
-
 
     <string name="something_went_wrong_check_internet_connection">
         Что-то пошло не так…\nПроверьте интернет-соединение

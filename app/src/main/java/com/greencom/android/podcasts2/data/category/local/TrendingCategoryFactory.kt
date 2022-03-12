@@ -77,7 +77,7 @@ class TrendingCategoryFactory @Inject constructor() {
             TrendingCategory(
                 id = 105,
                 name = "Film",
-                displayName = context.getString(R.string.films),
+                displayName = context.getString(R.string.film),
             ),
             TrendingCategory(
                 id = 2,
