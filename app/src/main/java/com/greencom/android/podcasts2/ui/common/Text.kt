@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.greencom.android.podcasts2.ui.common
 
 import android.content.Context

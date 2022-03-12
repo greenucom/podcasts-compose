@@ -11,5 +11,6 @@ val Shapes = Shapes(
     large = RoundedCornerShape(16.dp)
 )
 
+@Suppress("unused")
 val Shapes.placeholder: Shape
     get() = RoundedCornerShape(4.dp)
