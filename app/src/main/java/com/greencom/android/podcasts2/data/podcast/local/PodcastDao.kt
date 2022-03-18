@@ -35,4 +35,7 @@ abstract class PodcastDao {
     @Update
     abstract suspend fun update(podcast: PodcastEntity)
 
+    @Query("SELECT id FROM podcasts WHERE is_subscribed = 1")
+    abstract suspend fun getSubscriptionIds(): List<Long>
+
 }
