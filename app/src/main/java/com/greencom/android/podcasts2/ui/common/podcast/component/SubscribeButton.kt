@@ -2,6 +2,8 @@ package com.greencom.android.podcasts2.ui.common.podcast.component
 
 import android.content.res.Configuration
 import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -31,7 +33,10 @@ fun SubscribeButton(
         backgroundColor = backgroundColor,
     )
 
-    val borderColor by animateColorAsState(OutlinedButtonUtils.borderColor(isSubscribed))
+    val borderColor by animateColorAsState(
+        targetValue = OutlinedButtonUtils.borderColor(isSubscribed),
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+    )
 
     OutlinedButton(
         modifier = modifier,
@@ -65,7 +70,10 @@ fun SubscribeButton(
             },
         ) { isSubscribed ->
             val resId = if (isSubscribed) R.string.subscribed else R.string.subscribe
-            val color by animateColorAsState(OutlinedButtonUtils.contentColor(isSubscribed))
+            val color by animateColorAsState(
+                targetValue = OutlinedButtonUtils.contentColor(isSubscribed),
+                animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+            )
             Text(
                 text = stringResource(resId),
                 style = MaterialTheme.typography.body2,
