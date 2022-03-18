@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
-import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectedTrendingCategoryIdUseCase
+import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class DiscoverViewModel @Inject constructor(
     private val getTrendingCategoriesUseCase: GetTrendingCategoriesUseCase,
     private val getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
-    private val toggleSelectedTrendingCategoryIdUseCase: ToggleSelectedTrendingCategoryIdUseCase,
+    private val toggleSelectableTrendingCategoryUseCase: ToggleSelectableTrendingCategoryUseCase,
     private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
 ) : BaseViewModel() {
 
@@ -99,8 +99,8 @@ class DiscoverViewModel @Inject constructor(
 
     fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<Category>) {
         viewModelScope.launch {
-            val id = selectableCategory.item.id
-            toggleSelectedTrendingCategoryIdUseCase(id)
+            val category = selectableCategory.item
+            toggleSelectableTrendingCategoryUseCase(category)
         }
     }
 

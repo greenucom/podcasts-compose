@@ -41,8 +41,9 @@ class CategoryLocalDataSource @Inject constructor(
         }
         .distinctUntilChanged()
 
-    suspend fun toggleSelectedTrendingCategoryId(id: Int) {
+    suspend fun toggleSelectableTrendingCategory(category: Category) {
         dataStore.edit { preferences ->
+            val id = category.id
             val string = preferences[SELECTED_TRENDING_CATEGORIES_IDS_KEY]
             val set = selectedTrendingCategoriesIdsStringToMutableSet(string)
             if (id in set) set.remove(id) else set.add(id)
