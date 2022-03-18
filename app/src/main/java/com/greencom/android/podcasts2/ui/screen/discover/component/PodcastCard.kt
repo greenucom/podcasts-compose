@@ -41,20 +41,15 @@ fun PodcastCard(
     ) {
 
         Column(modifier = Modifier.fillMaxWidth()) {
-
-            Box(
+            Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f),
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = rememberImagePainterCustom(podcast.image) {
-                        scale(Scale.FILL)
-                    },
-                    contentDescription = stringResource(R.string.podcast_cover),
-                )
-            }
+                painter = rememberImagePainterCustom(podcast.image) {
+                    scale(Scale.FILL)
+                },
+                contentDescription = stringResource(R.string.podcast_cover),
+            )
 
             Text(
                 modifier = Modifier
