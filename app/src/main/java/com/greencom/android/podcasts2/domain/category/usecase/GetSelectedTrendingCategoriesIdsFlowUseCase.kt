@@ -1,6 +1,6 @@
 package com.greencom.android.podcasts2.domain.category.usecase
 
-import com.greencom.android.podcasts2.clean.SimpleUseCase
+import com.greencom.android.podcasts2.base.clean.SimpleUseCase
 import com.greencom.android.podcasts2.data.category.CategoryRepository
 import com.greencom.android.podcasts2.di.IODispatcher
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.clean
+package com.greencom.android.podcasts2.base.clean
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

@@ -2,7 +2,7 @@ package com.greencom.android.podcasts2.ui.screen.discover.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
-import com.greencom.android.podcasts2.ui.common.previewparameter.CategoriesParameterProvider
+import com.greencom.android.podcasts2.ui.common.category.previewparameter.CategoriesParameterProvider
 
 class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcast> {
 

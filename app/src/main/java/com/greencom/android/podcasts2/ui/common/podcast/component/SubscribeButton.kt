@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common.component
+package com.greencom.android.podcasts2.ui.common.podcast.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.ui.common.component.OutlinedButtonUtils
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable

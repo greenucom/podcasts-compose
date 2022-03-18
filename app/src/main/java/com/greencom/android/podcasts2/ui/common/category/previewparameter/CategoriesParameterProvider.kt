@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common.previewparameter
+package com.greencom.android.podcasts2.ui.common.category.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.domain.category.Category

@@ -24,8 +24,8 @@ import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.ui.common.PlaceholderLoadingEffect
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
-import com.greencom.android.podcasts2.ui.common.component.PodcastItem
-import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.podcast.component.PodcastItem
+import com.greencom.android.podcasts2.ui.common.podcast.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameter
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastListParameterProvider
