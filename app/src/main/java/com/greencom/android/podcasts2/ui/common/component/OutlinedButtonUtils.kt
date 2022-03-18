@@ -1,10 +1,9 @@
 package com.greencom.android.podcasts2.ui.common.component
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
@@ -14,28 +13,33 @@ object OutlinedButtonUtils {
     const val CheckedBorderColorAlpha = 0.16f
 
     @Composable
-    fun colors(isChecked: Boolean): ButtonColors {
+    fun backgroundColor(isChecked: Boolean): Color {
         return if (isChecked) {
-            ButtonDefaults.outlinedButtonColors(
-                backgroundColor = MaterialTheme.colors.primary.copy(
-                    alpha = CheckedBackgroundColorAlpha
-                ),
+            MaterialTheme.colors.primary.copy(
+                alpha = CheckedBackgroundColorAlpha
             )
         } else {
-            ButtonDefaults.outlinedButtonColors()
+            MaterialTheme.colors.surface
         }
     }
 
     @Composable
-    fun border(isChecked: Boolean): BorderStroke {
+    fun borderColor(isChecked: Boolean): Color {
         return if (isChecked) {
-            BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colors.primary.copy(alpha = CheckedBorderColorAlpha),
+            MaterialTheme.colors.primary.copy(
+                alpha = CheckedBorderColorAlpha
             )
         } else {
-            BorderStroke(1.dp, MaterialTheme.colors.onSurfaceUtil)
+            MaterialTheme.colors.onSurfaceUtil
         }
     }
+
+    @Composable
+    fun contentColor(isChecked: Boolean): Color {
+        return if (isChecked) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+    }
+
+    val contentPadding: PaddingValues
+        get() = PaddingValues(start = 8.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
 
 }
