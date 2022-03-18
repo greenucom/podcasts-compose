@@ -1,9 +1,7 @@
 package com.greencom.android.podcasts2.ui.common.component
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -32,9 +30,9 @@ fun FilterChip(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = FilterChipUtils.backgroundColor(isSelected)
+    val backgroundColor = OutlinedButtonUtils.backgroundColor(isSelected)
     val borderColor by animateColorAsState(
-        targetValue = FilterChipUtils.borderColor(isSelected),
+        targetValue = OutlinedButtonUtils.borderColor(isSelected),
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
     )
 
@@ -52,7 +50,7 @@ fun FilterChip(
             val paddingValues = FilterChipUtils.contentPadding(paddingStart)
 
             val textColor by animateColorAsState(
-                targetValue = FilterChipUtils.textColor(isSelected),
+                targetValue = OutlinedButtonUtils.contentColor(isSelected),
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
             )
 
@@ -60,10 +58,13 @@ fun FilterChip(
                 modifier = Modifier.padding(paddingValues),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                AnimatedContent(isSelected) { isSelected ->
+                AnimatedContent(
+                    targetState = isSelected,
+                    transitionSpec = { scaleIn() with scaleOut() },
+                ) { isSelected ->
                     if (isSelected) {
                         Icon(
-                            modifier = Modifier.padding(end = 8.dp),
+                            modifier = Modifier.padding(end = 6.dp),
                             imageVector = Icons.Outlined.Done,
                             contentDescription = null,
                             tint = MaterialTheme.colors.primary,
