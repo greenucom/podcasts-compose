@@ -12,8 +12,8 @@ class CategoriesParameterProvider : PreviewParameterProvider<List<Category>> {
 
         fun categories(): List<Category> {
             return listOf(
-                Category(1, "News", "News"),
-                Category(2, "Society", "Общество"),
+                Category(id = 1, name = "News"),
+                Category(id = 2, name = "Society"),
             )
         }
 

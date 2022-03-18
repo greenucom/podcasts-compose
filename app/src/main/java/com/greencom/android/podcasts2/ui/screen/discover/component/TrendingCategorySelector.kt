@@ -36,7 +36,7 @@ fun TrendingCategorySelector(
                 FilterChip(
                     isSelected = selectableCategory.isSelected,
                     onSelectedChanged = { onSelectableCategoryClicked(selectableCategory) },
-                    text = selectableCategory.item.displayName,
+                    text = selectableCategory.item.name,
                 )
             }
         }

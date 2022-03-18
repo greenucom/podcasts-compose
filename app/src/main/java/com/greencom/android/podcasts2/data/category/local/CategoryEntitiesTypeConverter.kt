@@ -12,12 +12,12 @@ import kotlinx.serialization.json.Json
 class CategoryEntitiesTypeConverter(private val json: Json) {
 
     @TypeConverter
-    fun fromCategoryEntities(categories: List<CategoryEntity>): String {
+    fun fromCategoryEntityList(categories: List<CategoryEntity>): String {
         return json.encodeToString(categories)
     }
 
     @TypeConverter
-    fun toCategoryEntities(string: String): List<CategoryEntity> {
+    fun toCategoryEntityList(string: String): List<CategoryEntity> {
         return json.decodeFromString(string)
     }
 

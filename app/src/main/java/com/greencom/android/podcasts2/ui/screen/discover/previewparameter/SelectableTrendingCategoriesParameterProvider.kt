@@ -13,10 +13,10 @@ class SelectableTrendingCategoriesParameterProvider :
     companion object {
 
         fun trendingCategories(): List<SelectableItem<Category>> {
-            val news = Category(1, "News", "News")
-            val society = Category(2, "Society", "Society")
-            val education = Category(3, "Education", "Education")
-            val sports = Category(4, "Sports", "Sports")
+            val news = Category(id = 1, name = "News")
+            val society = Category(id = 2, "Society")
+            val education = Category(id = 3, name = "Education")
+            val sports = Category(id = 4, name = "Sports")
 
             return listOf(
                 SelectableItem(isSelected = false, item = news),

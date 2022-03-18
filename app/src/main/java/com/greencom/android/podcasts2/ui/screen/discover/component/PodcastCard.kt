@@ -16,7 +16,6 @@ import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.IPodcast
 import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
-import com.greencom.android.podcasts2.ui.common.component.CategoryLabelRow
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -54,11 +53,6 @@ fun PodcastCard(
                         scale(Scale.FILL)
                     },
                     contentDescription = stringResource(R.string.podcast_cover),
-                )
-
-                CategoryLabelRow(
-                    modifier = Modifier.padding(start = 8.dp, top = 8.dp),
-                    categories = podcast.categories,
                 )
             }
 

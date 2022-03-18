@@ -8,10 +8,6 @@ class CategoryRepository @Inject constructor(
     private val localDataSource: CategoryLocalDataSource,
 ) {
 
-    fun getCategoryDisplayName(categoryId: Int): String {
-        return localDataSource.getCategoryDisplayName(categoryId)
-    }
-
     fun getTrendingCategories(): List<Category> {
         return localDataSource.getTrendingCategories()
     }

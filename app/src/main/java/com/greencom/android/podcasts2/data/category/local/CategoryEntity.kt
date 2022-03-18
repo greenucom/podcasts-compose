@@ -13,15 +13,11 @@ data class CategoryEntity(
     @SerialName("name")
     val name: String,
 
-    @SerialName("displayName")
-    val displayName: String,
-
 ) {
 
     fun toDomain(): Category = Category(
         id = id,
         name = name,
-        displayName = displayName,
     )
 
     companion object {
@@ -29,7 +25,6 @@ data class CategoryEntity(
         fun fromDomain(category: Category): CategoryEntity = CategoryEntity(
             id = category.id,
             name = category.name,
-            displayName = category.displayName,
         )
 
     }
