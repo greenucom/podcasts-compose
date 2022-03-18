@@ -9,7 +9,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @ProvidedTypeConverter
-class CategoryEntitiesTypeConverter(private val json: Json) {
+class CategoryEntityListTypeConverter(private val json: Json) {
 
     @TypeConverter
     fun fromCategoryEntityList(categories: List<CategoryEntity>): String {

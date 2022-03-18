@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.greencom.android.podcasts2.data.category.local.CategoryEntitiesTypeConverter
 import com.greencom.android.podcasts2.data.category.local.CategoryEntity
+import com.greencom.android.podcasts2.data.category.local.CategoryEntityListTypeConverter
 
 @Entity(tableName = "podcasts_temp")
-@TypeConverters(CategoryEntitiesTypeConverter::class)
+@TypeConverters(CategoryEntityListTypeConverter::class)
 data class PodcastEntityTemp(
 
     @PrimaryKey
