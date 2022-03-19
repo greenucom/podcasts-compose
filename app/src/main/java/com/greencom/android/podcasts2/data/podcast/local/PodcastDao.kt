@@ -9,7 +9,7 @@ abstract class PodcastDao {
     protected abstract suspend fun clearTemp()
 
     @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
-    protected abstract fun insertToTemp(podcast: PodcastEntity)
+    protected abstract suspend fun insertToTemp(podcast: PodcastEntity)
 
     @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
     protected abstract suspend fun insertToTemp(podcasts: List<PodcastEntity>)
