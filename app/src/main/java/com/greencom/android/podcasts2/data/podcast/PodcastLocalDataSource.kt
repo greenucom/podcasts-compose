@@ -39,23 +39,11 @@ class PodcastLocalDataSource @Inject constructor(
         updateSubscriptionIds(podcast)
     }
 
-    suspend fun insert(podcasts: List<Podcast>) {
-        val entities = podcasts.map { PodcastEntity.fromDomain(it) }
-        podcastDao.insert(entities)
-        updateSubscriptionIds(podcasts)
-    }
-
     private fun updateSubscriptionIds(podcast: Podcast) {
         if (podcast.isSubscribed) {
             _subscriptionIds.update { it + podcast.id }
         } else {
             _subscriptionIds.update { it - podcast.id }
-        }
-    }
-
-    private fun updateSubscriptionIds(podcasts: List<Podcast>) {
-        for (podcast in podcasts) {
-            updateSubscriptionIds(podcast)
         }
     }
 
