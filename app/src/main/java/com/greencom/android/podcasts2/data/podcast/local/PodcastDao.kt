@@ -8,13 +8,8 @@ abstract class PodcastDao {
     @Query("DELETE FROM podcasts_temp")
     protected abstract suspend fun clearTemp()
 
-    @Transaction
-    open suspend fun insert(podcasts: List<PodcastEntity>) {
-        insertToTemp(podcasts)
-        mergeTemp()
-        update(podcasts)
-        clearTemp()
-    }
+    @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
+    protected abstract fun insertToTemp(podcast: PodcastEntity)
 
     @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
     protected abstract suspend fun insertToTemp(podcasts: List<PodcastEntity>)
@@ -29,11 +24,27 @@ abstract class PodcastDao {
     """)
     protected abstract suspend fun mergeTemp()
 
-    @Update
-    protected abstract suspend fun update(podcasts: List<PodcastEntity>)
+    @Transaction
+    open suspend fun insert(podcast: PodcastEntity) {
+        insertToTemp(podcast)
+        mergeTemp()
+        update(podcast)
+        clearTemp()
+    }
+
+    @Transaction
+    open suspend fun insert(podcasts: List<PodcastEntity>) {
+        insertToTemp(podcasts)
+        mergeTemp()
+        update(podcasts)
+        clearTemp()
+    }
 
     @Update
-    abstract suspend fun update(podcast: PodcastEntity)
+    protected abstract suspend fun update(podcast: PodcastEntity)
+
+    @Update
+    protected abstract suspend fun update(podcasts: List<PodcastEntity>)
 
     @Query("SELECT id FROM podcasts WHERE is_subscribed = 1")
     abstract suspend fun getSubscriptionIds(): List<Long>
