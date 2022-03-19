@@ -16,9 +16,12 @@ import androidx.compose.ui.unit.dp
 import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.category.component.CategoryLabelRow
 import com.greencom.android.podcasts2.ui.common.podcast.previewparameter.PodcastParameterProvider
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+
+private const val MaxCategoryLabelCount = 3
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -75,6 +78,12 @@ fun PodcastItem(
                 style = MaterialTheme.typography.body2,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
+            )
+
+            CategoryLabelRow(
+                modifier = Modifier.padding(top = 8.dp),
+                categories = podcast.categories,
+                maxCount = MaxCategoryLabelCount,
             )
 
             SubscribeButton(

@@ -16,7 +16,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val TextColorAlpha = 0.74f
 
-private val CategoryLabelBackgroundLight = Color(0xFFE5E5E5)
+private val CategoryLabelBackgroundLight = Color(0xFFEFEFEF)
 private val CategoryLabelBackgroundDark = Color(0xFF323232)
 private val Colors.categoryLabelBackground: Color
     get() = if (isLight) CategoryLabelBackgroundLight else CategoryLabelBackgroundDark
