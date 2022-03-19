@@ -32,7 +32,12 @@ fun PodcastItem(
         modifier = modifier.fillMaxWidth(),
         onClick = { onPodcastClicked(podcast) },
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp, bottom = 12.dp),
+        ) {
+
             Row {
                 Image(
                     modifier = Modifier
@@ -70,6 +75,12 @@ fun PodcastItem(
                 style = MaterialTheme.typography.body2,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
+            )
+
+            SubscribeButton(
+                modifier = Modifier.padding(top = 6.dp),
+                isSubscribed = podcast.isSubscribed,
+                onSubscribedChanged = {},
             )
         }
     }
