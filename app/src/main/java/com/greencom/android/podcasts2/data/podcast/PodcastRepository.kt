@@ -26,7 +26,7 @@ class PodcastRepository @Inject constructor(
     }
 
     suspend fun updatePodcast(podcast: IPodcast) {
-        localDataSource.update(podcast)
+        localDataSource.insert(podcast)
     }
 
 }

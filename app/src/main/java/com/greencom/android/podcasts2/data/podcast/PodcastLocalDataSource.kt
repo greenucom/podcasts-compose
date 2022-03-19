@@ -31,22 +31,29 @@ class PodcastLocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun insert(podcast: IPodcast) {
+        val entity = PodcastEntity.fromDomain(podcast)
+        podcastDao.insert(entity)
+        updateSubscriptionIds(podcast)
+    }
+
     suspend fun insert(podcasts: List<IPodcast>) {
         val entities = podcasts.map { PodcastEntity.fromDomain(it) }
         podcastDao.insert(entities)
+        updateSubscriptionIds(podcasts)
     }
 
-    suspend fun update(podcast: IPodcast) {
-        val entity = PodcastEntity.fromDomain(podcast)
-        podcastDao.insert(entity)
-        updateSubscription(podcast)
-    }
-
-    private fun updateSubscription(podcast: IPodcast) {
+    private fun updateSubscriptionIds(podcast: IPodcast) {
         if (podcast.isSubscribed) {
             subscriptionIds.update { it + podcast.id }
         } else {
             subscriptionIds.update { it - podcast.id }
+        }
+    }
+
+    private fun updateSubscriptionIds(podcasts: List<IPodcast>) {
+        for (podcast in podcasts) {
+            updateSubscriptionIds(podcast)
         }
     }
 
