@@ -7,7 +7,8 @@ import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategor
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
-import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsUseCase
+import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
+import com.greencom.android.podcasts2.domain.podcast.usecase.TrendingPodcastsFlowUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,8 @@ class DiscoverViewModel @Inject constructor(
     private val getTrendingCategoriesUseCase: GetTrendingCategoriesUseCase,
     private val getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
     private val toggleSelectableTrendingCategoryUseCase: ToggleSelectableTrendingCategoryUseCase,
-    private val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
+    private val requestTrendingPodcastsUseCase: RequestTrendingPodcastsUseCase,
+    private val trendingPodcastsFlowUseCase: TrendingPodcastsFlowUseCase,
 ) : BaseViewModel() {
 
     private val _recommendedPodcastsState =
@@ -42,10 +44,11 @@ class DiscoverViewModel @Inject constructor(
     private var trendingPodcastsJob: Job? = null
 
     init {
+        loadTrendingCategoriesAndRequestPodcasts()
         loadTrendingPodcasts()
     }
 
-    private fun loadTrendingPodcasts() = viewModelScope.launch {
+    private fun loadTrendingCategoriesAndRequestPodcasts() = viewModelScope.launch {
         val trendingCategories = getTrendingCategoriesUseCase(Unit)
         getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
             val categories = trendingCategories.map { category ->
@@ -60,11 +63,11 @@ class DiscoverViewModel @Inject constructor(
                 .filter { it.isSelected }
                 .map { it.item }
 
-            loadTrendingPodcastsForSelectedCategories(selectedCategories)
+            requestTrendingPodcastsForSelectedCategories(selectedCategories)
         }
     }
 
-    private fun loadTrendingPodcastsForSelectedCategories(
+    private fun requestTrendingPodcastsForSelectedCategories(
         selectedCategories: List<Category>
     ) {
         trendingPodcastsJob?.cancel()
@@ -80,19 +83,23 @@ class DiscoverViewModel @Inject constructor(
                 max = max,
                 inCategories = selectedCategories,
             )
-            getTrendingPodcastsUseCase(params)
-                .onSuccess(::onLoadTrendingPodcastsSuccess)
-                .onFailure(::onLoadTrendingPodcastsFailure)
+            requestTrendingPodcastsUseCase(params)
+                .onFailure(::onRequestTrendingPodcastsFailure)
         }
     }
 
-    private fun onLoadTrendingPodcastsSuccess(podcasts: List<Podcast>) {
-        _trendingPodcastsState.update { TrendingPodcastsState.Success(podcasts) }
-    }
-
-    private fun onLoadTrendingPodcastsFailure(e: Throwable) {
+    private fun onRequestTrendingPodcastsFailure(e: Throwable) {
         if (e !is CancellationException) {
             _trendingPodcastsState.update { TrendingPodcastsState.Error }
+        }
+    }
+
+    private fun loadTrendingPodcasts() = viewModelScope.launch {
+        trendingPodcastsFlowUseCase(Unit).collect { podcasts ->
+            if (podcasts.isNotEmpty()) {
+                val state = TrendingPodcastsState.Success(podcasts)
+                _trendingPodcastsState.update { state }
+            }
         }
     }
 
@@ -109,7 +116,7 @@ class DiscoverViewModel @Inject constructor(
         val selectedCategories = trendingCategories.value
             .filter { it.isSelected }
             .map { it.item }
-        loadTrendingPodcastsForSelectedCategories(selectedCategories)
+        requestTrendingPodcastsForSelectedCategories(selectedCategories)
     }
 
     sealed interface RecommendedPodcastsState {

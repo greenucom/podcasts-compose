@@ -7,6 +7,7 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +19,8 @@ class PodcastLocalDataSource @Inject constructor(
     private val podcastDao: PodcastDao,
 ) {
 
-    private val subscriptionIds = MutableStateFlow(setOf<Long>())
+    private val _subscriptionIds = MutableStateFlow(setOf<Long>())
+    val subscriptionIds = _subscriptionIds.asStateFlow()
 
     init {
         loadSubscriptionIds()
@@ -27,7 +29,7 @@ class PodcastLocalDataSource @Inject constructor(
     private fun loadSubscriptionIds() {
         applicationScope.launch(Dispatchers.IO) {
             val ids = podcastDao.getSubscriptionIds().toSet()
-            subscriptionIds.update { ids }
+            _subscriptionIds.update { ids }
         }
     }
 
@@ -45,9 +47,9 @@ class PodcastLocalDataSource @Inject constructor(
 
     private fun updateSubscriptionIds(podcast: Podcast) {
         if (podcast.isSubscribed) {
-            subscriptionIds.update { it + podcast.id }
+            _subscriptionIds.update { it + podcast.id }
         } else {
-            subscriptionIds.update { it - podcast.id }
+            _subscriptionIds.update { it - podcast.id }
         }
     }
 

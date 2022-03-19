@@ -5,18 +5,17 @@ import com.greencom.android.podcasts2.data.podcast.PodcastRepository
 import com.greencom.android.podcasts2.di.IODispatcher
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.language.Language
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class GetTrendingPodcastsUseCase @Inject constructor(
+class RequestTrendingPodcastsUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val podcastRepository: PodcastRepository,
-) : UseCase<GetTrendingPodcastsPayload, List<Podcast>>(dispatcher) {
+) : UseCase<GetTrendingPodcastsPayload, Unit>(dispatcher) {
 
-    override suspend fun execute(params: GetTrendingPodcastsPayload): List<Podcast> {
+    override suspend fun execute(params: GetTrendingPodcastsPayload) {
         val (max, languages, inCategories, notInCategories) = params
-        return podcastRepository.getTrendingPodcasts(
+        podcastRepository.loadTrendingPodcasts(
             max = max,
             languages = languages,
             inCategories = inCategories,

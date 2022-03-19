@@ -6,25 +6,34 @@ import com.greencom.android.podcasts2.domain.category.toCategoriesString
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.language.toLanguagesString
 import com.greencom.android.podcasts2.domain.podcast.Podcast
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PodcastRemoteDataSource @Inject constructor(
     private val podcastService: PodcastService,
 ) {
 
-    suspend fun getTrendingPodcasts(
+    private val _trendingPodcasts = MutableStateFlow<List<Podcast>>(emptyList())
+    val trendingPodcasts = _trendingPodcasts.asStateFlow()
+
+    suspend fun loadTrendingPodcasts(
         max: Int,
         languages: List<Language>,
         inCategories: List<Category>,
         notInCategories: List<Category>,
-    ): List<Podcast> {
+    ) {
         val dto = podcastService.getTrendingPodcasts(
             max = max,
             languages = languages.toLanguagesString(),
             inCategories = inCategories.toCategoriesString(),
             notInCategories = notInCategories.toCategoriesString(),
         )
-        return dto.toDomain()
+        val podcasts = dto.toDomain()
+        _trendingPodcasts.update { podcasts }
     }
 
 }
