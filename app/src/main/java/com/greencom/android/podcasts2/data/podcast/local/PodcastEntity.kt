@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.greencom.android.podcasts2.data.category.local.CategoryEntity
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityListTypeConverter
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 
 @Entity(tableName = "podcasts")
 @TypeConverters(CategoryEntityListTypeConverter::class)
@@ -38,7 +38,7 @@ data class PodcastEntity(
 
     companion object {
 
-        fun fromDomain(podcast: IPodcast): PodcastEntity = PodcastEntity(
+        fun fromDomain(podcast: Podcast): PodcastEntity = PodcastEntity(
             id = podcast.id,
             title = podcast.title,
             description = podcast.description,

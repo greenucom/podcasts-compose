@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.PlaceholderLoadingEffect
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
@@ -44,7 +44,7 @@ fun LazyListScope.trendingPodcastList(
     selectableCategories: List<SelectableItem<Category>>,
     onSelectableCategoryClicked: (selectableCategory: SelectableItem<Category>) -> Unit,
     trendingPodcastsState: DiscoverViewModel.TrendingPodcastsState,
-    onTrendingPodcastClicked: (podcast: IPodcast) -> Unit,
+    onPodcastClicked: (podcast: Podcast) -> Unit,
     onTryAgainClicked: () -> Unit,
 ) {
     item(key = KeyHeader) {
@@ -73,7 +73,7 @@ fun LazyListScope.trendingPodcastList(
             ) { index, podcast ->
                 PodcastItem(
                     podcast = podcast,
-                    onPodcastClicked = onTrendingPodcastClicked,
+                    onPodcastClicked = onPodcastClicked,
                 )
 
                 if (index != trendingPodcastsState.trendingPodcasts.lastIndex) {
@@ -123,7 +123,7 @@ private fun Light(
                     selectableCategories = param.selectableTrendingCategories,
                     onSelectableCategoryClicked = {},
                     trendingPodcastsState = DiscoverViewModel.TrendingPodcastsState.Success(param.trendingPodcasts),
-                    onTrendingPodcastClicked = {},
+                    onPodcastClicked = {},
                     onTryAgainClicked = {},
                 )
             }
@@ -148,7 +148,7 @@ private fun Dark(
                     selectableCategories = param.selectableTrendingCategories,
                     onSelectableCategoryClicked = {},
                     trendingPodcastsState = DiscoverViewModel.TrendingPodcastsState.Success(param.trendingPodcasts),
-                    onTrendingPodcastClicked = {},
+                    onPodcastClicked = {},
                     onTryAgainClicked = {},
                 )
             }

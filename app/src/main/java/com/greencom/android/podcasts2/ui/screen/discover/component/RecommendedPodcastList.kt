@@ -16,11 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.podcast.previewparameter.PodcastsParameterProvider
 import com.greencom.android.podcasts2.ui.common.rememberPlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
-import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastsParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.placeholderLoadingEnd
 import com.greencom.android.podcasts2.ui.theme.placeholderLoadingStart
@@ -33,7 +32,7 @@ private const val PlaceholderCount = 4
 fun LazyListScope.recommendedPodcastList(
     lazyRowState: LazyListState,
     recommendedPodcastsState: DiscoverViewModel.RecommendedPodcastsState,
-    onRecommendedPodcastClicked: (podcast: IPodcast) -> Unit,
+    onPodcastClicked: (podcast: Podcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     item(key = KeyRecommendedPodcastList) {
@@ -72,7 +71,7 @@ fun LazyListScope.recommendedPodcastList(
                         ) { podcast ->
                             PodcastCard(
                                 podcast = podcast,
-                                onPodcastClicked = onRecommendedPodcastClicked,
+                                onPodcastClicked = onPodcastClicked,
                             )
                         }
                     }
@@ -91,8 +90,8 @@ fun LazyListScope.recommendedPodcastList(
 @Composable
 @Preview(showBackground = true)
 private fun Light(
-    @PreviewParameter(TrendingPodcastsParameterProvider::class)
-    podcasts: List<TrendingPodcast>
+    @PreviewParameter(PodcastsParameterProvider::class)
+    podcasts: List<Podcast>
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -101,7 +100,7 @@ private fun Light(
                 recommendedPodcastList(
                     lazyRowState = state,
                     recommendedPodcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts),
-                    onRecommendedPodcastClicked = {},
+                    onPodcastClicked = {},
                 )
             }
         }
@@ -115,8 +114,8 @@ private fun Light(
     locale = "ru",
 )
 private fun Dark(
-    @PreviewParameter(TrendingPodcastsParameterProvider::class)
-    podcasts: List<TrendingPodcast>
+    @PreviewParameter(PodcastsParameterProvider::class)
+    podcasts: List<Podcast>
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -125,7 +124,7 @@ private fun Dark(
                 recommendedPodcastList(
                     lazyRowState = state,
                     recommendedPodcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts),
-                    onRecommendedPodcastClicked = {},
+                    onPodcastClicked = {},
                 )
             }
         }

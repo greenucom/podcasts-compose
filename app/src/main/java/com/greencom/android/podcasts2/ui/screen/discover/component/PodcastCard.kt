@@ -14,17 +14,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.size.Scale
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
-import com.greencom.android.podcasts2.ui.screen.discover.previewparameter.TrendingPodcastParameterProvider
+import com.greencom.android.podcasts2.ui.common.podcast.previewparameter.PodcastParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PodcastCard(
-    podcast: IPodcast,
-    onPodcastClicked: (podcast: IPodcast) -> Unit,
+    podcast: Podcast,
+    onPodcastClicked: (podcast: Podcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
@@ -67,8 +66,8 @@ fun PodcastCard(
 @Composable
 @Preview(showBackground = true)
 private fun Light(
-    @PreviewParameter(TrendingPodcastParameterProvider::class)
-    podcast: TrendingPodcast
+    @PreviewParameter(PodcastParameterProvider::class)
+    podcast: Podcast
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -88,8 +87,8 @@ private fun Light(
     locale = "ru",
 )
 private fun Dark(
-    @PreviewParameter(TrendingPodcastParameterProvider::class)
-    podcast: TrendingPodcast
+    @PreviewParameter(PodcastParameterProvider::class)
+    podcast: Podcast
 ) {
     PodcastsComposeTheme {
         Surface {

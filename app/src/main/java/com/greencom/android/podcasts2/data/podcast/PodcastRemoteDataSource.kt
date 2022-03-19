@@ -5,7 +5,7 @@ import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.category.toCategoriesString
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.language.toLanguagesString
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import javax.inject.Inject
 
 class PodcastRemoteDataSource @Inject constructor(
@@ -17,7 +17,7 @@ class PodcastRemoteDataSource @Inject constructor(
         languages: List<Language>,
         inCategories: List<Category>,
         notInCategories: List<Category>,
-    ): List<TrendingPodcast> {
+    ): List<Podcast> {
         val dto = podcastService.getTrendingPodcasts(
             max = max,
             languages = languages.toLanguagesString(),

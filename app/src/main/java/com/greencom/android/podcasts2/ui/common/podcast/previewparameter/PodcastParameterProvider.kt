@@ -1,17 +1,17 @@
-package com.greencom.android.podcasts2.ui.screen.discover.previewparameter
+package com.greencom.android.podcasts2.ui.common.podcast.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.category.previewparameter.CategoriesParameterProvider
 
-class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcast> {
+class PodcastParameterProvider : PreviewParameterProvider<Podcast> {
 
-    override val values: Sequence<TrendingPodcast>
+    override val values: Sequence<Podcast>
         get() = sequenceOf(shortTrendingPodcast(), longTrendingPodcast())
 
     companion object {
 
-        fun shortTrendingPodcast(): TrendingPodcast = TrendingPodcast(
+        fun shortTrendingPodcast(): Podcast = Podcast(
             id = 1,
             title = "Lorem Ipsum",
             description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -21,7 +21,7 @@ class TrendingPodcastParameterProvider : PreviewParameterProvider<TrendingPodcas
             isSubscribed = false,
         )
 
-        fun longTrendingPodcast(): TrendingPodcast = shortTrendingPodcast().copy(
+        fun longTrendingPodcast(): Podcast = shortTrendingPodcast().copy(
             id = 2,
             title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
             description = "Lorem Ipsum is simply dummy text of the printing and typesetting " +

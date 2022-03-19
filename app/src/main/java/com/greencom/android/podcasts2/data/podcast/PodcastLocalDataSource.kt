@@ -3,7 +3,7 @@ package com.greencom.android.podcasts2.data.podcast
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
 import com.greencom.android.podcasts2.data.podcast.local.PodcastEntity
 import com.greencom.android.podcasts2.di.ApplicationScope
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,19 +31,19 @@ class PodcastLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun insert(podcast: IPodcast) {
+    suspend fun insert(podcast: Podcast) {
         val entity = PodcastEntity.fromDomain(podcast)
         podcastDao.insert(entity)
         updateSubscriptionIds(podcast)
     }
 
-    suspend fun insert(podcasts: List<IPodcast>) {
+    suspend fun insert(podcasts: List<Podcast>) {
         val entities = podcasts.map { PodcastEntity.fromDomain(it) }
         podcastDao.insert(entities)
         updateSubscriptionIds(podcasts)
     }
 
-    private fun updateSubscriptionIds(podcast: IPodcast) {
+    private fun updateSubscriptionIds(podcast: Podcast) {
         if (podcast.isSubscribed) {
             subscriptionIds.update { it + podcast.id }
         } else {
@@ -51,7 +51,7 @@ class PodcastLocalDataSource @Inject constructor(
         }
     }
 
-    private fun updateSubscriptionIds(podcasts: List<IPodcast>) {
+    private fun updateSubscriptionIds(podcasts: List<Podcast>) {
         for (podcast in podcasts) {
             updateSubscriptionIds(podcast)
         }

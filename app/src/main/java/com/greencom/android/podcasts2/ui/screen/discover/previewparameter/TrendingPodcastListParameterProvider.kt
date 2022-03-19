@@ -2,8 +2,9 @@ package com.greencom.android.podcasts2.ui.screen.discover.previewparameter
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
+import com.greencom.android.podcasts2.ui.common.podcast.previewparameter.PodcastsParameterProvider
 
 class TrendingPodcastListParameterProvider :
     PreviewParameterProvider<TrendingPodcastListParameter> {
@@ -16,7 +17,7 @@ class TrendingPodcastListParameterProvider :
         fun trendingPodcastListParameter(): TrendingPodcastListParameter {
             val categories =
                 SelectableTrendingCategoriesParameterProvider.trendingCategories()
-            val podcasts = TrendingPodcastsParameterProvider.trendingPodcasts()
+            val podcasts = PodcastsParameterProvider.trendingPodcasts()
 
             return TrendingPodcastListParameter(
                 selectableTrendingCategories = categories,
@@ -30,5 +31,5 @@ class TrendingPodcastListParameterProvider :
 
 class TrendingPodcastListParameter(
     val selectableTrendingCategories: List<SelectableItem<Category>>,
-    val trendingPodcasts: List<TrendingPodcast>,
+    val trendingPodcasts: List<Podcast>,
 )

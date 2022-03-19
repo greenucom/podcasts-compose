@@ -5,8 +5,7 @@ import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
-import com.greencom.android.podcasts2.domain.podcast.IPodcast
-import com.greencom.android.podcasts2.domain.podcast.TrendingPodcast
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
@@ -87,7 +86,7 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun onLoadTrendingPodcastsSuccess(podcasts: List<TrendingPodcast>) {
+    private fun onLoadTrendingPodcastsSuccess(podcasts: List<Podcast>) {
         _trendingPodcastsState.update { TrendingPodcastsState.Success(podcasts) }
     }
 
@@ -114,12 +113,12 @@ class DiscoverViewModel @Inject constructor(
     }
 
     sealed interface RecommendedPodcastsState {
-        data class Success(val recommendedPodcasts: List<IPodcast>) : RecommendedPodcastsState
+        data class Success(val recommendedPodcasts: List<Podcast>) : RecommendedPodcastsState
         object Loading : RecommendedPodcastsState
     }
 
     sealed interface TrendingPodcastsState {
-        data class Success(val trendingPodcasts: List<TrendingPodcast>) : TrendingPodcastsState
+        data class Success(val trendingPodcasts: List<Podcast>) : TrendingPodcastsState
         object Loading : TrendingPodcastsState
         object Error : TrendingPodcastsState
     }
