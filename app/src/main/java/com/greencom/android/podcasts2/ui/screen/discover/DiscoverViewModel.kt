@@ -9,6 +9,7 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.domain.podcast.usecase.TrendingPodcastsFlowUseCase
+import com.greencom.android.podcasts2.domain.podcast.usecase.UpdatePodcastSubscriptionUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,7 @@ class DiscoverViewModel @Inject constructor(
     private val toggleSelectableTrendingCategoryUseCase: ToggleSelectableTrendingCategoryUseCase,
     private val requestTrendingPodcastsUseCase: RequestTrendingPodcastsUseCase,
     private val trendingPodcastsFlowUseCase: TrendingPodcastsFlowUseCase,
+    private val updatePodcastSubscriptionUseCase: UpdatePodcastSubscriptionUseCase,
 ) : BaseViewModel() {
 
     private val _recommendedPodcastsState =
@@ -108,6 +110,10 @@ class DiscoverViewModel @Inject constructor(
             val category = selectableCategory.item
             toggleSelectableTrendingCategoryUseCase(category)
         }
+    }
+
+    fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
+        updatePodcastSubscriptionUseCase(podcast)
     }
 
     fun onTryAgainClicked() {

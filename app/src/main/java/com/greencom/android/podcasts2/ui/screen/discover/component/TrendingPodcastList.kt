@@ -45,6 +45,7 @@ fun LazyListScope.trendingPodcastList(
     onSelectableCategoryClicked: (selectableCategory: SelectableItem<Category>) -> Unit,
     trendingPodcastsState: DiscoverViewModel.TrendingPodcastsState,
     onPodcastClicked: (podcast: Podcast) -> Unit,
+    onSubscribedChanged: (podcast: Podcast) -> Unit,
     onTryAgainClicked: () -> Unit,
 ) {
     item(key = KeyHeader) {
@@ -74,6 +75,7 @@ fun LazyListScope.trendingPodcastList(
                 PodcastItem(
                     podcast = podcast,
                     onPodcastClicked = onPodcastClicked,
+                    onSubscribedChanged = onSubscribedChanged,
                 )
 
                 if (index != trendingPodcastsState.trendingPodcasts.lastIndex) {
@@ -124,6 +126,7 @@ private fun Light(
                     onSelectableCategoryClicked = {},
                     trendingPodcastsState = DiscoverViewModel.TrendingPodcastsState.Success(param.trendingPodcasts),
                     onPodcastClicked = {},
+                    onSubscribedChanged = {},
                     onTryAgainClicked = {},
                 )
             }
@@ -149,6 +152,7 @@ private fun Dark(
                     onSelectableCategoryClicked = {},
                     trendingPodcastsState = DiscoverViewModel.TrendingPodcastsState.Success(param.trendingPodcasts),
                     onPodcastClicked = {},
+                    onSubscribedChanged = {},
                     onTryAgainClicked = {},
                 )
             }

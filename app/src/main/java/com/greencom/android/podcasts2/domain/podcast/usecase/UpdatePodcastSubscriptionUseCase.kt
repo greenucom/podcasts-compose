@@ -7,7 +7,7 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class TogglePodcastSubscriptionUseCase @Inject constructor(
+class UpdatePodcastSubscriptionUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val podcastRepository: PodcastRepository,
 ) : UseCase<Podcast, Unit>(dispatcher) {

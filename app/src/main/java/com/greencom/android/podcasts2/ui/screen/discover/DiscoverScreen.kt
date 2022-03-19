@@ -66,6 +66,7 @@ fun DiscoverScreen(
                 onSelectableCategoryClicked = discoverViewModel::onSelectableTrendingCategoryClicked,
                 trendingPodcastsState = trendingPodcastsState,
                 onPodcastClicked = onPodcastClicked,
+                onSubscribedChanged = discoverViewModel::onSubscribedChanged,
                 onTryAgainClicked = discoverViewModel::onTryAgainClicked,
             )
 

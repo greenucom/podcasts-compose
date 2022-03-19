@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import coil.size.Scale
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.common.podcast.previewparameter.PodcastParameterProvider
+import com.greencom.android.podcasts2.ui.common.rememberImagePainterCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -25,6 +25,7 @@ import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 fun PodcastItem(
     podcast: Podcast,
     onPodcastClicked: (podcast: Podcast) -> Unit,
+    onSubscribedChanged: (podcast: Podcast) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -79,7 +80,10 @@ fun PodcastItem(
             SubscribeButton(
                 modifier = Modifier.padding(top = 6.dp),
                 isSubscribed = podcast.isSubscribed,
-                onSubscribedChanged = {},
+                onSubscribedChanged = {
+                    val newPodcast = podcast.copy(isSubscribed = it)
+                    onSubscribedChanged(newPodcast)
+                },
             )
         }
     }
@@ -95,6 +99,7 @@ private fun Light(
         PodcastItem(
             podcast = podcast,
             onPodcastClicked = {},
+            onSubscribedChanged = {},
         )
     }
 }
@@ -113,6 +118,7 @@ private fun Dark(
         PodcastItem(
             podcast = podcast,
             onPodcastClicked = {},
+            onSubscribedChanged = {},
         )
     }
 }
