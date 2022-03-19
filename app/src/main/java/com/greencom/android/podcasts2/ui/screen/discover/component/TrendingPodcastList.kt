@@ -103,7 +103,7 @@ fun LazyListScope.trendingPodcastList(
         DiscoverViewModel.TrendingPodcastsState.Error -> {
             item(key = KeyError) {
                 ErrorMessage(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                     onTryAgainClicked = onTryAgainClicked,
                 )
             }
