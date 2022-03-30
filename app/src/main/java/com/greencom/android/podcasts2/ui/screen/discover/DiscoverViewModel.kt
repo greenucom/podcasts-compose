@@ -6,7 +6,6 @@ import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendin
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsPayload
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.domain.podcast.usecase.TrendingPodcastsFlowUseCase
 import com.greencom.android.podcasts2.domain.podcast.usecase.UpdatePodcastSubscriptionUseCase
@@ -81,7 +80,7 @@ class DiscoverViewModel @Inject constructor(
                 value.coerceIn(TrendingPodcastCountMinValue, TrendingPodcastCountMaxValue)
             }
 
-            val params = GetTrendingPodcastsPayload(
+            val params = RequestTrendingPodcastsUseCase.Params(
                 max = max,
                 inCategories = selectedCategories,
             )

@@ -11,9 +11,9 @@ import javax.inject.Inject
 class RequestTrendingPodcastsUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val podcastRepository: PodcastRepository,
-) : UseCase<GetTrendingPodcastsPayload, Unit>(dispatcher) {
+) : UseCase<RequestTrendingPodcastsUseCase.Params, Unit>(dispatcher) {
 
-    override suspend fun execute(params: GetTrendingPodcastsPayload) {
+    override suspend fun execute(params: Params) {
         val (max, languages, inCategories, notInCategories) = params
         podcastRepository.loadTrendingPodcasts(
             max = max,
@@ -23,17 +23,17 @@ class RequestTrendingPodcastsUseCase @Inject constructor(
         )
     }
 
-}
+    data class Params(
+        val max: Int = MAX_DEFAULT_VALUE,
+        val languages: List<Language> = listOf(Language.Ru),
+        val inCategories: List<Category> = emptyList(),
+        val notInCategories: List<Category> = emptyList(),
+    ) {
 
-data class GetTrendingPodcastsPayload(
-    val max: Int = MAX_DEFAULT_VALUE,
-    val languages: List<Language> = listOf(Language.Ru),
-    val inCategories: List<Category> = emptyList(),
-    val notInCategories: List<Category> = emptyList(),
-) {
+        companion object {
+            private const val MAX_DEFAULT_VALUE = 20
+        }
 
-    companion object {
-        private const val MAX_DEFAULT_VALUE = 20
     }
 
 }
