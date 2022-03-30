@@ -2,13 +2,8 @@ package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendingCategoriesIdsUseCase
-import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
-import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
-import com.greencom.android.podcasts2.domain.podcast.usecase.TrendingPodcastsFlowUseCase
-import com.greencom.android.podcasts2.domain.podcast.usecase.UpdatePodcastSubscriptionUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,12 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val getTrendingCategoriesUseCase: GetTrendingCategoriesUseCase,
-    private val getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
-    private val toggleSelectableTrendingCategoryUseCase: ToggleSelectableTrendingCategoryUseCase,
-    private val requestTrendingPodcastsUseCase: RequestTrendingPodcastsUseCase,
-    private val trendingPodcastsFlowUseCase: TrendingPodcastsFlowUseCase,
-    private val updatePodcastSubscriptionUseCase: UpdatePodcastSubscriptionUseCase,
+    private val interactor: DiscoverInteractor,
 ) : BaseViewModel() {
 
     private val _recommendedPodcastsState =
@@ -50,8 +40,8 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun loadTrendingCategoriesAndRequestPodcasts() = viewModelScope.launch {
-        val trendingCategories = getTrendingCategoriesUseCase(Unit)
-        getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
+        val trendingCategories = interactor.getTrendingCategoriesUseCase(Unit)
+        interactor.getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
             val categories = trendingCategories.map { category ->
                 SelectableItem(
                     isSelected = category.id in ids,
@@ -84,7 +74,7 @@ class DiscoverViewModel @Inject constructor(
                 max = max,
                 inCategories = selectedCategories,
             )
-            requestTrendingPodcastsUseCase(params)
+            interactor.requestTrendingPodcastsUseCase(params)
                 .onFailure(::onRequestTrendingPodcastsFailure)
         }
     }
@@ -96,7 +86,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun loadTrendingPodcasts() = viewModelScope.launch {
-        trendingPodcastsFlowUseCase(Unit).collect { podcasts ->
+        interactor.trendingPodcastsFlowUseCase(Unit).collect { podcasts ->
             if (podcasts.isNotEmpty()) {
                 val state = TrendingPodcastsState.Success(podcasts)
                 _trendingPodcastsState.update { state }
@@ -107,12 +97,12 @@ class DiscoverViewModel @Inject constructor(
     fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<Category>) {
         viewModelScope.launch {
             val category = selectableCategory.item
-            toggleSelectableTrendingCategoryUseCase(category)
+            interactor.toggleSelectableTrendingCategoryUseCase(category)
         }
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
-        updatePodcastSubscriptionUseCase(podcast)
+        interactor.updatePodcastSubscriptionUseCase(podcast)
     }
 
     fun onTryAgainClicked() {
