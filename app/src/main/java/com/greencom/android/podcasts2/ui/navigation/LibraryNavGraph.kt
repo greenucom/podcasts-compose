@@ -7,7 +7,14 @@ import androidx.navigation.navigation
 import com.greencom.android.podcasts2.ui.screen.library.LibraryScreen
 
 fun NavGraphBuilder.libraryNavGraph(navController: NavHostController) {
-    navigation(route = BottomNavBarItem.Library.route, startDestination = Screen.Library.route) {
-        composable(Screen.Library.route) { LibraryScreen() }
+    navigation(
+        route = BottomNavBarItem.Library.route,
+        startDestination = Screen.Library.route,
+    ) {
+
+        composable(Screen.Library.route) {
+            LibraryScreen()
+        }
+
     }
 }

@@ -7,7 +7,14 @@ import androidx.navigation.navigation
 import com.greencom.android.podcasts2.ui.screen.mypodcasts.MyPodcastsScreen
 
 fun NavGraphBuilder.myPodcastsNavGraph(navController: NavHostController) {
-    navigation(route = BottomNavBarItem.MyPodcasts.route, startDestination = Screen.MyPodcasts.route) {
-        composable(Screen.MyPodcasts.route) { MyPodcastsScreen() }
+    navigation(
+        route = BottomNavBarItem.MyPodcasts.route,
+        startDestination = Screen.MyPodcasts.route,
+    ) {
+
+        composable(Screen.MyPodcasts.route) {
+            MyPodcastsScreen()
+        }
+
     }
 }
