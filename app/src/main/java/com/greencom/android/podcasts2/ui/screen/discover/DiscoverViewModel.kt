@@ -18,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val interactor: DiscoverInteractor,
-) : BaseViewModel() {
+) : BaseViewModel<DiscoverViewModel.ViewState, DiscoverViewModel.ViewEvent>() {
+
+    override val initialViewState = ViewState.None
 
     private val _recommendedPodcastsState =
         MutableStateFlow<RecommendedPodcastsState>(RecommendedPodcastsState.Loading)
@@ -124,6 +126,12 @@ class DiscoverViewModel @Inject constructor(
         object Loading : TrendingPodcastsState
         object Error : TrendingPodcastsState
     }
+
+    sealed interface ViewState : BaseViewModel.ViewState {
+        object None : ViewState
+    }
+
+    sealed interface ViewEvent : BaseViewModel.ViewEvent
 
     companion object {
         private const val TrendingPodcastCountMaxValue = 40

@@ -44,7 +44,7 @@ fun DiscoverScreen(
         val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
         LaunchedEffect(Unit) {
-            appViewModel.events.collect { event ->
+            appViewModel.viewEvents.collect { event ->
                 screenState.handleAppEvent(event)
             }
         }

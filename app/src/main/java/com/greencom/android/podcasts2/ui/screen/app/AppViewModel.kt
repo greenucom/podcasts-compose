@@ -1,32 +1,29 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
-import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppViewModel @Inject constructor() : BaseViewModel() {
+class AppViewModel @Inject constructor(
 
-    private val _events = Channel<Event>(Channel.UNLIMITED)
-    val events = _events.receiveAsFlow()
+) : BaseViewModel<AppViewModel.ViewState, AppViewModel.ViewEvent>() {
 
-    private fun setEvent(event: Event) = viewModelScope.launch {
-        _events.send(event)
-    }
+    override val initialViewState = ViewState.None
 
     fun onBottomNavBarItemReselected(item: BottomNavBarItem) {
         if (item is BottomNavBarItem.Discover) {
-            setEvent(Event.DiscoverBottomNavBarItemReselected)
+            sendEvent(ViewEvent.DiscoverBottomNavBarItemReselected)
         }
     }
 
-    sealed interface Event {
-        object DiscoverBottomNavBarItemReselected : Event
+    sealed interface ViewState : BaseViewModel.ViewState {
+        object None : ViewState
+    }
+
+    sealed interface ViewEvent : BaseViewModel.ViewEvent {
+        object DiscoverBottomNavBarItemReselected : ViewEvent
     }
 
 }

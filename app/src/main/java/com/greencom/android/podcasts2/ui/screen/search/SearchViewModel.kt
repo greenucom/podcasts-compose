@@ -5,6 +5,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor() : BaseViewModel() {
+class SearchViewModel @Inject constructor(
+
+) : BaseViewModel<SearchViewModel.ViewState, SearchViewModel.ViewEvent>() {
+
+    override val initialViewState = ViewState.None
+
+    sealed interface ViewState : BaseViewModel.ViewState {
+        object None : ViewState
+    }
+
+    sealed interface ViewEvent : BaseViewModel.ViewEvent
 
 }

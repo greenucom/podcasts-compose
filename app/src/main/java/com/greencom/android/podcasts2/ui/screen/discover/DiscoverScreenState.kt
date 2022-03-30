@@ -22,9 +22,9 @@ class DiscoverScreenState(
 
     private var lazyColumnScrollJob: Job? = null
 
-    fun handleAppEvent(event: AppViewModel.Event) {
+    fun handleAppEvent(event: AppViewModel.ViewEvent) {
         when (event) {
-            AppViewModel.Event.DiscoverBottomNavBarItemReselected -> {
+            AppViewModel.ViewEvent.DiscoverBottomNavBarItemReselected -> {
                 onDiscoverBottomNavBarItemReselected()
             }
 

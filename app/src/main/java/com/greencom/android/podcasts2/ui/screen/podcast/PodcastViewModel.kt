@@ -7,12 +7,20 @@ import javax.inject.Inject
 @HiltViewModel
 class PodcastViewModel @Inject constructor(
 
-) : BaseViewModel() {
+) : BaseViewModel<PodcastViewModel.ViewState, PodcastViewModel.ViewEvent>() {
+
+    override val initialViewState = ViewState.InitialLoading
 
     private var podcastId = 0L
 
     fun setParameters(podcastId: Long) {
         this.podcastId = podcastId
     }
+
+    sealed interface ViewState : BaseViewModel.ViewState {
+        object InitialLoading : ViewState
+    }
+
+    sealed interface ViewEvent : BaseViewModel.ViewEvent
 
 }
