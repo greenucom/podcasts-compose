@@ -18,11 +18,11 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    sealed interface ViewState : BaseViewModel.ViewState {
+    sealed interface ViewState {
         object None : ViewState
     }
 
-    sealed interface ViewEvent : BaseViewModel.ViewEvent {
+    sealed interface ViewEvent {
         object DiscoverBottomNavBarItemReselected : ViewEvent
     }
 

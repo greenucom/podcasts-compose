@@ -11,10 +11,10 @@ class SearchViewModel @Inject constructor(
 
     override val initialViewState = ViewState.None
 
-    sealed interface ViewState : BaseViewModel.ViewState {
+    sealed interface ViewState {
         object None : ViewState
     }
 
-    sealed interface ViewEvent : BaseViewModel.ViewEvent
+    sealed interface ViewEvent
 
 }

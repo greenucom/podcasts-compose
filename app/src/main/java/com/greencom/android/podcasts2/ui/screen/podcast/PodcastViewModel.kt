@@ -17,10 +17,10 @@ class PodcastViewModel @Inject constructor(
         this.podcastId = podcastId
     }
 
-    sealed interface ViewState : BaseViewModel.ViewState {
+    sealed interface ViewState {
         object InitialLoading : ViewState
     }
 
-    sealed interface ViewEvent : BaseViewModel.ViewEvent
+    sealed interface ViewEvent
 
 }

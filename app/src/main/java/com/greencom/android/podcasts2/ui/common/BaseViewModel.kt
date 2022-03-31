@@ -9,18 +9,14 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-abstract class BaseViewModel<State : BaseViewModel.ViewState, Event : BaseViewModel.ViewEvent> :
-    ViewModel() {
-
-    interface ViewState
-    interface ViewEvent
+abstract class BaseViewModel<State, Event> : ViewModel() {
 
     protected abstract val initialViewState: State
 
     protected val _viewState = MutableStateFlow<State>(initialViewState)
     val viewState = _viewState.asStateFlow()
 
-    protected val _viewEvents = Channel<Event>(Channel.UNLIMITED)
+    private val _viewEvents = Channel<Event>(Channel.UNLIMITED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
     protected fun sendEvent(event: Event) = viewModelScope.launch {

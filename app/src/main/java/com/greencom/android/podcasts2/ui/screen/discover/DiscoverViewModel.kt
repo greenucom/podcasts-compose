@@ -127,11 +127,11 @@ class DiscoverViewModel @Inject constructor(
         object Error : TrendingPodcastsState
     }
 
-    sealed interface ViewState : BaseViewModel.ViewState {
+    sealed interface ViewState {
         object None : ViewState
     }
 
-    sealed interface ViewEvent : BaseViewModel.ViewEvent
+    sealed interface ViewEvent
 
     companion object {
         private const val TrendingPodcastCountMaxValue = 40
