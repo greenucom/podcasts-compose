@@ -12,7 +12,7 @@ object Versions {
     const val coroutines = "1.6.0"
 
     const val compose = "1.1.1"
-    const val composeMaterial3 = "1.0.0-alpha06"
+    const val composeMaterial3 = "1.0.0-alpha08"
 
     const val coreKtx = "1.7.0"
     const val appCompat = "1.4.1"
