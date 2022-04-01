@@ -1,9 +1,6 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -24,23 +21,20 @@ fun AppScreen(
 ) {
     val screenState = rememberAppScreenState()
 
+    val navBackStackEntry by screenState.navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val isBottomNavBarVisible = screenState.isBottomNavBarVisible(currentRoute)
+
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
         bottomBar = {
-            val navBackStackEntry by screenState.navController.currentBackStackEntryAsState()
-            val currentDestinationRoute = navBackStackEntry?.destination?.route
-
-            AnimatedVisibility(
-                visible = screenState.shouldBottomNavBarBeVisible(currentDestinationRoute),
-                enter = slideInVertically(initialOffsetY = { it }),
-                exit = slideOutVertically(targetOffsetY = { it }),
-            ) {
-                BottomNavBar(
-                    navController = screenState.navController,
-                    onItemReselected = appViewModel::onBottomNavBarItemReselected,
-                )
-            }
+            BottomNavBar(
+                navController = screenState.navController,
+                currentNavBackStackEntry = navBackStackEntry,
+                isVisible = isBottomNavBarVisible,
+                onItemReselected = appViewModel::onBottomNavBarItemReselected,
+            )
         },
     ) { paddingValues ->
 

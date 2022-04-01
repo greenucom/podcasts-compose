@@ -14,11 +14,14 @@ class AppScreenState(
 ) {
 
     private val routesWithBottomNavBar = setOf(
-        Screen.MyPodcasts.route, Screen.Discover.route, Screen.Library.route, Screen.Profile.route
+        Screen.MyPodcasts.route,
+        Screen.Discover.route,
+        Screen.Library.route,
+        Screen.Profile.route,
     )
 
-    fun shouldBottomNavBarBeVisible(route: String?): Boolean {
-        return route in routesWithBottomNavBar
+    fun isBottomNavBarVisible(currentRoute: String?): Boolean {
+        return currentRoute in routesWithBottomNavBar
     }
 
 }

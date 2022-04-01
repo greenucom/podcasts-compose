@@ -13,9 +13,13 @@ class AppViewModel @Inject constructor(
     override val initialViewState = ViewState.None
 
     fun onBottomNavBarItemReselected(item: BottomNavBarItem) {
-        if (item is BottomNavBarItem.Discover) {
-            sendEvent(ViewEvent.DiscoverBottomNavBarItemReselected)
+        val event = when (item) {
+            BottomNavBarItem.MyPodcasts -> ViewEvent.MyPodcastsBottomNavBarItemReselected
+            BottomNavBarItem.Discover -> ViewEvent.DiscoverBottomNavBarItemReselected
+            BottomNavBarItem.Library -> ViewEvent.LibraryBottomNavBarItemReselected
+            BottomNavBarItem.Profile -> ViewEvent.ProfileBottomNavBarItemReselected
         }
+        sendEvent(event)
     }
 
     sealed interface ViewState {
@@ -23,7 +27,10 @@ class AppViewModel @Inject constructor(
     }
 
     sealed interface ViewEvent {
+        object MyPodcastsBottomNavBarItemReselected : ViewEvent
         object DiscoverBottomNavBarItemReselected : ViewEvent
+        object LibraryBottomNavBarItemReselected : ViewEvent
+        object ProfileBottomNavBarItemReselected : ViewEvent
     }
 
 }
