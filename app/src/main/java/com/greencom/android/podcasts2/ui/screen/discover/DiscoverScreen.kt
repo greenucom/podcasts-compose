@@ -52,7 +52,7 @@ fun DiscoverScreen(
         }
 
         val listContentPadding = paddingValues.copy(
-            bottom = LocalContentBottomPadding.current.bottomPadding,
+            bottom = LocalContentBottomPadding.current.value,
         )
 
         LazyColumn(
