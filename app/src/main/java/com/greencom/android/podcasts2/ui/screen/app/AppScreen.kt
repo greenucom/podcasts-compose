@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.greencom.android.podcasts2.ui.common.copy
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -38,8 +40,11 @@ fun AppScreen(
         },
     ) { paddingValues ->
 
+        // Remove bottom padding to allow NavHost content to be placed behind bottom nav bar
+        val navHostPaddingValues = paddingValues.copy(bottom = 0.dp)
+
         NavHost(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.padding(navHostPaddingValues),
             navController = screenState.navController,
             startDestination = BottomNavBarItem.MyPodcasts.route,
         ) {
