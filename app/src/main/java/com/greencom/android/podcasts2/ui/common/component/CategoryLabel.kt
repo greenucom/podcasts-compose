@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.ui.common.preview.CategoryPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val TextColorAlpha = 0.74f
@@ -42,12 +45,15 @@ fun CategoryLabel(
 
 @Composable
 @Preview(showBackground = true)
-private fun Light() {
+private fun Light(
+    @PreviewParameter(CategoryPreviewParameterProvider::class)
+    category: Category,
+) {
     PodcastsComposeTheme {
         Surface {
             CategoryLabel(
                 modifier = Modifier.padding(16.dp),
-                categoryName = "News",
+                categoryName = category.name,
             )
         }
     }
@@ -59,12 +65,15 @@ private fun Light() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     locale = "ru",
 )
-private fun Dark() {
+private fun Dark(
+    @PreviewParameter(CategoryPreviewParameterProvider::class)
+    category: Category,
+) {
     PodcastsComposeTheme {
         Surface {
             CategoryLabel(
                 modifier = Modifier.padding(16.dp),
-                categoryName = "Новости",
+                categoryName = category.name,
             )
         }
     }
