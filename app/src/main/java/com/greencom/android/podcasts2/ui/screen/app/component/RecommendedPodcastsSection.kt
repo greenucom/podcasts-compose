@@ -109,11 +109,11 @@ private fun Light(
     PodcastsComposeTheme {
         Surface {
             val innerLazyListState = rememberLazyListState()
-            val podcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts)
+            val recommendedPodcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
                     innerLazyListState = innerLazyListState,
-                    recommendedPodcastsState = podcastsState,
+                    recommendedPodcastsState = recommendedPodcastsState,
                     onPodcastClicked = {},
                 )
             }
@@ -134,11 +134,11 @@ private fun Dark(
     PodcastsComposeTheme {
         Surface {
             val innerLazyListState = rememberLazyListState()
-            val podcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts)
+            val recommendedPodcastsState = DiscoverViewModel.RecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
                     innerLazyListState = innerLazyListState,
-                    recommendedPodcastsState = podcastsState,
+                    recommendedPodcastsState = recommendedPodcastsState,
                     onPodcastClicked = {},
                 )
             }
