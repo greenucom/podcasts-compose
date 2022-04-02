@@ -14,9 +14,9 @@ private val StartLight = Color(0xFFE5E5E5)
 private val StartDark = Color(0xFF383838)
 private val EndLight = Color(0xFFD9D9D9)
 private val EndDark = Color(0xFF444444)
-private val Colors.placeholderLoadingEffectStart: Color
+val Colors.placeholderLoadingEffectStart: Color
     get() = if (isLight) StartLight else StartDark
-private val Colors.placeholderLoadingEffectEnd: Color
+val Colors.placeholderLoadingEffectEnd: Color
     get() = if (isLight) EndLight else EndDark
 
 @Composable
