@@ -83,7 +83,7 @@ fun PodcastCard(
 
 @Composable
 fun PodcastCardPlaceholder(
-    loadingEffectColor: Color,
+    loadingColor: Color,
     modifier: Modifier = Modifier,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -101,7 +101,7 @@ fun PodcastCardPlaceholder(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .background(loadingEffectColor)
+                    .background(loadingColor)
             )
 
             Box(
@@ -116,7 +116,7 @@ fun PodcastCardPlaceholder(
                         .fillMaxWidth(0.7f)
                         .height(20.dp)
                         .background(
-                            color = loadingEffectColor,
+                            color = loadingColor,
                             shape = MaterialTheme.shapes.placeholder,
                         )
                 )

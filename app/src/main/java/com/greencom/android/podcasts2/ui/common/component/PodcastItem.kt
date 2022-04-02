@@ -115,7 +115,7 @@ fun PodcastItem(
 
 @Composable
 fun PodcastItemPlaceholder(
-    color: Color,
+    loadingColor: Color,
     modifier: Modifier = Modifier,
 ) {
 
@@ -128,7 +128,7 @@ fun PodcastItemPlaceholder(
                     modifier = Modifier
                         .size(PodcastCoverSize)
                         .background(
-                            color = color,
+                            color = loadingColor,
                             shape = MaterialTheme.shapes.medium,
                         )
                 )
@@ -140,7 +140,7 @@ fun PodcastItemPlaceholder(
                             .fillMaxWidth(0.75f)
                             .height(24.dp)
                             .background(
-                                color = color,
+                                color = loadingColor,
                                 shape = MaterialTheme.shapes.placeholder,
                             )
                     )
@@ -151,7 +151,7 @@ fun PodcastItemPlaceholder(
                             .fillMaxWidth(0.5f)
                             .height(12.dp)
                             .background(
-                                color = color,
+                                color = loadingColor,
                                 shape = MaterialTheme.shapes.placeholder,
                             )
                     )
@@ -164,7 +164,7 @@ fun PodcastItemPlaceholder(
                     .fillMaxWidth()
                     .height(16.dp)
                     .background(
-                        color = color,
+                        color = loadingColor,
                         shape = MaterialTheme.shapes.placeholder,
                     )
             )
@@ -175,7 +175,7 @@ fun PodcastItemPlaceholder(
                     .fillMaxWidth(0.4f)
                     .height(16.dp)
                     .background(
-                        color = color,
+                        color = loadingColor,
                         shape = MaterialTheme.shapes.placeholder,
                     )
             )
