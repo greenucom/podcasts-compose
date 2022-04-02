@@ -1,26 +1,27 @@
 package com.greencom.android.podcasts2.ui.common
 
 import androidx.compose.runtime.Composable
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.greencom.android.podcasts2.R
 
 @Composable
-fun rememberImagePainterCustom(
+fun AsyncImageCustom(
     data: Any?,
-    onExecute: ImagePainter.ExecuteCallback = ImagePainter.ExecuteCallback.Default,
-    builder: ImageRequest.Builder.() -> Unit = {},
-): ImagePainter = rememberImagePainter(
-    data = data,
-    onExecute = onExecute,
+    modifier: Modifier = Modifier,
+    contentDescription: String?,
+    contentScale: ContentScale = ContentScale.FillBounds,
 ) {
-    crossfade(true)
-
-    // TODO: Replace with actual placeholders
-    placeholder(R.drawable.ic_launcher_background)
-    error(R.drawable.ic_launcher_background)
-    fallback(R.drawable.ic_launcher_background)
-
-    builder()
+    // TODO: Add placeholder, error and fallback
+    AsyncImage(
+        modifier = modifier,
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(data)
+            .crossfade(true)
+            .build(),
+        contentDescription = contentDescription,
+        contentScale = contentScale,
+    )
 }
