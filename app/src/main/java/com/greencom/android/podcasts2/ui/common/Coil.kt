@@ -12,7 +12,7 @@ fun AsyncImageCustom(
     data: Any?,
     modifier: Modifier = Modifier,
     contentDescription: String?,
-    contentScale: ContentScale = ContentScale.FillBounds,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     // TODO: Add placeholder, error and fallback
     AsyncImage(
