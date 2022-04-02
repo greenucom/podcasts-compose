@@ -21,7 +21,7 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
-fun ErrorScreen(
+fun ErrorMessage(
     onTryAgainClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,7 +69,7 @@ fun ErrorScreen(
 private fun Light() {
     PodcastsComposeTheme {
         Surface {
-            ErrorScreen(onTryAgainClicked = {})
+            ErrorMessage(onTryAgainClicked = {})
         }
     }
 }
@@ -83,7 +83,7 @@ private fun Light() {
 private fun Dark() {
     PodcastsComposeTheme {
         Surface {
-            ErrorScreen(onTryAgainClicked = {})
+            ErrorMessage(onTryAgainClicked = {})
         }
     }
 }
