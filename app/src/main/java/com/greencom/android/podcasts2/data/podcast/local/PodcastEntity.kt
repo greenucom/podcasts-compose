@@ -25,8 +25,8 @@ data class PodcastEntity(
     @ColumnInfo(name = "author")
     val author: String,
 
-    @ColumnInfo(name = "image")
-    val image: String,
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String,
 
     @ColumnInfo(name = "categories")
     val categories: List<CategoryEntity>,
@@ -43,7 +43,7 @@ data class PodcastEntity(
             title = podcast.title,
             description = podcast.description,
             author = podcast.author,
-            image = podcast.image,
+            imageUrl = podcast.imageUrl,
             categories = podcast.categories.map { CategoryEntity.fromDomain(it) },
             isSubscribed = podcast.isSubscribed,
         )

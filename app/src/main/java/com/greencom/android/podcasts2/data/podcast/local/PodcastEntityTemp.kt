@@ -24,8 +24,8 @@ data class PodcastEntityTemp(
     @ColumnInfo(name = "author")
     val author: String,
 
-    @ColumnInfo(name = "image")
-    val image: String,
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String,
 
     @ColumnInfo(name = "categories")
     val categories: List<CategoryEntity>,

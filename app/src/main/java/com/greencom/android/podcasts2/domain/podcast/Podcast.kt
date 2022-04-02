@@ -7,7 +7,7 @@ data class Podcast(
     val title: String,
     val description: String,
     val author: String,
-    val image: String,
+    val imageUrl: String,
     val categories: List<Category>,
     val isSubscribed: Boolean,
 )

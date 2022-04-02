@@ -69,7 +69,7 @@ data class GetTrendingPodcastResponseDto(
         title = checkNotNull(title),
         description = checkNotNull(description),
         author = checkNotNull(author),
-        image = checkNotNull(image),
+        imageUrl = checkNotNull(image),
         categories = categories?.toDomain() ?: emptyList(),
         isSubscribed = false,
     )

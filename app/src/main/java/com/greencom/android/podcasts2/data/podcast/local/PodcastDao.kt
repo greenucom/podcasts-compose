@@ -15,8 +15,8 @@ abstract class PodcastDao {
     protected abstract suspend fun insertToTemp(podcasts: List<PodcastEntity>)
 
     @Query("""
-        INSERT INTO podcasts (id, title, description, author, image, categories, is_subscribed)
-        SELECT tmp.id, tmp.title, tmp.description, tmp.author, tmp.image, tmp.categories, 
+        INSERT INTO podcasts (id, title, description, author, image_url, categories, is_subscribed)
+        SELECT tmp.id, tmp.title, tmp.description, tmp.author, tmp.image_url, tmp.categories, 
             tmp.is_subscribed
         FROM podcasts_temp tmp
         LEFT JOIN podcasts ON tmp.id = podcasts.id 
