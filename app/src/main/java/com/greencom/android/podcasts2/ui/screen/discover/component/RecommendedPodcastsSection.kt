@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.app.component
+package com.greencom.android.podcasts2.ui.screen.discover.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
@@ -21,10 +21,6 @@ import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectEnd
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectStart
 import com.greencom.android.podcasts2.ui.common.preview.PodcastListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
-import com.greencom.android.podcasts2.ui.screen.discover.component.PodcastCard
-import com.greencom.android.podcasts2.ui.screen.discover.component.PodcastCardPlaceholder
-import com.greencom.android.podcasts2.ui.screen.discover.component.PodcastCardPlaceholderLoadingEffectEndDark
-import com.greencom.android.podcasts2.ui.screen.discover.component.PodcastCardPlaceholderLoadingEffectStartDark
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val KeyRecommendedPodcastsSection = "RecommendedPodcastsSection"

@@ -22,7 +22,14 @@ fun NavGraphBuilder.discoverNavGraph(
     ) {
 
         composable(Screen.Discover.route) {
-            DiscoverScreen()
+            DiscoverScreen(
+                onPodcastClicked = { podcast ->
+                    val route = Screen.Podcast.createRoute(podcast.id)
+                    navController.navigate(route)
+                },
+                onSearchClicked = { navController.navigate(Screen.Search.route) },
+                appViewModel = appViewModel,
+            )
         }
 
         composable(Screen.Search.route) {

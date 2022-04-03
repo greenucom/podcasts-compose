@@ -29,7 +29,6 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionParameters
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionPreviewParameterProvider
-import com.greencom.android.podcasts2.ui.screen.app.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
