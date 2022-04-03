@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.AsyncImageCustom
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
+import com.greencom.android.podcasts2.ui.common.component.CategoryLabelRow
 import com.greencom.android.podcasts2.ui.common.preview.PodcastPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.placeholder
@@ -28,11 +30,12 @@ private val CardElevation = 6.dp
 private const val CardPercentOfScreenWidth = 0.7f
 private const val TitleSuffix = " suffixsuffixsuffixsuffixsuffixsuffixsuffixsuffixsuffixsuffix"
 private const val TitleMaxLines = 2
+private const val CategoryLabelMaxCount = 2
 
 val PodcastCardPlaceholderLoadingEffectStartDark = Color(0xFF4C4C4C)
 val PodcastCardPlaceholderLoadingEffectEndDark = Color(0xFF585858)
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 fun PodcastCard(
     podcast: Podcast,
@@ -51,13 +54,26 @@ fun PodcastCard(
 
         Column(modifier = Modifier.fillMaxWidth()) {
 
-            AsyncImageCustom(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f),
-                data = podcast.imageUrl,
-                contentDescription = null,
-            )
+                    .aspectRatio(1f)
+            ) {
+
+                AsyncImageCustom(
+                    modifier = Modifier.fillMaxSize(),
+                    data = podcast.imageUrl,
+                    contentDescription = null,
+                )
+
+                CategoryLabelRow(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 16.dp, top = 16.dp),
+                    categories = podcast.categories,
+                    maxCount = CategoryLabelMaxCount,
+                )
+            }
 
             // Append transparent suffix to the title to guarantee that the text will
             // take 2 rows
@@ -182,7 +198,10 @@ private fun PlaceholderLight() {
     PodcastsComposeTheme {
         Surface {
             val color by animatePlaceholderLoadingEffectColor()
-            PodcastCardPlaceholder(color)
+            PodcastCardPlaceholder(
+                modifier = Modifier.padding(16.dp),
+                loadingColor = color,
+            )
         }
     }
 }
@@ -200,7 +219,10 @@ private fun PlaceholderDark() {
                 startColor = PodcastCardPlaceholderLoadingEffectStartDark,
                 endColor = PodcastCardPlaceholderLoadingEffectEndDark,
             )
-            PodcastCardPlaceholder(color)
+            PodcastCardPlaceholder(
+                modifier = Modifier.padding(16.dp),
+                loadingColor = color,
+            )
         }
     }
 }
