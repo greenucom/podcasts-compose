@@ -29,7 +29,12 @@ class ApiAuthInterceptor @Inject constructor(): Interceptor {
     }
 
     private fun createUserAgent(version: String): String {
-        return "$USER_AGENT_NAME/$version ($USER_AGENT_LANGUAGE; $USER_AGENT_PLATFORM)"
+        return USER_AGENT_FORMAT.format(
+            USER_AGENT_NAME,
+            version,
+            USER_AGENT_LANGUAGE,
+            USER_AGENT_PLATFORM
+        )
     }
 
     private fun createAuthSha1Hash(epochSeconds: String): String {
@@ -45,6 +50,9 @@ class ApiAuthInterceptor @Inject constructor(): Interceptor {
         private const val USER_AGENT_NAME = "Podcasts Compose"
         private const val USER_AGENT_LANGUAGE = "Language=Kotlin"
         private const val USER_AGENT_PLATFORM = "Platform=Android"
+
+        /** Format **NAME/VERSION (LANGUAGE; PLATFORM)** */
+        private const val USER_AGENT_FORMAT = "%1\$s/%2\$s (%3\$s; %4\$s)"
 
         private const val SECOND_IN_MILLIS = 1000
         private const val SHA_1 = "SHA-1"
