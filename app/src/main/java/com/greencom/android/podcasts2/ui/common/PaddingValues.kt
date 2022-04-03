@@ -36,16 +36,6 @@ fun PaddingValues.copy(
     bottom = bottom,
 )
 
-@Composable
-operator fun PaddingValues.plus(paddingValues: PaddingValues): PaddingValues {
-    val ld = LocalLayoutDirection.current
-    val start = this.calculateStartPadding(ld) + paddingValues.calculateStartPadding(ld)
-    val top = this.calculateTopPadding() + paddingValues.calculateTopPadding()
-    val end = this.calculateEndPadding(ld) + paddingValues.calculateEndPadding(ld)
-    val bottom = this.calculateBottomPadding() + paddingValues.calculateBottomPadding()
-    return PaddingValues(start, top, end, bottom)
-}
-
 fun PaddingValues.add(
     layoutDirection: LayoutDirection,
     start: Dp = 0.dp,
@@ -71,4 +61,30 @@ fun PaddingValues.add(
     top = top,
     end = end,
     bottom = bottom,
+)
+
+fun PaddingValues.add(
+    layoutDirection: LayoutDirection,
+    paddingValues: PaddingValues,
+): PaddingValues = this.add(
+    layoutDirection = layoutDirection,
+    start = paddingValues.calculateStartPadding(layoutDirection),
+    top = paddingValues.calculateTopPadding(),
+    end = paddingValues.calculateEndPadding(layoutDirection),
+    bottom = paddingValues.calculateBottomPadding(),
+)
+
+@Composable
+fun PaddingValues.add(
+    paddingValues: PaddingValues,
+): PaddingValues = this.add(
+    layoutDirection = LocalLayoutDirection.current,
+    paddingValues = paddingValues,
+)
+
+@Composable
+operator fun PaddingValues.plus(
+    paddingValues: PaddingValues,
+): PaddingValues = this.add(
+    paddingValues = paddingValues,
 )
