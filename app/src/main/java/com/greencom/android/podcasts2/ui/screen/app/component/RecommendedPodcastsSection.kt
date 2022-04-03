@@ -76,7 +76,7 @@ fun LazyListScope.recommendedPodcastsSection(
 
                     is DiscoverViewModel.RecommendedPodcastsState.Success -> {
                         items(
-                            items = recommendedPodcastsState.recommendedPodcasts,
+                            items = recommendedPodcastsState.podcasts,
                             key = { "PodcastCard ${it.id}" },
                         ) { podcast ->
                             PodcastCard(

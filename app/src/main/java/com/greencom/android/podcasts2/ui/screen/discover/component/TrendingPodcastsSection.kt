@@ -70,7 +70,7 @@ fun LazyListScope.trendingPodcastsSection(
     when (trendingPodcastsState) {
         is DiscoverViewModel.TrendingPodcastsState.Success -> {
             itemsIndexed(
-                items = trendingPodcastsState.trendingPodcasts,
+                items = trendingPodcastsState.podcasts,
                 key = { _, podcast -> "PodcastItem ${podcast.id}" }
             ) { index, podcast ->
 
@@ -80,7 +80,7 @@ fun LazyListScope.trendingPodcastsSection(
                     onSubscribedChanged = onSubscribedChanged,
                 )
 
-                if (index != trendingPodcastsState.trendingPodcasts.lastIndex) {
+                if (index != trendingPodcastsState.podcasts.lastIndex) {
                     Divider(color = MaterialTheme.colors.onSurfaceUtil)
                 }
             }

@@ -26,9 +26,9 @@ class DiscoverViewModel @Inject constructor(
         MutableStateFlow<RecommendedPodcastsState>(RecommendedPodcastsState.Loading)
     val recommendedPodcastsState = _recommendedPodcastsState.asStateFlow()
 
-    private val _trendingCategories =
+    private val _selectableCategories =
         MutableStateFlow<List<SelectableItem<Category>>>(emptyList())
-    val trendingCategories = _trendingCategories.asStateFlow()
+    val selectableCategories = _selectableCategories.asStateFlow()
 
     private val _trendingPodcastsState =
         MutableStateFlow<TrendingPodcastsState>(TrendingPodcastsState.Loading)
@@ -37,11 +37,11 @@ class DiscoverViewModel @Inject constructor(
     private var trendingPodcastsJob: Job? = null
 
     init {
-        loadTrendingCategoriesAndRequestPodcasts()
+        loadTrendingCategoriesAndRequestTrendingPodcasts()
         loadTrendingPodcasts()
     }
 
-    private fun loadTrendingCategoriesAndRequestPodcasts() = viewModelScope.launch {
+    private fun loadTrendingCategoriesAndRequestTrendingPodcasts() = viewModelScope.launch {
         val trendingCategories = interactor.getTrendingCategoriesUseCase(Unit)
         interactor.getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
             val categories = trendingCategories.map { category ->
@@ -50,7 +50,7 @@ class DiscoverViewModel @Inject constructor(
                     item = category,
                 )
             }
-            _trendingCategories.update { categories }
+            _selectableCategories.update { categories }
 
             val selectedCategories = categories
                 .filter { it.isSelected }
@@ -89,16 +89,13 @@ class DiscoverViewModel @Inject constructor(
 
     private fun loadTrendingPodcasts() = viewModelScope.launch {
         interactor.trendingPodcastsFlowUseCase(Unit).collect { podcasts ->
-            if (podcasts.isNotEmpty()) {
-                val state = TrendingPodcastsState.Success(podcasts)
-                _trendingPodcastsState.update { state }
-            }
+            val state = TrendingPodcastsState.Success(podcasts)
+            _trendingPodcastsState.update { state }
         }
     }
 
-    fun onSelectableTrendingCategoryClicked(selectableCategory: SelectableItem<Category>) {
+    fun onSelectableCategoryClicked(category: Category) {
         viewModelScope.launch {
-            val category = selectableCategory.item
             interactor.toggleSelectableTrendingCategoryUseCase(category)
         }
     }
@@ -110,25 +107,25 @@ class DiscoverViewModel @Inject constructor(
     fun onTryAgainClicked() {
         _trendingPodcastsState.update { TrendingPodcastsState.Loading }
 
-        val selectedCategories = trendingCategories.value
+        val selectedCategories = selectableCategories.value
             .filter { it.isSelected }
             .map { it.item }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
     }
 
+    sealed interface ViewState {
+        object None : ViewState
+    }
+
     sealed interface RecommendedPodcastsState {
-        data class Success(val recommendedPodcasts: List<Podcast>) : RecommendedPodcastsState
+        data class Success(val podcasts: List<Podcast>) : RecommendedPodcastsState
         object Loading : RecommendedPodcastsState
     }
 
     sealed interface TrendingPodcastsState {
-        data class Success(val trendingPodcasts: List<Podcast>) : TrendingPodcastsState
+        data class Success(val podcasts: List<Podcast>) : TrendingPodcastsState
         object Loading : TrendingPodcastsState
         object Error : TrendingPodcastsState
-    }
-
-    sealed interface ViewState {
-        object None : ViewState
     }
 
     sealed interface ViewEvent
