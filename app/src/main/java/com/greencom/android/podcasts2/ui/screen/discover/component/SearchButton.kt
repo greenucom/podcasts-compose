@@ -59,6 +59,7 @@ fun SearchButton(
         Text(
             modifier = Modifier
                 .padding(start = 8.dp)
+                .weight(1f)
                 .alpha(TextAlpha),
             text = stringResource(R.string.search_for_podcasts),
             style = MaterialTheme.typography.body1,
