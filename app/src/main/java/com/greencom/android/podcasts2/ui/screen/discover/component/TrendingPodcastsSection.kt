@@ -62,7 +62,7 @@ fun LazyListScope.trendingPodcastsSection(
         TrendingCategorySelector(
             selectableCategories = selectableCategories,
             onCategoryClicked = onCategoryClicked,
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 4.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 2.dp),
         )
     }
 
