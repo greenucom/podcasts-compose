@@ -45,9 +45,7 @@ fun TextFieldCustom(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current.copy(
-        color = MaterialTheme.colors.onSurface.copy(
-            alpha = LocalContentAlpha.current,
-        ),
+        color = MaterialTheme.colors.onSurface,
     ),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -57,6 +55,12 @@ fun TextFieldCustom(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
+    val textStyle = textStyle.copy(
+        color = textStyle.color.copy(
+            alpha = LocalContentAlpha.current,
+        )
+    )
+
     BasicTextField(
         modifier = modifier
             .heightIn(min = MinHeight)
