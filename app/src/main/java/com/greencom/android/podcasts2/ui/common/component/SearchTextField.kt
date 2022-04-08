@@ -23,12 +23,12 @@ import com.greencom.android.podcasts2.ui.theme.searchBackground
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun SearchField(
+fun SearchTextField(
     query: String,
     onQueryChanged: (String) -> Unit,
     placeholderText: String,
-    onSearch: (String) -> Unit,
-    onClear: () -> Unit,
+    onImeSearch: (String) -> Unit,
+    onClearQuery: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -64,7 +64,7 @@ fun SearchField(
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .size(24.dp),
-                onClick = onClear,
+                onClick = onClearQuery,
             ) {
 
                 Icon(
@@ -92,7 +92,7 @@ fun SearchField(
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(onSearch = { onSearch(query) }),
+        keyboardActions = KeyboardActions(onSearch = { onImeSearch(query) }),
         shape = MaterialTheme.shapes.small,
         colors = colors,
     )
@@ -104,13 +104,13 @@ private fun Light() {
     PodcastsComposeTheme {
         var query by remember { mutableStateOf("") }
         Surface {
-            SearchField(
+            SearchTextField(
                 modifier = Modifier.padding(16.dp),
                 query = query,
                 onQueryChanged = { query = it },
                 placeholderText = "Search for podcasts",
-                onSearch = {},
-                onClear = {},
+                onImeSearch = {},
+                onClearQuery = {},
             )
         }
     }
@@ -126,13 +126,13 @@ private fun Dark() {
     PodcastsComposeTheme {
         var query by remember { mutableStateOf("") }
         Surface {
-            SearchField(
+            SearchTextField(
                 modifier = Modifier.padding(16.dp),
                 query = query,
                 onQueryChanged = { query = it },
                 placeholderText = "Search for podcasts",
-                onSearch = {},
-                onClear = {},
+                onImeSearch = {},
+                onClearQuery = {},
             )
         }
     }
