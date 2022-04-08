@@ -14,6 +14,7 @@
         Something went wrong…\nCheck internet connection
     </string>
     <string name="try_again">Try again</string>
+    <string name="clear_search_field">Clear search field</string>
 
     <!-- Discover -->
     <string name="search_for_podcasts">Search for podcasts</string>

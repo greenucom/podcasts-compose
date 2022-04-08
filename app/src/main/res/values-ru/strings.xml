@@ -15,6 +15,7 @@
         Что-то пошло не так…\nПроверьте интернет-соединение
     </string>
     <string name="try_again">Попробовать снова</string>
+    <string name="clear_search_field">Очистить поле поиска</string>
 
     <!-- Discover -->
     <string name="search_for_podcasts">Поиск подкастов</string>

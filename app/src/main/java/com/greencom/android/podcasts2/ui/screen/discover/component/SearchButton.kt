@@ -9,22 +9,17 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.component.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.theme.searchBackground
 
-private val Elevation = 2.dp
-private const val IconAlpha = 0.6f
+private val Elevation = 0.dp
 private const val TextAlpha = 0.74f
-
-private val BackgroundLight = Color(0xFFF0F0F0)
-private val BackgroundDark = Color(0xFF373737)
-private val Colors.searchButtonBackground: Color
-    get() = if (isLight) BackgroundLight else BackgroundDark
+private const val IconAlpha = 0.60f
 
 @Composable
 fun SearchButton(
@@ -32,7 +27,7 @@ fun SearchButton(
     modifier: Modifier = Modifier,
 ) {
     val colors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.searchButtonBackground,
+        backgroundColor = MaterialTheme.colors.searchBackground,
     )
     val elevation = ButtonDefaults.elevation(
         defaultElevation = Elevation,

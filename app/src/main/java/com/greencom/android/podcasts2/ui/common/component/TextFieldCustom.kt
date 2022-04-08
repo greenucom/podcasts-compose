@@ -53,7 +53,7 @@ fun TextFieldCustom(
     val placeholderColor by colors.placeholderColor(enabled = enabled)
     val leadingIconColor by colors.leadingIconColor(enabled = enabled, isError = false)
     val trailingIconColor by colors.trailingIconColor(enabled = enabled, isError = false)
-    val cursorColor by colors.cursorColor(isError = true)
+    val cursorColor by colors.cursorColor(isError = false)
 
     Surface(
         modifier = modifier.heightIn(min = ComponentDefaults.MinHeight),
