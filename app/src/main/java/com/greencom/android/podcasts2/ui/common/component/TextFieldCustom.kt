@@ -2,10 +2,7 @@ package com.greencom.android.podcasts2.ui.common.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -70,6 +67,7 @@ fun TextFieldCustom(
         ) {
 
             BasicTextField(
+                modifier = Modifier.weight(1f),
                 value = value,
                 onValueChange = onValueChanged,
                 enabled = enabled,
@@ -114,7 +112,7 @@ private fun Light() {
     PodcastsComposeTheme {
         Surface {
             TextFieldCustom(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
                 value = "Query",
                 onValueChanged = {},
                 placeholder = { Text(text = "Placeholder") },
@@ -133,7 +131,7 @@ private fun Dark() {
     PodcastsComposeTheme {
         Surface {
             TextFieldCustom(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
                 value = "Query",
                 onValueChanged = {},
                 placeholder = { Text(text = "Placeholder") },
