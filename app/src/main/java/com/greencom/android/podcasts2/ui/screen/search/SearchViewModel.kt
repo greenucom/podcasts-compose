@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-
+    private val interactor: SearchInteractor,
 ) : BaseViewModel<SearchViewModel.ViewState, SearchViewModel.ViewEvent>() {
 
     override val initialViewState = ViewState.None
