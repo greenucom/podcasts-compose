@@ -15,9 +15,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.greencom.android.podcasts2.ui.common.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
-private val MinHeight = 40.dp
 private const val CheckedBorderColorAlpha = 0.16f
 private const val CheckedBackgroundColorAlpha = 0.08f
 
@@ -57,7 +57,7 @@ fun OutlinedButtonCustom(
     )
 
     OutlinedButton(
-        modifier = modifier.heightIn(min = MinHeight),
+        modifier = modifier.heightIn(min = ComponentDefaults.MinHeight),
         onClick = onClick,
         border = border,
         colors = colors,

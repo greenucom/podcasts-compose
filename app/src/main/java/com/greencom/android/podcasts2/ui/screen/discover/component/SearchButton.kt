@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.ui.common.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
-private val MinHeight = 40.dp
 private val Elevation = 2.dp
 private const val IconAlpha = 0.6f
 private const val TextAlpha = 0.74f
@@ -43,7 +43,7 @@ fun SearchButton(
     )
 
     Button(
-        modifier = modifier.heightIn(MinHeight),
+        modifier = modifier.heightIn(min = ComponentDefaults.MinHeight),
         onClick = onClick,
         shape = MaterialTheme.shapes.small,
         colors = colors,
