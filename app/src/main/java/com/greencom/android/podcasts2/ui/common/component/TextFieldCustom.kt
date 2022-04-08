@@ -27,7 +27,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.common.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable

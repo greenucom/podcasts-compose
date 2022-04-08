@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.common.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 private const val CheckedBorderColorAlpha = 0.16f

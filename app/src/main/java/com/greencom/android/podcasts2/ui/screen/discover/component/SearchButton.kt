@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.ui.common.ComponentDefaults
+import com.greencom.android.podcasts2.ui.common.component.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private val Elevation = 2.dp
