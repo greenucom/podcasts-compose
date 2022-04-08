@@ -78,6 +78,7 @@ fun SearchTextField(
 
     val iconColor = MaterialTheme.colors.onSurface
     val colors = TextFieldDefaults.textFieldColors(
+        textColor = MaterialTheme.colors.onSurface.copy(alpha = ComponentDefaults.TextAlpha),
         backgroundColor = MaterialTheme.colors.searchBackground,
         leadingIconColor = iconColor,
         trailingIconColor = iconColor,
