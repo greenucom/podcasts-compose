@@ -21,9 +21,6 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.searchBackground
 
-private const val TextAlpha = 0.74f
-private const val IconAlpha = 0.60f
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SearchField(
@@ -36,7 +33,7 @@ fun SearchField(
 ) {
 
     val textStyle = MaterialTheme.typography.body1.copy(
-        color = MaterialTheme.colors.onSurface.copy(alpha = TextAlpha)
+        color = MaterialTheme.colors.onSurface.copy(alpha = ComponentDefaults.TextAlpha)
     )
 
     val placeholder = @Composable {
@@ -50,7 +47,7 @@ fun SearchField(
         Icon(
             modifier = Modifier
                 .padding(end = 8.dp)
-                .alpha(IconAlpha),
+                .alpha(ComponentDefaults.IconAlpha),
             imageVector = Icons.Outlined.Search,
             contentDescription = placeholderText,
         )
@@ -71,7 +68,7 @@ fun SearchField(
             ) {
 
                 Icon(
-                    modifier = Modifier.alpha(IconAlpha),
+                    modifier = Modifier.alpha(ComponentDefaults.IconAlpha),
                     imageVector = Icons.Outlined.Close,
                     contentDescription = stringResource(R.string.clear_search_field),
                 )

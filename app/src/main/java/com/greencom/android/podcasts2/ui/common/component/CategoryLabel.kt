@@ -17,8 +17,6 @@ import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.preview.CategoryPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
-private const val TextColorAlpha = 0.74f
-
 private val BackgroundLight = Color(0xFFEFEFEF)
 private val BackgroundDark = Color(0xFF323232)
 private val Colors.categoryLabelBackground: Color
@@ -38,7 +36,7 @@ fun CategoryLabel(
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
             text = categoryName,
             style = MaterialTheme.typography.overline,
-            color = MaterialTheme.colors.onSurface.copy(alpha = TextColorAlpha),
+            color = MaterialTheme.colors.onSurface.copy(alpha = ComponentDefaults.TextAlpha),
         )
     }
 }

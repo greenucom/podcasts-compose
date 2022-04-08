@@ -17,10 +17,6 @@ import com.greencom.android.podcasts2.ui.common.component.ComponentDefaults
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.searchBackground
 
-private val Elevation = 0.dp
-private const val TextAlpha = 0.74f
-private const val IconAlpha = 0.60f
-
 @Composable
 fun SearchButton(
     onClick: () -> Unit,
@@ -30,11 +26,11 @@ fun SearchButton(
         backgroundColor = MaterialTheme.colors.searchBackground,
     )
     val elevation = ButtonDefaults.elevation(
-        defaultElevation = Elevation,
-        pressedElevation = Elevation,
-        disabledElevation = Elevation,
-        hoveredElevation = Elevation,
-        focusedElevation = Elevation,
+        defaultElevation = 0.dp,
+        pressedElevation = 0.dp,
+        disabledElevation = 0.dp,
+        hoveredElevation = 0.dp,
+        focusedElevation = 0.dp,
     )
 
     Button(
@@ -46,7 +42,7 @@ fun SearchButton(
     ) {
 
         Icon(
-            modifier = Modifier.alpha(IconAlpha),
+            modifier = Modifier.alpha(ComponentDefaults.IconAlpha),
             imageVector = Icons.Outlined.Search,
             contentDescription = null,
         )
@@ -55,7 +51,7 @@ fun SearchButton(
             modifier = Modifier
                 .padding(start = 8.dp)
                 .weight(1f)
-                .alpha(TextAlpha),
+                .alpha(ComponentDefaults.TextAlpha),
             text = stringResource(R.string.search_for_podcasts),
             style = MaterialTheme.typography.body1,
         )
