@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -56,7 +55,7 @@ fun SearchScreen(
     ) { paddingValues ->
 
         LazyColumn(
-            state = rememberLazyListState(),
+            state = screenState.searchResultListState,
             contentPadding = paddingValues.applyAppContentPaddings(),
         ) {
             viewState.let { state ->
@@ -96,13 +95,16 @@ fun SearchScreen(
 
                     SearchViewModel.ViewState.Empty -> {
                         item(key = KeyEmpty) {
-                            SearchEmptyMessage(modifier = Modifier.padding(top = 32.dp))
+                            SearchEmptyMessage(modifier = Modifier.padding(vertical = 32.dp))
                         }
                     }
 
                     SearchViewModel.ViewState.Error -> {
                         item(key = KeyError) {
-                            ErrorMessage(onTryAgainClicked = searchViewModel::onTryAgainClicked)
+                            ErrorMessage(
+                                modifier = Modifier.padding(vertical = 32.dp),
+                                onTryAgainClicked = searchViewModel::onTryAgainClicked,
+                            )
                         }
                     }
                 }
