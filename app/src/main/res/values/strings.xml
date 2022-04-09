@@ -21,4 +21,7 @@
     <string name="recommended">Recommended</string>
     <string name="trending">Trending</string>
 
+    <!-- Search -->
+    <string name="enter_query_to_start_searching">Enter a query to start searching</string>
+
 </resources>
