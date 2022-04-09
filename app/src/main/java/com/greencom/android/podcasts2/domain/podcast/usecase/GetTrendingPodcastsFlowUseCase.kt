@@ -6,7 +6,7 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class TrendingPodcastsFlowUseCase @Inject constructor(
+class GetTrendingPodcastsFlowUseCase @Inject constructor(
     private val podcastRepository: PodcastRepository,
 ) : SimpleUseCase<Unit, Flow<List<Podcast>>>() {
 

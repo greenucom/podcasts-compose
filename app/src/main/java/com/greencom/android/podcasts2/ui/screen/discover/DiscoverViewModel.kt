@@ -88,7 +88,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun loadTrendingPodcasts() = viewModelScope.launch {
-        interactor.trendingPodcastsFlowUseCase(Unit).collect { podcasts ->
+        interactor.getTrendingPodcastsFlowUseCase(Unit).collect { podcasts ->
             val state = if (podcasts.isEmpty()) {
                 TrendingPodcastsState.Loading
             } else {

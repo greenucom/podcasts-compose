@@ -4,7 +4,7 @@ import com.greencom.android.podcasts2.domain.category.usecase.GetSelectedTrendin
 import com.greencom.android.podcasts2.domain.category.usecase.GetTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
-import com.greencom.android.podcasts2.domain.podcast.usecase.TrendingPodcastsFlowUseCase
+import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcastsFlowUseCase
 import com.greencom.android.podcasts2.domain.podcast.usecase.UpdatePodcastSubscriptionUseCase
 import javax.inject.Inject
 
@@ -13,6 +13,6 @@ class DiscoverInteractor @Inject constructor(
     val getSelectedTrendingCategoriesIdsUseCase: GetSelectedTrendingCategoriesIdsUseCase,
     val toggleSelectableTrendingCategoryUseCase: ToggleSelectableTrendingCategoryUseCase,
     val requestTrendingPodcastsUseCase: RequestTrendingPodcastsUseCase,
-    val trendingPodcastsFlowUseCase: TrendingPodcastsFlowUseCase,
+    val getTrendingPodcastsFlowUseCase: GetTrendingPodcastsFlowUseCase,
     val updatePodcastSubscriptionUseCase: UpdatePodcastSubscriptionUseCase,
 )
