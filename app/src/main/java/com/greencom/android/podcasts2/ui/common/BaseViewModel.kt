@@ -13,8 +13,8 @@ abstract class BaseViewModel<State, Event> : ViewModel() {
 
     protected abstract val initialViewState: State
 
-    protected val _viewState = MutableStateFlow<State>(initialViewState)
-    val viewState = _viewState.asStateFlow()
+    protected val _viewState by lazy { MutableStateFlow<State>(initialViewState) }
+    val viewState by lazy { _viewState.asStateFlow() }
 
     private val _viewEvents = Channel<Event>(Channel.UNLIMITED)
     val viewEvents = _viewEvents.receiveAsFlow()
