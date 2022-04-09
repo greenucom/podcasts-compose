@@ -49,13 +49,13 @@ fun DiscoverScreen(
         }
 
         LazyColumn(
-            state = screenState.screenLazyListState,
+            state = screenState.screenListState,
             contentPadding = paddingValues.applyAppContentPaddings(),
         ) {
 
             recommendedPodcastsSection(
                 modifier = Modifier.padding(vertical = 8.dp),
-                innerLazyListState = screenState.recommendedPodcastsLazyListState,
+                innerLazyListState = screenState.recommendedPodcastsListState,
                 recommendedPodcastsState = recommendedPodcastsState,
                 onPodcastClicked = onPodcastClicked,
             )

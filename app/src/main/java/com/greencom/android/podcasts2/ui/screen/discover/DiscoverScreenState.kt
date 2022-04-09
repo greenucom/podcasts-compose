@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 class DiscoverScreenState(
     val onSearchClicked: () -> Unit,
     val scaffoldState: ScaffoldState,
-    val screenLazyListState: LazyListState,
+    val screenListState: LazyListState,
     val coroutineScope: CoroutineScope,
-    val recommendedPodcastsLazyListState: LazyListState,
+    val recommendedPodcastsListState: LazyListState,
 ) {
 
     private var scrollJob: Job? = null
@@ -36,13 +36,13 @@ class DiscoverScreenState(
         scrollJob?.cancel()
 
         if (
-            screenLazyListState.firstVisibleItemIndex == 0 &&
-            screenLazyListState.firstVisibleItemScrollOffset == 0
+            screenListState.firstVisibleItemIndex == 0 &&
+            screenListState.firstVisibleItemScrollOffset == 0
         ) {
             onSearchClicked()
         } else {
             scrollJob = coroutineScope.launch {
-                screenLazyListState.animateScrollToItem(0)
+                screenListState.animateScrollToItem(0)
             }
         }
     }
@@ -63,8 +63,8 @@ fun rememberDiscoverScreenState(
     DiscoverScreenState(
         onSearchClicked = onSearchClicked,
         scaffoldState = scaffoldState,
-        screenLazyListState = screenLazyColumnState,
+        screenListState = screenLazyColumnState,
         coroutineScope = coroutineScope,
-        recommendedPodcastsLazyListState = recommendedPodcastsLazyListState,
+        recommendedPodcastsListState = recommendedPodcastsLazyListState,
     )
 }
