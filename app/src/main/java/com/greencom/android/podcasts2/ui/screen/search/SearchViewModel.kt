@@ -62,7 +62,6 @@ class SearchViewModel @Inject constructor(
 
     fun onQueryChange(query: String) {
         _query.update { query }
-        searchPodcasts()
     }
 
     fun onImeSearch() {
@@ -75,6 +74,10 @@ class SearchViewModel @Inject constructor(
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
         interactor.updatePodcastSubscriptionUseCase(podcast)
+    }
+
+    fun onTryAgainClicked() {
+        searchPodcasts()
     }
 
     sealed interface ViewState {
