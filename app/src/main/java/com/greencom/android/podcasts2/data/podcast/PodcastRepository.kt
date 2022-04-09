@@ -1,6 +1,6 @@
 package com.greencom.android.podcasts2.data.podcast
 
-import com.greencom.android.podcasts2.di.IODispatcher
+import com.greencom.android.podcasts2.di.DefaultDispatcher
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.podcast.Podcast
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class PodcastRepository @Inject constructor(
-    @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     private val remoteDataSource: PodcastRemoteDataSource,
     private val localDataSource: PodcastLocalDataSource,
 ) {
@@ -22,7 +22,16 @@ class PodcastRepository @Inject constructor(
         trendingPodcasts.map { podcast ->
             podcast.copy(isSubscribed = podcast.id in subscriptionIds)
         }
-    }.flowOn(ioDispatcher)
+    }.flowOn(defaultDispatcher)
+
+    val lastSearchPodcastsResult = combine(
+        remoteDataSource.lastSearchPodcastsResult,
+        localDataSource.subscriptionIds,
+    ) { searchResult, subscriptionIds ->
+        searchResult.map { podcast ->
+            podcast.copy(isSubscribed = podcast.id in subscriptionIds)
+        }
+    }.flowOn(defaultDispatcher)
 
     suspend fun loadTrendingPodcasts(
         max: Int,

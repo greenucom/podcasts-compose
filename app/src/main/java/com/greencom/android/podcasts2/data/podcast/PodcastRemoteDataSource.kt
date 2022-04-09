@@ -20,6 +20,9 @@ class PodcastRemoteDataSource @Inject constructor(
     private val _trendingPodcasts = MutableStateFlow<List<Podcast>>(emptyList())
     val trendingPodcasts = _trendingPodcasts.asStateFlow()
 
+    private val _lastSearchPodcastsResult = MutableStateFlow<List<Podcast>>(emptyList())
+    val lastSearchPodcastsResult = _lastSearchPodcastsResult.asStateFlow()
+
     suspend fun loadTrendingPodcasts(
         max: Int,
         languages: List<Language>,
@@ -34,6 +37,12 @@ class PodcastRemoteDataSource @Inject constructor(
         )
         val podcasts = dto.toDomain()
         _trendingPodcasts.update { podcasts }
+    }
+
+    suspend fun searchPodcasts(query: String) {
+        val dto = podcastService.searchPodcasts(query)
+        val podcasts = dto.toDomain()
+        _lastSearchPodcastsResult.update { podcasts }
     }
 
 }

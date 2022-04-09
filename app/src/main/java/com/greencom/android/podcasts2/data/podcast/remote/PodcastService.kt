@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.data.podcast.remote
 
 import com.greencom.android.podcasts2.data.podcast.remote.dto.GetTrendingPodcastsResponseDto
+import com.greencom.android.podcasts2.data.podcast.remote.dto.SearchPodcastsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,6 +22,14 @@ interface PodcastService {
         @Query("notcat")
         notInCategories: String,
 
-    ) : GetTrendingPodcastsResponseDto
+    ): GetTrendingPodcastsResponseDto
+
+    @GET("search/byterm")
+    suspend fun searchPodcasts(
+
+        @Query("q")
+        query: String,
+
+    ): SearchPodcastsResponseDto
 
 }
