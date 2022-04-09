@@ -34,11 +34,11 @@ class DiscoverViewModel @Inject constructor(
         MutableStateFlow<TrendingPodcastsState>(TrendingPodcastsState.Loading)
     val trendingPodcastsState = _trendingPodcastsState.asStateFlow()
 
-    private var trendingPodcastsJob: Job? = null
+    private var requestTrendingPodcastsJob: Job? = null
 
     init {
         loadTrendingCategoriesAndRequestTrendingPodcasts()
-        loadTrendingPodcasts()
+        collectTrendingPodcasts()
     }
 
     private fun loadTrendingCategoriesAndRequestTrendingPodcasts() = viewModelScope.launch {
@@ -63,8 +63,8 @@ class DiscoverViewModel @Inject constructor(
     private fun requestTrendingPodcastsForSelectedCategories(
         selectedCategories: List<Category>
     ) {
-        trendingPodcastsJob?.cancel()
-        trendingPodcastsJob = viewModelScope.launch {
+        requestTrendingPodcastsJob?.cancel()
+        requestTrendingPodcastsJob = viewModelScope.launch {
             val max = if (selectedCategories.isEmpty()) {
                 TrendingPodcastCountMaxValue
             } else {
@@ -87,7 +87,7 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun loadTrendingPodcasts() = viewModelScope.launch {
+    private fun collectTrendingPodcasts() = viewModelScope.launch {
         interactor.getTrendingPodcastsFlowUseCase(Unit).collect { podcasts ->
             val state = if (podcasts.isEmpty()) {
                 TrendingPodcastsState.Loading
