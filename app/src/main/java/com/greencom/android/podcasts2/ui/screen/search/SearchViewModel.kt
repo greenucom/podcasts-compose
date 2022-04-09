@@ -73,6 +73,10 @@ class SearchViewModel @Inject constructor(
         _query.update { "" }
     }
 
+    fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
+        interactor.updatePodcastSubscriptionUseCase(podcast)
+    }
+
     sealed interface ViewState {
         data class Success(val podcasts: List<Podcast>) : ViewState
         object Loading : ViewState
