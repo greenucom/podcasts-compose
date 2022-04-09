@@ -9,11 +9,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GetTrendingPodcastsResponseDto(
 
-    @SerialName("status")
-    val status: String? = null,
-
     @SerialName("feeds")
-    val podcasts: List<GetTrendingPodcastResponseDto>? = null,
+    val podcasts: List<GetTrendingPodcastsItemDto>? = null,
 
     @SerialName("count")
     val count: Int? = null,
@@ -30,7 +27,7 @@ data class GetTrendingPodcastsResponseDto(
 }
 
 @Serializable
-data class GetTrendingPodcastResponseDto(
+data class GetTrendingPodcastsItemDto(
     
     @SerialName("id")
     val id: Long? = null,
@@ -49,12 +46,6 @@ data class GetTrendingPodcastResponseDto(
     
     @SerialName("image")
     val image: String? = null,
-    
-    @SerialName("newestItemPublishedTime")
-    val newestItemPublishedTime: Long? = null,
-    
-    @SerialName("trendScore")
-    val trendScore: Int? = null,
 
     @SerialName("language")
     val language: String? = null,
