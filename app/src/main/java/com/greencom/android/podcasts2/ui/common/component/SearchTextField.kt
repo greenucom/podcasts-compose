@@ -27,7 +27,7 @@ fun SearchTextField(
     query: String,
     onQueryChanged: (String) -> Unit,
     placeholderText: String,
-    onImeSearch: (String) -> Unit,
+    onImeSearch: () -> Unit,
     onClearQuery: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -93,7 +93,7 @@ fun SearchTextField(
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(onSearch = { onImeSearch(query) }),
+        keyboardActions = KeyboardActions(onSearch = { onImeSearch() }),
         shape = MaterialTheme.shapes.small,
         colors = colors,
     )

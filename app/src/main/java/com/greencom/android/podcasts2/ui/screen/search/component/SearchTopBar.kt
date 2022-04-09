@@ -19,7 +19,7 @@ import com.greencom.android.podcasts2.ui.common.component.SearchTextField
 fun SearchTopBar(
     query: String,
     onQueryChanged: (String) -> Unit,
-    onImeSearch: (String) -> Unit,
+    onImeSearch: () -> Unit,
     onClearQuery: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
