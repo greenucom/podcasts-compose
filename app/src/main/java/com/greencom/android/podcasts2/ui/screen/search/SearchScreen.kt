@@ -8,7 +8,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -40,24 +39,25 @@ fun SearchScreen(
 
     val screenState = rememberSearchScreenState()
 
-    val query by searchViewModel.query.collectAsState()
     val viewState by searchViewModel.viewState.collectAsState()
+    val query by searchViewModel.query.collectAsState()
+    val showInitialKeyboard by searchViewModel.showInitialKeyboard.collectAsState()
 
-    LaunchedEffect(Unit) {
+    if (showInitialKeyboard) {
         screenState.searchFieldFocusRequester.requestFocus()
     }
 
     Scaffold(
-        modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
         scaffoldState = screenState.scaffoldState,
         topBar = {
             SearchTopBar(
+                modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
                 query = query,
                 onQueryChanged = searchViewModel::onQueryChange,
                 onImeSearch = searchViewModel::onImeSearch,
                 onClearQuery = searchViewModel::onClearQuery,
             )
-        }
+        },
     ) { paddingValues ->
 
         LazyColumn(

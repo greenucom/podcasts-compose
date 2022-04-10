@@ -7,6 +7,7 @@ import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,13 +21,27 @@ class SearchViewModel @Inject constructor(
 
     override val initialViewState = ViewState.Empty
 
-    private val _query = MutableStateFlow("")
+    private val _query = MutableStateFlow(QUERY_DEFAULT_VALUE)
     val query = _query.asStateFlow()
+
+    // Initial value set to false because FocusRequester is not initialized at start
+    // and can't request focus
+    private val _showInitialKeyboard = MutableStateFlow(false)
+    val showInitialKeyboard = _showInitialKeyboard.asStateFlow()
 
     private var searchPodcastsJob: Job? = null
 
     init {
+        showInitialKeyboard()
         collectSearchResults()
+    }
+
+    private fun showInitialKeyboard() = viewModelScope.launch {
+        delay(KEYBOARD_APPEARING_DELAY)
+        _showInitialKeyboard.update { true }
+        // Reset value to not show keyboard on next compositions and recompositions
+        delay(KEYBOARD_APPEARING_DELAY)
+        _showInitialKeyboard.update { false }
     }
 
     private fun collectSearchResults() = viewModelScope.launch {
@@ -88,5 +103,10 @@ class SearchViewModel @Inject constructor(
     }
 
     sealed interface ViewEvent
+
+    companion object {
+        private const val QUERY_DEFAULT_VALUE = ""
+        private const val KEYBOARD_APPEARING_DELAY = 50L
+    }
 
 }
