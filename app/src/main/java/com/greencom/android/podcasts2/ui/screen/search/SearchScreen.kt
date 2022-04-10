@@ -8,9 +8,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
@@ -41,8 +43,12 @@ fun SearchScreen(
     val query by searchViewModel.query.collectAsState()
     val viewState by searchViewModel.viewState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        screenState.searchFieldFocusRequester.requestFocus()
+    }
+
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
         scaffoldState = screenState.scaffoldState,
         topBar = {
             SearchTopBar(
