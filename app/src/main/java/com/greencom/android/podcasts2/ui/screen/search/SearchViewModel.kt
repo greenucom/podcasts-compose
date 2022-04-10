@@ -81,7 +81,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onClearQuery() {
-        _query.update { "" }
+        _query.update { QUERY_DEFAULT_VALUE }
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
