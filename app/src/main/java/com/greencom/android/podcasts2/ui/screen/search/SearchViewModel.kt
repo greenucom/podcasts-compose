@@ -26,24 +26,16 @@ class SearchViewModel @Inject constructor(
 
     private var lastSearchQuery = QUERY_DEFAULT_VALUE
 
-    // Initial value set to false because FocusRequester is not initialized at start
-    // and can't request focus
-    private val _showInitialKeyboard = MutableStateFlow(false)
-    val showInitialKeyboard = _showInitialKeyboard.asStateFlow()
-
     private var searchPodcastsJob: Job? = null
 
     init {
-        showInitialKeyboard()
+        requestInitialFocusForSearchField()
         collectSearchResults()
     }
 
-    private fun showInitialKeyboard() = viewModelScope.launch {
+    private fun requestInitialFocusForSearchField() = viewModelScope.launch {
         delay(KEYBOARD_APPEARING_DELAY)
-        _showInitialKeyboard.update { true }
-        // Reset value to not show keyboard on next compositions and recompositions
-        delay(KEYBOARD_APPEARING_DELAY)
-        _showInitialKeyboard.update { false }
+        sendEvent(ViewEvent.RequestInitialFocusForSearchField)
     }
 
     private fun collectSearchResults() = viewModelScope.launch {
@@ -107,7 +99,9 @@ class SearchViewModel @Inject constructor(
         object Error : ViewState
     }
 
-    sealed interface ViewEvent
+    sealed interface ViewEvent {
+        object RequestInitialFocusForSearchField : ViewEvent
+    }
 
     companion object {
         private const val QUERY_DEFAULT_VALUE = ""

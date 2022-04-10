@@ -12,7 +12,17 @@ class SearchScreenState(
     val scaffoldState: ScaffoldState,
     val searchResultListState: LazyListState,
     val searchFieldFocusRequester: FocusRequester,
-)
+) {
+
+    fun handleEvent(event: SearchViewModel.ViewEvent) {
+        when (event) {
+            SearchViewModel.ViewEvent.RequestInitialFocusForSearchField -> {
+                searchFieldFocusRequester.requestFocus()
+            }
+        }
+    }
+
+}
 
 @Composable
 fun rememberSearchScreenState(

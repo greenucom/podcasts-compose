@@ -8,6 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,10 +42,11 @@ fun SearchScreen(
 
     val viewState by searchViewModel.viewState.collectAsState()
     val query by searchViewModel.query.collectAsState()
-    val showInitialKeyboard by searchViewModel.showInitialKeyboard.collectAsState()
 
-    if (showInitialKeyboard) {
-        screenState.searchFieldFocusRequester.requestFocus()
+    LaunchedEffect(Unit) {
+        searchViewModel.viewEvents.collect { event ->
+            screenState.handleEvent(event)
+        }
     }
 
     Scaffold(
