@@ -52,12 +52,12 @@ fun AppScreen(
             targetValue = if (isBottomNavBarVisible) BottomNavBarHeight else 0.dp,
             animationSpec = spring(stiffness = BottomNavBarAnimSpringStiffness),
         )
-        val appPaddingValues = rememberInsetsPaddingValues(
+        val appContentPaddingValues = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.navigationBars,
             additionalBottom = bottomNavBarHeight,
         )
 
-        CompositionLocalProvider(LocalAppContentPaddingValues provides appPaddingValues) {
+        CompositionLocalProvider(LocalAppContentPaddingValues provides appContentPaddingValues) {
 
             // Remove bottom padding to allow app content be placed behind bottom nav bar
             val navHostPaddingValues = paddingValues.copy(bottom = 0.dp)
