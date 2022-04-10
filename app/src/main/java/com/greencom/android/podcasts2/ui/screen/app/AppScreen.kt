@@ -1,6 +1,5 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
-import android.content.res.Configuration
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -11,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -21,7 +19,6 @@ import com.greencom.android.podcasts2.ui.common.LocalAppContentPaddings
 import com.greencom.android.podcasts2.ui.common.copy
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
-import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val BottomNavBarAnimSpringStiffness = Spring.StiffnessMediumLow
 
@@ -84,25 +81,5 @@ fun AppScreen(
                 profileNavGraph(screenState.navController)
             }
         }
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun Light() {
-    PodcastsComposeTheme {
-        AppScreen()
-    }
-}
-
-@Composable
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    locale = "ru",
-)
-private fun Dark() {
-    PodcastsComposeTheme {
-        AppScreen()
     }
 }
