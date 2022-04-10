@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.navigationBarsPadding
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.addAppContentPaddingValues
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
@@ -63,8 +63,9 @@ fun SearchScreen(
     ) { paddingValues ->
 
         LazyColumn(
+            modifier = Modifier.navigationBarsPadding(),
             state = screenState.searchResultListState,
-            contentPadding = paddingValues.addAppContentPaddingValues(),
+            contentPadding = paddingValues,
         ) {
             viewState.let { state ->
                 when (state) {
