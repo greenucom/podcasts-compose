@@ -29,7 +29,7 @@ private const val KeyLoading = "Loading"
 private const val KeyEmpty = "Empty"
 private const val KeyError = "Error"
 
-private const val LoadingPlaceholderCount = 6
+private const val LoadingPlaceholderCount = 5
 
 @Composable
 fun SearchScreen(
