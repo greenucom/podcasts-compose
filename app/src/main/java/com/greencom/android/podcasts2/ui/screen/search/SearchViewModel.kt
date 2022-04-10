@@ -24,6 +24,8 @@ class SearchViewModel @Inject constructor(
     private val _query = MutableStateFlow(QUERY_DEFAULT_VALUE)
     val query = _query.asStateFlow()
 
+    private var lastSearchQuery = QUERY_DEFAULT_VALUE
+
     // Initial value set to false because FocusRequester is not initialized at start
     // and can't request focus
     private val _showInitialKeyboard = MutableStateFlow(false)
@@ -53,17 +55,20 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchPodcasts() {
-        searchPodcastsJob?.cancel()
-
-        val query = query.value
+        val query = query.value.trim()
         if (query.isBlank()) {
+            searchPodcastsJob?.cancel()
             _viewState.update { ViewState.Empty }
             return
         }
 
+        if (query == lastSearchQuery) return
+
+        searchPodcastsJob?.cancel()
         _viewState.update { ViewState.Loading }
         searchPodcastsJob = viewModelScope.launch {
             val params = SearchPodcastsUseCase.Params(query)
+            lastSearchQuery = query
             interactor.searchPodcastsUseCase(params)
                 .onFailure(::onSearchPodcastsFailure)
         }
