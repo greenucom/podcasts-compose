@@ -24,8 +24,6 @@ class SearchViewModel @Inject constructor(
     private val _query = MutableStateFlow(QUERY_DEFAULT_VALUE)
     val query = _query.asStateFlow()
 
-    private var lastSearchQuery = QUERY_DEFAULT_VALUE
-
     private var searchPodcastsJob: Job? = null
 
     init {
@@ -47,20 +45,17 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchPodcasts() {
-        val query = query.value.trim()
+        searchPodcastsJob?.cancel()
+
+        val query = query.value
         if (query.isBlank()) {
-            searchPodcastsJob?.cancel()
             _viewState.update { ViewState.Empty }
             return
         }
 
-        if (query == lastSearchQuery) return
-
-        searchPodcastsJob?.cancel()
         _viewState.update { ViewState.Loading }
         searchPodcastsJob = viewModelScope.launch {
-            val params = SearchPodcastsUseCase.Params(query)
-            lastSearchQuery = query
+            val params = SearchPodcastsUseCase.Params(query.trim())
             interactor.searchPodcastsUseCase(params)
                 .onFailure(::onSearchPodcastsFailure)
         }
