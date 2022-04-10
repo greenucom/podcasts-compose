@@ -13,6 +13,7 @@ class AppScreenState(
     val navController: NavHostController,
 ) {
 
+    // TODO: Extract to separate file
     private val routesWithBottomNavBar = setOf(
         Screen.MyPodcasts.route,
         Screen.Discover.route,

@@ -3,7 +3,6 @@ package com.greencom.android.podcasts2.ui.screen.app
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -14,12 +13,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.greencom.android.podcasts2.ui.common.AppContentPaddings
-import com.greencom.android.podcasts2.ui.common.LocalAppContentPaddings
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.greencom.android.podcasts2.ui.common.LocalAppContentPaddingValues
 import com.greencom.android.podcasts2.ui.common.copy
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 
+private val BottomNavBarHeight = 56.dp
 private const val BottomNavBarAnimSpringStiffness = Spring.StiffnessMediumLow
 
 @Composable
@@ -47,23 +48,20 @@ fun AppScreen(
         },
     ) { paddingValues ->
 
-        val bottomNavBarHeight = if (isBottomNavBarVisible) {
-            paddingValues.calculateBottomPadding()
-        } else {
-            0.dp
-        }
-        val appBottomPadding by animateDpAsState(
-            targetValue = bottomNavBarHeight,
+        val bottomNavBarHeight by animateDpAsState(
+            targetValue = if (isBottomNavBarVisible) BottomNavBarHeight else 0.dp,
             animationSpec = spring(stiffness = BottomNavBarAnimSpringStiffness),
         )
-        val appPaddingValues = PaddingValues(bottom = appBottomPadding)
+        val appPaddingValues = rememberInsetsPaddingValues(
+            insets = LocalWindowInsets.current.navigationBars,
+            additionalBottom = bottomNavBarHeight,
+        )
 
-        // Remove bottom padding to allow NavHost content to be placed behind bottom nav bar
-        val navHostPaddingValues = paddingValues.copy(bottom = 0.dp)
+        CompositionLocalProvider(LocalAppContentPaddingValues provides appPaddingValues) {
 
-        CompositionLocalProvider(
-            LocalAppContentPaddings provides AppContentPaddings(appPaddingValues)
-        ) {
+            // Remove bottom padding to allow app content be placed behind bottom nav bar
+            val navHostPaddingValues = paddingValues.copy(bottom = 0.dp)
+
             NavHost(
                 modifier = Modifier.padding(navHostPaddingValues),
                 navController = screenState.navController,

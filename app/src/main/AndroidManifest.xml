@@ -17,7 +17,8 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.PodcastsCompose">
+            android:theme="@style/Theme.PodcastsCompose"
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

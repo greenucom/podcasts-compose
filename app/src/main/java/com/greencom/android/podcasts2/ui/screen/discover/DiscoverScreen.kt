@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.applyAppContentPaddings
+import com.greencom.android.podcasts2.ui.common.addAppContentPaddingValues
 import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastsSection
@@ -36,21 +36,21 @@ fun DiscoverScreen(
     val selectableCategories by discoverViewModel.selectableCategories.collectAsState()
     val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        appViewModel.viewEvents.collect { event ->
+            screenState.handleAppEvent(event)
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
         topBar = { DiscoverTopBar(onSearchClicked = onSearchClicked) },
     ) { paddingValues ->
 
-        LaunchedEffect(Unit) {
-            appViewModel.viewEvents.collect { event ->
-                screenState.handleAppEvent(event)
-            }
-        }
-
         LazyColumn(
             state = screenState.screenListState,
-            contentPadding = paddingValues.applyAppContentPaddings(),
+            contentPadding = paddingValues.addAppContentPaddingValues(),
         ) {
 
             recommendedPodcastsSection(

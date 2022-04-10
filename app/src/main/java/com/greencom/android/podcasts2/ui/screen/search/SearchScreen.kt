@@ -16,8 +16,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.addAppContentPaddingValues
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
-import com.greencom.android.podcasts2.ui.common.applyAppContentPaddings
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
@@ -64,7 +64,7 @@ fun SearchScreen(
 
         LazyColumn(
             state = screenState.searchResultListState,
-            contentPadding = paddingValues.applyAppContentPaddings(),
+            contentPadding = paddingValues.addAppContentPaddingValues(),
         ) {
             viewState.let { state ->
                 when (state) {
