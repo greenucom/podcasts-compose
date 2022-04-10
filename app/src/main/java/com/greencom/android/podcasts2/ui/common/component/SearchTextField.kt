@@ -11,8 +11,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,7 +23,7 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.searchBackground
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(
     query: String,
@@ -84,6 +86,14 @@ fun SearchTextField(
         trailingIconColor = iconColor,
     )
 
+    val keyboard = LocalSoftwareKeyboardController.current
+    val keyboardActions = KeyboardActions(
+        onSearch = {
+            onImeSearch()
+            keyboard?.hide()
+        }
+    )
+
     TextFieldCustom(
         modifier = modifier,
         value = query,
@@ -93,7 +103,7 @@ fun SearchTextField(
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(onSearch = { onImeSearch() }),
+        keyboardActions = keyboardActions,
         shape = MaterialTheme.shapes.small,
         colors = colors,
     )
