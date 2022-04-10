@@ -6,9 +6,9 @@ import com.greencom.android.podcasts2.domain.category.toCategoriesString
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.language.toLanguagesString
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,11 +17,17 @@ class PodcastRemoteDataSource @Inject constructor(
     private val podcastService: PodcastService,
 ) {
 
-    private val _trendingPodcasts = MutableStateFlow<List<Podcast>>(emptyList())
-    val trendingPodcasts = _trendingPodcasts.asStateFlow()
+    private val _trendingPodcasts = MutableSharedFlow<List<Podcast>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val trendingPodcasts = _trendingPodcasts.asSharedFlow()
 
-    private val _lastSearchPodcastsResult = MutableStateFlow<List<Podcast>>(emptyList())
-    val lastSearchPodcastsResult = _lastSearchPodcastsResult.asStateFlow()
+    private val _lastSearchPodcastsResult = MutableSharedFlow<List<Podcast>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val lastSearchPodcastsResult = _lastSearchPodcastsResult.asSharedFlow()
 
     suspend fun loadTrendingPodcasts(
         max: Int,
@@ -36,13 +42,13 @@ class PodcastRemoteDataSource @Inject constructor(
             notInCategories = notInCategories.toCategoriesString(),
         )
         val podcasts = dto.toDomain()
-        _trendingPodcasts.update { podcasts }
+        _trendingPodcasts.tryEmit(podcasts)
     }
 
     suspend fun searchPodcasts(query: String) {
         val dto = podcastService.searchPodcasts(query)
         val podcasts = dto.toDomain()
-        _lastSearchPodcastsResult.update { podcasts }
+        _lastSearchPodcastsResult.tryEmit(podcasts)
     }
 
 }
