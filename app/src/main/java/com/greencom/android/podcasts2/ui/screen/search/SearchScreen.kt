@@ -7,14 +7,17 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.BottomNavBarState
+import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
@@ -32,16 +35,17 @@ private const val LoadingPlaceholderCount = 5
 @Composable
 fun SearchScreen(
     onPodcastClicked: (Podcast) -> Unit,
-    bottomNavBarState: MutableState<BottomNavBarState>,
+    onScreenBehaviorChanged: (ScreenBehavior) -> Unit,
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
 ) {
 
-    LaunchedEffect(Unit) {
-        bottomNavBarState.value = BottomNavBarState.Visible
-    }
-
     val screenState = rememberSearchScreenState()
+
+    LaunchedEffect(Unit) {
+        val behavior = ScreenBehavior()
+        onScreenBehaviorChanged(behavior)
+    }
 
     val viewState by searchViewModel.viewState.collectAsState()
     val query by searchViewModel.query.collectAsState()

@@ -24,14 +24,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.navigationBarsHeight
 import com.greencom.android.podcasts2.ui.common.BottomNavBarState
+import com.greencom.android.podcasts2.ui.common.OnBottomNavBarItemReselected
+import com.greencom.android.podcasts2.ui.common.findBottomNavBarItemStartDestination
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
-    onItemReselected: (item: BottomNavBarItem) -> Unit,
     state: BottomNavBarState,
+    onItemReselected: OnBottomNavBarItemReselected?,
     modifier: Modifier = Modifier,
 ) {
     val isVisible = state == BottomNavBarState.Visible
@@ -65,7 +67,16 @@ fun BottomNavBar(
                             selected = isSelected,
                             onClick = {
                                 if (isSelected) {
-                                    onItemReselected(item)
+                                    val isHandled = onItemReselected?.invoke(item)
+                                    if (isHandled != true) {
+                                        val itemStartDestination =
+                                            navController.findBottomNavBarItemStartDestination()
+
+                                        navController.popBackStack(
+                                            destinationId = itemStartDestination.id,
+                                            inclusive = false,
+                                        )
+                                    }
                                 } else {
                                     navController.navigate(item.route) {
                                         popUpTo(navController.graph.findStartDestination().id) {
@@ -98,7 +109,7 @@ private fun Light() {
         val navController = rememberNavController()
         BottomNavBar(
             navController = navController,
-            onItemReselected = {},
+            onItemReselected = null,
             state = BottomNavBarState.Visible,
         )
     }
@@ -115,7 +126,7 @@ private fun Dark() {
         val navController = rememberNavController()
         BottomNavBar(
             navController = navController,
-            onItemReselected = {},
+            onItemReselected = null,
             state = BottomNavBarState.Visible,
         )
     }

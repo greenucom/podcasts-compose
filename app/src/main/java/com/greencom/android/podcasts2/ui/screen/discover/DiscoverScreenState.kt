@@ -7,7 +7,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -22,17 +21,7 @@ class DiscoverScreenState(
 
     private var scrollJob: Job? = null
 
-    fun handleAppEvent(event: AppViewModel.ViewEvent) {
-        when (event) {
-            AppViewModel.ViewEvent.DiscoverBottomNavBarItemReselected -> {
-                onDiscoverBottomNavBarItemReselected()
-            }
-
-            else -> {}
-        }
-    }
-
-    private fun onDiscoverBottomNavBarItemReselected() {
+    fun onBottomNavBarItemReselected(): Boolean {
         scrollJob?.cancel()
         val isScrolledUp = screenListState.firstVisibleItemIndex == 0 &&
                 screenListState.firstVisibleItemScrollOffset == 0
@@ -44,6 +33,7 @@ class DiscoverScreenState(
                 screenListState.animateScrollToItem(0)
             }
         }
+        return true
     }
 
 }

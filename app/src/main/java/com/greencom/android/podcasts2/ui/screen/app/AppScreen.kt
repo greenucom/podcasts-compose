@@ -6,20 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import com.greencom.android.podcasts2.ui.common.BottomNavBarState
+import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
 
 @Composable
-fun AppScreen(
-    modifier: Modifier = Modifier,
-    appViewModel: AppViewModel = hiltViewModel(),
-) {
+fun AppScreen(modifier: Modifier = Modifier) {
+
     val screenState = rememberAppScreenState()
 
-    val bottomNavBarState = remember { mutableStateOf(BottomNavBarState.Visible) }
+    val (screenBehavior, onScreenBehaviorChanged) = remember {
+        mutableStateOf(ScreenBehavior())
+    }
 
     Scaffold(
         modifier = modifier,
@@ -27,8 +26,8 @@ fun AppScreen(
         bottomBar = {
             BottomNavBar(
                 navController = screenState.navController,
-                onItemReselected = appViewModel::onBottomNavBarItemReselected,
-                state = bottomNavBarState.value,
+                state = screenBehavior.bottomNavBarState,
+                onItemReselected = screenBehavior.onBottomNavBarItemReselected,
             )
         },
     ) { paddingValues ->
@@ -40,23 +39,22 @@ fun AppScreen(
         ) {
             myPodcastsNavGraph(
                 navController = screenState.navController,
-                bottomNavBarState = bottomNavBarState,
+                onScreenBehaviorChanged = onScreenBehaviorChanged,
             )
 
             discoverNavGraph(
                 navController = screenState.navController,
-                bottomNavBarState = bottomNavBarState,
-                appViewModel = appViewModel,
+                onScreenBehaviorChanged = onScreenBehaviorChanged,
             )
 
             libraryNavGraph(
                 navController = screenState.navController,
-                bottomNavBarState = bottomNavBarState,
+                onScreenBehaviorChanged = onScreenBehaviorChanged,
             )
 
             profileNavGraph(
                 navController = screenState.navController,
-                bottomNavBarState = bottomNavBarState
+                onScreenBehaviorChanged = onScreenBehaviorChanged,
             )
         }
     }
