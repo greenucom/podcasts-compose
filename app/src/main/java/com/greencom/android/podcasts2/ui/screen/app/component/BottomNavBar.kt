@@ -2,8 +2,6 @@ package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -40,8 +38,8 @@ fun BottomNavBar(
 
     AnimatedVisibility(
         visible = isVisible,
-        enter = slideInVertically(spring(stiffness = Spring.StiffnessMediumLow)) { it },
-        exit = slideOutVertically(spring(stiffness = Spring.StiffnessMediumLow)) { it },
+        enter = slideInVertically { it },
+        exit = slideOutVertically { it },
     ) {
 
         Column(modifier = modifier) {
