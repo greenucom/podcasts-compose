@@ -48,7 +48,7 @@ fun NavGraphBuilder.discoverNavGraph(
             podcastViewModel.setParameters(podcastId)
 
             PodcastScreen(
-                podcastViewModel = podcastViewModel,
+                viewModel = podcastViewModel,
             )
         }
 

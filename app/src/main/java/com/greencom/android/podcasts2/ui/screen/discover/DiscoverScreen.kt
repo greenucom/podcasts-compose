@@ -24,7 +24,7 @@ fun DiscoverScreen(
     onSearchClicked: () -> Unit,
     onScreenBehaviorChanged: (ScreenBehavior) -> Unit,
     modifier: Modifier = Modifier,
-    discoverViewModel: DiscoverViewModel = hiltViewModel(),
+    viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberDiscoverScreenState(
@@ -40,9 +40,9 @@ fun DiscoverScreen(
         onScreenBehaviorChanged(behavior)
     }
 
-    val recommendedPodcastsState by discoverViewModel.recommendedPodcastsState.collectAsState()
-    val selectableCategories by discoverViewModel.selectableCategories.collectAsState()
-    val trendingPodcastsState by discoverViewModel.trendingPodcastsState.collectAsState()
+    val recommendedPodcastsState by viewModel.recommendedPodcastsState.collectAsState()
+    val selectableCategories by viewModel.selectableCategories.collectAsState()
+    val trendingPodcastsState by viewModel.trendingPodcastsState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -64,11 +64,11 @@ fun DiscoverScreen(
 
             trendingPodcastsSection(
                 selectableCategories = selectableCategories,
-                onCategoryClicked = discoverViewModel::onSelectableCategoryClicked,
+                onCategoryClicked = viewModel::onSelectableCategoryClicked,
                 trendingPodcastsState = trendingPodcastsState,
                 onPodcastClicked = onPodcastClicked,
-                onSubscribedChanged = discoverViewModel::onSubscribedChanged,
-                onTryAgainClicked = discoverViewModel::onTryAgainClicked,
+                onSubscribedChanged = viewModel::onSubscribedChanged,
+                onTryAgainClicked = viewModel::onTryAgainClicked,
             )
         }
     }

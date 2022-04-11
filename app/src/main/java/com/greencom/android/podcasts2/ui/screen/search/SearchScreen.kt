@@ -24,6 +24,7 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchEmptyMessage
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+import timber.log.Timber
 
 private const val KeyLoading = "Loading"
 private const val KeyEmpty = "Empty"
@@ -35,16 +36,16 @@ private const val LoadingPlaceholderCount = 5
 fun SearchScreen(
     onPodcastClicked: (Podcast) -> Unit,
     modifier: Modifier = Modifier,
-    searchViewModel: SearchViewModel = hiltViewModel(),
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberSearchScreenState()
 
-    val viewState by searchViewModel.viewState.collectAsState()
-    val query by searchViewModel.query.collectAsState()
+    val viewState by viewModel.viewState.collectAsState()
+    val query by viewModel.query.collectAsState()
 
     LaunchedEffect(Unit) {
-        searchViewModel.viewEvents.collect { event ->
+        viewModel.viewEvents.collect { event ->
             screenState.handleEvent(event)
         }
     }
@@ -55,12 +56,17 @@ fun SearchScreen(
             SearchTopBar(
                 modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
                 query = query,
-                onQueryChanged = searchViewModel::onQueryChange,
-                onImeSearch = searchViewModel::onImeSearch,
-                onClearQuery = searchViewModel::onClearQuery,
+                onQueryChanged = viewModel::onQueryChange,
+                onImeSearch = viewModel::onImeSearch,
+                onClearQuery = viewModel::onClearQuery,
             )
         },
     ) { paddingValues ->
+
+        if (screenState.searchResultListState.isScrollInProgress) {
+            Timber.d("onScroll")
+            viewModel.onScroll()
+        }
 
         LazyColumn(
             modifier = Modifier.navigationBarsPadding(),
@@ -78,7 +84,7 @@ fun SearchScreen(
                             PodcastItem(
                                 podcast = podcast,
                                 onPodcastClicked = onPodcastClicked,
-                                onSubscribedChanged = searchViewModel::onSubscribedChanged,
+                                onSubscribedChanged = viewModel::onSubscribedChanged,
                             )
 
                             if (index != state.podcasts.lastIndex) {
@@ -112,7 +118,7 @@ fun SearchScreen(
                         item(key = KeyError) {
                             ErrorMessage(
                                 modifier = Modifier.padding(vertical = 32.dp),
-                                onTryAgainClicked = searchViewModel::onTryAgainClicked,
+                                onTryAgainClicked = viewModel::onTryAgainClicked,
                             )
                         }
                     }

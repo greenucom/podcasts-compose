@@ -7,7 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun PodcastScreen(
     modifier: Modifier = Modifier,
-    podcastViewModel: PodcastViewModel = hiltViewModel(),
+    viewModel: PodcastViewModel = hiltViewModel(),
 ) {
 
 }

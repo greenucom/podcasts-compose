@@ -6,11 +6,14 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 
 class SearchScreenState(
     val scaffoldState: ScaffoldState,
     val searchResultListState: LazyListState,
+    val focusManager: FocusManager,
     val searchFieldFocusRequester: FocusRequester,
 ) {
 
@@ -19,6 +22,8 @@ class SearchScreenState(
             SearchViewModel.ViewEvent.RequestInitialFocusForSearchField -> {
                 searchFieldFocusRequester.requestFocus()
             }
+
+            SearchViewModel.ViewEvent.ClearFocusForSearchField -> focusManager.clearFocus()
         }
     }
 
@@ -28,13 +33,15 @@ class SearchScreenState(
 fun rememberSearchScreenState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     searchResultListState: LazyListState = rememberLazyListState(),
+    focusManager: FocusManager = LocalFocusManager.current,
     searchFieldFocusRequester: FocusRequester = remember { FocusRequester() },
 ) = remember(
-    scaffoldState, searchResultListState, searchFieldFocusRequester,
+    scaffoldState, searchResultListState, focusManager, searchFieldFocusRequester,
 ) {
     SearchScreenState(
         scaffoldState = scaffoldState,
         searchResultListState = searchResultListState,
+        focusManager = focusManager,
         searchFieldFocusRequester = searchFieldFocusRequester,
     )
 }

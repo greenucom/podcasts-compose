@@ -73,10 +73,15 @@ class SearchViewModel @Inject constructor(
 
     fun onImeSearch() {
         searchPodcasts()
+        sendEvent(ViewEvent.ClearFocusForSearchField)
     }
 
     fun onClearQuery() {
         _query.update { QUERY_DEFAULT_VALUE }
+    }
+
+    fun onScroll() {
+        sendEvent(ViewEvent.ClearFocusForSearchField)
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
@@ -96,6 +101,7 @@ class SearchViewModel @Inject constructor(
 
     sealed interface ViewEvent {
         object RequestInitialFocusForSearchField : ViewEvent
+        object ClearFocusForSearchField : ViewEvent
     }
 
     companion object {
