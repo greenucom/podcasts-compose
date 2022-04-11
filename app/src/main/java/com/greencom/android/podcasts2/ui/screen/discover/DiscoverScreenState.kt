@@ -34,11 +34,10 @@ class DiscoverScreenState(
 
     private fun onDiscoverBottomNavBarItemReselected() {
         scrollJob?.cancel()
+        val isScrolledUp = screenListState.firstVisibleItemIndex == 0 &&
+                screenListState.firstVisibleItemScrollOffset == 0
 
-        if (
-            screenListState.firstVisibleItemIndex == 0 &&
-            screenListState.firstVisibleItemScrollOffset == 0
-        ) {
+        if (isScrolledUp) {
             onSearchClicked()
         } else {
             scrollJob = coroutineScope.launch {
