@@ -34,7 +34,7 @@ class SearchViewModel @Inject constructor(
 
     private fun requestInitialFocusForSearchField() = viewModelScope.launch {
         delay(KEYBOARD_APPEARING_DELAY)
-        sendEvent(ViewEvent.RequestInitialFocusForSearchField)
+        sendEventSuspend(ViewEvent.RequestInitialFocusForSearchField)
     }
 
     private fun collectSearchResults() = viewModelScope.launch {
