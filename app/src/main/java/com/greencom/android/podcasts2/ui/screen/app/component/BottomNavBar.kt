@@ -13,38 +13,41 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.navigationBarsHeight
+import com.greencom.android.podcasts2.ui.common.BottomNavBarState
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
-    currentNavBackStackEntry: NavBackStackEntry?,
-    isVisible: Boolean,
     onItemReselected: (item: BottomNavBarItem) -> Unit,
+    state: BottomNavBarState,
     modifier: Modifier = Modifier,
-    springStiffness: Float = Spring.StiffnessMediumLow
 ) {
+    val isVisible = state == BottomNavBarState.Visible
 
     AnimatedVisibility(
         visible = isVisible,
-        enter = slideInVertically(spring(stiffness = springStiffness)) { it },
-        exit = slideOutVertically(spring(stiffness = springStiffness)) { it },
+        enter = slideInVertically(spring(stiffness = Spring.StiffnessMediumLow)) { it },
+        exit = slideOutVertically(spring(stiffness = Spring.StiffnessMediumLow)) { it },
     ) {
 
         Column(modifier = modifier) {
             val backgroundColor = MaterialTheme.colors.surface
 
             CompositionLocalProvider(LocalElevationOverlay provides null) {
+
+                val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
 
                 BottomNavigation(backgroundColor = backgroundColor) {
 
@@ -95,9 +98,8 @@ private fun Light() {
         val navController = rememberNavController()
         BottomNavBar(
             navController = navController,
-            currentNavBackStackEntry = navController.currentBackStackEntry,
             onItemReselected = {},
-            isVisible = true,
+            state = BottomNavBarState.Visible,
         )
     }
 }
@@ -113,9 +115,8 @@ private fun Dark() {
         val navController = rememberNavController()
         BottomNavBar(
             navController = navController,
-            currentNavBackStackEntry = navController.currentBackStackEntry,
             onItemReselected = {},
-            isVisible = true,
+            state = BottomNavBarState.Visible,
         )
     }
 }

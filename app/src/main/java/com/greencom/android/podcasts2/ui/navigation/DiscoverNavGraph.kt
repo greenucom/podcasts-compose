@@ -1,11 +1,13 @@
 package com.greencom.android.podcasts2.ui.navigation
 
+import androidx.compose.runtime.MutableState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.BottomNavBarState
 import com.greencom.android.podcasts2.ui.common.requireLong
 import com.greencom.android.podcasts2.ui.screen.app.AppViewModel
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
@@ -15,6 +17,7 @@ import com.greencom.android.podcasts2.ui.screen.search.SearchScreen
 
 fun NavGraphBuilder.discoverNavGraph(
     navController: NavHostController,
+    bottomNavBarState: MutableState<BottomNavBarState>,
     appViewModel: AppViewModel,
 ) {
     val onPodcastClicked = { podcast: Podcast ->
@@ -31,12 +34,16 @@ fun NavGraphBuilder.discoverNavGraph(
             DiscoverScreen(
                 onPodcastClicked = onPodcastClicked,
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
+                bottomNavBarState = bottomNavBarState,
                 appViewModel = appViewModel,
             )
         }
 
         composable(Screen.Search.route) {
-            SearchScreen(onPodcastClicked = onPodcastClicked)
+            SearchScreen(
+                onPodcastClicked = onPodcastClicked,
+                bottomNavBarState = bottomNavBarState,
+            )
         }
 
         composable(
@@ -46,7 +53,11 @@ fun NavGraphBuilder.discoverNavGraph(
             val podcastId = backStackEntry.requireLong(Screen.Podcast.PodcastId)
             val podcastViewModel = hiltViewModel<PodcastViewModel>()
             podcastViewModel.setParameters(podcastId)
-            PodcastScreen(podcastViewModel = podcastViewModel)
+
+            PodcastScreen(
+                bottomNavBarState = bottomNavBarState,
+                podcastViewModel = podcastViewModel,
+            )
         }
 
     }

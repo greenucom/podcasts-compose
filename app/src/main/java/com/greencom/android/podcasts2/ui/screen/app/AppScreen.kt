@@ -1,18 +1,16 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
-import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
+import com.greencom.android.podcasts2.ui.common.BottomNavBarState
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
-
-private const val BottomNavBarAnimSpringStiffness = Spring.StiffnessMediumLow
 
 @Composable
 fun AppScreen(
@@ -21,9 +19,7 @@ fun AppScreen(
 ) {
     val screenState = rememberAppScreenState()
 
-    val navBackStackEntry by screenState.navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-    val isBottomNavBarVisible = screenState.isBottomNavBarVisible(currentRoute)
+    val bottomNavBarState = remember { mutableStateOf(BottomNavBarState.Visible) }
 
     Scaffold(
         modifier = modifier,
@@ -31,10 +27,8 @@ fun AppScreen(
         bottomBar = {
             BottomNavBar(
                 navController = screenState.navController,
-                currentNavBackStackEntry = navBackStackEntry,
-                isVisible = isBottomNavBarVisible,
                 onItemReselected = appViewModel::onBottomNavBarItemReselected,
-                springStiffness = BottomNavBarAnimSpringStiffness,
+                state = bottomNavBarState.value,
             )
         },
     ) { paddingValues ->
@@ -44,16 +38,26 @@ fun AppScreen(
             navController = screenState.navController,
             startDestination = BottomNavBarItem.MyPodcasts.route,
         ) {
-            myPodcastsNavGraph(screenState.navController)
+            myPodcastsNavGraph(
+                navController = screenState.navController,
+                bottomNavBarState = bottomNavBarState,
+            )
 
             discoverNavGraph(
                 navController = screenState.navController,
+                bottomNavBarState = bottomNavBarState,
                 appViewModel = appViewModel,
             )
 
-            libraryNavGraph(screenState.navController)
+            libraryNavGraph(
+                navController = screenState.navController,
+                bottomNavBarState = bottomNavBarState,
+            )
 
-            profileNavGraph(screenState.navController)
+            profileNavGraph(
+                navController = screenState.navController,
+                bottomNavBarState = bottomNavBarState
+            )
         }
     }
 }
