@@ -7,4 +7,10 @@ typealias OnBottomNavBarItemReselected = (BottomNavBarItem) -> Boolean
 data class ScreenBehavior(
     val bottomNavBarState: BottomNavBarState = BottomNavBarState.Visible,
     val onBottomNavBarItemReselected: OnBottomNavBarItemReselected? = null,
-)
+) {
+
+    companion object {
+        val Default: ScreenBehavior = ScreenBehavior()
+    }
+
+}

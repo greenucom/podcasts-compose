@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
@@ -35,17 +34,11 @@ private const val LoadingPlaceholderCount = 5
 @Composable
 fun SearchScreen(
     onPodcastClicked: (Podcast) -> Unit,
-    onScreenBehaviorChanged: (ScreenBehavior) -> Unit,
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberSearchScreenState()
-
-    LaunchedEffect(Unit) {
-        val behavior = ScreenBehavior()
-        onScreenBehaviorChanged(behavior)
-    }
 
     val viewState by searchViewModel.viewState.collectAsState()
     val query by searchViewModel.query.collectAsState()

@@ -36,10 +36,7 @@ fun NavGraphBuilder.discoverNavGraph(
         }
 
         composable(Screen.Search.route) {
-            SearchScreen(
-                onPodcastClicked = onPodcastClicked,
-                onScreenBehaviorChanged = onScreenBehaviorChanged,
-            )
+            SearchScreen(onPodcastClicked = onPodcastClicked)
         }
 
         composable(
