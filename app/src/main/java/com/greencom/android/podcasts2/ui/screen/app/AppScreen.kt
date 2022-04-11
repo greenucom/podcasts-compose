@@ -16,7 +16,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
     val screenState = rememberAppScreenState()
 
     val (currentScreenBehavior, onCurrentScreenBehaviorChanged) = remember {
-        mutableStateOf(ScreenBehavior())
+        mutableStateOf(ScreenBehavior.Default)
     }
 
     val currentBackStackEntry by screenState.navController.currentBackStackEntryAsState()
