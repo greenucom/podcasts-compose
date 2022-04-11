@@ -23,6 +23,10 @@ abstract class BaseViewModel<State, Event> : ViewModel() {
         _viewEvents.send(event)
     }
 
+    protected suspend fun sendEventSuspend(event: Event) {
+        _viewEvents.send(event)
+    }
+
     init {
         Timber.i("${this.javaClass.simpleName} init")
     }

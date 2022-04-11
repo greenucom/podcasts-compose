@@ -25,6 +25,7 @@ class SearchViewModel @Inject constructor(
     val query = _query.asStateFlow()
 
     private var searchPodcastsJob: Job? = null
+    private var onScrollJob: Job? = null
 
     init {
         requestInitialFocusForSearchField()
@@ -81,7 +82,12 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onScroll() {
-        sendEvent(ViewEvent.ClearFocusForSearchField)
+        if (onScrollJob?.isCompleted != false) {
+            onScrollJob = viewModelScope.launch {
+                sendEventSuspend(ViewEvent.ClearFocusForSearchField)
+                delay(ON_SCROLL_REPETITIONS_DELAY)
+            }
+        }
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
@@ -107,6 +113,7 @@ class SearchViewModel @Inject constructor(
     companion object {
         private const val QUERY_DEFAULT_VALUE = ""
         private const val KEYBOARD_APPEARING_DELAY = 50L
+        private const val ON_SCROLL_REPETITIONS_DELAY = 500L
     }
 
 }

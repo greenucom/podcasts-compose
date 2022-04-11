@@ -24,7 +24,6 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchEmptyMessage
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
-import timber.log.Timber
 
 private const val KeyLoading = "Loading"
 private const val KeyEmpty = "Empty"
@@ -64,7 +63,6 @@ fun SearchScreen(
     ) { paddingValues ->
 
         if (screenState.searchResultListState.isScrollInProgress) {
-            Timber.d("onScroll")
             viewModel.onScroll()
         }
 
