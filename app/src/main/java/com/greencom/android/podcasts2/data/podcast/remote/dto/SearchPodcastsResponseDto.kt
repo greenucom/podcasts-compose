@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.data.podcast.remote.dto
 
+import android.net.Uri
 import com.greencom.android.podcasts2.data.category.remote.dto.CategoriesDto
 import com.greencom.android.podcasts2.data.category.remote.dto.toDomain
 import com.greencom.android.podcasts2.domain.podcast.Podcast
@@ -57,7 +58,7 @@ data class SearchPodcastsItemDto(
         title = checkNotNull(title),
         description = checkNotNull(description),
         author = checkNotNull(author),
-        imageUrl = checkNotNull(image),
+        imageUrl = Uri.decode(checkNotNull(image)),
         categories = categories?.toDomain() ?: emptyList(),
         isSubscribed = false,
     )
