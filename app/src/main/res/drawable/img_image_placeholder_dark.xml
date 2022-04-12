@@ -12,14 +12,11 @@
             android:fillType="evenOdd"
             android:pathData="M0,0L72,0L72,72L0,72L0,0Z"
             android:strokeColor="#00000000" />
-        <group>
-            <clip-path android:pathData="M16,32C16,20.402 25.402,11 37,11C48.598,11 58,20.402 58,32C58,43.598 48.598,53 37,53C25.402,53 16,43.598 16,32Z" />
-            <path
-                android:fillColor="#00000000"
-                android:pathData="M16,32C16,20.402 25.402,11 37,11C48.598,11 58,20.402 58,32C58,43.598 48.598,53 37,53C25.402,53 16,43.598 16,32Z"
-                android:strokeWidth="16"
-                android:strokeColor="#5F5F5F" />
-        </group>
+        <path
+            android:fillColor="#5F5F5F"
+            android:fillType="evenOdd"
+            android:pathData="M37,11C25.402,11 16,20.402 16,32C16,43.598 25.402,53 37,53C48.598,53 58,43.598 58,32C58,20.402 48.598,11 37,11ZM37,18.9999C29.8203,18.9999 24,24.8202 24,31.9999C24,39.1796 29.8203,44.9999 37,44.9999C44.1797,44.9999 50,39.1796 50,31.9999C50,24.8202 44.1797,18.9999 37,18.9999Z"
+            android:strokeColor="#00000000" />
         <path
             android:fillColor="#5F5F5F"
             android:fillType="evenOdd"
