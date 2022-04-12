@@ -37,7 +37,7 @@ object Versions {
 
     const val accompanist = "0.23.1"
 
-    const val coil = "2.0.0-rc02"
+    const val coil = "2.0.0-rc03"
     const val timber = "5.0.1"
 
     const val leakCanary = "2.8.1"
