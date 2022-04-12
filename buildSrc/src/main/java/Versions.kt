@@ -15,6 +15,7 @@ object Versions {
     const val composeMaterial3 = "1.0.0-alpha09"
 
     const val coreKtx = "1.7.0"
+    const val coreSplashScreen = "1.0.0-beta02"
     const val appCompat = "1.4.1"
     const val activityCompose = "1.4.0"
 

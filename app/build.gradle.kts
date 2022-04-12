@@ -175,6 +175,7 @@ dependencies {
     implementation(Dependencies.coroutines)
 
     implementation(Dependencies.coreKtx)
+    implementation(Dependencies.coreSplashScreen)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.activityCompose)
 
