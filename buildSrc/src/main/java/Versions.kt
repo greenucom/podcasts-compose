@@ -5,7 +5,7 @@ object Versions {
     const val targetSdk = 31
 
     const val kotlin = "1.6.10"
-    const val androidGradlePlugin = "7.1.2"
+    const val androidGradlePlugin = "7.1.3"
 
     const val androidGitVersion = "0.4.14"
 
