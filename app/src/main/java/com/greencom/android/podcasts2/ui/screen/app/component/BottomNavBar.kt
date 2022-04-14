@@ -22,8 +22,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.navigationBarsHeight
 import com.greencom.android.podcasts2.ui.common.BottomNavBarState
-import com.greencom.android.podcasts2.ui.common.OnBottomNavBarItemReselected
 import com.greencom.android.podcasts2.ui.common.findBottomNavBarItemStartDestination
+import com.greencom.android.podcasts2.ui.common.screenbehavior.OnBottomNavBarItemReselected
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
