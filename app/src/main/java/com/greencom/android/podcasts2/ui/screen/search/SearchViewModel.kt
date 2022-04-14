@@ -21,7 +21,7 @@ class SearchViewModel @Inject constructor(
 
     override val initialViewState = ViewState.Empty
 
-    private val _query = MutableStateFlow(QUERY_DEFAULT_VALUE)
+    private val _query = MutableStateFlow(QueryDefaultValue)
     val query = _query.asStateFlow()
 
     private var searchPodcastsJob: Job? = null
@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun requestInitialFocusForSearchField() = viewModelScope.launch {
-        delay(KEYBOARD_APPEARING_DELAY)
+        delay(KeyboardAppearingDelay)
         sendEventSuspend(ViewEvent.RequestFocusForSearchField)
     }
 
@@ -77,7 +77,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onClearQuery() {
-        _query.update { QUERY_DEFAULT_VALUE }
+        _query.update { QueryDefaultValue }
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
@@ -101,8 +101,8 @@ class SearchViewModel @Inject constructor(
     }
 
     companion object {
-        private const val QUERY_DEFAULT_VALUE = ""
-        private const val KEYBOARD_APPEARING_DELAY = 75L
+        private const val QueryDefaultValue = ""
+        private const val KeyboardAppearingDelay = 75L
     }
 
 }
