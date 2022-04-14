@@ -10,9 +10,13 @@ import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
+import timber.log.Timber
+
+const val ScreenBehaviorTag = "ScreenBehavior"
 
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
+    Timber.tag(ScreenBehaviorTag).d("AppScreen")
 
     val screenState = rememberAppScreenState()
 
@@ -31,6 +35,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
             )
         },
     ) { paddingValues ->
+        Timber.tag(ScreenBehaviorTag).d("AppScreen Scaffold")
 
         NavHost(
             modifier = Modifier.padding(paddingValues),

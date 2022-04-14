@@ -11,9 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.screen.app.ScreenBehaviorTag
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastsSection
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastsSection
+import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -23,6 +25,7 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
+    Timber.tag(ScreenBehaviorTag).d("DiscoverScreen")
 
     val screenState = rememberDiscoverScreenState(
         onSearchClicked = onSearchClicked,
