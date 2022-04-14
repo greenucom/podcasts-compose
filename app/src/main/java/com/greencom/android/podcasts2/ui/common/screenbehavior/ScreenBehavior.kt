@@ -1,5 +1,6 @@
-package com.greencom.android.podcasts2.ui.common
+package com.greencom.android.podcasts2.ui.common.screenbehavior
 
+import com.greencom.android.podcasts2.ui.common.BottomNavBarState
 import com.greencom.android.podcasts2.ui.navigation.BottomNavBarItem
 
 typealias OnBottomNavBarItemReselected = (BottomNavBarItem) -> Boolean

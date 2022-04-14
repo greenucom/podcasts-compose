@@ -2,26 +2,35 @@ package com.greencom.android.podcasts2.ui.screen.app
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.greencom.android.podcasts2.ui.common.ScreenBehavior
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
+import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
+import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehaviorController
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
-import timber.log.Timber
-
-const val ScreenBehaviorTag = "ScreenBehavior"
 
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
-    Timber.tag(ScreenBehaviorTag).d("AppScreen")
 
     val screenState = rememberAppScreenState()
 
-    val (currentScreenBehavior, onCurrentScreenBehaviorChanged) = remember {
+    var currentScreenBehavior by remember {
         mutableStateOf(ScreenBehavior.Default)
+    }
+    val screenBehaviorController = remember {
+        object : ScreenBehaviorController {
+            override fun set(screenBehavior: ScreenBehavior) {
+                currentScreenBehavior = screenBehavior
+            }
+
+            override fun remove(screenBehavior: ScreenBehavior) {
+                if (currentScreenBehavior == screenBehavior) {
+                    currentScreenBehavior = ScreenBehavior.Default
+                }
+            }
+        }
     }
 
     Scaffold(
@@ -35,28 +44,30 @@ fun AppScreen(modifier: Modifier = Modifier) {
             )
         },
     ) { paddingValues ->
-        Timber.tag(ScreenBehaviorTag).d("AppScreen Scaffold")
 
-        NavHost(
-            modifier = Modifier.padding(paddingValues),
-            navController = screenState.navController,
-            startDestination = BottomNavBarItem.MyPodcasts.route,
-        ) {
-            myPodcastsNavGraph(
-                navController = screenState.navController,
-            )
+        CompositionLocalProvider(LocalScreenBehaviorController provides screenBehaviorController) {
 
-            discoverNavGraph(
+            NavHost(
+                modifier = Modifier.padding(paddingValues),
                 navController = screenState.navController,
-            )
+                startDestination = BottomNavBarItem.MyPodcasts.route,
+            ) {
+                myPodcastsNavGraph(
+                    navController = screenState.navController,
+                )
 
-            libraryNavGraph(
-                navController = screenState.navController,
-            )
+                discoverNavGraph(
+                    navController = screenState.navController,
+                )
 
-            profileNavGraph(
-                navController = screenState.navController,
-            )
+                libraryNavGraph(
+                    navController = screenState.navController,
+                )
+
+                profileNavGraph(
+                    navController = screenState.navController,
+                )
+            }
         }
     }
 }
