@@ -25,7 +25,6 @@ class SearchViewModel @Inject constructor(
     val query = _query.asStateFlow()
 
     private var searchPodcastsJob: Job? = null
-    private var onScrollJob: Job? = null
 
     init {
         requestInitialFocusForSearchField()
@@ -34,7 +33,7 @@ class SearchViewModel @Inject constructor(
 
     private fun requestInitialFocusForSearchField() = viewModelScope.launch {
         delay(KEYBOARD_APPEARING_DELAY)
-        sendEventSuspend(ViewEvent.RequestInitialFocusForSearchField)
+        sendEventSuspend(ViewEvent.RequestFocusForSearchField)
     }
 
     private fun collectSearchResults() = viewModelScope.launch {
@@ -68,7 +67,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onQueryChange(query: String) {
+    fun onQueryChanged(query: String) {
         _query.update { query }
     }
 
@@ -79,15 +78,6 @@ class SearchViewModel @Inject constructor(
 
     fun onClearQuery() {
         _query.update { QUERY_DEFAULT_VALUE }
-    }
-
-    fun onScroll() {
-        if (onScrollJob?.isCompleted != false) {
-            onScrollJob = viewModelScope.launch {
-                sendEventSuspend(ViewEvent.ClearFocusForSearchField)
-                delay(ON_SCROLL_REPETITIONS_DELAY)
-            }
-        }
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
@@ -106,14 +96,13 @@ class SearchViewModel @Inject constructor(
     }
 
     sealed interface ViewEvent {
-        object RequestInitialFocusForSearchField : ViewEvent
+        object RequestFocusForSearchField : ViewEvent
         object ClearFocusForSearchField : ViewEvent
     }
 
     companion object {
         private const val QUERY_DEFAULT_VALUE = ""
-        private const val KEYBOARD_APPEARING_DELAY = 50L
-        private const val ON_SCROLL_REPETITIONS_DELAY = 500L
+        private const val KEYBOARD_APPEARING_DELAY = 75L
     }
 
 }

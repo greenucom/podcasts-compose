@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,8 @@ import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectC
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
+import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchEmptyMessage
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -30,6 +33,7 @@ private const val KeyError = "Error"
 
 private const val LoadingPlaceholderCount = 5
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
     onPodcastClicked: (Podcast) -> Unit,
@@ -38,6 +42,12 @@ fun SearchScreen(
 ) {
 
     val screenState = rememberSearchScreenState()
+
+    SpecificScreenBehavior {
+        ScreenBehavior(
+            onBottomNavBarItemReselected = { screenState.onBottomNavBarItemReselected() },
+        )
+    }
 
     val viewState by viewModel.viewState.collectAsState()
     val query by viewModel.query.collectAsState()
@@ -54,7 +64,7 @@ fun SearchScreen(
             SearchTopBar(
                 modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
                 query = query,
-                onQueryChanged = viewModel::onQueryChange,
+                onQueryChanged = viewModel::onQueryChanged,
                 onImeSearch = viewModel::onImeSearch,
                 onClearQuery = viewModel::onClearQuery,
             )
@@ -62,7 +72,7 @@ fun SearchScreen(
     ) { paddingValues ->
 
         if (screenState.searchResultListState.isScrollInProgress) {
-            viewModel.onScroll()
+            screenState.onScroll()
         }
 
         LazyColumn(
