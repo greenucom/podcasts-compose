@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastsSection
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastsSection
@@ -22,7 +20,6 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodca
 fun DiscoverScreen(
     onPodcastClicked: (Podcast) -> Unit,
     onSearchClicked: () -> Unit,
-    onScreenBehaviorChanged: (ScreenBehavior) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -30,15 +27,6 @@ fun DiscoverScreen(
     val screenState = rememberDiscoverScreenState(
         onSearchClicked = onSearchClicked,
     )
-
-    LaunchedEffect(Unit) {
-        val behavior = ScreenBehavior(
-            onBottomNavBarItemReselected = {
-                screenState.onBottomNavBarItemReselected()
-            },
-        )
-        onScreenBehaviorChanged(behavior)
-    }
 
     val recommendedPodcastsState by viewModel.recommendedPodcastsState.collectAsState()
     val selectableCategories by viewModel.selectableCategories.collectAsState()

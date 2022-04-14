@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.requireLong
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
 import com.greencom.android.podcasts2.ui.screen.podcast.PodcastScreen
@@ -15,7 +14,6 @@ import com.greencom.android.podcasts2.ui.screen.search.SearchScreen
 
 fun NavGraphBuilder.discoverNavGraph(
     navController: NavHostController,
-    onScreenBehaviorChanged: (ScreenBehavior) -> Unit,
 ) {
     val onPodcastClicked = { podcast: Podcast ->
         val route = Screen.Podcast.createRoute(podcast.id)
@@ -31,7 +29,6 @@ fun NavGraphBuilder.discoverNavGraph(
             DiscoverScreen(
                 onPodcastClicked = onPodcastClicked,
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
-                onScreenBehaviorChanged = onScreenBehaviorChanged,
             )
         }
 

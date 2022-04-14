@@ -2,10 +2,11 @@ package com.greencom.android.podcasts2.ui.screen.app
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.greencom.android.podcasts2.ui.common.ScreenBehavior
 import com.greencom.android.podcasts2.ui.navigation.*
 import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
@@ -17,14 +18,6 @@ fun AppScreen(modifier: Modifier = Modifier) {
 
     val (currentScreenBehavior, onCurrentScreenBehaviorChanged) = remember {
         mutableStateOf(ScreenBehavior.Default)
-    }
-
-    val currentBackStackEntry by screenState.navController.currentBackStackEntryAsState()
-    val currentDestinationId = currentBackStackEntry?.destination?.id
-
-    // Reset currentScreenBehavior when navigating to another screen
-    LaunchedEffect(currentDestinationId) {
-        onCurrentScreenBehaviorChanged(ScreenBehavior.Default)
     }
 
     Scaffold(
@@ -46,22 +39,18 @@ fun AppScreen(modifier: Modifier = Modifier) {
         ) {
             myPodcastsNavGraph(
                 navController = screenState.navController,
-                onScreenBehaviorChanged = onCurrentScreenBehaviorChanged,
             )
 
             discoverNavGraph(
                 navController = screenState.navController,
-                onScreenBehaviorChanged = onCurrentScreenBehaviorChanged,
             )
 
             libraryNavGraph(
                 navController = screenState.navController,
-                onScreenBehaviorChanged = onCurrentScreenBehaviorChanged,
             )
 
             profileNavGraph(
                 navController = screenState.navController,
-                onScreenBehaviorChanged = onCurrentScreenBehaviorChanged,
             )
         }
     }
