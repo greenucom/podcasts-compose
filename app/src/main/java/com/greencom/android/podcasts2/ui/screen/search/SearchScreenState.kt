@@ -44,7 +44,7 @@ class SearchScreenState(
         if (onScrollJob?.isCompleted != false) {
             onScrollJob = coroutineScope.launch {
                 focusManager.clearFocus()
-                delay(ON_SCROLL_REPETITIONS_DELAY)
+                delay(OnScrollRepetitionsDelay)
             }
         }
     }
@@ -56,7 +56,7 @@ class SearchScreenState(
     }
 
     companion object {
-        private const val ON_SCROLL_REPETITIONS_DELAY = 500L
+        private const val OnScrollRepetitionsDelay = 500L
     }
 
 }
