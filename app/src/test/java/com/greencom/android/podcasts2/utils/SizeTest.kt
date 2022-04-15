@@ -5,9 +5,18 @@ import com.greencom.android.podcasts2.utils.Size.Companion.gigabytes
 import com.greencom.android.podcasts2.utils.Size.Companion.kilobytes
 import com.greencom.android.podcasts2.utils.Size.Companion.megabytes
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import java.text.DecimalFormat
 
 class SizeTest {
+
+    lateinit var formatter: DecimalFormat
+
+    @Before
+    fun before() {
+        formatter = DecimalFormat("#.##")
+    }
 
     @Test
     fun bytesInt() {
@@ -218,6 +227,64 @@ class SizeTest {
         Assert.assertEquals(megabytesExpected, megabytesActual)
         Assert.assertEquals(kilobytesExpected, kilobytesActual)
         Assert.assertEquals(bytesExpected, bytesActual)
+    }
+
+    @Test
+    fun toString1() {
+        val gigabytes = 3
+        val megabytes = 275
+        val size = gigabytes.gigabytes + megabytes.megabytes
+
+        val total = gigabytes + megabytes / 1_000F
+        val expected = formatter.format(total) + " GB"
+
+        Assert.assertEquals(expected, size.toString())
+    }
+
+    @Test
+    fun toString2() {
+        val megabytes = 3
+        val kilobytes = 275
+        val size = megabytes.megabytes + kilobytes.kilobytes
+
+        val total = megabytes + kilobytes / 1_000F
+        val expected = formatter.format(total) + " MB"
+
+        Assert.assertEquals(expected, size.toString())
+    }
+
+    @Test
+    fun toString3() {
+        val kilobytes = 3
+        val bytes = 275
+        val size = kilobytes.kilobytes + bytes.bytes
+
+        val total = kilobytes + bytes / 1_000F
+        val expected = formatter.format(total) + " kB"
+
+        Assert.assertEquals(expected, size.toString())
+    }
+
+    @Test
+    fun toString4() {
+        val bytes = 275
+        val size = bytes.bytes
+
+        val total = bytes
+        val expected = formatter.format(total) + " B"
+
+        Assert.assertEquals(expected, size.toString())
+    }
+
+    @Test
+    fun toString5() {
+        val bytes = 1275
+        val size = bytes.bytes
+
+        val total = bytes / 1_000F
+        val expected = formatter.format(total) + " kB"
+
+        Assert.assertEquals(expected, size.toString())
     }
 
 }

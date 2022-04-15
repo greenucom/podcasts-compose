@@ -1,5 +1,7 @@
 package com.greencom.android.podcasts2.utils
 
+import java.text.DecimalFormat
+
 /**
  * Value class that based on **64bit value of size in bytes**, so the max value that can be
  * correctly represented by this class is ~9223 petabytes.
@@ -70,6 +72,48 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
         return bytes.compareTo(other.bytes)
     }
 
+    override fun toString(): String = when {
+        inWholeGigabytes != 0L -> formattedGigabytes
+        inWholeMegabytes != 0L -> formattedMegabytes
+        inWholeKilobytes != 0L -> formattedKilobytes
+        else -> formattedBytes
+    }
+
+    private val formattedGigabytes: String
+        get() {
+            val gigabytes = bytes / bytesInGigabyte.toFloat()
+            return format(gigabytes, SizeUnit.GIGABYTES)
+        }
+
+    private val formattedMegabytes: String
+        get() {
+            val megabytes = bytes / bytesInMegabyte.toFloat()
+            return format(megabytes, SizeUnit.MEGABYTES)
+        }
+
+    private val formattedKilobytes: String
+        get() {
+            val kilobytes = bytes / BYTES_IN_KILOBYTE.toFloat()
+            return format(kilobytes, SizeUnit.KILOBYTES)
+        }
+
+    private val formattedBytes: String
+        get() = format(inBytes.toFloat(), SizeUnit.BYTES)
+
+    private fun format(value: Float, unit: SizeUnit): String {
+        val valueString = decimalFormatter.format(value)
+        val unitString = when (unit) {
+            SizeUnit.BYTES -> STRING_BYTE
+            SizeUnit.KILOBYTES -> STRING_KILOBYTE
+            SizeUnit.MEGABYTES -> STRING_MEGABYTE
+            SizeUnit.GIGABYTES -> STRING_GIGABYTE
+        }
+        return STRING_FORMAT.format(valueString, unitString)
+    }
+
+    private val decimalFormatter: DecimalFormat
+        get() = DecimalFormat("#.##")
+
     companion object {
 
         val Int.bytes: Size get() = toSize(SizeUnit.BYTES)
@@ -110,6 +154,12 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
         private const val BYTES_IN_KILOBYTE = 1_000L
         private const val KILOBYTES_IN_MEGABYTE = 1_000L
         private const val MEGABYTES_IN_GIGABYTE = 1_000L
+
+        private const val STRING_BYTE = "B"
+        private const val STRING_KILOBYTE = "kB"
+        private const val STRING_MEGABYTE = "MB"
+        private const val STRING_GIGABYTE = "GB"
+        private const val STRING_FORMAT = "%1\$s %2\$s"
 
     }
 
