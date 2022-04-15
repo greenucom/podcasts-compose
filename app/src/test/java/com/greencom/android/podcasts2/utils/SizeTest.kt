@@ -192,6 +192,61 @@ class SizeTest {
     }
 
     @Test
+    fun inWholeBytesRounding1() {
+        val bits = 12
+        val bytes = bits / 8
+        val size = bits.bits
+
+        val bytesFinal = size.inWholeBytesLong
+
+        Assert.assertEquals(bytes.toLong(), bytesFinal)
+    }
+
+    @Test
+    fun inWholeBytesRounding2() {
+        val bits = 26
+        val bytes = bits / 8
+        val size = bits.bits
+
+        val bytesFinal = size.inWholeBytesLong
+
+        Assert.assertEquals(bytes.toLong(), bytesFinal)
+    }
+
+    @Test
+    fun inWholeKilobytesRounding() {
+        val bytes = 1_500
+        val kilobytes = bytes / 1_000
+        val size = bytes.bytes
+
+        val kilobytesFinal = size.inWholeKilobytesLong
+
+        Assert.assertEquals(kilobytes.toLong(), kilobytesFinal)
+    }
+
+    @Test
+    fun inWholeMegabytesRounding() {
+        val kilobytes = 1_500
+        val megabytes = kilobytes / 1_000
+        val size = kilobytes.kilobytes
+
+        val megabytesFinal = size.inWholeMegabytes
+
+        Assert.assertEquals(megabytes.toLong(), megabytesFinal)
+    }
+
+    @Test
+    fun inWholeGigabytesRounding() {
+        val megabytes = 1_500
+        val gigabytes = megabytes / 1_000
+        val size = megabytes.megabytes
+
+        val gigabytesFinal = size.inWholeGigabytes
+
+        Assert.assertEquals(gigabytes.toLong(), gigabytesFinal)
+    }
+
+    @Test
     fun plusBitsBits() {
         val bits1 = 16L
         val bits2 = 32L
