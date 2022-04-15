@@ -11,7 +11,7 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             if (rawValueBits <= maxValue) {
                 return rawValueBits.toLong()
             } else {
-                throw ArithmeticException("Value does not fit in a Long, use inBitsExact instead")
+                throw ArithmeticException("Value does not fit in a Long, use inBits instead")
             }
         }
 
@@ -25,7 +25,7 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             if (value <= maxValue) {
                 return value.toLong()
             } else {
-                throw ArithmeticException("Value does not fit in a Long, use inWholeBytesExact instead")
+                throw ArithmeticException("Value does not fit in a Long, use inWholeBytes instead")
             }
         }
 
@@ -39,7 +39,7 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             if (value <= maxValue) {
                 return value.toLong()
             } else {
-                throw ArithmeticException("Value does not fit in a Long, use inWholeKilobytesExact instead")
+                throw ArithmeticException("Value does not fit in a Long, use inWholeKilobytes instead")
             }
         }
 
