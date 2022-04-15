@@ -5,7 +5,7 @@ import java.math.BigInteger
 @JvmInline
 value class Size private constructor(private val rawValueBits: BigInteger) : Comparable<Size> {
 
-    val inBits: Long
+    val inBitsLong: Long
         get() {
             val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
             if (rawValueBits <= maxValue) {
@@ -15,10 +15,10 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             }
         }
 
-    val inBitsExact: BigInteger
+    val inBits: BigInteger
         get() = rawValueBits
 
-    val inWholeBytes: Long
+    val inWholeBytesLong: Long
         get() {
             val value = rawValueBits / BigInteger.valueOf(bitsInByte)
             val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
@@ -29,10 +29,10 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             }
         }
 
-    val inWholeBytesExact: BigInteger
+    val inWholeBytes: BigInteger
         get() = rawValueBits / BigInteger.valueOf(bitsInByte)
 
-    val inWholeKilobytes: Long
+    val inWholeKilobytesLong: Long
         get() {
             val value = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
             val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
@@ -43,7 +43,7 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
             }
         }
 
-    val inWholeKilobytesExact: BigInteger
+    val inWholeKilobytes: BigInteger
         get() = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
 
     val inWholeMegabytes: Long
@@ -51,6 +51,8 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
 
     val inWholeGigabytes: Long
         get() = (rawValueBits / BigInteger.valueOf(bitsInGigabyte)).toLong()
+
+    operator fun plus(size: Size): Size = Size(rawValueBits + size.rawValueBits)
 
     override fun compareTo(other: Size): Int {
         return this.rawValueBits.compareTo(other.rawValueBits)
