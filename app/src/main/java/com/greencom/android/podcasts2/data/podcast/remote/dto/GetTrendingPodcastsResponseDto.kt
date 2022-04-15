@@ -16,9 +16,6 @@ data class GetTrendingPodcastsResponseDto(
     @SerialName("count")
     val count: Int? = null,
 
-    @SerialName("max")
-    val max: Int? = null,
-
 ) {
 
     fun toDomain(): List<Podcast> {
@@ -29,31 +26,25 @@ data class GetTrendingPodcastsResponseDto(
 
 @Serializable
 data class GetTrendingPodcastsItemDto(
-    
+
     @SerialName("id")
     val id: Long? = null,
-    
-    @SerialName("url")
-    val url: String? = null,
-    
+
     @SerialName("title")
     val title: String? = null,
-    
+
     @SerialName("description")
     val description: String? = null,
-    
+
     @SerialName("author")
     val author: String? = null,
-    
-    @SerialName("image")
-    val image: String? = null,
 
-    @SerialName("language")
-    val language: String? = null,
+    @SerialName("image")
+    val imageUrl: String? = null,
 
     @SerialName("categories")
     val categories: CategoriesDto? = null,
-    
+
 ) {
 
     fun toDomain(): Podcast = Podcast(
@@ -61,7 +52,7 @@ data class GetTrendingPodcastsItemDto(
         title = checkNotNull(title),
         description = checkNotNull(description),
         author = checkNotNull(author),
-        imageUrl = Uri.decode(checkNotNull(image)),
+        imageUrl = Uri.decode(checkNotNull(imageUrl)),
         categories = categories?.toDomain() ?: emptyList(),
         isSubscribed = false,
     )
