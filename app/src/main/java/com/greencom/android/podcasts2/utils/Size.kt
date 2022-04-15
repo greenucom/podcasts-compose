@@ -54,6 +54,51 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
 
     operator fun plus(size: Size): Size = Size(rawValueBits + size.rawValueBits)
 
+    fun toComponents(
+        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
+    ) = toComponentsInternal(action)
+
+    fun toComponents(
+        action: (megabytes: Long, kilobytes: Int, bytes: Int) -> Unit,
+    ) = toComponentsInternal(action)
+
+    private fun toComponentsInternal(
+        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
+    ) {
+        var remainingBits = rawValueBits
+
+        val gigabytes = (remainingBits / BigInteger.valueOf(bitsInGigabyte)).toLong()
+        remainingBits -= BigInteger.valueOf(gigabytes * bitsInGigabyte)
+
+        val megabytes = (remainingBits / BigInteger.valueOf(bitsInMegabyte)).toInt()
+        remainingBits -= BigInteger.valueOf(megabytes * bitsInMegabyte)
+
+        val kilobytes = (remainingBits / BigInteger.valueOf(bitsInKilobyte)).toInt()
+        remainingBits -= BigInteger.valueOf(kilobytes * bitsInKilobyte)
+
+        val bytes = (remainingBits / BigInteger.valueOf(bitsInByte)).toInt()
+        remainingBits -= BigInteger.valueOf(bytes * bitsInByte)
+
+        action(gigabytes, megabytes, kilobytes, bytes)
+    }
+
+    private fun toComponentsInternal(
+        action: (megabytes: Long, kilobytes: Int, bytes: Int) -> Unit,
+    ) {
+        var remainingBits = rawValueBits
+
+        val megabytes = (remainingBits / BigInteger.valueOf(bitsInMegabyte)).toLong()
+        remainingBits -= BigInteger.valueOf(megabytes * bitsInMegabyte)
+
+        val kilobytes = (remainingBits / BigInteger.valueOf(bitsInKilobyte)).toInt()
+        remainingBits -= BigInteger.valueOf(kilobytes * bitsInKilobyte)
+
+        val bytes = (remainingBits / BigInteger.valueOf(bitsInByte)).toInt()
+        remainingBits -= BigInteger.valueOf(bytes * bitsInByte)
+
+        action(megabytes, kilobytes, bytes)
+    }
+
     override fun compareTo(other: Size): Int {
         return this.rawValueBits.compareTo(other.rawValueBits)
     }

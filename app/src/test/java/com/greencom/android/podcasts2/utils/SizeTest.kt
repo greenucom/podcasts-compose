@@ -326,4 +326,52 @@ class SizeTest {
         Assert.assertEquals(kilobytes1 > kilobytes2, size1 > size2)
     }
 
+    @Test
+    fun toComponents1() {
+        val gb = 2
+        val mb = 840
+        val kb = 360
+        val b = 200
+        val size = gb.gigabytes + mb.megabytes + kb.kilobytes + b.bytes
+
+        var gbFinal = 0L
+        var mbFinal = 0
+        var kbFinal = 0
+        var bFinal = 0
+        size.toComponents { gigabytes, megabytes, kilobytes, bytes ->
+            gbFinal = gigabytes
+            mbFinal = megabytes
+            kbFinal = kilobytes
+            bFinal = bytes
+        }
+
+        Assert.assertEquals(gb.toLong(), gbFinal)
+        Assert.assertEquals(mb, mbFinal)
+        Assert.assertEquals(kb, kbFinal)
+        Assert.assertEquals(b, bFinal)
+    }
+
+    @Test
+    fun toComponents2() {
+        val gb = 2
+        val mb = 840
+        val kb = 360
+        val b = 200
+        val mbInitial = gb * 1_000L + mb
+        val size = gb.gigabytes + mb.megabytes + kb.kilobytes + b.bytes
+
+        var mbFinal = 0L
+        var kbFinal = 0
+        var bFinal = 0
+        size.toComponents { megabytes, kilobytes, bytes ->
+            mbFinal = megabytes
+            kbFinal = kilobytes
+            bFinal = bytes
+        }
+
+        Assert.assertEquals(mbInitial, mbFinal)
+        Assert.assertEquals(kb, kbFinal)
+        Assert.assertEquals(b, bFinal)
+    }
+
 }
