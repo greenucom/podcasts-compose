@@ -1,154 +1,112 @@
 package com.greencom.android.podcasts2.utils
 
-import java.math.BigInteger
-
+/**
+ * Value class that based on **64bit value of size in bytes**, so the max value that can be
+ * correctly represented by this class is ~9223 petabytes.
+ */
 @JvmInline
-value class Size private constructor(private val rawValueBits: BigInteger) : Comparable<Size> {
+value class Size private constructor(private val bytes: Long) : Comparable<Size> {
 
-    val inBitsLong: Long
-        get() {
-            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
-            if (rawValueBits <= maxValue) {
-                return rawValueBits.toLong()
-            } else {
-                throw ArithmeticException("Value does not fit in a Long, use inBits instead")
-            }
-        }
+    val inBytes: Long
+        get() = bytes
 
-    val inBits: BigInteger
-        get() = rawValueBits
-
-    val inWholeBytesLong: Long
-        get() {
-            val value = rawValueBits / BigInteger.valueOf(bitsInByte)
-            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
-            if (value <= maxValue) {
-                return value.toLong()
-            } else {
-                throw ArithmeticException("Value does not fit in a Long, use inWholeBytes instead")
-            }
-        }
-
-    val inWholeBytes: BigInteger
-        get() = rawValueBits / BigInteger.valueOf(bitsInByte)
-
-    val inWholeKilobytesLong: Long
-        get() {
-            val value = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
-            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
-            if (value <= maxValue) {
-                return value.toLong()
-            } else {
-                throw ArithmeticException("Value does not fit in a Long, use inWholeKilobytes instead")
-            }
-        }
-
-    val inWholeKilobytes: BigInteger
-        get() = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
+    val inWholeKilobytes: Long
+        get() = bytes / BYTES_IN_KILOBYTE
 
     val inWholeMegabytes: Long
-        get() = (rawValueBits / BigInteger.valueOf(bitsInMegabyte)).toLong()
+        get() = bytes / bytesInMegabyte
 
     val inWholeGigabytes: Long
-        get() = (rawValueBits / BigInteger.valueOf(bitsInGigabyte)).toLong()
+        get() = bytes / bytesInGigabyte
 
-    operator fun plus(size: Size): Size = Size(rawValueBits + size.rawValueBits)
-
-    fun toComponents(
-        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
-    ) = toComponentsInternal(action)
-
-    fun toComponents(
-        action: (megabytes: Long, kilobytes: Int, bytes: Int) -> Unit,
-    ) = toComponentsInternal(action)
-
-    private fun toComponentsInternal(
-        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
-    ) {
-        var remainingBits = rawValueBits
-
-        val gigabytes = (remainingBits / BigInteger.valueOf(bitsInGigabyte)).toLong()
-        remainingBits -= BigInteger.valueOf(gigabytes * bitsInGigabyte)
-
-        val megabytes = (remainingBits / BigInteger.valueOf(bitsInMegabyte)).toInt()
-        remainingBits -= BigInteger.valueOf(megabytes * bitsInMegabyte)
-
-        val kilobytes = (remainingBits / BigInteger.valueOf(bitsInKilobyte)).toInt()
-        remainingBits -= BigInteger.valueOf(kilobytes * bitsInKilobyte)
-
-        val bytes = (remainingBits / BigInteger.valueOf(bitsInByte)).toInt()
-        remainingBits -= BigInteger.valueOf(bytes * bitsInByte)
-
-        action(gigabytes, megabytes, kilobytes, bytes)
+    operator fun plus(size: Size): Size {
+        val newBytes = bytes + size.bytes
+        return Size(newBytes)
     }
 
-    private fun toComponentsInternal(
+    operator fun minus(size: Size): Size {
+        val newBytes = bytes - size.bytes
+        check(newBytes >= 0) { "Size can not be negative" }
+        return Size(newBytes)
+    }
+
+    operator fun times(times: Int): Size {
+        val newBytes = bytes * times
+        return Size(newBytes)
+    }
+
+    fun toComponents(
         action: (megabytes: Long, kilobytes: Int, bytes: Int) -> Unit,
     ) {
-        var remainingBits = rawValueBits
+        var remainingBytes = bytes
 
-        val megabytes = (remainingBits / BigInteger.valueOf(bitsInMegabyte)).toLong()
-        remainingBits -= BigInteger.valueOf(megabytes * bitsInMegabyte)
+        val megabytes = remainingBytes / bytesInMegabyte
+        remainingBytes -= megabytes * bytesInMegabyte
 
-        val kilobytes = (remainingBits / BigInteger.valueOf(bitsInKilobyte)).toInt()
-        remainingBits -= BigInteger.valueOf(kilobytes * bitsInKilobyte)
+        val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
+        remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
 
-        val bytes = (remainingBits / BigInteger.valueOf(bitsInByte)).toInt()
-        remainingBits -= BigInteger.valueOf(bytes * bitsInByte)
+        action(megabytes, kilobytes.toInt(), remainingBytes.toInt())
+    }
 
-        action(megabytes, kilobytes, bytes)
+    fun toComponents(
+        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
+    ) {
+        var remainingBytes = bytes
+
+        val gigabytes = remainingBytes / bytesInGigabyte
+        remainingBytes -= gigabytes * bytesInGigabyte
+
+        val megabytes = remainingBytes / bytesInMegabyte
+        remainingBytes -= megabytes * bytesInMegabyte
+
+        val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
+        remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
+
+        action(gigabytes, megabytes.toInt(), kilobytes.toInt(), remainingBytes.toInt())
     }
 
     override fun compareTo(other: Size): Int {
-        return this.rawValueBits.compareTo(other.rawValueBits)
+        return bytes.compareTo(other.bytes)
     }
 
     companion object {
 
-        val Int.bits: Size get() = this.toSize(SizeUnit.BITS)
+        val Int.bytes: Size get() = toSize(SizeUnit.BYTES)
 
-        val Long.bits: Size get() = this.toSize(SizeUnit.BITS)
+        val Long.bytes: Size get() = toSize(SizeUnit.BYTES)
 
-        val Int.bytes: Size get() = this.toSize(SizeUnit.BYTES)
+        val Int.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
 
-        val Long.bytes: Size get() = this.toSize(SizeUnit.BYTES)
+        val Long.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
 
-        val Int.kilobytes: Size get() = this.toSize(SizeUnit.KILOBYTES)
+        val Int.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
 
-        val Long.kilobytes: Size get() = this.toSize(SizeUnit.KILOBYTES)
+        val Long.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
 
-        val Int.megabytes get() = this.toSize(SizeUnit.MEGABYTES)
+        val Int.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
 
-        val Long.megabytes get() = this.toSize(SizeUnit.MEGABYTES)
+        val Long.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
 
-        val Int.gigabytes get() = this.toSize(SizeUnit.GIGABYTES)
-
-        val Long.gigabytes get() = this.toSize(SizeUnit.GIGABYTES)
-
-        private fun Int.toSize(unit: SizeUnit) = this.toLong().toSize(unit)
+        private fun Int.toSize(unit: SizeUnit): Size = (this.toLong()).toSize(unit)
 
         private fun Long.toSize(unit: SizeUnit): Size {
-            val bitsInUnit = bitsInUnit(unit)
-            val bits = this * bitsInUnit
-            val value = BigInteger.valueOf(bits)
-            return Size(value)
+            val bytesInUnit = bytesInUnit(unit)
+            val bytes = this * bytesInUnit
+            return Size(bytes)
         }
 
-        private fun bitsInUnit(unit: SizeUnit): Long = when (unit) {
-            SizeUnit.BITS -> ONE_BIT
-            SizeUnit.BYTES -> bitsInByte
-            SizeUnit.KILOBYTES -> bitsInKilobyte
-            SizeUnit.MEGABYTES -> bitsInMegabyte
-            SizeUnit.GIGABYTES -> bitsInGigabyte
+        private fun bytesInUnit(unit: SizeUnit): Long = when (unit) {
+            SizeUnit.BYTES -> ONE_BYTE
+            SizeUnit.KILOBYTES -> BYTES_IN_KILOBYTE
+            SizeUnit.MEGABYTES -> bytesInMegabyte
+            SizeUnit.GIGABYTES -> bytesInGigabyte
         }
 
-        private val bitsInByte get() = BITS_IN_BYTE
-        private val bitsInKilobyte get() = BYTES_IN_KILOBYTE * bitsInByte
-        private val bitsInMegabyte get() = KILOBYTES_IN_MEGABYTE * bitsInKilobyte
-        private val bitsInGigabyte get() = MEGABYTES_IN_GIGABYTE * bitsInMegabyte
+        private val bytesInMegabyte: Long get() = KILOBYTES_IN_MEGABYTE * BYTES_IN_KILOBYTE
+        private val bytesInGigabyte: Long get() = MEGABYTES_IN_GIGABYTE * bytesInMegabyte
 
-        private const val ONE_BIT = 1L
-        private const val BITS_IN_BYTE = 8L
+        private const val ONE_BYTE = 1L
         private const val BYTES_IN_KILOBYTE = 1_000L
         private const val KILOBYTES_IN_MEGABYTE = 1_000L
         private const val MEGABYTES_IN_GIGABYTE = 1_000L
@@ -158,7 +116,6 @@ value class Size private constructor(private val rawValueBits: BigInteger) : Com
 }
 
 private enum class SizeUnit {
-    BITS,
     BYTES,
     KILOBYTES,
     MEGABYTES,

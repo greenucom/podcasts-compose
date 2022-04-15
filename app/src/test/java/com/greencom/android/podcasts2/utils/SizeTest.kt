@@ -1,377 +1,223 @@
 package com.greencom.android.podcasts2.utils
 
-import com.greencom.android.podcasts2.utils.Size.Companion.bits
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
 import com.greencom.android.podcasts2.utils.Size.Companion.gigabytes
 import com.greencom.android.podcasts2.utils.Size.Companion.kilobytes
 import com.greencom.android.podcasts2.utils.Size.Companion.megabytes
 import org.junit.Assert
 import org.junit.Test
-import java.math.BigInteger
 
 class SizeTest {
 
     @Test
-    fun bits() {
-        val bitsInitial = 1024
-        val size = bitsInitial.bits
+    fun bytesInt() {
+        val bytesExpected = 100
+        val size = bytesExpected.bytes
 
-        val bitsFinal = size.inBitsLong
+        val bytesActual = size.inBytes
 
-        Assert.assertEquals(bitsInitial.toLong(), bitsFinal)
-    }
-
-    @Test
-    fun bytes() {
-        val bytesInitial = 1024
-        val size = bytesInitial.bytes
-
-        val bytesFinal = size.inWholeBytesLong
-
-        Assert.assertEquals(bytesInitial.toLong(), bytesFinal)
-    }
-
-    @Test
-    fun kilobytes() {
-        val kilobytesInitial = 1024
-        val size = kilobytesInitial.kilobytes
-
-        val kilobytesFinal = size.inWholeKilobytesLong
-
-        Assert.assertEquals(kilobytesInitial.toLong(), kilobytesFinal)
-    }
-
-    @Test
-    fun megabytes() {
-        val megabytesInitial = 1024
-        val size = megabytesInitial.megabytes
-
-        val megabytesFinal = size.inWholeMegabytes
-
-        Assert.assertEquals(megabytesInitial.toLong(), megabytesFinal)
-    }
-
-    @Test
-    fun gigabytes() {
-        val gigabytesInitial = 1024
-        val size = gigabytesInitial.gigabytes
-
-        val gigabytesFinal = size.inWholeGigabytes
-
-        Assert.assertEquals(gigabytesInitial.toLong(), gigabytesFinal)
-    }
-
-    @Test
-    fun bitsLong() {
-        val bitsInitial = 1024L
-        val size = bitsInitial.bits
-
-        val bitsFinal = size.inBitsLong
-
-        Assert.assertEquals(bitsInitial, bitsFinal)
+        Assert.assertEquals(bytesExpected.toLong(), bytesActual)
     }
 
     @Test
     fun bytesLong() {
-        val bytesInitial = 1024L
-        val size = bytesInitial.bytes
+        val bytesExpected = 100L
+        val size = bytesExpected.bytes
 
-        val bytesFinal = size.inWholeBytesLong
+        val bytesActual = size.inBytes
 
-        Assert.assertEquals(bytesInitial, bytesFinal)
+        Assert.assertEquals(bytesExpected, bytesActual)
+    }
+
+    @Test
+    fun kilobytesInt() {
+        val kilobytesExpected = 100
+        val size = kilobytesExpected.kilobytes
+
+        val kilobytesActual = size.inWholeKilobytes
+
+        Assert.assertEquals(kilobytesExpected.toLong(), kilobytesActual)
     }
 
     @Test
     fun kilobytesLong() {
-        val kilobytesInitial = 1024L
-        val size = kilobytesInitial.kilobytes
+        val kilobytesExpected = 100L
+        val size = kilobytesExpected.kilobytes
 
-        val kilobytesFinal = size.inWholeKilobytesLong
+        val kilobytesActual = size.inWholeKilobytes
 
-        Assert.assertEquals(kilobytesInitial, kilobytesFinal)
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+    }
+
+    @Test
+    fun megabytesInt() {
+        val megabytesExpected = 100
+        val size = megabytesExpected.megabytes
+
+        val megabytesActual = size.inWholeMegabytes
+
+        Assert.assertEquals(megabytesExpected.toLong(), megabytesActual)
     }
 
     @Test
     fun megabytesLong() {
-        val megabytesInitial = 1024L
-        val size = megabytesInitial.megabytes
+        val megabytesExpected = 100L
+        val size = megabytesExpected.megabytes
 
-        val megabytesFinal = size.inWholeMegabytes
+        val megabytesActual = size.inWholeMegabytes
 
-        Assert.assertEquals(megabytesInitial, megabytesFinal)
+        Assert.assertEquals(megabytesExpected, megabytesActual)
+    }
+
+    @Test
+    fun gigabytesInt() {
+        val gigabytesExpected = 100
+        val size = gigabytesExpected.gigabytes
+
+        val gigabytesActual = size.inWholeGigabytes
+
+        Assert.assertEquals(gigabytesExpected.toLong(), gigabytesActual)
     }
 
     @Test
     fun gigabytesLong() {
-        val gigabytesInitial = 1024L
-        val size = gigabytesInitial.gigabytes
+        val gigabytesExpected = 100L
+        val size = gigabytesExpected.gigabytes
 
-        val gigabytesFinal = size.inWholeGigabytes
+        val gigabytesActual = size.inWholeGigabytes
 
-        Assert.assertEquals(gigabytesInitial, gigabytesFinal)
+        Assert.assertEquals(gigabytesExpected, gigabytesActual)
     }
 
     @Test
-    fun inBitsLong() {
-        val bitsInitial = 128
-        val size = bitsInitial.bits
-
-        val bitsFinal = size.inBitsLong
-
-        Assert.assertEquals(bitsInitial.toLong(), bitsFinal)
-    }
-
-    @Test
-    fun inBits() {
-        val bitsInitial = 128L
-        val size = bitsInitial.bits
-
-        val bitsFinal = size.inBits
-
-        Assert.assertEquals(BigInteger.valueOf(bitsInitial), bitsFinal)
-    }
-
-    @Test
-    fun inWholeBytesLong() {
-        val bytesInitial = 128
-        val size = bytesInitial.bytes
-
-        val bytesFinal = size.inWholeBytesLong
-
-        Assert.assertEquals(bytesInitial.toLong(), bytesFinal)
-    }
-
-    @Test
-    fun inWholeBytes() {
-        val bytesInitial = 128L
-        val size = bytesInitial.bytes
-
-        val bytesFinal = size.inWholeBytes
-
-        Assert.assertEquals(BigInteger.valueOf(bytesInitial), bytesFinal)
-    }
-
-    @Test
-    fun inWholeKilobytesLong() {
-        val kilobytesInitial = 128
-        val size = kilobytesInitial.kilobytes
-
-        val kilobytesFinal = size.inWholeKilobytesLong
-
-        Assert.assertEquals(kilobytesInitial.toLong(), kilobytesFinal)
-    }
-
-    @Test
-    fun inWholeKilobytes() {
-        val kilobytesInitial = 128L
-        val size = kilobytesInitial.kilobytes
-
-        val kilobytesFinal = size.inWholeKilobytes
-
-        Assert.assertEquals(BigInteger.valueOf(kilobytesInitial), kilobytesFinal)
-    }
-
-    @Test
-    fun inWholeMegabytes() {
-        val megabytesInitial = 128L
-        val size = megabytesInitial.megabytes
-
-        val megabytesFinal = size.inWholeMegabytes
-
-        Assert.assertEquals(megabytesInitial, megabytesFinal)
-    }
-
-    @Test
-    fun inWholeGigabytes() {
-        val gigabytesInitial = 128L
-        val size = gigabytesInitial.gigabytes
-
-        val gigabytesFinal = size.inWholeGigabytes
-
-        Assert.assertEquals(gigabytesInitial, gigabytesFinal)
-    }
-
-    @Test
-    fun inWholeBytesRounding1() {
-        val bits = 12
-        val bytes = bits / 8
-        val size = bits.bits
-
-        val bytesFinal = size.inWholeBytesLong
-
-        Assert.assertEquals(bytes.toLong(), bytesFinal)
-    }
-
-    @Test
-    fun inWholeBytesRounding2() {
-        val bits = 26
-        val bytes = bits / 8
-        val size = bits.bits
-
-        val bytesFinal = size.inWholeBytesLong
-
-        Assert.assertEquals(bytes.toLong(), bytesFinal)
-    }
-
-    @Test
-    fun inWholeKilobytesRounding() {
-        val bytes = 1_500
-        val kilobytes = bytes / 1_000
-        val size = bytes.bytes
-
-        val kilobytesFinal = size.inWholeKilobytesLong
-
-        Assert.assertEquals(kilobytes.toLong(), kilobytesFinal)
-    }
-
-    @Test
-    fun inWholeMegabytesRounding() {
-        val kilobytes = 1_500
-        val megabytes = kilobytes / 1_000
-        val size = kilobytes.kilobytes
-
-        val megabytesFinal = size.inWholeMegabytes
-
-        Assert.assertEquals(megabytes.toLong(), megabytesFinal)
-    }
-
-    @Test
-    fun inWholeGigabytesRounding() {
-        val megabytes = 1_500
-        val gigabytes = megabytes / 1_000
-        val size = megabytes.megabytes
-
-        val gigabytesFinal = size.inWholeGigabytes
-
-        Assert.assertEquals(gigabytes.toLong(), gigabytesFinal)
-    }
-
-    @Test
-    fun plusBitsBits() {
-        val bits1 = 16L
-        val bits2 = 32L
-        val sum = bits1 + bits2
-        val size = bits1.bits + bits2.bits
-
-        val bitsFinal = size.inBitsLong
-
-        Assert.assertEquals(sum, bitsFinal)
-    }
-
-    @Test
-    fun plusBytesBits() {
-        val bytes = 1L
-        val bits = 8L
-        val sum = (bytes * 8) + bits
-        val size = bytes.bytes + bits.bits
-
-        val bitsFinal = size.inBitsLong
-
-        Assert.assertEquals(sum, bitsFinal)
-    }
-
-    @Test
-    fun plusKilobytesBytes() {
-        val kilobytes = 100
-        val bytes = 2_000L
-        val sum = kilobytes + bytes / 1_000
-        val size = kilobytes.kilobytes + bytes.bytes
-
-        val kilobytesFinal = size.inWholeKilobytesLong
-
-        Assert.assertEquals(sum, kilobytesFinal)
-    }
-
-    @Test
-    fun plusMegabytesKilobytes() {
-        val megabytes = 100
-        val kilobytes = 2_000L
-        val sum = megabytes + kilobytes / 1_000
+    fun plus() {
+        val megabytes = 5
+        val kilobytes = 2_000
+        val sumExpected = megabytes + kilobytes / 1_000
         val size = megabytes.megabytes + kilobytes.kilobytes
 
-        val megabytesFinal = size.inWholeMegabytes
+        val sumActual = size.inWholeMegabytes
 
-        Assert.assertEquals(sum, megabytesFinal)
+        Assert.assertEquals(sumExpected.toLong(), sumActual)
     }
 
     @Test
-    fun plusGigabytesMegabytes() {
-        val gigabytes = 100
-        val megabytes = 2_000L
-        val sum = gigabytes + megabytes / 1_000
-        val size = gigabytes.gigabytes + megabytes.megabytes
+    fun minus() {
+        val megabytes = 5
+        val kilobytes = 2_000
+        val sumExpected = megabytes - kilobytes / 1_000
+        val size = megabytes.megabytes - kilobytes.kilobytes
 
-        val gigabytesFinal = size.inWholeGigabytes
+        val sumActual = size.inWholeMegabytes
 
-        Assert.assertEquals(sum, gigabytesFinal)
+        Assert.assertEquals(sumExpected.toLong(), sumActual)
     }
 
     @Test
-    fun compareToEqual() {
-        val kilobytes1 = 16
-        val kilobytes2 = 16
+    fun times() {
+        val megabytes = 10
+        val times = 3
+        val productExpected = megabytes * times
+        val size = megabytes.megabytes * times
+
+        val productActual = size.inWholeMegabytes
+
+        Assert.assertEquals(productExpected.toLong(), productActual)
+    }
+
+    @Test
+    fun compareTo1() {
+        val kilobytes1 = 1
+        val kilobytes2 = 4
         val size1 = kilobytes1.kilobytes
         val size2 = kilobytes2.kilobytes
 
-        Assert.assertEquals(kilobytes1 == kilobytes2, size1 == size2)
+        Assert.assertEquals(kilobytes1 < kilobytes2, size1 < size2)
     }
 
     @Test
-    fun compareToMore() {
-        val kilobytes1 = 100
-        val kilobytes2 = 50
-        val size1 = kilobytes1.kilobytes
-        val size2 = kilobytes2.kilobytes
+    fun compareTo2() {
+        val bytes = 1_000
+        val kilobyte = 1
+        val bytesSize = bytes.bytes
+        val kilobyteSize = kilobyte.kilobytes
 
-        Assert.assertEquals(kilobytes1 > kilobytes2, size1 > size2)
+        Assert.assertEquals(kilobyte * 1_000 == bytes, bytesSize == kilobyteSize)
     }
 
     @Test
     fun toComponents1() {
-        val gb = 2
-        val mb = 840
-        val kb = 360
-        val b = 200
-        val size = gb.gigabytes + mb.megabytes + kb.kilobytes + b.bytes
+        val bytesExpected = 100
+        val kilobytesExpected = 200
+        val megabytesExpected = 300
+        val size = megabytesExpected.megabytes +
+                kilobytesExpected.kilobytes + bytesExpected.bytes
 
-        var gbFinal = 0L
-        var mbFinal = 0
-        var kbFinal = 0
-        var bFinal = 0
-        size.toComponents { gigabytes, megabytes, kilobytes, bytes ->
-            gbFinal = gigabytes
-            mbFinal = megabytes
-            kbFinal = kilobytes
-            bFinal = bytes
+        var bytesActual = 0
+        var kilobytesActual = 0
+        var megabytesActual = 0L
+        size.toComponents { megabytes, kilobytes, bytes ->
+            megabytesActual = megabytes
+            kilobytesActual = kilobytes
+            bytesActual = bytes
         }
 
-        Assert.assertEquals(gb.toLong(), gbFinal)
-        Assert.assertEquals(mb, mbFinal)
-        Assert.assertEquals(kb, kbFinal)
-        Assert.assertEquals(b, bFinal)
+        Assert.assertEquals(megabytesExpected.toLong(), megabytesActual)
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+        Assert.assertEquals(bytesExpected, bytesActual)
     }
 
     @Test
     fun toComponents2() {
-        val gb = 2
-        val mb = 840
-        val kb = 360
-        val b = 200
-        val mbInitial = gb * 1_000L + mb
-        val size = gb.gigabytes + mb.megabytes + kb.kilobytes + b.bytes
+        val bytesExpected = 100
+        val kilobytesInit = 2100
+        val megabytesInit = 300
 
-        var mbFinal = 0L
-        var kbFinal = 0
-        var bFinal = 0
+        val kilobytesExpected = kilobytesInit - kilobytesInit / 1_000 * 1_000
+        val megabytesExpected = megabytesInit + kilobytesInit / 1_000
+        val size = megabytesInit.megabytes + kilobytesInit.kilobytes + bytesExpected.bytes
+
+        var bytesActual = 0
+        var kilobytesActual = 0
+        var megabytesActual = 0L
         size.toComponents { megabytes, kilobytes, bytes ->
-            mbFinal = megabytes
-            kbFinal = kilobytes
-            bFinal = bytes
+            megabytesActual = megabytes
+            kilobytesActual = kilobytes
+            bytesActual = bytes
         }
 
-        Assert.assertEquals(mbInitial, mbFinal)
-        Assert.assertEquals(kb, kbFinal)
-        Assert.assertEquals(b, bFinal)
+        Assert.assertEquals(megabytesExpected.toLong(), megabytesActual)
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+        Assert.assertEquals(bytesExpected, bytesActual)
+    }
+
+    @Test
+    fun toComponents3() {
+        val bytesExpected = 100
+        val kilobytesInit = 2100
+        val megabytesInit = 300
+        val gigabytesExpected = 1
+
+        val kilobytesExpected = kilobytesInit - kilobytesInit / 1_000 * 1_000
+        val megabytesExpected = megabytesInit + kilobytesInit / 1_000
+        val size = megabytesInit.megabytes + kilobytesInit.kilobytes +
+                bytesExpected.bytes + gigabytesExpected.gigabytes
+
+        var bytesActual = 0
+        var kilobytesActual = 0
+        var megabytesActual = 0
+        var gigabytesActual = 0L
+        size.toComponents { gigabytes, megabytes, kilobytes, bytes ->
+            gigabytesActual = gigabytes
+            megabytesActual = megabytes
+            kilobytesActual = kilobytes
+            bytesActual = bytes
+        }
+
+        Assert.assertEquals(gigabytesExpected.toLong(), gigabytesActual)
+        Assert.assertEquals(megabytesExpected, megabytesActual)
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+        Assert.assertEquals(bytesExpected, bytesActual)
     }
 
 }
