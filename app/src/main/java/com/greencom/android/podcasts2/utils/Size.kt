@@ -5,6 +5,53 @@ import java.math.BigInteger
 @JvmInline
 value class Size private constructor(private val rawValueBits: BigInteger) : Comparable<Size> {
 
+    val inBits: Long
+        get() {
+            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
+            if (rawValueBits <= maxValue) {
+                return rawValueBits.toLong()
+            } else {
+                throw ArithmeticException("Value does not fit in a Long, use inBitsExact instead")
+            }
+        }
+
+    val inBitsExact: BigInteger
+        get() = rawValueBits
+
+    val inWholeBytes: Long
+        get() {
+            val value = rawValueBits / BigInteger.valueOf(bitsInByte)
+            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
+            if (value <= maxValue) {
+                return value.toLong()
+            } else {
+                throw ArithmeticException("Value does not fit in a Long, use inWholeBytesExact instead")
+            }
+        }
+
+    val inWholeBytesExact: BigInteger
+        get() = rawValueBits / BigInteger.valueOf(bitsInByte)
+
+    val inWholeKilobytes: Long
+        get() {
+            val value = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
+            val maxValue = BigInteger.valueOf(Long.MAX_VALUE)
+            if (value <= maxValue) {
+                return value.toLong()
+            } else {
+                throw ArithmeticException("Value does not fit in a Long, use inWholeKilobytesExact instead")
+            }
+        }
+
+    val inWholeKilobytesExact: BigInteger
+        get() = rawValueBits / BigInteger.valueOf(bitsInKilobyte)
+
+    val inWholeMegabytes: Long
+        get() = (rawValueBits / BigInteger.valueOf(bitsInMegabyte)).toLong()
+
+    val inWholeGigabytes: Long
+        get() = (rawValueBits / BigInteger.valueOf(bitsInGigabyte)).toLong()
+
     override fun compareTo(other: Size): Int {
         return this.rawValueBits.compareTo(other.rawValueBits)
     }
