@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.domain.episode
 
+import com.greencom.android.podcasts2.utils.Size
 import kotlin.time.Duration
 
 data class Episode(
@@ -7,12 +8,12 @@ data class Episode(
     val title: String,
     val description: String,
     val date: Long,
-    val seasonNumber: Int,
-    val episodeNumber: Int,
+    val seasonNumber: Int?,
+    val episodeNumber: Int?,
     val type: Type,
     val explicit: Boolean,
     val audioUrl: String,
-    val audioSizeInBytes: Long,
+    val audioSize: Size,
     val audioDuration: Duration,
     val chaptersUrl: String,
     val imageUrl: String,

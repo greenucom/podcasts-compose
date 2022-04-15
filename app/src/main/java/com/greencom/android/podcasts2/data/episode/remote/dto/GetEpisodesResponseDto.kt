@@ -1,7 +1,11 @@
 package com.greencom.android.podcasts2.data.episode.remote.dto
 
+import com.greencom.android.podcasts2.domain.episode.Episode
+import com.greencom.android.podcasts2.utils.Size.Companion.bytes
+import com.greencom.android.podcasts2.utils.toBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Duration.Companion.seconds
 
 @Serializable
 data class GetEpisodesResponseDto(
@@ -12,7 +16,11 @@ data class GetEpisodesResponseDto(
     @SerialName("count")
     val count: Int? = null,
 
-)
+) {
+
+    fun toEpisodes(): List<Episode> = episodes?.map { it.toEpisode() } ?: emptyList()
+
+}
 
 @Serializable
 data class GetEpisodesItemDto(
@@ -59,4 +67,23 @@ data class GetEpisodesItemDto(
     @SerialName("podcastId")
     val podcastId: Long? = null,
 
-)
+) {
+
+    fun toEpisode(): Episode = Episode(
+        id = checkNotNull(id),
+        title = checkNotNull(title),
+        description = checkNotNull(description),
+        date = checkNotNull(date),
+        seasonNumber = seasonNumber,
+        episodeNumber = episodeNumber,
+        type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
+        explicit = explicit?.toBoolean() ?: false,
+        audioUrl = checkNotNull(audioUrl),
+        audioSize = checkNotNull(audioSizeInBytes).bytes,
+        audioDuration = checkNotNull(audioDurationInSeconds).seconds,
+        chaptersUrl = checkNotNull(chaptersUrl),
+        imageUrl = checkNotNull(imageUrl),
+        podcastId = checkNotNull(podcastId),
+    )
+
+}
