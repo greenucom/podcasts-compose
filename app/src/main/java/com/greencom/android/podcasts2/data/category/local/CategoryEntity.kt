@@ -15,7 +15,7 @@ data class CategoryEntity(
 
 ) {
 
-    fun toDomain(): Category = Category(
+    fun toCategory(): Category = Category(
         id = id,
         name = name,
     )

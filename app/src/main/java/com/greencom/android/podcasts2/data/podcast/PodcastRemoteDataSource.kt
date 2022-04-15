@@ -41,13 +41,13 @@ class PodcastRemoteDataSource @Inject constructor(
             inCategories = inCategories.toCategoriesString(),
             notInCategories = notInCategories.toCategoriesString(),
         )
-        val podcasts = dto.toDomain()
+        val podcasts = dto.toPodcasts()
         _trendingPodcasts.tryEmit(podcasts)
     }
 
     suspend fun searchPodcasts(query: String) {
         val dto = podcastService.searchPodcasts(query)
-        val podcasts = dto.toDomain()
+        val podcasts = dto.toPodcasts()
         _lastSearchPodcastsResult.tryEmit(podcasts)
     }
 
