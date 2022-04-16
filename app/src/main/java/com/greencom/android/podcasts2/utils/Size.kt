@@ -21,6 +21,15 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     val inGigabytes: Float
         get() = bytes / bytesInGigabyte.toFloat()
 
+    val inKilobytesFormatted: String
+        get() = decimalFormatter.format(inKilobytes)
+
+    val inMegabytesFormatted: String
+        get() = decimalFormatter.format(inMegabytes)
+
+    val inGigabytesFormatted: String
+        get() = decimalFormatter.format(inGigabytes)
+
     val inWholeKilobytes: Long
         get() = bytes / BYTES_IN_KILOBYTE
 
@@ -29,6 +38,15 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
 
     val inWholeGigabytes: Long
         get() = bytes / bytesInGigabyte
+
+    val isAtLeastKilobyte: Boolean
+        get() = inWholeKilobytes > 0
+
+    val isAtLeastMegabyte: Boolean
+        get() = inWholeMegabytes > 0
+
+    val isAtLeastGigabyte: Boolean
+        get() = inWholeGigabytes > 0
 
     operator fun plus(size: Size): Size {
         val newBytes = bytes + size.bytes
@@ -82,22 +100,22 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     }
 
     override fun toString(): String = when {
-        inWholeGigabytes != 0L -> formattedGigabytes
-        inWholeMegabytes != 0L -> formattedMegabytes
-        inWholeKilobytes != 0L -> formattedKilobytes
-        else -> formattedBytes
+        isAtLeastGigabyte -> formattedGigabytesWithUnit
+        isAtLeastMegabyte -> formattedMegabytesWithUnit
+        isAtLeastKilobyte -> formattedKilobytesWithUnit
+        else -> formattedBytesWithUnit
     }
 
-    private val formattedGigabytes: String
+    private val formattedGigabytesWithUnit: String
         get() = format(inGigabytes, SizeUnit.GIGABYTES)
 
-    private val formattedMegabytes: String
+    private val formattedMegabytesWithUnit: String
         get() = format(inMegabytes, SizeUnit.MEGABYTES)
 
-    private val formattedKilobytes: String
+    private val formattedKilobytesWithUnit: String
         get() = format(inKilobytes, SizeUnit.KILOBYTES)
 
-    private val formattedBytes: String
+    private val formattedBytesWithUnit: String
         get() = format(inBytes.toFloat(), SizeUnit.BYTES)
 
     private fun format(value: Float, unit: SizeUnit): String {

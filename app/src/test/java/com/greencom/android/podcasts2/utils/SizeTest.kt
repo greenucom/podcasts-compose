@@ -11,11 +11,11 @@ import java.text.DecimalFormat
 
 class SizeTest {
 
-    lateinit var formatter: DecimalFormat
+    lateinit var decimalFormatter: DecimalFormat
 
     @Before
     fun before() {
-        formatter = DecimalFormat("#.##")
+        decimalFormatter = DecimalFormat("#.##")
     }
 
     @Test
@@ -142,6 +142,42 @@ class SizeTest {
     }
 
     @Test
+    fun inKilobytesFormatted() {
+        val bytes = 1500
+        val kilobytes = bytes / 1_000F
+        val kilobytesExpected = decimalFormatter.format(kilobytes)
+        val size = bytes.bytes
+
+        val kilobytesActual = size.inKilobytesFormatted
+
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+    }
+
+    @Test
+    fun inMegabytesFormatted() {
+        val kilobytes = 1280
+        val megabytes = kilobytes / 1_000F
+        val megabytesExpected = decimalFormatter.format(megabytes)
+        val size = kilobytes.kilobytes
+
+        val megabytesActual = size.inMegabytesFormatted
+
+        Assert.assertEquals(megabytesExpected, megabytesActual)
+    }
+
+    @Test
+    fun inGigabytesFormatted() {
+        val megabytes = 1111
+        val gigabytes = megabytes / 1_000F
+        val gigabytesExpected = decimalFormatter.format(gigabytes)
+        val size = megabytes.megabytes
+
+        val gigabytesActual = size.inGigabytesFormatted
+
+        Assert.assertEquals(gigabytesExpected, gigabytesActual)
+    }
+
+    @Test
     fun inWholeKilobytes() {
         val bytes = 1500
         val kilobytesExpected = bytes / 1_000
@@ -172,6 +208,39 @@ class SizeTest {
         val gigabytesActual = size.inWholeGigabytes
 
         Assert.assertEquals(gigabytesExpected.toLong(), gigabytesActual)
+    }
+
+    @Test
+    fun isAtLeastKilobyte() {
+        val bytesLess = 800
+        val bytesMore = 1200
+        val sizeLess = bytesLess.bytes
+        val sizeMore = bytesMore.bytes
+
+        Assert.assertEquals(bytesLess > 1_000, sizeLess.isAtLeastKilobyte)
+        Assert.assertEquals(bytesMore > 1_000, sizeMore.isAtLeastKilobyte)
+    }
+
+    @Test
+    fun isAtLeastMegabyte() {
+        val kilobytesLess = 800
+        val kilobytesMore = 1200
+        val sizeLess = kilobytesLess.kilobytes
+        val sizeMore = kilobytesMore.kilobytes
+
+        Assert.assertEquals(kilobytesLess > 1_000, sizeLess.isAtLeastMegabyte)
+        Assert.assertEquals(kilobytesMore > 1_000, sizeMore.isAtLeastMegabyte)
+    }
+
+    @Test
+    fun isAtLeastGigabyte() {
+        val megabytesLess = 800
+        val megabytesMore = 1200
+        val sizeLess = megabytesLess.megabytes
+        val sizeMore = megabytesMore.megabytes
+
+        Assert.assertEquals(megabytesLess > 1_000, sizeLess.isAtLeastGigabyte)
+        Assert.assertEquals(megabytesMore > 1_000, sizeMore.isAtLeastGigabyte)
     }
 
     @Test
@@ -312,7 +381,7 @@ class SizeTest {
         val size = gigabytes.gigabytes + megabytes.megabytes
 
         val total = gigabytes + megabytes / 1_000F
-        val expected = formatter.format(total) + " GB"
+        val expected = decimalFormatter.format(total) + " GB"
 
         Assert.assertEquals(expected, size.toString())
     }
@@ -324,7 +393,7 @@ class SizeTest {
         val size = megabytes.megabytes + kilobytes.kilobytes
 
         val total = megabytes + kilobytes / 1_000F
-        val expected = formatter.format(total) + " MB"
+        val expected = decimalFormatter.format(total) + " MB"
 
         Assert.assertEquals(expected, size.toString())
     }
@@ -336,7 +405,7 @@ class SizeTest {
         val size = kilobytes.kilobytes + bytes.bytes
 
         val total = kilobytes + bytes / 1_000F
-        val expected = formatter.format(total) + " kB"
+        val expected = decimalFormatter.format(total) + " kB"
 
         Assert.assertEquals(expected, size.toString())
     }
@@ -347,7 +416,7 @@ class SizeTest {
         val size = bytes.bytes
 
         val total = bytes
-        val expected = formatter.format(total) + " B"
+        val expected = decimalFormatter.format(total) + " B"
 
         Assert.assertEquals(expected, size.toString())
     }
@@ -358,7 +427,7 @@ class SizeTest {
         val size = bytes.bytes
 
         val total = bytes / 1_000F
-        val expected = formatter.format(total) + " kB"
+        val expected = decimalFormatter.format(total) + " kB"
 
         Assert.assertEquals(expected, size.toString())
     }
