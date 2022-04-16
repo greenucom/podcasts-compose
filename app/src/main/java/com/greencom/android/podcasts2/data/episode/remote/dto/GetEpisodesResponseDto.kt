@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.data.episode.remote.dto
 
 import com.greencom.android.podcasts2.domain.episode.Episode
+import com.greencom.android.podcasts2.domain.episode.SerialNumber
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
 import com.greencom.android.podcasts2.utils.toBoolean
 import kotlinx.serialization.SerialName
@@ -74,8 +75,10 @@ data class GetEpisodesItemDto(
         title = checkNotNull(title),
         description = checkNotNull(description),
         date = checkNotNull(date),
-        seasonNumber = seasonNumber,
-        episodeNumber = episodeNumber,
+        serialNumber = SerialNumber(
+            season = seasonNumber,
+            episode = episodeNumber,
+        ),
         type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
         explicit = explicit?.toBoolean() ?: false,
         audioUrl = checkNotNull(audioUrl),
