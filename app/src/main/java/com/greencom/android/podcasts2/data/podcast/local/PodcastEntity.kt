@@ -4,12 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.greencom.android.podcasts2.data.category.local.CategoryEntity
-import com.greencom.android.podcasts2.data.category.local.CategoryEntityListTypeConverter
+import com.greencom.android.podcasts2.data.category.local.CategoryEntityDto
+import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 
 @Entity(tableName = "podcasts")
-@TypeConverters(CategoryEntityListTypeConverter::class)
+@TypeConverters(CategoryEntityDtoListTypeConverter::class)
 data class PodcastEntity(
 
     @PrimaryKey
@@ -29,7 +29,7 @@ data class PodcastEntity(
     val imageUrl: String,
 
     @ColumnInfo(name = "categories")
-    val categories: List<CategoryEntity>,
+    val categories: List<CategoryEntityDto>,
 
     @ColumnInfo(name = "is_subscribed", defaultValue = "0")
     val isSubscribed: Boolean,
@@ -38,13 +38,13 @@ data class PodcastEntity(
 
     companion object {
 
-        fun fromDomain(podcast: Podcast): PodcastEntity = PodcastEntity(
+        fun fromPodcast(podcast: Podcast): PodcastEntity = PodcastEntity(
             id = podcast.id,
             title = podcast.title,
             description = podcast.description,
             author = podcast.author,
             imageUrl = podcast.imageUrl,
-            categories = podcast.categories.map { CategoryEntity.fromDomain(it) },
+            categories = podcast.categories.map { CategoryEntityDto.fromCategory(it) },
             isSubscribed = podcast.isSubscribed,
         )
 

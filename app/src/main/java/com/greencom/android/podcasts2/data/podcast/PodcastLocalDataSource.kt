@@ -34,7 +34,7 @@ class PodcastLocalDataSource @Inject constructor(
     }
 
     suspend fun insert(podcast: Podcast) {
-        val entity = PodcastEntity.fromDomain(podcast)
+        val entity = PodcastEntity.fromPodcast(podcast)
         podcastDao.insert(entity)
         updateSubscriptionIds(podcast)
     }

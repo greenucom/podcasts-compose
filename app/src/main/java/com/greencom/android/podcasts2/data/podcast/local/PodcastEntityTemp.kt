@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.greencom.android.podcasts2.data.category.local.CategoryEntity
-import com.greencom.android.podcasts2.data.category.local.CategoryEntityListTypeConverter
+import com.greencom.android.podcasts2.data.category.local.CategoryEntityDto
+import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
 
 @Entity(tableName = "podcasts_temp")
-@TypeConverters(CategoryEntityListTypeConverter::class)
+@TypeConverters(CategoryEntityDtoListTypeConverter::class)
 data class PodcastEntityTemp(
 
     @PrimaryKey
@@ -28,7 +28,7 @@ data class PodcastEntityTemp(
     val imageUrl: String,
 
     @ColumnInfo(name = "categories")
-    val categories: List<CategoryEntity>,
+    val categories: List<CategoryEntityDto>,
 
     @ColumnInfo(name = "is_subscribed", defaultValue = "0")
     val isSubscribed: Boolean,

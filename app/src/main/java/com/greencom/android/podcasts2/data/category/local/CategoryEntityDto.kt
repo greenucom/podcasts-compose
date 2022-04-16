@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CategoryEntity(
+data class CategoryEntityDto(
 
     @SerialName("id")
     val id: Int,
@@ -22,7 +22,7 @@ data class CategoryEntity(
 
     companion object {
 
-        fun fromDomain(category: Category): CategoryEntity = CategoryEntity(
+        fun fromCategory(category: Category): CategoryEntityDto = CategoryEntityDto(
             id = category.id,
             name = category.name,
         )

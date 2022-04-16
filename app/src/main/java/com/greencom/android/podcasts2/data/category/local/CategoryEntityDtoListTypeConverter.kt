@@ -9,15 +9,15 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @ProvidedTypeConverter
-class CategoryEntityListTypeConverter(private val json: Json) {
+class CategoryEntityDtoListTypeConverter(private val json: Json) {
 
     @TypeConverter
-    fun fromCategoryEntityList(categories: List<CategoryEntity>): String {
+    fun fromCategoryEntityDtoList(categories: List<CategoryEntityDto>): String {
         return json.encodeToString(categories)
     }
 
     @TypeConverter
-    fun toCategoryEntityList(string: String): List<CategoryEntity> {
+    fun toCategoryEntityDtoList(string: String): List<CategoryEntityDto> {
         return json.decodeFromString(string)
     }
 
