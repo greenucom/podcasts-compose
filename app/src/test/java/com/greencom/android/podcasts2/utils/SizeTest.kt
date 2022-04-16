@@ -99,6 +99,82 @@ class SizeTest {
     }
 
     @Test
+    fun inBytes() {
+        val bytesExpected = 1280
+        val size = bytesExpected.bytes
+
+        val bytesActual = size.inBytes
+
+        Assert.assertEquals(bytesExpected.toLong(), bytesActual)
+    }
+
+    @Test
+    fun inKilobytes() {
+        val bytes = 1500
+        val kilobytesExpected = bytes / 1_000F
+        val size = bytes.bytes
+
+        val kilobytesActual = size.inKilobytes
+
+        Assert.assertEquals(kilobytesExpected, kilobytesActual)
+    }
+
+    @Test
+    fun inMegabytes() {
+        val kilobytes = 1500
+        val megabytesExpected = kilobytes / 1_000F
+        val size = kilobytes.kilobytes
+
+        val megabytesActual = size.inMegabytes
+
+        Assert.assertEquals(megabytesExpected, megabytesActual)
+    }
+
+    @Test
+    fun inGigabytes() {
+        val megabytes = 1500
+        val gigabytesExpected = megabytes / 1_000F
+        val size = megabytes.megabytes
+
+        val gigabytesActual = size.inGigabytes
+
+        Assert.assertEquals(gigabytesExpected, gigabytesActual)
+    }
+
+    @Test
+    fun inWholeKilobytes() {
+        val bytes = 1500
+        val kilobytesExpected = bytes / 1_000
+        val size = bytes.bytes
+
+        val kilobytesActual = size.inWholeKilobytes
+
+        Assert.assertEquals(kilobytesExpected.toLong(), kilobytesActual)
+    }
+
+    @Test
+    fun inWholeMegabytes() {
+        val kilobytes = 1500
+        val megabytesExpected = kilobytes / 1_000
+        val size = kilobytes.kilobytes
+
+        val megabytesActual = size.inWholeMegabytes
+
+        Assert.assertEquals(megabytesExpected.toLong(), megabytesActual)
+    }
+
+    @Test
+    fun inWholeGigabytes() {
+        val megabytes = 1500
+        val gigabytesExpected = megabytes / 1_000
+        val size = megabytes.megabytes
+
+        val gigabytesActual = size.inWholeGigabytes
+
+        Assert.assertEquals(gigabytesExpected.toLong(), gigabytesActual)
+    }
+
+    @Test
     fun plus() {
         val megabytes = 5
         val kilobytes = 2_000

@@ -12,6 +12,15 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     val inBytes: Long
         get() = bytes
 
+    val inKilobytes: Float
+        get() = bytes / BYTES_IN_KILOBYTE.toFloat()
+
+    val inMegabytes: Float
+        get() = bytes / bytesInMegabyte.toFloat()
+
+    val inGigabytes: Float
+        get() = bytes / bytesInGigabyte.toFloat()
+
     val inWholeKilobytes: Long
         get() = bytes / BYTES_IN_KILOBYTE
 
@@ -80,22 +89,13 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     }
 
     private val formattedGigabytes: String
-        get() {
-            val gigabytes = bytes / bytesInGigabyte.toFloat()
-            return format(gigabytes, SizeUnit.GIGABYTES)
-        }
+        get() = format(inGigabytes, SizeUnit.GIGABYTES)
 
     private val formattedMegabytes: String
-        get() {
-            val megabytes = bytes / bytesInMegabyte.toFloat()
-            return format(megabytes, SizeUnit.MEGABYTES)
-        }
+        get() = format(inMegabytes, SizeUnit.MEGABYTES)
 
     private val formattedKilobytes: String
-        get() {
-            val kilobytes = bytes / BYTES_IN_KILOBYTE.toFloat()
-            return format(kilobytes, SizeUnit.KILOBYTES)
-        }
+        get() = format(inKilobytes, SizeUnit.KILOBYTES)
 
     private val formattedBytes: String
         get() = format(inBytes.toFloat(), SizeUnit.BYTES)
