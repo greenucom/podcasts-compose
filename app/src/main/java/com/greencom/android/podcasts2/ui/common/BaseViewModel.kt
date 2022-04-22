@@ -1,12 +1,10 @@
 package com.greencom.android.podcasts2.ui.common
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 abstract class BaseViewModel<State, Event> : ViewModel() {
@@ -19,12 +17,8 @@ abstract class BaseViewModel<State, Event> : ViewModel() {
     private val _viewEvents = Channel<Event>(Channel.UNLIMITED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    protected fun sendEvent(event: Event) = viewModelScope.launch {
-        _viewEvents.send(event)
-    }
-
-    protected suspend fun sendEventSuspend(event: Event) {
-        _viewEvents.send(event)
+    protected fun sendEvent(event: Event) {
+        _viewEvents.trySend(event)
     }
 
     init {
