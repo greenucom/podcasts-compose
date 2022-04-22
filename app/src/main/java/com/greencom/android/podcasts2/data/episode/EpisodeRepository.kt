@@ -7,4 +7,13 @@ class EpisodeRepository @Inject constructor(
     private val localDataSource: EpisodeLocalDataSource,
 ) {
 
+    suspend fun getEpisodesForPodcastById(podcastId: Long, since: Long, max: Int) {
+        val entities = remoteDataSource.getEpisodesForPodcastById(
+            podcastId = podcastId,
+            since = since,
+            max = max,
+        )
+        localDataSource.insert(entities)
+    }
+
 }

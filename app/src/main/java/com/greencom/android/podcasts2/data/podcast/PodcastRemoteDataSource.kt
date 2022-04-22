@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PodcastRemoteDataSource @Inject constructor(
-    private val podcastService: PodcastService,
+    private val apiService: PodcastService,
 ) {
 
     private val _trendingPodcasts = MutableSharedFlow<List<Podcast>>(
@@ -35,7 +35,7 @@ class PodcastRemoteDataSource @Inject constructor(
         inCategories: List<Category>,
         notInCategories: List<Category>,
     ) {
-        val dto = podcastService.getTrendingPodcasts(
+        val dto = apiService.getTrendingPodcasts(
             max = max,
             languages = languages.toLanguagesString(),
             inCategories = inCategories.toCategoriesString(),
@@ -46,7 +46,7 @@ class PodcastRemoteDataSource @Inject constructor(
     }
 
     suspend fun searchPodcasts(query: String) {
-        val dto = podcastService.searchPodcasts(query)
+        val dto = apiService.searchPodcasts(query)
         val podcasts = dto.toPodcasts()
         _lastSearchPodcastsResult.tryEmit(podcasts)
     }

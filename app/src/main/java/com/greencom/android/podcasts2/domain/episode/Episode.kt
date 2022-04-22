@@ -7,7 +7,7 @@ data class Episode(
     val id: Long,
     val title: String,
     val description: String,
-    val date: Long,
+    val dateUnix: Long,
     val serialNumber: SerialNumber,
     val type: Type,
     val explicit: Boolean,

@@ -10,6 +10,6 @@ class SizeTypeConverter {
     fun fromSize(size: Size): Long = size.inBytes
 
     @TypeConverter
-    fun toSize(value: Long): Size = value.bytes
+    fun toSize(bytes: Long): Size = bytes.bytes
 
 }

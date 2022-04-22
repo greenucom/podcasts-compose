@@ -1,5 +1,7 @@
 package com.greencom.android.podcasts2.data.episode.remote.dto
 
+import com.greencom.android.podcasts2.data.episode.local.EpisodeEntity
+import com.greencom.android.podcasts2.data.episode.local.SerialNumberEntity
 import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.domain.episode.SerialNumber
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
@@ -9,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.seconds
 
 @Serializable
-data class GetEpisodesResponseDto(
+data class GetEpisodesForPodcastByIdResponseDto(
 
     @SerialName("items")
     val episodes: List<GetEpisodesItemDto>? = null,
@@ -21,11 +23,14 @@ data class GetEpisodesResponseDto(
 
     fun toEpisodes(): List<Episode> = episodes?.map { it.toEpisode() } ?: emptyList()
 
+    fun toEpisodeEntities(): List<EpisodeEntity> =
+        episodes?.map { it.toEpisodeEntity() } ?: emptyList()
+
 }
 
 @Serializable
 data class GetEpisodesItemDto(
-    
+
     @SerialName("id")
     val id: Long? = null,
 
@@ -36,7 +41,7 @@ data class GetEpisodesItemDto(
     val description: String? = null,
 
     @SerialName("datePublished")
-    val date: Long? = null,
+    val dateUnix: Long? = null,
 
     @SerialName("season")
     val seasonNumber: Int? = null,
@@ -74,12 +79,31 @@ data class GetEpisodesItemDto(
         id = checkNotNull(id),
         title = checkNotNull(title),
         description = checkNotNull(description),
-        date = checkNotNull(date),
+        dateUnix = checkNotNull(dateUnix),
         serialNumber = SerialNumber(
             season = seasonNumber,
             episode = episodeNumber,
         ),
         type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
+        explicit = explicit?.toBoolean() ?: false,
+        audioUrl = checkNotNull(audioUrl),
+        audioSize = checkNotNull(audioSizeInBytes).bytes,
+        audioDuration = checkNotNull(audioDurationInSeconds).seconds,
+        chaptersUrl = checkNotNull(chaptersUrl),
+        imageUrl = checkNotNull(imageUrl),
+        podcastId = checkNotNull(podcastId),
+    )
+
+    fun toEpisodeEntity(): EpisodeEntity = EpisodeEntity(
+        id = checkNotNull(id),
+        title = checkNotNull(title),
+        description = checkNotNull(description),
+        dateUnix = checkNotNull(dateUnix),
+        serialNumber = SerialNumberEntity(
+            season = seasonNumber ?: SerialNumberEntity.MISSING_VALUE,
+            episode = episodeNumber ?: SerialNumberEntity.MISSING_VALUE,
+        ),
+        type = checkNotNull(type),
         explicit = explicit?.toBoolean() ?: false,
         audioUrl = checkNotNull(audioUrl),
         audioSize = checkNotNull(audioSizeInBytes).bytes,
