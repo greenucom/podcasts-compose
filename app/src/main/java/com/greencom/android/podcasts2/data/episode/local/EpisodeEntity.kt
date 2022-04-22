@@ -3,6 +3,8 @@ package com.greencom.android.podcasts2.data.episode.local
 import androidx.room.*
 import com.greencom.android.podcasts2.data.common.DurationTypeConverter
 import com.greencom.android.podcasts2.data.common.SizeTypeConverter
+import com.greencom.android.podcasts2.data.episode.remote.dto.EpisodeTypeDto
+import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.utils.Size
 import kotlin.time.Duration
 
@@ -53,4 +55,22 @@ data class EpisodeEntity(
     @ColumnInfo(name = "podcast_id")
     val podcastId: Long,
 
-)
+) {
+
+    fun toEpisode() = Episode(
+        id = id,
+        title = title,
+        description = description,
+        dateUnix = dateUnix,
+        serialNumber = serialNumber.toSerialNumber(),
+        type = EpisodeTypeDto(type).toEpisodeType(),
+        explicit = explicit,
+        audioUrl = audioUrl,
+        audioSize = audioSize,
+        audioDuration = audioDuration,
+        chaptersUrl = chaptersUrl,
+        imageUrl = imageUrl,
+        podcastId = podcastId,
+    )
+
+}

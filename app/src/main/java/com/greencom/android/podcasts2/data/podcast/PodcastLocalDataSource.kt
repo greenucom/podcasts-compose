@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class PodcastLocalDataSource @Inject constructor(
     @ApplicationScope private val applicationScope: CoroutineScope,
-    private val podcastDao: PodcastDao,
+    private val dao: PodcastDao,
 ) {
 
     private val _subscriptionIds = MutableStateFlow(setOf<Long>())
@@ -28,14 +28,14 @@ class PodcastLocalDataSource @Inject constructor(
 
     private fun loadSubscriptionIds() {
         applicationScope.launch(Dispatchers.IO) {
-            val ids = podcastDao.getSubscriptionIds().toSet()
+            val ids = dao.getSubscriptionIds().toSet()
             _subscriptionIds.update { ids }
         }
     }
 
     suspend fun insert(podcast: Podcast) {
         val entity = PodcastEntity.fromPodcast(podcast)
-        podcastDao.insert(entity)
+        dao.insert(entity)
         updateSubscriptionIds(podcast)
     }
 
