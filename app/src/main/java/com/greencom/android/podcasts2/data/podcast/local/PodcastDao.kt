@@ -55,7 +55,8 @@ abstract class PodcastDao {
     @Query("""
         SELECT id, title, description, author, image_url, categories, is_subscribed
         FROM podcasts
-        LEFT JOIN episodes ON podcasts.id = episodes.podcast_id
+        LEFT JOIN episodes ON episodes.podcast_id = podcasts.id
+        WHERE id = :id
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
             Flow<Map<PodcastEntity, List<EpisodeEntity>>>
