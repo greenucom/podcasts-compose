@@ -1,7 +1,6 @@
 package com.greencom.android.podcasts2.data.episode
 
 import com.greencom.android.podcasts2.domain.episode.Episode
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EpisodeRepository @Inject constructor(
@@ -18,8 +17,8 @@ class EpisodeRepository @Inject constructor(
         localDataSource.insert(entities)
     }
 
-    fun getEpisodesForPodcastByIdFlow(podcastId: Long): Flow<List<Episode>> {
-        return localDataSource.getEpisodesForPodcastByIdFlow(podcastId)
+    suspend fun getEpisodeById(id: Long): Episode {
+        return localDataSource.getEpisodeById(id)
     }
 
 }

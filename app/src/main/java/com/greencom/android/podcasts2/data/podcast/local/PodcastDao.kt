@@ -1,6 +1,9 @@
 package com.greencom.android.podcasts2.data.podcast.local
 
 import androidx.room.*
+import com.greencom.android.podcasts2.data.episode.local.EpisodeEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Dao
 abstract class PodcastDao {
@@ -48,5 +51,16 @@ abstract class PodcastDao {
 
     @Query("SELECT id FROM podcasts WHERE is_subscribed = 1")
     abstract suspend fun getSubscriptionIds(): List<Long>
+
+    @Query("""
+        SELECT id, title, description, author, image_url, categories, is_subscribed
+        FROM podcasts
+        LEFT JOIN episodes ON podcasts.id = episodes.podcast_id
+    """)
+    protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
+            Flow<Map<PodcastEntity, List<EpisodeEntity>>>
+
+    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<PodcastEntity, List<EpisodeEntity>>> =
+        getPodcastWithEpisodesByIdFlowRaw(id).distinctUntilChanged()
 
 }

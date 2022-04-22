@@ -2,9 +2,11 @@ package com.greencom.android.podcasts2.data.podcast
 
 import com.greencom.android.podcasts2.di.DefaultDispatcher
 import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -53,6 +55,10 @@ class PodcastRepository @Inject constructor(
 
     suspend fun updatePodcast(podcast: Podcast) {
         localDataSource.insert(podcast)
+    }
+
+    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast, List<Episode>>> {
+        return localDataSource.getPodcastWithEpisodesByIdFlow(id)
     }
 
 }

@@ -36,6 +36,16 @@ data class PodcastEntity(
 
 ) {
 
+    fun toPodcast() = Podcast(
+        id = id,
+        title = title,
+        description = description,
+        author = author,
+        imageUrl = imageUrl,
+        categories = categories.map { it.toCategory() },
+        isSubscribed = isSubscribed,
+    )
+
     companion object {
 
         fun fromPodcast(podcast: Podcast): PodcastEntity = PodcastEntity(
