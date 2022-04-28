@@ -3,8 +3,8 @@ package com.greencom.android.podcasts2.utils
 import java.text.DecimalFormat
 
 /**
- * Value class that based on **64bit value of size in bytes**, so the max value that can be
- * correctly represented by this class is ~9223 petabytes.
+ * Value class that based on **64bit value of size in bytes**, hence the max value that can be
+ * correctly represented by this class is ~9200 petabytes.
  */
 @JvmInline
 value class Size private constructor(private val bytes: Long) : Comparable<Size> {
@@ -16,17 +16,20 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
         get() = bytes / BYTES_IN_KILOBYTE.toFloat()
 
     val inMegabytes: Float
-        get() = bytes / bytesInMegabyte.toFloat()
+        get() = bytes / BYTES_IN_MEGABYTE.toFloat()
 
     val inGigabytes: Float
-        get() = bytes / bytesInGigabyte.toFloat()
+        get() = bytes / BYTES_IN_GIGABYTE.toFloat()
 
+    /** [inKilobytes] value in #.## format */
     val inKilobytesFormatted: String
         get() = decimalFormatter.format(inKilobytes)
 
+    /** [inMegabytes] value in #.## format */
     val inMegabytesFormatted: String
         get() = decimalFormatter.format(inMegabytes)
 
+    /** [inGigabytes] value in #.## format */
     val inGigabytesFormatted: String
         get() = decimalFormatter.format(inGigabytes)
 
@@ -34,10 +37,10 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
         get() = bytes / BYTES_IN_KILOBYTE
 
     val inWholeMegabytes: Long
-        get() = bytes / bytesInMegabyte
+        get() = bytes / BYTES_IN_MEGABYTE
 
     val inWholeGigabytes: Long
-        get() = bytes / bytesInGigabyte
+        get() = bytes / BYTES_IN_GIGABYTE
 
     val isAtLeastKilobyte: Boolean
         get() = inWholeKilobytes > 0
@@ -69,8 +72,8 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     ) {
         var remainingBytes = bytes
 
-        val megabytes = remainingBytes / bytesInMegabyte
-        remainingBytes -= megabytes * bytesInMegabyte
+        val megabytes = remainingBytes / BYTES_IN_MEGABYTE
+        remainingBytes -= megabytes * BYTES_IN_MEGABYTE
 
         val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
         remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
@@ -83,11 +86,11 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
     ) {
         var remainingBytes = bytes
 
-        val gigabytes = remainingBytes / bytesInGigabyte
-        remainingBytes -= gigabytes * bytesInGigabyte
+        val gigabytes = remainingBytes / BYTES_IN_GIGABYTE
+        remainingBytes -= gigabytes * BYTES_IN_GIGABYTE
 
-        val megabytes = remainingBytes / bytesInMegabyte
-        remainingBytes -= megabytes * bytesInMegabyte
+        val megabytes = remainingBytes / BYTES_IN_MEGABYTE
+        remainingBytes -= megabytes * BYTES_IN_MEGABYTE
 
         val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
         remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
@@ -161,17 +164,14 @@ value class Size private constructor(private val bytes: Long) : Comparable<Size>
         private fun bytesInUnit(unit: SizeUnit): Long = when (unit) {
             SizeUnit.BYTES -> ONE_BYTE
             SizeUnit.KILOBYTES -> BYTES_IN_KILOBYTE
-            SizeUnit.MEGABYTES -> bytesInMegabyte
-            SizeUnit.GIGABYTES -> bytesInGigabyte
+            SizeUnit.MEGABYTES -> BYTES_IN_MEGABYTE
+            SizeUnit.GIGABYTES -> BYTES_IN_GIGABYTE
         }
-
-        private val bytesInMegabyte: Long get() = KILOBYTES_IN_MEGABYTE * BYTES_IN_KILOBYTE
-        private val bytesInGigabyte: Long get() = MEGABYTES_IN_GIGABYTE * bytesInMegabyte
 
         private const val ONE_BYTE = 1L
         private const val BYTES_IN_KILOBYTE = 1_000L
-        private const val KILOBYTES_IN_MEGABYTE = 1_000L
-        private const val MEGABYTES_IN_GIGABYTE = 1_000L
+        private const val BYTES_IN_MEGABYTE = 1_000_000L
+        private const val BYTES_IN_GIGABYTE = 1_000_000_000L
 
         private const val STRING_BYTE = "B"
         private const val STRING_KILOBYTE = "kB"
