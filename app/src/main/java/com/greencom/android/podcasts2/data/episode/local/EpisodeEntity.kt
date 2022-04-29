@@ -1,18 +1,15 @@
 package com.greencom.android.podcasts2.data.episode.local
 
-import androidx.room.*
-import com.greencom.android.podcasts2.data.common.DurationTypeConverter
-import com.greencom.android.podcasts2.data.common.SizeTypeConverter
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.greencom.android.podcasts2.data.episode.remote.dto.EpisodeTypeDto
 import com.greencom.android.podcasts2.domain.episode.Episode
-import com.greencom.android.podcasts2.utils.Size
-import kotlin.time.Duration
+import com.greencom.android.podcasts2.utils.Size.Companion.bytes
+import kotlin.time.Duration.Companion.milliseconds
 
 @Entity(tableName = "episodes")
-@TypeConverters(
-    SizeTypeConverter::class,
-    DurationTypeConverter::class,
-)
 data class EpisodeEntity(
 
     @PrimaryKey
@@ -40,11 +37,11 @@ data class EpisodeEntity(
     @ColumnInfo(name = "audio_url")
     val audioUrl: String,
 
-    @ColumnInfo(name = "audio_size")
-    val audioSize: Size,
+    @ColumnInfo(name = "audio_size_in_bytes")
+    val audioSizeInBytes: Long,
 
-    @ColumnInfo(name = "audio_duration")
-    val audioDuration: Duration,
+    @ColumnInfo(name = "audio_duration_in_milliseconds")
+    val audioDurationInMilliseconds: Long,
 
     @ColumnInfo(name = "chapters_url")
     val chaptersUrl: String,
@@ -66,8 +63,8 @@ data class EpisodeEntity(
         type = EpisodeTypeDto(type).toEpisodeType(),
         explicit = explicit,
         audioUrl = audioUrl,
-        audioSize = audioSize,
-        audioDuration = audioDuration,
+        audioSize = audioSizeInBytes.bytes,
+        audioDuration = audioDurationInMilliseconds.milliseconds,
         chaptersUrl = chaptersUrl,
         imageUrl = imageUrl,
         podcastId = podcastId,
