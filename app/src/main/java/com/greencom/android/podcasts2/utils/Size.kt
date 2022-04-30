@@ -111,6 +111,60 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     val inTebibytesFormatted: String
         get() = decimalFormatter.format(inTebibytes)
 
+    val inBitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inBits.toFloat(), SizeUnit.BITS)
+
+    val inKilobitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inKilobits, SizeUnit.KILOBITS)
+
+    val inMegabitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inMegabits, SizeUnit.MEGABITS)
+
+    val inGigabitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inGigabits, SizeUnit.GIGABITS)
+
+    val inTerabitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inTerabits, SizeUnit.TERABITS)
+
+    val inKibibitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inKibibits, SizeUnit.KIBIBITS)
+
+    val inMebibitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inMebibits, SizeUnit.MEBIBITS)
+
+    val inGibibitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inGibibits, SizeUnit.GIBIBITS)
+
+    val inTebibitsFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inTebibits, SizeUnit.TEBIBITS)
+
+    val inBytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inBytes, SizeUnit.BYTES)
+
+    val inKilobytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inKilobytes, SizeUnit.KILOBYTES)
+
+    val inMegabytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inMegabytes, SizeUnit.MEGABYTES)
+
+    val inGigabytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inGigabytes, SizeUnit.GIGABYTES)
+
+    val inTerabytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inTerabytes, SizeUnit.TERABYTES)
+
+    val inKibibytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inKibibytes, SizeUnit.KIBIBYTES)
+
+    val inMebibytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inMebibytes, SizeUnit.MEBIBYTES)
+
+    val inGibibytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inGibibytes, SizeUnit.GIBIBYTES)
+
+    val inTebibytesFormattedWithUnit: String
+        get() = formatToStringWithUnitSymbol(inTebibytes, SizeUnit.TEBIBYTES)
+
     val inWholeKilobits: Long
         get() = bits / getBitsInUnit(SizeUnit.KILOBITS)
 
@@ -179,6 +233,33 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     operator fun times(times: Int): Size {
         val bits = bits * times
         return Size(bits)
+    }
+
+    private fun formatToStringWithUnitSymbol(value: Float, unit: SizeUnit): String {
+        val valueString = decimalFormatter.format(value)
+        val unitSymbol = getUnitSymbol(unit)
+        return FORMAT_WITH_UNIT_SYMBOL.format(valueString, unitSymbol)
+    }
+
+    private fun getUnitSymbol(unit: SizeUnit): String = when (unit) {
+        SizeUnit.BITS -> UNIT_SYMBOL_BIT
+        SizeUnit.KILOBITS -> UNIT_SYMBOL_KILOBIT
+        SizeUnit.MEGABITS -> UNIT_SYMBOL_MEGABIT
+        SizeUnit.GIGABITS -> UNIT_SYMBOL_GIGABIT
+        SizeUnit.TERABITS -> UNIT_SYMBOL_TERABIT
+        SizeUnit.KIBIBITS -> UNIT_SYMBOL_KIBIBIT
+        SizeUnit.MEBIBITS -> UNIT_SYMBOL_MEBIBIT
+        SizeUnit.GIBIBITS -> UNIT_SYMBOL_GIBIBIT
+        SizeUnit.TEBIBITS -> UNIT_SYMBOL_TEBIBIT
+        SizeUnit.BYTES -> UNIT_SYMBOL_BYTE
+        SizeUnit.KILOBYTES -> UNIT_SYMBOL_KILOBYTE
+        SizeUnit.MEGABYTES -> UNIT_SYMBOL_MEGABYTE
+        SizeUnit.GIGABYTES -> UNIT_SYMBOL_GIGABYTE
+        SizeUnit.TERABYTES -> UNIT_SYMBOL_TERABYTE
+        SizeUnit.KIBIBYTES -> UNIT_SYMBOL_KIBIBYTE
+        SizeUnit.MEBIBYTES -> UNIT_SYMBOL_MEBIBYTE
+        SizeUnit.GIBIBYTES -> UNIT_SYMBOL_GIBIBYTE
+        SizeUnit.TEBIBYTES -> UNIT_SYMBOL_TEBIBYTE
     }
 
     override fun compareTo(other: Size): Int {
@@ -361,6 +442,8 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
 
         private const val BIT = 1
         private const val BITS_IN_BYTE = 8
+
+        private const val FORMAT_WITH_UNIT_SYMBOL = "%1\$s %2\$s"
 
     }
 
