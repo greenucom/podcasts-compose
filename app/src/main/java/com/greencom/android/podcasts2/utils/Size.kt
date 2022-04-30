@@ -3,6 +3,12 @@ package com.greencom.android.podcasts2.utils
 import java.math.BigInteger
 import java.text.DecimalFormat
 
+/**
+ * Value class that represents size.
+ *
+ * **Note**: this class based on the **64bit value of bits**, hence the max value that can be
+ * correctly represented with by this class is ~1100 petabytes.
+ */
 @JvmInline
 value class Size private constructor(private val bits: Long) : Comparable<Size> {
 
@@ -60,108 +66,143 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     val inTebibytes: Float
         get() = bits / getBitsInUnit(SizeUnit.TEBIBYTES).toFloat()
 
+    /** [inKilobits] value in **#.##** format */
     val inKilobitsFormatted: String
         get() = decimalFormatter.format(inKilobits)
 
+    /** [inMegabits] value in **#.##** format */
     val inMegabitsFormatted: String
         get() = decimalFormatter.format(inMegabits)
 
+    /** [inGigabits] value in **#.##** format */
     val inGigabitsFormatted: String
         get() = decimalFormatter.format(inGigabits)
 
+    /** [inTerabits] value in **#.##** format */
     val inTerabitsFormatted: String
         get() = decimalFormatter.format(inTerabits)
 
+    /** [inKibibits] value in **#.##** format */
     val inKibibitsFormatted: String
         get() = decimalFormatter.format(inKibibits)
 
+    /** [inMebibits] value in **#.##** format */
     val inMebibitsFormatted: String
         get() = decimalFormatter.format(inMebibits)
 
+    /** [inGibibits] value in **#.##** format */
     val inGibibitsFormatted: String
         get() = decimalFormatter.format(inGibibits)
 
+    /** [inTebibits] value in **#.##** format */
     val inTebibitsFormatted: String
         get() = decimalFormatter.format(inTebibits)
 
+    /** [inBytes] value in **#.##** format */
     val inBytesFormatted: String
         get() = decimalFormatter.format(inBytes)
 
+    /** [inKilobytes] value in **#.##** format */
     val inKilobytesFormatted: String
         get() = decimalFormatter.format(inKilobytes)
 
+    /** [inMegabytes] value in **#.##** format */
     val inMegabytesFormatted: String
         get() = decimalFormatter.format(inMegabytes)
 
+    /** [inGigabytes] value in **#.##** format */
     val inGigabytesFormatted: String
         get() = decimalFormatter.format(inGigabytes)
 
+    /** [inTerabytes] value in **#.##** format */
     val inTerabytesFormatted: String
         get() = decimalFormatter.format(inTerabytes)
 
+    /** [inKibibytes] value in **#.##** format */
     val inKibibytesFormatted: String
         get() = decimalFormatter.format(inKibibytes)
 
+    /** [inMebibytes] value in **#.##** format */
     val inMebibytesFormatted: String
         get() = decimalFormatter.format(inMebibytes)
 
+    /** [inGibibytes] value in **#.##** format */
     val inGibibytesFormatted: String
         get() = decimalFormatter.format(inGibibytes)
 
+    /** [inTebibytes] value in **#.##** format */
     val inTebibytesFormatted: String
         get() = decimalFormatter.format(inTebibytes)
 
+    /** [inBits] value in **#.## b** format */
     val inBitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inBits.toFloat(), SizeUnit.BITS)
 
+    /** [inKilobits] value in **#.## kbit** format */
     val inKilobitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inKilobits, SizeUnit.KILOBITS)
 
+    /** [inMegabits] value in **#.## Mbit** format */
     val inMegabitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inMegabits, SizeUnit.MEGABITS)
 
+    /** [inGigabits] value in **#.## Gbit** format */
     val inGigabitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inGigabits, SizeUnit.GIGABITS)
 
+    /** [inTerabits] value in **#.## Tbit** format */
     val inTerabitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inTerabits, SizeUnit.TERABITS)
 
+    /** [inKibibits] value in **#.## Kibit** format */
     val inKibibitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inKibibits, SizeUnit.KIBIBITS)
 
+    /** [inMebibits] value in **#.## Mibit** format */
     val inMebibitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inMebibits, SizeUnit.MEBIBITS)
 
+    /** [inGibibits] value in **#.## Gibit** format */
     val inGibibitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inGibibits, SizeUnit.GIBIBITS)
 
+    /** [inTebibits] value in **#.## Tibit** format */
     val inTebibitsFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inTebibits, SizeUnit.TEBIBITS)
 
+    /** [inBytes] value in **#.## B** format */
     val inBytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inBytes, SizeUnit.BYTES)
 
+    /** [inKilobytes] value in **#.## kB** format */
     val inKilobytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inKilobytes, SizeUnit.KILOBYTES)
 
+    /** [inMegabytes] value in **#.## MB** format */
     val inMegabytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inMegabytes, SizeUnit.MEGABYTES)
 
+    /** [inGigabytes] value in **#.## GB** format */
     val inGigabytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inGigabytes, SizeUnit.GIGABYTES)
 
+    /** [inTerabytes] value in **#.## TB** format */
     val inTerabytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inTerabytes, SizeUnit.TERABYTES)
 
+    /** [inKibibytes] value in **#.## KiB** format */
     val inKibibytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inKibibytes, SizeUnit.KIBIBYTES)
 
+    /** [inMebibytes] value in **#.## MiB** format */
     val inMebibytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inMebibytes, SizeUnit.MEBIBYTES)
 
+    /** [inGibibytes] value in **#.## GiB** format */
     val inGibibytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inGibibytes, SizeUnit.GIBIBYTES)
 
+    /** [inTebibytes] value in **#.## TiB** format */
     val inTebibytesFormattedWithUnit: String
         get() = formatToStringWithUnitSymbol(inTebibytes, SizeUnit.TEBIBYTES)
 
@@ -246,6 +287,10 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     private val decimalFormatter: DecimalFormat
         get() = DecimalFormat("#.##")
 
+    /**
+     * Returns the bit-based string based on the most appropriate size unit
+     * @see [toByteBasedString]
+     */
     fun toBitBasedString(): String = when {
         isAtLeastTerabit -> inTerabitsFormattedWithUnit
         isAtLeastGigabit -> inGigabitsFormattedWithUnit
@@ -254,6 +299,10 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
         else -> inBitsFormattedWithUnit
     }
 
+    /**
+     * Returns the byte-based string based on the most appropriate size unit
+     * @see [toBitBasedString]
+     */
     fun toByteBasedString(): String = when {
         isAtLeastTerabyte -> inTerabytesFormattedWithUnit
         isAtLeastGigabyte -> inGigabytesFormattedWithUnit
