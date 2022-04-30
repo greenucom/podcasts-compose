@@ -13,8 +13,8 @@ class EpisodeLocalDataSource @Inject constructor(
         dao.insert(episodeEntities)
     }
 
-    suspend fun getEpisodeById(id: Long): Episode {
-        return dao.getEpisodeById(id).toEpisode()
+    suspend fun getEpisodeById(id: Long): Episode? {
+        return dao.getEpisodeById(id)?.toEpisode()
     }
 
 }

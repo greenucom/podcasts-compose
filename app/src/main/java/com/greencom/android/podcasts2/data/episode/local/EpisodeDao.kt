@@ -18,6 +18,6 @@ abstract class EpisodeDao {
         FROM Episode
         WHERE id = :id
     """)
-    abstract suspend fun getEpisodeById(id: Long): EpisodeEntity
+    abstract suspend fun getEpisodeById(id: Long): EpisodeEntity?
 
 }
