@@ -53,7 +53,7 @@ class PodcastRepository @Inject constructor(
         remoteDataSource.searchPodcasts(query)
     }
 
-    suspend fun updatePodcast(podcast: Podcast) {
+    suspend fun insertPodcast(podcast: Podcast) {
         localDataSource.insert(podcast)
     }
 

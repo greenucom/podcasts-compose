@@ -13,7 +13,7 @@ class UpdatePodcastSubscriptionUseCase @Inject constructor(
 ) : UseCase<Podcast, Unit>(dispatcher) {
 
     override suspend fun execute(params: Podcast) {
-        podcastRepository.updatePodcast(params)
+        podcastRepository.insertPodcast(params)
     }
 
 }
