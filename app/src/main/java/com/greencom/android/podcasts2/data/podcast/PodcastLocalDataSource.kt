@@ -46,11 +46,11 @@ class PodcastLocalDataSource @Inject constructor(
         updateSubscriptionIds(podcast)
     }
 
-    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast, List<Episode>>> {
+    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast?, List<Episode>>> {
         return dao.getPodcastWithEpisodesByIdFlow(id)
             .map { podcastToEpisodes ->
                 podcastToEpisodes.entries.associate { (podcast, episodes) ->
-                    podcast.toPodcast() to episodes.map { it.toEpisode() }
+                    podcast?.toPodcast() to episodes.map { it.toEpisode() }
                 }
             }
     }

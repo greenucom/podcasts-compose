@@ -57,7 +57,7 @@ class PodcastRepository @Inject constructor(
         localDataSource.insert(podcast)
     }
 
-    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast, List<Episode>>> {
+    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast?, List<Episode>>> {
         return localDataSource.getPodcastWithEpisodesByIdFlow(id)
     }
 

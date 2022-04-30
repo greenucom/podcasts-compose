@@ -63,9 +63,9 @@ abstract class PodcastDao {
         WHERE p.id = :id
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
-            Flow<Map<PodcastEntity, List<EpisodeEntity>>>
+            Flow<Map<PodcastEntity?, List<EpisodeEntity>>>
 
-    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<PodcastEntity, List<EpisodeEntity>>> =
+    fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<PodcastEntity?, List<EpisodeEntity>>> =
         getPodcastWithEpisodesByIdFlowRaw(id).distinctUntilChanged()
 
 }
