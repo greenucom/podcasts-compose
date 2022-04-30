@@ -305,17 +305,17 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
         private fun getUnitPowerBase(unit: SizeUnit): Long = when (unit) {
             SizeUnit.KIBIBITS, SizeUnit.KIBIBYTES, SizeUnit.MEBIBITS, SizeUnit.MEBIBYTES,
             SizeUnit.GIBIBITS, SizeUnit.GIBIBYTES, SizeUnit.TEBIBITS, SizeUnit.TEBIBYTES ->
-                POWER_BASE_BINARY
+                UNIT_POWER_BASE_BINARY
 
-            else -> POWER_BASE_DECIMAL
+            else -> UNIT_POWER_BASE_DECIMAL
         }
 
         private fun getUnitPrefixPower(unit: SizeUnit): Int = when (unit) {
-            SizeUnit.BITS, SizeUnit.BYTES -> POWER_NONE
-            SizeUnit.KILOBITS, SizeUnit.KIBIBITS, SizeUnit.KILOBYTES, SizeUnit.KIBIBYTES -> POWER_KILO
-            SizeUnit.MEGABITS, SizeUnit.MEBIBITS, SizeUnit.MEGABYTES, SizeUnit.MEBIBYTES -> POWER_MEGA
-            SizeUnit.GIGABITS, SizeUnit.GIBIBITS, SizeUnit.GIGABYTES, SizeUnit.GIBIBYTES -> POWER_GIGA
-            SizeUnit.TERABITS, SizeUnit.TEBIBITS, SizeUnit.TERABYTES, SizeUnit.TEBIBYTES -> POWER_TERA
+            SizeUnit.BITS, SizeUnit.BYTES -> UNIT_POWER_NONE
+            SizeUnit.KILOBITS, SizeUnit.KIBIBITS, SizeUnit.KILOBYTES, SizeUnit.KIBIBYTES -> UNIT_POWER_KILO
+            SizeUnit.MEGABITS, SizeUnit.MEBIBITS, SizeUnit.MEGABYTES, SizeUnit.MEBIBYTES -> UNIT_POWER_MEGA
+            SizeUnit.GIGABITS, SizeUnit.GIBIBITS, SizeUnit.GIGABYTES, SizeUnit.GIBIBYTES -> UNIT_POWER_GIGA
+            SizeUnit.TERABITS, SizeUnit.TEBIBITS, SizeUnit.TERABYTES, SizeUnit.TEBIBYTES -> UNIT_POWER_TERA
         }
 
         private fun getUnitConversionFactor(unit: SizeUnit): Int = when (unit) {
@@ -328,14 +328,36 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
             else -> BITS_IN_BYTE
         }
 
-        private const val POWER_BASE_DECIMAL = 1_000L
-        private const val POWER_BASE_BINARY = 1_024L
+        private const val UNIT_SYMBOL_BIT = "b"
+        private const val UNIT_SYMBOL_KILOBIT = "kbit"
+        private const val UNIT_SYMBOL_MEGABIT = "Mbit"
+        private const val UNIT_SYMBOL_GIGABIT = "Gbit"
+        private const val UNIT_SYMBOL_TERABIT = "Tbit"
 
-        private const val POWER_NONE = 0
-        private const val POWER_KILO = 1
-        private const val POWER_MEGA = 2
-        private const val POWER_GIGA = 3
-        private const val POWER_TERA = 4
+        private const val UNIT_SYMBOL_KIBIBIT = "Kibit"
+        private const val UNIT_SYMBOL_MEBIBIT = "Mibit"
+        private const val UNIT_SYMBOL_GIBIBIT = "Gibit"
+        private const val UNIT_SYMBOL_TEBIBIT = "Tibit"
+
+        private const val UNIT_SYMBOL_BYTE = "B"
+        private const val UNIT_SYMBOL_KILOBYTE = "kB"
+        private const val UNIT_SYMBOL_MEGABYTE = "MB"
+        private const val UNIT_SYMBOL_GIGABYTE = "GB"
+        private const val UNIT_SYMBOL_TERABYTE = "TB"
+
+        private const val UNIT_SYMBOL_KIBIBYTE = "KiB"
+        private const val UNIT_SYMBOL_MEBIBYTE = "MiB"
+        private const val UNIT_SYMBOL_GIBIBYTE = "GiB"
+        private const val UNIT_SYMBOL_TEBIBYTE = "TiB"
+
+        private const val UNIT_POWER_BASE_DECIMAL = 1_000L
+        private const val UNIT_POWER_BASE_BINARY = 1_024L
+
+        private const val UNIT_POWER_NONE = 0
+        private const val UNIT_POWER_KILO = 1
+        private const val UNIT_POWER_MEGA = 2
+        private const val UNIT_POWER_GIGA = 3
+        private const val UNIT_POWER_TERA = 4
 
         private const val BIT = 1
         private const val BITS_IN_BYTE = 8
