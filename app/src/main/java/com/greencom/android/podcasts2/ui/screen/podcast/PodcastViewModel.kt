@@ -6,7 +6,6 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.GetPodcastWithEpisodesFlowUseCase
 import com.greencom.android.podcasts2.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +34,7 @@ class PodcastViewModel @Inject constructor(
         val podcast = podcastWithEpisodes.keys.first()
         val episodes = podcastWithEpisodes[podcast] ?: emptyList()
         val viewState = ViewState.Success(podcast, episodes)
-        _viewState.update { viewState }
+        updateViewState { viewState }
     }
 
     sealed interface ViewState {

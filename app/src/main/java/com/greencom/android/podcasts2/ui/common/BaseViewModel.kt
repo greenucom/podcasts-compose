@@ -5,6 +5,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 abstract class BaseViewModel<State, Event> : ViewModel() {
@@ -17,7 +18,11 @@ abstract class BaseViewModel<State, Event> : ViewModel() {
     private val _viewEvents = Channel<Event>(Channel.UNLIMITED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    protected fun sendEvent(event: Event) {
+    protected inline fun updateViewState(function: (State) -> State) {
+        _viewState.update(function)
+    }
+
+    protected fun sendViewEvent(event: Event) {
         _viewEvents.trySend(event)
     }
 

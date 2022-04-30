@@ -33,12 +33,12 @@ class SearchViewModel @Inject constructor(
 
     private fun requestInitialFocusForSearchField() = viewModelScope.launch {
         delay(KeyboardAppearingDelay)
-        sendEvent(ViewEvent.RequestFocusForSearchField)
+        sendViewEvent(ViewEvent.RequestFocusForSearchField)
     }
 
     private fun collectSearchResults() = viewModelScope.launch {
         interactor.getSearchPodcastsResultFlowUseCase(Unit).collect { podcasts ->
-            _viewState.update {
+            updateViewState {
                 if (podcasts.isNotEmpty()) ViewState.Success(podcasts) else ViewState.Empty
             }
         }
@@ -49,11 +49,11 @@ class SearchViewModel @Inject constructor(
 
         val query = query.value
         if (query.isBlank()) {
-            _viewState.update { ViewState.Empty }
+            updateViewState { ViewState.Empty }
             return
         }
 
-        _viewState.update { ViewState.Loading }
+        updateViewState { ViewState.Loading }
         searchPodcastsJob = viewModelScope.launch {
             val params = SearchPodcastsUseCase.Params(query.trim())
             interactor.searchPodcastsUseCase(params)
@@ -63,7 +63,7 @@ class SearchViewModel @Inject constructor(
 
     private fun onSearchPodcastsFailure(e: Throwable) {
         if (e !is CancellationException) {
-            _viewState.update { ViewState.Error }
+            updateViewState { ViewState.Error }
         }
     }
 
@@ -73,7 +73,7 @@ class SearchViewModel @Inject constructor(
 
     fun onImeSearch() {
         searchPodcasts()
-        sendEvent(ViewEvent.ClearFocusForSearchField)
+        sendViewEvent(ViewEvent.ClearFocusForSearchField)
     }
 
     fun onClearQuery() {
