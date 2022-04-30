@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- BottomNavBar -->
-    <string name="podcasts">Подкасты</string>
-    <string name="discover">Находки</string>
-    <string name="library">Библиотека</string>
-    <string name="profile">Профиль</string>
-
     <!-- Common -->
     <string name="podcast_cover">Обложка подкаста</string>
     <string name="subscribe">Подписаться</string>
@@ -16,6 +10,12 @@
     </string>
     <string name="try_again">Попробовать снова</string>
     <string name="clear_search_field">Очистить поле поиска</string>
+
+    <!-- BottomNavBar -->
+    <string name="podcasts">Подкасты</string>
+    <string name="discover">Находки</string>
+    <string name="library">Библиотека</string>
+    <string name="profile">Профиль</string>
 
     <!-- Discover -->
     <string name="search_for_podcasts">Поиск подкастов</string>

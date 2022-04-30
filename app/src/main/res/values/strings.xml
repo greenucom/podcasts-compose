@@ -1,11 +1,5 @@
 <resources>
 
-    <!-- BottomNavBar -->
-    <string name="podcasts">Podcasts</string>
-    <string name="discover">Discover</string>
-    <string name="library">Library</string>
-    <string name="profile">Profile</string>
-
     <!-- Common -->
     <string name="podcast_cover">Podcast cover</string>
     <string name="subscribe">Subscribe</string>
@@ -15,6 +9,12 @@
     </string>
     <string name="try_again">Try again</string>
     <string name="clear_search_field">Clear search field</string>
+
+    <!-- BottomNavBar -->
+    <string name="podcasts">Podcasts</string>
+    <string name="discover">Discover</string>
+    <string name="library">Library</string>
+    <string name="profile">Profile</string>
 
     <!-- Discover -->
     <string name="search_for_podcasts">Search for podcasts</string>
