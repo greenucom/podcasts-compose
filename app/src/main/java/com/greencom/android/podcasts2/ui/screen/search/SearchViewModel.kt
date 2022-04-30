@@ -80,6 +80,12 @@ class SearchViewModel @Inject constructor(
         _query.update { QueryDefaultValue }
     }
 
+    fun onPodcastClicked(podcast: Podcast) = viewModelScope.launch {
+        interactor.savePodcastUseCase(podcast)
+        val event = ViewEvent.ShowPodcast(podcast)
+        sendViewEvent(event)
+    }
+
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
         interactor.updatePodcastSubscriptionUseCase(podcast)
     }
@@ -98,6 +104,7 @@ class SearchViewModel @Inject constructor(
     sealed interface ViewEvent {
         object RequestFocusForSearchField : ViewEvent
         object ClearFocusForSearchField : ViewEvent
+        data class ShowPodcast(val podcast: Podcast) : ViewEvent
     }
 
     companion object {

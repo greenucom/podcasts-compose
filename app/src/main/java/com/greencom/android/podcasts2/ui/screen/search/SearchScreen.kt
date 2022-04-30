@@ -42,7 +42,9 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
 
-    val screenState = rememberSearchScreenState()
+    val screenState = rememberSearchScreenState(
+        onPodcastClicked = onPodcastClicked,
+    )
 
     SpecificScreenBehavior {
         ScreenBehavior(
@@ -91,7 +93,7 @@ fun SearchScreen(
                         ) { index, podcast ->
                             PodcastItem(
                                 podcast = podcast,
-                                onPodcastClicked = onPodcastClicked,
+                                onPodcastClicked = viewModel::onPodcastClicked,
                                 onSubscribedChanged = viewModel::onSubscribedChanged,
                             )
 

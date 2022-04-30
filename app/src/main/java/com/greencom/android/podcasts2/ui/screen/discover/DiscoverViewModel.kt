@@ -98,15 +98,16 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    fun onPodcastClicked(podcast: Podcast) {
-        val event = ViewEvent.ShowPodcast(podcast)
-        sendViewEvent(event)
-    }
-
     fun onSelectableCategoryClicked(category: Category) {
         viewModelScope.launch {
             interactor.toggleSelectableTrendingCategoryUseCase(category)
         }
+    }
+
+    fun onPodcastClicked(podcast: Podcast) = viewModelScope.launch {
+        interactor.savePodcastUseCase(podcast)
+        val event = ViewEvent.ShowPodcast(podcast)
+        sendViewEvent(event)
     }
 
     fun onSubscribedChanged(podcast: Podcast) = viewModelScope.launch {
