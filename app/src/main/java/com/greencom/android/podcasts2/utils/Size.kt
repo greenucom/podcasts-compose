@@ -246,6 +246,22 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     private val decimalFormatter: DecimalFormat
         get() = DecimalFormat("#.##")
 
+    fun toBitBasedString(): String = when {
+        isAtLeastTerabit -> inTerabitsFormattedWithUnit
+        isAtLeastGigabit -> inGigabitsFormattedWithUnit
+        isAtLeastMegabit -> inMegabitsFormattedWithUnit
+        isAtLeastKilobit -> inKilobitsFormattedWithUnit
+        else -> inBitsFormattedWithUnit
+    }
+
+    fun toByteBasedString(): String = when {
+        isAtLeastTerabyte -> inTerabytesFormattedWithUnit
+        isAtLeastGigabyte -> inGigabytesFormattedWithUnit
+        isAtLeastMegabyte -> inMegabytesFormattedWithUnit
+        isAtLeastKilobyte -> inKilobytesFormattedWithUnit
+        else -> inBytesFormattedWithUnit
+    }
+
     operator fun plus(size: Size): Size {
         val bits = bits + size.inBits
         return Size(bits)
@@ -292,6 +308,8 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     override fun compareTo(other: Size): Int {
         return this.bits.compareTo(other.bits)
     }
+
+    override fun toString(): String = toBitBasedString()
 
     companion object {
 
