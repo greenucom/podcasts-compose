@@ -216,6 +216,33 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
     val inWholeTebibytes: Long
         get() = bits / getBitsInUnit(SizeUnit.TEBIBYTES)
 
+    val isAtLeastKilobit: Boolean
+        get() = inWholeKilobits > 0
+
+    val isAtLeastMegabit: Boolean
+        get() = inWholeMegabits > 0
+
+    val isAtLeastGigabit: Boolean
+        get() = inWholeGigabits > 0
+
+    val isAtLeastTerabit: Boolean
+        get() = inWholeTerabits > 0
+
+    val isAtLeastByte: Boolean
+        get() = inWholeBytes > 0
+
+    val isAtLeastKilobyte: Boolean
+        get() = inWholeKilobytes > 0
+
+    val isAtLeastMegabyte: Boolean
+        get() = inWholeMegabytes > 0
+
+    val isAtLeastGigabyte: Boolean
+        get() = inWholeGigabytes > 0
+
+    val isAtLeastTerabyte: Boolean
+        get() = inWholeTerabytes > 0
+
     private val decimalFormatter: DecimalFormat
         get() = DecimalFormat("#.##")
 
