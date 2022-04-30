@@ -59,7 +59,7 @@ abstract class PodcastDao {
                 e.serial_number_episode, e.type, e.explicit, e.audio_url, e.audio_size_in_bytes,
                 e.audio_duration_in_milliseconds, e.chapters_url, e.image_url, e.podcast_id
         FROM Podcast p
-        JOIN Episode e ON e.podcast_id = p.id
+        LEFT JOIN Episode e ON e.podcast_id = p.id
         WHERE p.id = :id
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
