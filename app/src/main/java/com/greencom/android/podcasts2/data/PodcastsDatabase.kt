@@ -14,7 +14,7 @@ import com.greencom.android.podcasts2.data.podcast.local.PodcastEntityTemp
         PodcastEntityTemp::class,
         EpisodeEntity::class,
     ],
-    version = 5,
+    version = 8,
 )
 abstract class PodcastsDatabase : RoomDatabase() {
 

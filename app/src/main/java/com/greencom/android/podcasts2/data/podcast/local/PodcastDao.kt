@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Dao
 abstract class PodcastDao {
 
-    @Query("DELETE FROM podcasts_temp")
+    @Query("DELETE FROM PodcastTemp")
     protected abstract suspend fun clearTemp()
 
     @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
@@ -18,12 +18,12 @@ abstract class PodcastDao {
     protected abstract suspend fun insertToTemp(podcastEntities: List<PodcastEntity>)
 
     @Query("""
-        INSERT INTO podcasts (id, title, description, author, image_url, categories, is_subscribed)
+        INSERT INTO Podcast (id, title, description, author, image_url, categories, is_subscribed)
         SELECT tmp.id, tmp.title, tmp.description, tmp.author, tmp.image_url, tmp.categories, 
             tmp.is_subscribed
-        FROM podcasts_temp tmp
-        LEFT JOIN podcasts ON tmp.id = podcasts.id 
-        WHERE podcasts.id IS NULL
+        FROM PodcastTemp tmp
+        LEFT JOIN Podcast ON tmp.id = Podcast.id 
+        WHERE Podcast.id IS NULL
     """)
     protected abstract suspend fun mergeTemp()
 
@@ -49,14 +49,18 @@ abstract class PodcastDao {
     @Update
     protected abstract suspend fun update(podcastEntities: List<PodcastEntity>)
 
-    @Query("SELECT id FROM podcasts WHERE is_subscribed = 1")
+    @Query("SELECT id FROM Podcast WHERE is_subscribed = 1")
     abstract suspend fun getSubscriptionIds(): List<Long>
 
     @Query("""
-        SELECT id, title, description, author, image_url, categories, is_subscribed
-        FROM podcasts
-        LEFT JOIN episodes ON episodes.podcast_id = podcasts.id
-        WHERE id = :id
+        SELECT 
+            p.id, p.title, p.description, p.author, p.image_url, p.categories, p.is_subscribed,
+            e.id, e.title, e.description, e.date_unix, e.serial_number_season, 
+                e.serial_number_episode, e.type, e.explicit, e.audio_url, e.audio_size_in_bytes,
+                e.audio_duration_in_milliseconds, e.chapters_url, e.image_url, e.podcast_id
+        FROM Podcast p
+        JOIN Episode e ON e.podcast_id = p.id
+        WHERE p.id = :id
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
             Flow<Map<PodcastEntity, List<EpisodeEntity>>>

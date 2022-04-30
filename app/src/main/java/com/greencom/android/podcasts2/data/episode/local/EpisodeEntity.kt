@@ -4,12 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.greencom.android.podcasts2.data.episode.remote.dto.EpisodeTypeDto
 import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
 import kotlin.time.Duration.Companion.milliseconds
 
-@Entity(tableName = "episodes")
+@Entity(tableName = "Episode")
 data class EpisodeEntity(
 
     @PrimaryKey
@@ -29,7 +28,7 @@ data class EpisodeEntity(
     val serialNumber: SerialNumberEntity,
 
     @ColumnInfo(name = "type")
-    val type: String,
+    val type: Episode.Type,
 
     @ColumnInfo(name = "explicit")
     val explicit: Boolean,
@@ -60,7 +59,7 @@ data class EpisodeEntity(
         description = description,
         dateUnix = dateUnix,
         serialNumber = serialNumber.toSerialNumber(),
-        type = EpisodeTypeDto(type).toEpisodeType(),
+        type = type,
         explicit = explicit,
         audioUrl = audioUrl,
         audioSize = audioSizeInBytes.bytes,

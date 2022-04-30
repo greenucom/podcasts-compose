@@ -103,7 +103,7 @@ data class GetEpisodesItemDto(
             season = seasonNumber ?: SerialNumberEntity.MISSING_VALUE,
             episode = episodeNumber ?: SerialNumberEntity.MISSING_VALUE,
         ),
-        type = checkNotNull(type),
+        type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
         explicit = explicit?.toBoolean() ?: false,
         audioUrl = checkNotNull(audioUrl),
         audioSizeInBytes = checkNotNull(audioSizeInBytes),

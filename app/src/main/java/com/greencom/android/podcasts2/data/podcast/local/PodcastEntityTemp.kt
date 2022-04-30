@@ -7,7 +7,7 @@ import androidx.room.TypeConverters
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityDto
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
 
-@Entity(tableName = "podcasts_temp")
+@Entity(tableName = "PodcastTemp")
 @TypeConverters(CategoryEntityDtoListTypeConverter::class)
 data class PodcastEntityTemp(
 

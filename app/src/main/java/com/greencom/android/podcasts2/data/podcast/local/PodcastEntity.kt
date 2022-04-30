@@ -8,7 +8,7 @@ import com.greencom.android.podcasts2.data.category.local.CategoryEntityDto
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 
-@Entity(tableName = "podcasts")
+@Entity(tableName = "Podcast")
 @TypeConverters(CategoryEntityDtoListTypeConverter::class)
 data class PodcastEntity(
 
