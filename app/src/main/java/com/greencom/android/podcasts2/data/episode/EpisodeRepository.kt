@@ -14,7 +14,7 @@ class EpisodeRepository @Inject constructor(
             since = since,
             max = max,
         )
-        localDataSource.insert(entities)
+        localDataSource.saveEpisodes(entities)
     }
 
     suspend fun getEpisodeById(id: Long): Episode? {

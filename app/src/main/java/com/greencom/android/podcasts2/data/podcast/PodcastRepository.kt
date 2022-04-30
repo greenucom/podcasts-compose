@@ -19,7 +19,7 @@ class PodcastRepository @Inject constructor(
 
     val trendingPodcasts = combine(
         remoteDataSource.trendingPodcasts,
-        localDataSource.subscriptionIds,
+        localDataSource.podcastSubscriptionIds,
     ) { trendingPodcasts, subscriptionIds ->
         trendingPodcasts.map { podcast ->
             podcast.copy(isSubscribed = podcast.id in subscriptionIds)
@@ -28,7 +28,7 @@ class PodcastRepository @Inject constructor(
 
     val lastSearchPodcastsResult = combine(
         remoteDataSource.lastSearchPodcastsResult,
-        localDataSource.subscriptionIds,
+        localDataSource.podcastSubscriptionIds,
     ) { searchResult, subscriptionIds ->
         searchResult.map { podcast ->
             podcast.copy(isSubscribed = podcast.id in subscriptionIds)
@@ -53,8 +53,8 @@ class PodcastRepository @Inject constructor(
         remoteDataSource.searchPodcasts(query)
     }
 
-    suspend fun insertPodcast(podcast: Podcast) {
-        localDataSource.insert(podcast)
+    suspend fun savePodcast(podcast: Podcast) {
+        localDataSource.savePodcast(podcast)
     }
 
     fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast?, List<Episode>>> {

@@ -13,7 +13,7 @@ class SavePodcastUseCase @Inject constructor(
 ) : UseCase<Podcast, Unit>(dispatcher) {
 
     override suspend fun execute(params: Podcast) {
-        podcastRepository.insertPodcast(params)
+        podcastRepository.savePodcast(params)
     }
 
 }

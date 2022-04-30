@@ -50,7 +50,7 @@ abstract class PodcastDao {
     protected abstract suspend fun update(podcastEntities: List<PodcastEntity>)
 
     @Query("SELECT id FROM Podcast WHERE is_subscribed = 1")
-    abstract suspend fun getSubscriptionIds(): List<Long>
+    abstract suspend fun getPodcastSubscriptionIds(): List<Long>
 
     @Query("""
         SELECT 

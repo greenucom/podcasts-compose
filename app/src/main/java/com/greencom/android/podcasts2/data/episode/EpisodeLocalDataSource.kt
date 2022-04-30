@@ -9,7 +9,7 @@ class EpisodeLocalDataSource @Inject constructor(
     private val dao: EpisodeDao,
 ) {
 
-    suspend fun insert(episodeEntities: List<EpisodeEntity>) {
+    suspend fun saveEpisodes(episodeEntities: List<EpisodeEntity>) {
         dao.insert(episodeEntities)
     }
 

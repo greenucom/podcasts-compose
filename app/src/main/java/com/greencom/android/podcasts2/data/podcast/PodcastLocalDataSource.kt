@@ -18,32 +18,32 @@ class PodcastLocalDataSource @Inject constructor(
     private val dao: PodcastDao,
 ) {
 
-    private val _subscriptionIds = MutableStateFlow(setOf<Long>())
-    val subscriptionIds = _subscriptionIds.asStateFlow()
+    private val _podcastSubscriptionIds = MutableStateFlow(setOf<Long>())
+    val podcastSubscriptionIds = _podcastSubscriptionIds.asStateFlow()
 
     init {
-        loadSubscriptionIds()
+        loadPodcastSubscriptionIds()
     }
 
-    private fun loadSubscriptionIds() {
+    private fun loadPodcastSubscriptionIds() {
         applicationScope.launch(Dispatchers.IO) {
-            val ids = dao.getSubscriptionIds().toSet()
-            _subscriptionIds.update { ids }
+            val ids = dao.getPodcastSubscriptionIds().toSet()
+            _podcastSubscriptionIds.update { ids }
         }
     }
 
-    private fun updateSubscriptionIds(podcast: Podcast) {
+    private fun updatePodcastSubscriptionIds(podcast: Podcast) {
         if (podcast.isSubscribed) {
-            _subscriptionIds.update { it + podcast.id }
+            _podcastSubscriptionIds.update { it + podcast.id }
         } else {
-            _subscriptionIds.update { it - podcast.id }
+            _podcastSubscriptionIds.update { it - podcast.id }
         }
     }
 
-    suspend fun insert(podcast: Podcast) {
+    suspend fun savePodcast(podcast: Podcast) {
         val entity = PodcastEntity.fromPodcast(podcast)
         dao.insert(entity)
-        updateSubscriptionIds(podcast)
+        updatePodcastSubscriptionIds(podcast)
     }
 
     fun getPodcastWithEpisodesByIdFlow(id: Long): Flow<Map<Podcast?, List<Episode>>> {
