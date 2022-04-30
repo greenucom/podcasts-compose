@@ -1,191 +1,369 @@
 package com.greencom.android.podcasts2.utils
 
+import java.math.BigInteger
 import java.text.DecimalFormat
 
-/**
- * Value class that based on **64bit value of size in bytes**, hence the max value that can be
- * correctly represented by this class is ~9200 petabytes.
- */
 @JvmInline
-value class Size private constructor(private val bytes: Long) : Comparable<Size> {
+value class Size private constructor(private val bits: Long) : Comparable<Size> {
 
-    val inBytes: Long
-        get() = bytes
+    val inBits: Long
+        get() = bits
+
+    val inKilobits: Float
+        get() = bits / getBitsInUnit(SizeUnit.KILOBITS).toFloat()
+
+    val inMegabits: Float
+        get() = bits / getBitsInUnit(SizeUnit.MEGABITS).toFloat()
+
+    val inGigabits: Float
+        get() = bits / getBitsInUnit(SizeUnit.GIGABITS).toFloat()
+
+    val inTerabits: Float
+        get() = bits / getBitsInUnit(SizeUnit.TERABITS).toFloat()
+
+    val inKibibits: Float
+        get() = bits / getBitsInUnit(SizeUnit.KIBIBITS).toFloat()
+
+    val inMebibits: Float
+        get() = bits / getBitsInUnit(SizeUnit.MEBIBITS).toFloat()
+
+    val inGibibits: Float
+        get() = bits / getBitsInUnit(SizeUnit.GIBIBITS).toFloat()
+
+    val inTebibits: Float
+        get() = bits / getBitsInUnit(SizeUnit.TEBIBITS).toFloat()
+
+    val inBytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.BYTES).toFloat()
 
     val inKilobytes: Float
-        get() = bytes / BYTES_IN_KILOBYTE.toFloat()
+        get() = bits / getBitsInUnit(SizeUnit.KILOBYTES).toFloat()
 
     val inMegabytes: Float
-        get() = bytes / BYTES_IN_MEGABYTE.toFloat()
+        get() = bits / getBitsInUnit(SizeUnit.MEGABYTES).toFloat()
 
     val inGigabytes: Float
-        get() = bytes / BYTES_IN_GIGABYTE.toFloat()
+        get() = bits / getBitsInUnit(SizeUnit.GIGABYTES).toFloat()
 
-    /** [inKilobytes] value in #.## format */
+    val inTerabytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.TERABYTES).toFloat()
+
+    val inKibibytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.KIBIBYTES).toFloat()
+
+    val inMebibytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.MEBIBYTES).toFloat()
+
+    val inGibibytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.GIBIBYTES).toFloat()
+
+    val inTebibytes: Float
+        get() = bits / getBitsInUnit(SizeUnit.TEBIBYTES).toFloat()
+
+    val inKilobitsFormatted: String
+        get() = decimalFormatter.format(inKilobits)
+
+    val inMegabitsFormatted: String
+        get() = decimalFormatter.format(inMegabits)
+
+    val inGigabitsFormatted: String
+        get() = decimalFormatter.format(inGigabits)
+
+    val inTerabitsFormatted: String
+        get() = decimalFormatter.format(inTerabits)
+
+    val inKibibitsFormatted: String
+        get() = decimalFormatter.format(inKibibits)
+
+    val inMebibitsFormatted: String
+        get() = decimalFormatter.format(inMebibits)
+
+    val inGibibitsFormatted: String
+        get() = decimalFormatter.format(inGibibits)
+
+    val inTebibitsFormatted: String
+        get() = decimalFormatter.format(inTebibits)
+
+    val inBytesFormatted: String
+        get() = decimalFormatter.format(inBytes)
+
     val inKilobytesFormatted: String
         get() = decimalFormatter.format(inKilobytes)
 
-    /** [inMegabytes] value in #.## format */
     val inMegabytesFormatted: String
         get() = decimalFormatter.format(inMegabytes)
 
-    /** [inGigabytes] value in #.## format */
     val inGigabytesFormatted: String
         get() = decimalFormatter.format(inGigabytes)
 
+    val inTerabytesFormatted: String
+        get() = decimalFormatter.format(inTerabytes)
+
+    val inKibibytesFormatted: String
+        get() = decimalFormatter.format(inKibibytes)
+
+    val inMebibytesFormatted: String
+        get() = decimalFormatter.format(inMebibytes)
+
+    val inGibibytesFormatted: String
+        get() = decimalFormatter.format(inGibibytes)
+
+    val inTebibytesFormatted: String
+        get() = decimalFormatter.format(inTebibytes)
+
+    val inWholeKilobits: Long
+        get() = bits / getBitsInUnit(SizeUnit.KILOBITS)
+
+    val inWholeMegabits: Long
+        get() = bits / getBitsInUnit(SizeUnit.MEGABITS)
+
+    val inWholeGigabits: Long
+        get() = bits / getBitsInUnit(SizeUnit.GIGABITS)
+
+    val inWholeTerabits: Long
+        get() = bits / getBitsInUnit(SizeUnit.TERABITS)
+
+    val inWholeKibibits: Long
+        get() = bits / getBitsInUnit(SizeUnit.KIBIBITS)
+
+    val inWholeMebibits: Long
+        get() = bits / getBitsInUnit(SizeUnit.MEBIBITS)
+
+    val inWholeGibibits: Long
+        get() = bits / getBitsInUnit(SizeUnit.GIBIBITS)
+
+    val inWholeTebibits: Long
+        get() = bits / getBitsInUnit(SizeUnit.TEBIBITS)
+
+    val inWholeBytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.BYTES)
+
     val inWholeKilobytes: Long
-        get() = bytes / BYTES_IN_KILOBYTE
+        get() = bits / getBitsInUnit(SizeUnit.KILOBYTES)
 
     val inWholeMegabytes: Long
-        get() = bytes / BYTES_IN_MEGABYTE
+        get() = bits / getBitsInUnit(SizeUnit.MEGABYTES)
 
     val inWholeGigabytes: Long
-        get() = bytes / BYTES_IN_GIGABYTE
+        get() = bits / getBitsInUnit(SizeUnit.GIGABYTES)
 
-    val isAtLeastKilobyte: Boolean
-        get() = inWholeKilobytes > 0
+    val inWholeTerabytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.TERABYTES)
 
-    val isAtLeastMegabyte: Boolean
-        get() = inWholeMegabytes > 0
+    val inWholeKibibytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.KIBIBYTES)
 
-    val isAtLeastGigabyte: Boolean
-        get() = inWholeGigabytes > 0
+    val inWholeMebibytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.MEBIBYTES)
 
-    operator fun plus(size: Size): Size {
-        val newBytes = bytes + size.bytes
-        return Size(newBytes)
-    }
+    val inWholeGibibytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.GIBIBYTES)
 
-    operator fun minus(size: Size): Size {
-        val newBytes = bytes - size.bytes
-        check(newBytes >= 0) { "Size can not be negative" }
-        return Size(newBytes)
-    }
-
-    operator fun times(times: Int): Size {
-        val newBytes = bytes * times
-        return Size(newBytes)
-    }
-
-    fun toComponents(
-        action: (megabytes: Long, kilobytes: Int, bytes: Int) -> Unit,
-    ) {
-        var remainingBytes = bytes
-
-        val megabytes = remainingBytes / BYTES_IN_MEGABYTE
-        remainingBytes -= megabytes * BYTES_IN_MEGABYTE
-
-        val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
-        remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
-
-        action(megabytes, kilobytes.toInt(), remainingBytes.toInt())
-    }
-
-    fun toComponents(
-        action: (gigabytes: Long, megabytes: Int, kilobytes: Int, bytes: Int) -> Unit,
-    ) {
-        var remainingBytes = bytes
-
-        val gigabytes = remainingBytes / BYTES_IN_GIGABYTE
-        remainingBytes -= gigabytes * BYTES_IN_GIGABYTE
-
-        val megabytes = remainingBytes / BYTES_IN_MEGABYTE
-        remainingBytes -= megabytes * BYTES_IN_MEGABYTE
-
-        val kilobytes = remainingBytes / BYTES_IN_KILOBYTE
-        remainingBytes -= kilobytes * BYTES_IN_KILOBYTE
-
-        action(gigabytes, megabytes.toInt(), kilobytes.toInt(), remainingBytes.toInt())
-    }
-
-    override fun compareTo(other: Size): Int {
-        return bytes.compareTo(other.bytes)
-    }
-
-    override fun toString(): String = when {
-        isAtLeastGigabyte -> formattedGigabytesWithUnit
-        isAtLeastMegabyte -> formattedMegabytesWithUnit
-        isAtLeastKilobyte -> formattedKilobytesWithUnit
-        else -> formattedBytesWithUnit
-    }
-
-    private val formattedGigabytesWithUnit: String
-        get() = format(inGigabytes, SizeUnit.GIGABYTES)
-
-    private val formattedMegabytesWithUnit: String
-        get() = format(inMegabytes, SizeUnit.MEGABYTES)
-
-    private val formattedKilobytesWithUnit: String
-        get() = format(inKilobytes, SizeUnit.KILOBYTES)
-
-    private val formattedBytesWithUnit: String
-        get() = format(inBytes.toFloat(), SizeUnit.BYTES)
-
-    private fun format(value: Float, unit: SizeUnit): String {
-        val valueString = decimalFormatter.format(value)
-        val unitString = when (unit) {
-            SizeUnit.BYTES -> STRING_BYTE
-            SizeUnit.KILOBYTES -> STRING_KILOBYTE
-            SizeUnit.MEGABYTES -> STRING_MEGABYTE
-            SizeUnit.GIGABYTES -> STRING_GIGABYTE
-        }
-        return STRING_FORMAT.format(valueString, unitString)
-    }
+    val inWholeTebibytes: Long
+        get() = bits / getBitsInUnit(SizeUnit.TEBIBYTES)
 
     private val decimalFormatter: DecimalFormat
         get() = DecimalFormat("#.##")
 
+    operator fun plus(size: Size): Size {
+        val bits = bits + size.inBits
+        return Size(bits)
+    }
+
+    operator fun minus(size: Size): Size {
+        val bits = bits - size.inBits
+        check(bits >= 0) { "Size can not be negative: $bits bits" }
+        return Size(bits)
+    }
+
+    operator fun times(times: Int): Size {
+        val bits = bits * times
+        return Size(bits)
+    }
+
+    override fun compareTo(other: Size): Int {
+        return this.bits.compareTo(other.bits)
+    }
+
     companion object {
 
-        val Int.bytes: Size get() = toSize(SizeUnit.BYTES)
+        val Int.bits: Size get() = toSize(SizeUnit.BITS)
+        val Long.bits: Size get() = toSize(SizeUnit.BITS)
+        val Float.bits: Size get() = toSize(SizeUnit.BITS)
+        val Double.bits: Size get() = toSize(SizeUnit.BITS)
 
+        val Int.kilobits: Size get() = toSize(SizeUnit.KILOBITS)
+        val Long.kilobits: Size get() = toSize(SizeUnit.KILOBITS)
+        val Float.kilobits: Size get() = toSize(SizeUnit.KILOBITS)
+        val Double.kilobits: Size get() = toSize(SizeUnit.KILOBITS)
+
+        val Int.megabits: Size get() = toSize(SizeUnit.MEGABITS)
+        val Long.megabits: Size get() = toSize(SizeUnit.MEGABITS)
+        val Float.megabits: Size get() = toSize(SizeUnit.MEGABITS)
+        val Double.megabits: Size get() = toSize(SizeUnit.MEGABITS)
+
+        val Int.gigabits: Size get() = toSize(SizeUnit.GIGABITS)
+        val Long.gigabits: Size get() = toSize(SizeUnit.GIGABITS)
+        val Float.gigabits: Size get() = toSize(SizeUnit.GIGABITS)
+        val Double.gigabits: Size get() = toSize(SizeUnit.GIGABITS)
+
+        val Int.terabits: Size get() = toSize(SizeUnit.TERABITS)
+        val Long.terabits: Size get() = toSize(SizeUnit.TERABITS)
+        val Float.terabits: Size get() = toSize(SizeUnit.TERABITS)
+        val Double.terabits: Size get() = toSize(SizeUnit.TERABITS)
+
+        val Int.kibibits: Size get() = toSize(SizeUnit.KIBIBITS)
+        val Long.kibibits: Size get() = toSize(SizeUnit.KIBIBITS)
+        val Float.kibibits: Size get() = toSize(SizeUnit.KIBIBITS)
+        val Double.kibibits: Size get() = toSize(SizeUnit.KIBIBITS)
+
+        val Int.mebibits: Size get() = toSize(SizeUnit.MEBIBITS)
+        val Long.mebibits: Size get() = toSize(SizeUnit.MEBIBITS)
+        val Float.mebibits: Size get() = toSize(SizeUnit.MEBIBITS)
+        val Double.mebibits: Size get() = toSize(SizeUnit.MEBIBITS)
+
+        val Int.gibibits: Size get() = toSize(SizeUnit.GIBIBITS)
+        val Long.gibibits: Size get() = toSize(SizeUnit.GIBIBITS)
+        val Float.gibibits: Size get() = toSize(SizeUnit.GIBIBITS)
+        val Double.gibibits: Size get() = toSize(SizeUnit.GIBIBITS)
+
+        val Int.tebibits: Size get() = toSize(SizeUnit.TEBIBITS)
+        val Long.tebibits: Size get() = toSize(SizeUnit.TEBIBITS)
+        val Float.tebibits: Size get() = toSize(SizeUnit.TEBIBITS)
+        val Double.tebibits: Size get() = toSize(SizeUnit.TEBIBITS)
+
+        val Int.bytes: Size get() = toSize(SizeUnit.BYTES)
         val Long.bytes: Size get() = toSize(SizeUnit.BYTES)
+        val Float.bytes: Size get() = toSize(SizeUnit.BYTES)
+        val Double.bytes: Size get() = toSize(SizeUnit.BYTES)
 
         val Int.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
-
         val Long.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
+        val Float.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
+        val Double.kilobytes: Size get() = toSize(SizeUnit.KILOBYTES)
 
         val Int.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
-
         val Long.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
+        val Float.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
+        val Double.megabytes: Size get() = toSize(SizeUnit.MEGABYTES)
 
         val Int.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
-
         val Long.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
+        val Float.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
+        val Double.gigabytes: Size get() = toSize(SizeUnit.GIGABYTES)
 
-        private fun Int.toSize(unit: SizeUnit): Size = (this.toLong()).toSize(unit)
+        val Int.terabytes: Size get() = toSize(SizeUnit.TERABYTES)
+        val Long.terabytes: Size get() = toSize(SizeUnit.TERABYTES)
+        val Float.terabytes: Size get() = toSize(SizeUnit.TERABYTES)
+        val Double.terabytes: Size get() = toSize(SizeUnit.TERABYTES)
+
+        val Int.kibibytes: Size get() = toSize(SizeUnit.KIBIBYTES)
+        val Long.kibibytes: Size get() = toSize(SizeUnit.KIBIBYTES)
+        val Float.kibibytes: Size get() = toSize(SizeUnit.KIBIBYTES)
+        val Double.kibibytes: Size get() = toSize(SizeUnit.KIBIBYTES)
+
+        val Int.mebibytes: Size get() = toSize(SizeUnit.MEBIBYTES)
+        val Long.mebibytes: Size get() = toSize(SizeUnit.MEBIBYTES)
+        val Float.mebibytes: Size get() = toSize(SizeUnit.MEBIBYTES)
+        val Double.mebibytes: Size get() = toSize(SizeUnit.MEBIBYTES)
+
+        val Int.gibibytes: Size get() = toSize(SizeUnit.GIBIBYTES)
+        val Long.gibibytes: Size get() = toSize(SizeUnit.GIBIBYTES)
+        val Float.gibibytes: Size get() = toSize(SizeUnit.GIBIBYTES)
+        val Double.gibibytes: Size get() = toSize(SizeUnit.GIBIBYTES)
+
+        val Int.tebibytes: Size get() = toSize(SizeUnit.TEBIBYTES)
+        val Long.tebibytes: Size get() = toSize(SizeUnit.TEBIBYTES)
+        val Float.tebibytes: Size get() = toSize(SizeUnit.TEBIBYTES)
+        val Double.tebibytes: Size get() = toSize(SizeUnit.TEBIBYTES)
+
+        private fun Int.toSize(unit: SizeUnit): Size = toLong().toSize(unit)
 
         private fun Long.toSize(unit: SizeUnit): Size {
-            val bytesInUnit = bytesInUnit(unit)
-            val bytes = this * bytesInUnit
-            return Size(bytes)
+            val bitsInUnit = getBitsInUnit(unit)
+            val bits = this * bitsInUnit
+            return Size(bits)
         }
 
-        private fun bytesInUnit(unit: SizeUnit): Long = when (unit) {
-            SizeUnit.BYTES -> ONE_BYTE
-            SizeUnit.KILOBYTES -> BYTES_IN_KILOBYTE
-            SizeUnit.MEGABYTES -> BYTES_IN_MEGABYTE
-            SizeUnit.GIGABYTES -> BYTES_IN_GIGABYTE
+        private fun Float.toSize(unit: SizeUnit): Size = toDouble().toSize(unit)
+
+        private fun Double.toSize(unit: SizeUnit): Size {
+            val bitsInUnit = getBitsInUnit(unit)
+            val bits = (this * bitsInUnit).toLong()
+            return Size(bits)
         }
 
-        private const val ONE_BYTE = 1L
-        private const val BYTES_IN_KILOBYTE = 1_000L
-        private const val BYTES_IN_MEGABYTE = 1_000_000L
-        private const val BYTES_IN_GIGABYTE = 1_000_000_000L
+        private fun getBitsInUnit(unit: SizeUnit): Long {
+            val unitPowerBase = getUnitPowerBase(unit)
+            val unitPrefixPower = getUnitPrefixPower(unit)
+            val unitConversionFactor = getUnitConversionFactor(unit)
 
-        private const val STRING_BYTE = "B"
-        private const val STRING_KILOBYTE = "kB"
-        private const val STRING_MEGABYTE = "MB"
-        private const val STRING_GIGABYTE = "GB"
-        private const val STRING_FORMAT = "%1\$s %2\$s"
+            return BigInteger.valueOf(unitPowerBase).pow(unitPrefixPower).toLong() *
+                    unitConversionFactor
+        }
+
+        private fun getUnitPowerBase(unit: SizeUnit): Long = when (unit) {
+            SizeUnit.KIBIBITS, SizeUnit.KIBIBYTES, SizeUnit.MEBIBITS, SizeUnit.MEBIBYTES,
+            SizeUnit.GIBIBITS, SizeUnit.GIBIBYTES, SizeUnit.TEBIBITS, SizeUnit.TEBIBYTES ->
+                POWER_BASE_BINARY
+
+            else -> POWER_BASE_DECIMAL
+        }
+
+        private fun getUnitPrefixPower(unit: SizeUnit): Int = when (unit) {
+            SizeUnit.BITS, SizeUnit.BYTES -> POWER_NONE
+            SizeUnit.KILOBITS, SizeUnit.KIBIBITS, SizeUnit.KILOBYTES, SizeUnit.KIBIBYTES -> POWER_KILO
+            SizeUnit.MEGABITS, SizeUnit.MEBIBITS, SizeUnit.MEGABYTES, SizeUnit.MEBIBYTES -> POWER_MEGA
+            SizeUnit.GIGABITS, SizeUnit.GIBIBITS, SizeUnit.GIGABYTES, SizeUnit.GIBIBYTES -> POWER_GIGA
+            SizeUnit.TERABITS, SizeUnit.TEBIBITS, SizeUnit.TERABYTES, SizeUnit.TEBIBYTES -> POWER_TERA
+        }
+
+        private fun getUnitConversionFactor(unit: SizeUnit): Int = when (unit) {
+            SizeUnit.BITS,
+            SizeUnit.KILOBITS, SizeUnit.KIBIBITS,
+            SizeUnit.MEGABITS, SizeUnit.MEBIBITS,
+            SizeUnit.GIGABITS, SizeUnit.GIBIBITS,
+            SizeUnit.TERABITS, SizeUnit.TEBIBITS -> BIT
+
+            else -> BITS_IN_BYTE
+        }
+
+        private const val POWER_BASE_DECIMAL = 1_000L
+        private const val POWER_BASE_BINARY = 1_024L
+
+        private const val POWER_NONE = 0
+        private const val POWER_KILO = 1
+        private const val POWER_MEGA = 2
+        private const val POWER_GIGA = 3
+        private const val POWER_TERA = 4
+
+        private const val BIT = 1
+        private const val BITS_IN_BYTE = 8
 
     }
 
 }
 
-private enum class SizeUnit {
+enum class SizeUnit {
+    BITS,
+    KILOBITS,
+    MEGABITS,
+    GIGABITS,
+    TERABITS,
+
+    KIBIBITS,
+    MEBIBITS,
+    GIBIBITS,
+    TEBIBITS,
+
     BYTES,
     KILOBYTES,
     MEGABYTES,
     GIGABYTES,
+    TERABYTES,
+
+    KIBIBYTES,
+    MEBIBYTES,
+    GIBIBYTES,
+    TEBIBYTES,
 }
