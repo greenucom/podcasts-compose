@@ -98,6 +98,11 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
+    fun onPodcastClicked(podcast: Podcast) {
+        val event = ViewEvent.ShowPodcast(podcast)
+        sendViewEvent(event)
+    }
+
     fun onSelectableCategoryClicked(category: Category) {
         viewModelScope.launch {
             interactor.toggleSelectableTrendingCategoryUseCase(category)
@@ -132,7 +137,9 @@ class DiscoverViewModel @Inject constructor(
         object Error : TrendingPodcastsState
     }
 
-    sealed interface ViewEvent
+    sealed interface ViewEvent {
+        data class ShowPodcast(val podcast: Podcast) : ViewEvent
+    }
 
     companion object {
         private const val TrendingPodcastCountMaxValue = 40

@@ -15,7 +15,7 @@ import com.greencom.android.podcasts2.ui.screen.search.SearchScreen
 fun NavGraphBuilder.discoverNavGraph(
     navController: NavHostController,
 ) {
-    val onPodcastClicked = { podcast: Podcast ->
+    val navigateToPodcastScreen = { podcast: Podcast ->
         val route = Screen.Podcast.createRoute(podcast.id)
         navController.navigate(route)
     }
@@ -27,13 +27,13 @@ fun NavGraphBuilder.discoverNavGraph(
 
         composable(Screen.Discover.route) {
             DiscoverScreen(
-                onPodcastClicked = onPodcastClicked,
+                onPodcastClicked = navigateToPodcastScreen,
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
             )
         }
 
         composable(Screen.Search.route) {
-            SearchScreen(onPodcastClicked = onPodcastClicked)
+            SearchScreen(onPodcastClicked = navigateToPodcastScreen)
         }
 
         composable(
