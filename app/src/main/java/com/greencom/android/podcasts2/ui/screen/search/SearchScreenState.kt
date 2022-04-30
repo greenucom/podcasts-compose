@@ -30,7 +30,7 @@ class SearchScreenState(
 
     private var onScrollJob: Job? = null
 
-    fun handleEvent(event: SearchViewModel.ViewEvent) {
+    fun handleViewEvent(event: SearchViewModel.ViewEvent) {
         when (event) {
             SearchViewModel.ViewEvent.RequestFocusForSearchField -> {
                 searchFieldFocusRequester.requestFocus()

@@ -53,8 +53,8 @@ fun SearchScreen(
     val query by viewModel.query.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.viewEvents.collect { event ->
-            screenState.handleEvent(event)
+        viewModel.viewEvents.collect {
+            screenState.handleViewEvent(it)
         }
     }
 
