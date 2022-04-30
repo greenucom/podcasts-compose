@@ -61,6 +61,7 @@ abstract class PodcastDao {
         FROM Podcast p
         LEFT JOIN Episode e ON e.podcast_id = p.id
         WHERE p.id = :id
+        ORDER BY e.date_unix DESC
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
             Flow<Map<PodcastEntity?, List<EpisodeEntity>>>
