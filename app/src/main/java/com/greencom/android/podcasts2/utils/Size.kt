@@ -12,6 +12,10 @@ import java.text.DecimalFormat
 @JvmInline
 value class Size private constructor(private val bits: Long) : Comparable<Size> {
 
+    init {
+        check(bits >= 0) { "Size can not be negative: $bits bits" }
+    }
+
     val inBits: Long
         get() = bits
 
@@ -318,7 +322,6 @@ value class Size private constructor(private val bits: Long) : Comparable<Size> 
 
     operator fun minus(size: Size): Size {
         val bits = bits - size.inBits
-        check(bits >= 0) { "Size can not be negative: $bits bits" }
         return Size(bits)
     }
 
