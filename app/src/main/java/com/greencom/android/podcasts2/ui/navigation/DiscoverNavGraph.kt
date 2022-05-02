@@ -15,6 +15,10 @@ import com.greencom.android.podcasts2.ui.screen.search.SearchScreen
 fun NavGraphBuilder.discoverNavGraph(
     navController: NavHostController,
 ) {
+    val navigateUp: () -> Unit = {
+        navController.navigateUp()
+    }
+
     val navigateToPodcastScreen = { podcast: Podcast ->
         val route = Screen.Podcast.createRoute(podcast.id)
         navController.navigate(route)
@@ -45,6 +49,7 @@ fun NavGraphBuilder.discoverNavGraph(
             podcastViewModel.setParameters(podcastId)
 
             PodcastScreen(
+                onBackClicked = navigateUp,
                 viewModel = podcastViewModel,
             )
         }

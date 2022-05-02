@@ -9,6 +9,7 @@
     </string>
     <string name="try_again">Try again</string>
     <string name="clear_search_field">Clear search field</string>
+    <string name="go_back">Go back</string>
 
     <!-- BottomNavBar -->
     <string name="podcasts">Podcasts</string>
