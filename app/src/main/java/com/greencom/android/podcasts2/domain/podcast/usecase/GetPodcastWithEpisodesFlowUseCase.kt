@@ -13,11 +13,19 @@ import javax.inject.Inject
 class GetPodcastWithEpisodesFlowUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val podcastRepository: PodcastRepository,
-) : FlowUseCase<GetPodcastWithEpisodesFlowUseCase.Params, Map<Podcast?, List<Episode>>>(dispatcher) {
+) : FlowUseCase<GetPodcastWithEpisodesFlowUseCase.Params, Pair<Podcast?, List<Episode>>>(dispatcher) {
 
-    override fun execute(params: Params): Flow<Result<Map<Podcast?, List<Episode>>>> {
+    override fun execute(params: Params): Flow<Result<Pair<Podcast?, List<Episode>>>> {
         return podcastRepository.getPodcastWithEpisodesByIdFlow(params.podcastId)
-            .map { Result.success(it) }
+            .map { map ->
+                val entries = map.entries
+                check(entries.size == 1) {
+                    "More than one podcast with episodes was retrieved for the given id"
+                }
+
+                val pairPodcastWithEpisodes = entries.first().toPair()
+                Result.success(pairPodcastWithEpisodes)
+            }
     }
 
     data class Params(val podcastId: Long)

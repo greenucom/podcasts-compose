@@ -5,6 +5,8 @@ import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,6 +31,8 @@ fun PodcastScreen(
         )
     }
 
+    val viewState by viewModel.viewState.collectAsState()
+
     BackdropScaffold(
         modifier = modifier,
         scaffoldState = screenState.backdropScaffoldState,
@@ -36,10 +40,10 @@ fun PodcastScreen(
             TopAppBarCustomWithBackButton(onBackClicked = onBackClicked)
         },
         backLayerContent = {
-            Text(modifier = Modifier.padding(16.dp), text = "Back layer")
+            Text(modifier = Modifier.padding(16.dp), text = "Podcast header")
         },
         frontLayerContent = {
-            Text(modifier = Modifier.padding(16.dp), text = "Front layer")
+            Text(modifier = Modifier.padding(16.dp), text = "Episode list")
         },
     )
 
