@@ -1,6 +1,5 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
@@ -18,7 +17,6 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverTopBa
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastsSection
 import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodcastsSection
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DiscoverScreen(
     onPodcastClicked: (Podcast) -> Unit,
