@@ -18,12 +18,13 @@ abstract class PodcastDao {
     protected abstract suspend fun insertToTemp(podcastEntities: List<PodcastEntity>)
 
     @Query("""
-        INSERT INTO Podcast (id, title, description, author, image_url, categories, is_subscribed)
-        SELECT tmp.id, tmp.title, tmp.description, tmp.author, tmp.image_url, tmp.categories, 
-            tmp.is_subscribed
+        INSERT INTO Podcast (podcast_id, podcast_title, podcast_description, podcast_author, 
+            podcast_image_url, podcast_categories, podcast_is_subscribed)
+        SELECT tmp.podcast_id, tmp.podcast_title, tmp.podcast_description, tmp.podcast_author, 
+            tmp.podcast_image_url, tmp.podcast_categories, tmp.podcast_is_subscribed
         FROM PodcastTemp tmp
-        LEFT JOIN Podcast ON tmp.id = Podcast.id 
-        WHERE Podcast.id IS NULL
+        LEFT JOIN Podcast ON tmp.podcast_id = Podcast.podcast_id 
+        WHERE Podcast.podcast_id IS NULL
     """)
     protected abstract suspend fun mergeTemp()
 
@@ -49,19 +50,22 @@ abstract class PodcastDao {
     @Update
     protected abstract suspend fun update(podcastEntities: List<PodcastEntity>)
 
-    @Query("SELECT id FROM Podcast WHERE is_subscribed = 1")
+    @Query("SELECT podcast_id FROM Podcast WHERE podcast_is_subscribed = 1")
     abstract suspend fun getPodcastSubscriptionIds(): List<Long>
 
     @Query("""
         SELECT 
-            p.id, p.title, p.description, p.author, p.image_url, p.categories, p.is_subscribed,
-            e.id, e.title, e.description, e.date_unix, e.serial_number, e.type, e.explicit, 
-                e.audio_url, e.audio_size_in_bytes, e.audio_duration_in_milliseconds, 
-                e.chapters_url, e.image_url, e.podcast_id
+            p.podcast_id, p.podcast_title, p.podcast_description, p.podcast_author, 
+                p.podcast_image_url, p.podcast_categories, p.podcast_is_subscribed,
+            e.episode_id, e.episode_title, e.episode_description, e.episode_date_unix, 
+                e.episode_serial_number, e.episode_type, e.episode_explicit, 
+                e.episode_audio_url, e.episode_audio_size_in_bytes, 
+                e.episode_audio_duration_in_milliseconds, e.episode_chapters_url, 
+                e.episode_image_url, e.episode_podcast_id
         FROM Podcast p
-        LEFT JOIN Episode e ON p.id = e.podcast_id
-        WHERE p.id = :id
-        ORDER BY e.date_unix DESC
+        LEFT JOIN Episode e ON p.podcast_id = e.episode_podcast_id
+        WHERE p.podcast_id = :id
+        ORDER BY e.episode_date_unix DESC
     """)
     protected abstract fun getPodcastWithEpisodesByIdFlowRaw(id: Long):
             Flow<Map<PodcastEntity?, List<EpisodeEntity>>>

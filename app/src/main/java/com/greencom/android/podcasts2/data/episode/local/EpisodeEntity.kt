@@ -13,43 +13,43 @@ import kotlin.time.Duration.Companion.milliseconds
 data class EpisodeEntity(
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "episode_id")
     val id: Long,
 
-    @ColumnInfo(name = "title")
+    @ColumnInfo(name = "episode_title")
     val title: String,
 
-    @ColumnInfo(name = "description")
+    @ColumnInfo(name = "episode_description")
     val description: String,
 
-    @ColumnInfo(name = "date_unix")
+    @ColumnInfo(name = "episode_date_unix")
     val dateUnix: Long,
 
-    @ColumnInfo(name = "serial_number")
+    @ColumnInfo(name = "episode_serial_number")
     val serialNumber: SerialNumberDto,
 
-    @ColumnInfo(name = "type")
+    @ColumnInfo(name = "episode_type")
     val type: Episode.Type,
 
-    @ColumnInfo(name = "explicit")
+    @ColumnInfo(name = "episode_explicit")
     val explicit: Boolean,
 
-    @ColumnInfo(name = "audio_url")
+    @ColumnInfo(name = "episode_audio_url")
     val audioUrl: String,
 
-    @ColumnInfo(name = "audio_size_in_bytes")
+    @ColumnInfo(name = "episode_audio_size_in_bytes")
     val audioSizeInBytes: Long,
 
-    @ColumnInfo(name = "audio_duration_in_milliseconds")
+    @ColumnInfo(name = "episode_audio_duration_in_milliseconds")
     val audioDurationInMilliseconds: Long,
 
-    @ColumnInfo(name = "chapters_url")
+    @ColumnInfo(name = "episode_chapters_url")
     val chaptersUrl: String,
 
-    @ColumnInfo(name = "image_url")
+    @ColumnInfo(name = "episode_image_url")
     val imageUrl: String,
 
-    @ColumnInfo(name = "podcast_id")
+    @ColumnInfo(name = "episode_podcast_id")
     val podcastId: Long,
 
 ) {

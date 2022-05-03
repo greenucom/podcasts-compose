@@ -12,11 +12,12 @@ abstract class EpisodeDao {
     abstract suspend fun insert(episodeEntities: List<EpisodeEntity>)
 
     @Query("""
-        SELECT id, title, description, date_unix, serial_number, type, explicit, audio_url, 
-            audio_size_in_bytes, audio_duration_in_milliseconds, chapters_url, image_url, 
-            podcast_id
+        SELECT episode_id, episode_title, episode_description, episode_date_unix, 
+            episode_serial_number, episode_type, episode_explicit, episode_audio_url, 
+            episode_audio_size_in_bytes, episode_audio_duration_in_milliseconds, 
+            episode_chapters_url, episode_image_url, episode_podcast_id
         FROM Episode
-        WHERE id = :id
+        WHERE episode_id = :id
     """)
     abstract suspend fun getEpisodeById(id: Long): EpisodeEntity?
 

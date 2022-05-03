@@ -12,25 +12,25 @@ import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListT
 data class PodcastEntityTemp(
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "podcast_id")
     val id: Long,
 
-    @ColumnInfo(name = "title")
+    @ColumnInfo(name = "podcast_title")
     val title: String,
 
-    @ColumnInfo(name = "description")
+    @ColumnInfo(name = "podcast_description")
     val description: String,
 
-    @ColumnInfo(name = "author")
+    @ColumnInfo(name = "podcast_author")
     val author: String,
 
-    @ColumnInfo(name = "image_url")
+    @ColumnInfo(name = "podcast_image_url")
     val imageUrl: String,
 
-    @ColumnInfo(name = "categories")
+    @ColumnInfo(name = "podcast_categories")
     val categories: List<CategoryEntityDto>,
 
-    @ColumnInfo(name = "is_subscribed", defaultValue = "0")
+    @ColumnInfo(name = "podcast_is_subscribed", defaultValue = "0")
     val isSubscribed: Boolean,
 
 )
