@@ -6,8 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.greencom.android.podcasts2.data.PodcastsDatabase
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
-import com.greencom.android.podcasts2.data.category.local.SerialNumberDtoTypeConverter
 import com.greencom.android.podcasts2.data.episode.local.EpisodeDao
+import com.greencom.android.podcasts2.data.episode.local.SerialNumberDtoTypeConverter
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
 import com.greencom.android.podcasts2.utils.dataStore
 import dagger.Module

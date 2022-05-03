@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.greencom.android.podcasts2.data.category.local.SerialNumberDtoTypeConverter
 import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
 import kotlin.time.Duration.Companion.milliseconds
