@@ -1,10 +1,7 @@
 package com.greencom.android.podcasts2.data.episode.remote.dto
 
 import com.greencom.android.podcasts2.data.episode.local.EpisodeEntity
-import com.greencom.android.podcasts2.data.episode.local.SerialNumberEntity
-import com.greencom.android.podcasts2.domain.episode.Episode
-import com.greencom.android.podcasts2.domain.episode.SerialNumber
-import com.greencom.android.podcasts2.utils.Size.Companion.bytes
+import com.greencom.android.podcasts2.data.episode.local.SerialNumberDto
 import com.greencom.android.podcasts2.utils.toBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -21,10 +18,9 @@ data class GetEpisodesForPodcastByIdResponseDto(
 
 ) {
 
-    fun toEpisodes(): List<Episode> = episodes?.map { it.toEpisode() } ?: emptyList()
-
-    fun toEpisodeEntities(): List<EpisodeEntity> =
-        episodes?.map { it.toEpisodeEntity() } ?: emptyList()
+    fun toEpisodeEntities(): List<EpisodeEntity> {
+        return episodes?.map { it.toEpisodeEntity() } ?: emptyList()
+    }
 
 }
 
@@ -75,33 +71,14 @@ data class GetEpisodesItemDto(
 
 ) {
 
-    fun toEpisode(): Episode = Episode(
-        id = checkNotNull(id),
-        title = checkNotNull(title),
-        description = checkNotNull(description),
-        dateUnix = checkNotNull(dateUnix),
-        serialNumber = SerialNumber(
-            season = seasonNumber,
-            episode = episodeNumber,
-        ),
-        type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
-        explicit = explicit?.toBoolean() ?: false,
-        audioUrl = checkNotNull(audioUrl),
-        audioSize = checkNotNull(audioSizeInBytes).bytes,
-        audioDuration = checkNotNull(audioDurationInSeconds).seconds,
-        chaptersUrl = checkNotNull(chaptersUrl),
-        imageUrl = checkNotNull(imageUrl),
-        podcastId = checkNotNull(podcastId),
-    )
-
     fun toEpisodeEntity(): EpisodeEntity = EpisodeEntity(
         id = checkNotNull(id),
         title = checkNotNull(title),
         description = checkNotNull(description),
         dateUnix = checkNotNull(dateUnix),
-        serialNumber = SerialNumberEntity(
-            season = seasonNumber ?: SerialNumberEntity.MISSING_VALUE,
-            episode = episodeNumber ?: SerialNumberEntity.MISSING_VALUE,
+        serialNumber = SerialNumberDto(
+            season = seasonNumber,
+            episode = episodeNumber,
         ),
         type = EpisodeTypeDto(checkNotNull(type)).toEpisodeType(),
         explicit = explicit?.toBoolean() ?: false,

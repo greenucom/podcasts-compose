@@ -55,9 +55,9 @@ abstract class PodcastDao {
     @Query("""
         SELECT 
             p.id, p.title, p.description, p.author, p.image_url, p.categories, p.is_subscribed,
-            e.id, e.title, e.description, e.date_unix, e.serial_number_season, 
-                e.serial_number_episode, e.type, e.explicit, e.audio_url, e.audio_size_in_bytes,
-                e.audio_duration_in_milliseconds, e.chapters_url, e.image_url, e.podcast_id
+            e.id, e.title, e.description, e.date_unix, e.serial_number, e.type, e.explicit, 
+                e.audio_url, e.audio_size_in_bytes, e.audio_duration_in_milliseconds, 
+                e.chapters_url, e.image_url, e.podcast_id
         FROM Podcast p
         LEFT JOIN Episode e ON e.podcast_id = p.id
         WHERE p.id = :id

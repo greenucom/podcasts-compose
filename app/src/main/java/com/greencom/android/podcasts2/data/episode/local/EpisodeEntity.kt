@@ -1,14 +1,16 @@
 package com.greencom.android.podcasts2.data.episode.local
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.greencom.android.podcasts2.data.category.local.SerialNumberDtoTypeConverter
 import com.greencom.android.podcasts2.domain.episode.Episode
 import com.greencom.android.podcasts2.utils.Size.Companion.bytes
 import kotlin.time.Duration.Companion.milliseconds
 
 @Entity(tableName = "Episode")
+@TypeConverters(SerialNumberDtoTypeConverter::class)
 data class EpisodeEntity(
 
     @PrimaryKey
@@ -24,8 +26,8 @@ data class EpisodeEntity(
     @ColumnInfo(name = "date_unix")
     val dateUnix: Long,
 
-    @Embedded(prefix = "serial_number_")
-    val serialNumber: SerialNumberEntity,
+    @ColumnInfo(name = "serial_number")
+    val serialNumber: SerialNumberDto,
 
     @ColumnInfo(name = "type")
     val type: Episode.Type,

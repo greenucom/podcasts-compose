@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.greencom.android.podcasts2.data.PodcastsDatabase
 import com.greencom.android.podcasts2.data.category.local.CategoryEntityDtoListTypeConverter
+import com.greencom.android.podcasts2.data.category.local.SerialNumberDtoTypeConverter
 import com.greencom.android.podcasts2.data.episode.local.EpisodeDao
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
 import com.greencom.android.podcasts2.utils.dataStore
@@ -37,6 +38,7 @@ object PersistenceModule {
     ): PodcastsDatabase {
         return Room.databaseBuilder(context, PodcastsDatabase::class.java, DATABASE_NAME)
             .addTypeConverter(CategoryEntityDtoListTypeConverter(json))
+            .addTypeConverter(SerialNumberDtoTypeConverter(json))
             .fallbackToDestructiveMigration()
             .build()
     }
