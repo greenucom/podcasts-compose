@@ -59,7 +59,7 @@ abstract class PodcastDao {
                 e.audio_url, e.audio_size_in_bytes, e.audio_duration_in_milliseconds, 
                 e.chapters_url, e.image_url, e.podcast_id
         FROM Podcast p
-        LEFT JOIN Episode e ON e.podcast_id = p.id
+        LEFT JOIN Episode e ON p.id = e.podcast_id
         WHERE p.id = :id
         ORDER BY e.date_unix DESC
     """)
