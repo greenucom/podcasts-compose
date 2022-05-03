@@ -1,13 +1,17 @@
 package com.greencom.android.podcasts2.ui.screen.podcast
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.BottomNavBarState
@@ -43,8 +47,15 @@ fun PodcastScreen(
             Text(modifier = Modifier.padding(16.dp), text = "Podcast header")
         },
         frontLayerContent = {
-            Text(modifier = Modifier.padding(16.dp), text = "Episode list")
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(count = 100, key = { it }) {
+                    Text(modifier = Modifier.padding(16.dp), text = "Episode list")
+                }
+            }
         },
+        backLayerBackgroundColor = MaterialTheme.colors.surface,
+        frontLayerBackgroundColor = MaterialTheme.colors.surface,
+        frontLayerScrimColor = Color.Unspecified,
     )
 
 }
