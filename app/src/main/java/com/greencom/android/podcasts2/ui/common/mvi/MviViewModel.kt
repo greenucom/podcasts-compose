@@ -11,13 +11,13 @@ abstract class MviViewModel<ViewState : State, UserIntent : Intent, ViewSideEffe
 
     protected abstract val initialViewState: ViewState
 
-    private val _state by lazy { MutableStateFlow(initialViewState) }
+    protected val _state by lazy { MutableStateFlow(initialViewState) }
     override val state by lazy { _state }
 
     private val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
     override val sideEffects = _sideEffects.receiveAsFlow()
 
-    protected fun updateState(function: (ViewState) -> ViewState) {
+    protected inline fun updateState(function: (ViewState) -> ViewState) {
         _state.update(function)
     }
 
