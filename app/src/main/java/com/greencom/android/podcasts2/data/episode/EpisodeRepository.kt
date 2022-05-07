@@ -1,6 +1,5 @@
 package com.greencom.android.podcasts2.data.episode
 
-import com.greencom.android.podcasts2.domain.episode.Episode
 import javax.inject.Inject
 
 class EpisodeRepository @Inject constructor(
@@ -15,10 +14,6 @@ class EpisodeRepository @Inject constructor(
             max = max,
         )
         localDataSource.saveEpisodes(entities)
-    }
-
-    suspend fun getEpisodeById(id: Long): Episode? {
-        return localDataSource.getEpisodeById(id)
     }
 
 }
