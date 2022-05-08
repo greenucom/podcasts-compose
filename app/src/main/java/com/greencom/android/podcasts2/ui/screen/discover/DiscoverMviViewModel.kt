@@ -33,7 +33,7 @@ class DiscoverMviViewModel @Inject constructor(
         is UserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
     }
 
-    private var requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
+    private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
 
     init {
         collectTrendingCategoriesAndRequestTrendingPodcasts()
