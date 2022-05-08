@@ -9,29 +9,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 
 class DiscoverScreenState(
-    val onSearchClicked: () -> Unit,
+    val dispatchEvent: (DiscoverViewEvent) -> Unit,
     val scaffoldState: ScaffoldState,
     val screenListState: LazyListState,
     val coroutineScope: CoroutineScope,
     val recommendedPodcastsListState: LazyListState,
 ) {
 
-    private var scrollJob: Job? = null
+    private val scrollJob = MutableStateFlow<Job?>(null)
 
     fun onBottomNavBarItemReselected(): Boolean {
-        scrollJob?.cancel()
         val isScrolledUp = screenListState.firstVisibleItemIndex == 0 &&
                 screenListState.firstVisibleItemScrollOffset == 0
 
         if (isScrolledUp) {
-            onSearchClicked()
+            val event = DiscoverViewEvent.ShowSearchScreen
+            dispatchEvent(event)
         } else {
-            scrollJob = coroutineScope.launch {
-                screenListState.animateScrollToItem(0)
-            }
+            scrollJob.getAndUpdate {
+                coroutineScope.launch {
+                    screenListState.animateScrollToItem(0)
+                }
+            }?.cancel()
         }
         return true
     }
@@ -40,17 +44,17 @@ class DiscoverScreenState(
 
 @Composable
 fun rememberDiscoverScreenState(
-    onSearchClicked: () -> Unit,
+    dispatchEvent: (DiscoverViewEvent) -> Unit,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     screenLazyColumnState: LazyListState = rememberLazyListState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     recommendedPodcastsLazyListState: LazyListState = rememberLazyListState(),
 ) = remember(
-    onSearchClicked, scaffoldState, screenLazyColumnState, coroutineScope,
+    dispatchEvent, scaffoldState, screenLazyColumnState, coroutineScope,
     recommendedPodcastsLazyListState,
 ) {
     DiscoverScreenState(
-        onSearchClicked = onSearchClicked,
+        dispatchEvent = dispatchEvent,
         scaffoldState = scaffoldState,
         screenListState = screenLazyColumnState,
         coroutineScope = coroutineScope,

@@ -19,14 +19,13 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodca
 @Composable
 fun DiscoverScreen(
     navigateToPodcastScreen: (Podcast) -> Unit,
-    onSearchClicked: () -> Unit,
     navigateToSearchScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberDiscoverScreenState(
-        onSearchClicked = onSearchClicked,
+        dispatchEvent = viewModel::dispatchEvent,
     )
 
     SpecificScreenBehavior {
