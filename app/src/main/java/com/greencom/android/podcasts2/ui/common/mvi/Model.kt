@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.StateFlow
 interface Model<ViewState : State, UserIntent : Intent, ViewSideEffect : SideEffect> {
     val state: StateFlow<ViewState>
     val sideEffects: Flow<ViewSideEffect>
-    suspend fun handleIntent(intent: UserIntent)
+    fun dispatchIntent(intent: UserIntent)
 }
