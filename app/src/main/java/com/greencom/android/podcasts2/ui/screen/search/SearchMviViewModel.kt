@@ -1,8 +1,8 @@
 package com.greencom.android.podcasts2.ui.screen.search
 
 import androidx.lifecycle.viewModelScope
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.SearchPodcastsUseCase
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -48,7 +48,7 @@ class SearchMviViewModel @Inject constructor(
     private fun collectSearchResults() = viewModelScope.launch {
         interactor.getSearchPodcastsResultFlowUseCase(Unit).collect { podcasts ->
             val resultState = if (podcasts.isNotEmpty()) {
-                SearchResultState.Success(podcasts)
+                SearchResultState.Success(podcasts.map { PodcastUiModel.fromPodcast(it) })
             } else {
                 SearchResultState.Empty
             }
@@ -94,12 +94,12 @@ class SearchMviViewModel @Inject constructor(
         updateState { it.copy(query = QueryValueEmpty) }
     }
 
-    private suspend fun reduceChangeSubscription(podcast: Podcast) {
-        interactor.updatePodcastSubscriptionUseCase(podcast)
+    private suspend fun reduceChangeSubscription(podcast: PodcastUiModel) {
+        interactor.updatePodcastSubscriptionUseCase(podcast.toPodcast())
     }
 
-    private suspend fun reduceShowPodcastScreen(podcast: Podcast) {
-        interactor.savePodcastUseCase(podcast)
+    private suspend fun reduceShowPodcastScreen(podcast: PodcastUiModel) {
+        interactor.savePodcastUseCase(podcast.toPodcast())
         updateState { it.copy(showPodcastScreen = podcast) }
     }
 

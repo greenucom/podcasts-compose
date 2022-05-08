@@ -15,8 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectEnd
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectStart
 import com.greencom.android.podcasts2.ui.common.preview.PodcastListPreviewParameterProvider
@@ -104,7 +104,7 @@ fun LazyListScope.recommendedPodcastsSection(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(PodcastListPreviewParameterProvider::class)
-    podcasts: List<Podcast>
+    podcasts: List<PodcastUiModel>
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -129,7 +129,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(PodcastListPreviewParameterProvider::class)
-    podcasts: List<Podcast>
+    podcasts: List<PodcastUiModel>
 ) {
     PodcastsComposeTheme {
         Surface {

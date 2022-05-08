@@ -17,11 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchEmptyMessage
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
@@ -36,7 +36,7 @@ private const val LoadingPlaceholderCount = 5
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    navigateToPodcastScreen: (Podcast) -> Unit,
+    navigateToPodcastScreen: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchMviViewModel = hiltViewModel(),
 ) {

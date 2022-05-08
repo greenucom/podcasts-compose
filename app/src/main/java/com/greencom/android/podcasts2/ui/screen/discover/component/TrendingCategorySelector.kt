@@ -12,17 +12,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.CategoryHelper
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.FilterChip
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.common.preview.SelectableCategoryListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 @Composable
 fun TrendingCategorySelector(
-    selectableCategories: List<SelectableItem<Category>>,
-    onCategoryClicked: (Category) -> Unit,
+    selectableCategories: List<SelectableItem<CategoryUiModel>>,
+    onCategoryClicked: (CategoryUiModel) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -57,7 +57,7 @@ fun TrendingCategorySelector(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(SelectableCategoryListPreviewParameterProvider::class)
-    selectableCategories: List<SelectableItem<Category>>
+    selectableCategories: List<SelectableItem<CategoryUiModel>>
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -78,7 +78,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(SelectableCategoryListPreviewParameterProvider::class)
-    selectableCategories: List<SelectableItem<Category>>
+    selectableCategories: List<SelectableItem<CategoryUiModel>>
 ) {
     PodcastsComposeTheme {
         Surface {

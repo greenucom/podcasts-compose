@@ -11,8 +11,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.CategoryHelper
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.common.preview.CategoryListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -20,7 +20,7 @@ private const val MaxCount = 2
 
 @Composable
 fun CategoryLabelRow(
-    categories: List<Category>,
+    categories: List<CategoryUiModel>,
     modifier: Modifier = Modifier,
     maxCount: Int = MaxCount,
 ) {
@@ -43,7 +43,7 @@ fun CategoryLabelRow(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(CategoryListPreviewParameterProvider::class)
-    categories: List<Category>,
+    categories: List<CategoryUiModel>,
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -64,7 +64,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(CategoryListPreviewParameterProvider::class)
-    categories: List<Category>,
+    categories: List<CategoryUiModel>,
 ) {
     PodcastsComposeTheme {
         Surface {

@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.discover.component.DiscoverTopBar
 import com.greencom.android.podcasts2.ui.screen.discover.component.recommendedPodcastsSection
@@ -17,7 +17,7 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodca
 
 @Composable
 fun DiscoverScreen(
-    navigateToPodcastScreen: (Podcast) -> Unit,
+    navigateToPodcastScreen: (PodcastUiModel) -> Unit,
     navigateToSearchScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),

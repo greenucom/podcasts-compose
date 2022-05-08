@@ -1,15 +1,15 @@
 package com.greencom.android.podcasts2.ui.common.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 
-class PodcastPreviewParameterProvider : PreviewParameterProvider<Podcast> {
+class PodcastPreviewParameterProvider : PreviewParameterProvider<PodcastUiModel> {
 
-    override val values: Sequence<Podcast>
+    override val values: Sequence<PodcastUiModel>
         get() = sequenceOf(shortPodcast(), longPodcast())
 
     companion object {
-        fun shortPodcast(): Podcast = Podcast(
+        fun shortPodcast(): PodcastUiModel = PodcastUiModel(
             id = 1,
             title = "Что случилось",
             description = "«Что случилось» — новостной подкаст «Медузы».",
@@ -19,7 +19,7 @@ class PodcastPreviewParameterProvider : PreviewParameterProvider<Podcast> {
             isSubscribed = false,
         )
 
-        fun longPodcast(): Podcast = Podcast(
+        fun longPodcast(): PodcastUiModel = PodcastUiModel(
             id = 2,
             title = "The Big Beard Theory",
             description = """

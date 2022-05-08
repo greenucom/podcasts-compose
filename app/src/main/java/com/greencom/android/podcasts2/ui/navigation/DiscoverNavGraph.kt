@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.requireLong
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
 import com.greencom.android.podcasts2.ui.screen.podcast.PodcastScreen
@@ -19,7 +19,7 @@ fun NavGraphBuilder.discoverNavGraph(
         navController.navigateUp()
     }
 
-    val navigateToPodcastScreen = { podcast: Podcast ->
+    val navigateToPodcastScreen = { podcast: PodcastUiModel ->
         val route = Screen.Podcast.createRoute(podcast.id)
         navController.navigate(route)
     }

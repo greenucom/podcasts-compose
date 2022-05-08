@@ -70,11 +70,12 @@ fun PodcastHeader(
                 style = MaterialTheme.typography.h6,
             )
 
-            CategoryLabelRow(
-                modifier = Modifier.padding(top = 4.dp),
-                categories = podcast.categories,
-                maxCount = CategoryMaxCount,
-            )
+            // TODO
+//            CategoryLabelRow(
+//                modifier = Modifier.padding(top = 4.dp),
+//                categories = podcast.categories,
+//                maxCount = CategoryMaxCount,
+//            )
 
             Text(
                 modifier = Modifier.padding(top = 6.dp),

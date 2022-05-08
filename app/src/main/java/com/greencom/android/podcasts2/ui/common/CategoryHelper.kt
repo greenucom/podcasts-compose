@@ -2,11 +2,11 @@ package com.greencom.android.podcasts2.ui.common
 
 import android.content.Context
 import com.greencom.android.podcasts2.R
-import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
 
 object CategoryHelper {
 
-    fun getLocalizedName(category: Category, context: Context): String? {
+    fun getLocalizedName(category: CategoryUiModel, context: Context): String? {
         val localizedNameResId = categoryIdToLocalizedNameResId[category.id] ?: return null
         return context.getString(localizedNameResId)
     }

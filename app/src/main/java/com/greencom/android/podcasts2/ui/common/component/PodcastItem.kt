@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.AsyncImageCustom
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.preview.PodcastPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.Inter
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
@@ -40,9 +40,9 @@ private val TitleTextStyle = TextStyle(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PodcastItem(
-    podcast: Podcast,
-    onPodcastClicked: (Podcast) -> Unit,
-    onSubscribedChanged: (Podcast) -> Unit,
+    podcast: PodcastUiModel,
+    onPodcastClicked: (PodcastUiModel) -> Unit,
+    onSubscribedChanged: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -187,7 +187,7 @@ fun PodcastItemPlaceholder(
 @Preview(showBackground = true)
 private fun PodcastItemLight(
     @PreviewParameter(PodcastPreviewParameterProvider::class)
-    podcast: Podcast
+    podcast: PodcastUiModel
 ) {
     PodcastsComposeTheme {
         PodcastItem(
@@ -206,7 +206,7 @@ private fun PodcastItemLight(
 )
 private fun PodcastItemDark(
     @PreviewParameter(PodcastPreviewParameterProvider::class)
-    podcast: Podcast
+    podcast: PodcastUiModel
 ) {
     PodcastsComposeTheme {
         PodcastItem(

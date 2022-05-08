@@ -1,9 +1,9 @@
 package com.greencom.android.podcasts2.ui.common.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 
 class TrendingPodcastSectionPreviewParameterProvider :
     PreviewParameterProvider<TrendingPodcastSectionParameters> {
@@ -26,6 +26,6 @@ class TrendingPodcastSectionPreviewParameterProvider :
 }
 
 class TrendingPodcastSectionParameters(
-    val selectableCategories: List<SelectableItem<Category>>,
-    val trendingPodcasts: List<Podcast>,
+    val selectableCategories: List<SelectableItem<CategoryUiModel>>,
+    val trendingPodcasts: List<PodcastUiModel>,
 )

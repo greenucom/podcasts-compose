@@ -2,9 +2,10 @@ package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.ui.common.SelectableItem
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -41,15 +42,21 @@ class DiscoverViewModel @Inject constructor(
     private fun collectTrendingCategoriesAndRequestTrendingPodcasts() = viewModelScope.launch {
         val trendingCategories = interactor.getTrendingCategoriesUseCase(Unit)
         interactor.getSelectedTrendingCategoriesIdsUseCase(Unit).collect { ids ->
-            val categories = trendingCategories.map { category ->
+            val selectableCategories = trendingCategories.map { category ->
                 SelectableItem(
                     item = category,
                     isSelected = category.id in ids,
                 )
             }
-            updateState { it.copy(selectableCategories = categories) }
+            val uiSelectableCategories = selectableCategories.map { selectableItem ->
+                SelectableItem(
+                    item = CategoryUiModel.fromCategory(selectableItem.item),
+                    isSelected = selectableItem.isSelected,
+                )
+            }
+            updateState { it.copy(selectableCategories = uiSelectableCategories) }
 
-            val selectedCategories = categories
+            val selectedCategories = selectableCategories
                 .filter { it.isSelected }
                 .map { it.item }
 
@@ -90,18 +97,18 @@ class DiscoverViewModel @Inject constructor(
             val trendingPodcastsState = if (podcasts.isEmpty()) {
                 DiscoverTrendingPodcastsState.Loading
             } else {
-                DiscoverTrendingPodcastsState.Success(podcasts)
+                DiscoverTrendingPodcastsState.Success(podcasts.map { PodcastUiModel.fromPodcast(it) })
             }
             updateState { it.copy(trendingPodcastsState = trendingPodcastsState) }
         }
     }
 
-    private suspend fun reduceToggleSelectableCategory(category: Category) {
-        interactor.toggleSelectableTrendingCategoryUseCase(category)
+    private suspend fun reduceToggleSelectableCategory(category: CategoryUiModel) {
+        interactor.toggleSelectableTrendingCategoryUseCase(category.toCategory())
     }
 
-    private suspend fun reduceShowPodcastScreen(podcast: Podcast) {
-        interactor.savePodcastUseCase(podcast)
+    private suspend fun reduceShowPodcastScreen(podcast: PodcastUiModel) {
+        interactor.savePodcastUseCase(podcast.toPodcast())
         updateState { it.copy(showPodcastScreen = podcast) }
     }
 
@@ -109,8 +116,8 @@ class DiscoverViewModel @Inject constructor(
         updateState { it.copy(showPodcastScreen = null) }
     }
 
-    private suspend fun reduceChangeSubscription(podcast: Podcast) {
-        interactor.updatePodcastSubscriptionUseCase(podcast)
+    private suspend fun reduceChangeSubscription(podcast: PodcastUiModel) {
+        interactor.updatePodcastSubscriptionUseCase(podcast.toPodcast())
     }
 
     private fun reduceRefreshTrendingPodcasts() {
@@ -118,7 +125,7 @@ class DiscoverViewModel @Inject constructor(
 
         val selectedCategories = state.value.selectableCategories
             .filter { it.isSelected }
-            .map { it.item }
+            .map { it.item.toCategory() }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
     }
 

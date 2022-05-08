@@ -1,6 +1,6 @@
 package com.greencom.android.podcasts2.ui.screen.search
 
-import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.mvi.Event
 
 sealed interface SearchViewEvent : Event {
@@ -9,7 +9,7 @@ sealed interface SearchViewEvent : Event {
     object ClearQuery : SearchViewEvent
     object RequestSearchFieldFocus : SearchViewEvent
     object ClearSearchFieldFocus : SearchViewEvent
-    data class ChangeSubscription(val podcast: Podcast) : SearchViewEvent
-    data class ShowPodcastScreen(val podcast: Podcast) : SearchViewEvent
+    data class ChangeSubscription(val podcast: PodcastUiModel) : SearchViewEvent
+    data class ShowPodcastScreen(val podcast: PodcastUiModel) : SearchViewEvent
     object PodcastScreenShown : SearchViewEvent
 }

@@ -17,10 +17,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.AsyncImageCustom
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.CategoryLabelRow
+import com.greencom.android.podcasts2.ui.common.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.common.preview.PodcastPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.placeholder
@@ -38,8 +38,8 @@ val PodcastCardPlaceholderLoadingEffectEndDark = Color(0xFF585858)
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 fun PodcastCard(
-    podcast: Podcast,
-    onPodcastClicked: (Podcast) -> Unit,
+    podcast: PodcastUiModel,
+    onPodcastClicked: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -158,7 +158,7 @@ fun PodcastCardPlaceholder(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(PodcastPreviewParameterProvider::class)
-    podcast: Podcast
+    podcast: PodcastUiModel
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -179,7 +179,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(PodcastPreviewParameterProvider::class)
-    podcast: Podcast
+    podcast: PodcastUiModel
 ) {
     PodcastsComposeTheme {
         Surface {

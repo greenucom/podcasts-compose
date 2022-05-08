@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.ui.common.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.common.preview.CategoryPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
@@ -45,7 +45,7 @@ fun CategoryLabel(
 @Preview(showBackground = true)
 private fun Light(
     @PreviewParameter(CategoryPreviewParameterProvider::class)
-    category: Category,
+    category: CategoryUiModel,
 ) {
     PodcastsComposeTheme {
         Surface {
@@ -65,7 +65,7 @@ private fun Light(
 )
 private fun Dark(
     @PreviewParameter(CategoryPreviewParameterProvider::class)
-    category: Category,
+    category: CategoryUiModel,
 ) {
     PodcastsComposeTheme {
         Surface {
