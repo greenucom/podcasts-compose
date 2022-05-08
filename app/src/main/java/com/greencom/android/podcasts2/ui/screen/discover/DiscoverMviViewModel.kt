@@ -5,10 +5,7 @@ import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.RequestTrendingPodcastsUseCase
 import com.greencom.android.podcasts2.ui.common.SelectableItem
-import com.greencom.android.podcasts2.ui.common.mvi.Intent
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
-import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
-import com.greencom.android.podcasts2.ui.common.mvi.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -20,18 +17,15 @@ import javax.inject.Inject
 @HiltViewModel
 class DiscoverMviViewModel @Inject constructor(
     private val interactor: DiscoverInteractor,
-) : MviViewModel<
-        DiscoverMviViewModel.ViewState,
-        DiscoverMviViewModel.UserIntent,
-        DiscoverMviViewModel.ViewSideEffect>() {
+) : MviViewModel<DiscoverViewState, DiscoverUserIntent, DiscoverViewSideEffect>() {
 
-    override val initialViewState = ViewState()
+    override val initialViewState = DiscoverViewState()
 
-    override suspend fun handleIntent(intent: UserIntent) = when (intent) {
-        is UserIntent.ToggleSelectableCategory -> reduceToggleSelectableCategory(intent.category)
-        is UserIntent.ClickPodcast -> reduceClickPodcast(intent.podcast)
-        is UserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
-        UserIntent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+    override suspend fun handleIntent(intent: DiscoverUserIntent) = when (intent) {
+        is DiscoverUserIntent.ToggleSelectableCategory -> reduceToggleSelectableCategory(intent.category)
+        is DiscoverUserIntent.ClickPodcast -> reduceClickPodcast(intent.podcast)
+        is DiscoverUserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
+        DiscoverUserIntent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
@@ -84,16 +78,16 @@ class DiscoverMviViewModel @Inject constructor(
 
     private fun onRequestTrendingPodcastsFailure(e: Throwable) {
         if (e !is CancellationException) {
-            updateState { it.copy(trendingPodcastsState = TrendingPodcastsState.Error) }
+            updateState { it.copy(trendingPodcastsState = DiscoverTrendingPodcastsState.Error) }
         }
     }
 
     private fun collectTrendingPodcasts() = viewModelScope.launch {
         interactor.getTrendingPodcastsFlowUseCase(Unit).collect { podcasts ->
             val trendingPodcastsState = if (podcasts.isEmpty()) {
-                TrendingPodcastsState.Loading
+                DiscoverTrendingPodcastsState.Loading
             } else {
-                TrendingPodcastsState.Success(podcasts)
+                DiscoverTrendingPodcastsState.Success(podcasts)
             }
             updateState { it.copy(trendingPodcastsState = trendingPodcastsState) }
         }
@@ -113,39 +107,13 @@ class DiscoverMviViewModel @Inject constructor(
     }
 
     private fun reduceRefreshTrendingPodcasts() {
-        updateState { it.copy(trendingPodcastsState = TrendingPodcastsState.Loading) }
+        updateState { it.copy(trendingPodcastsState = DiscoverTrendingPodcastsState.Loading) }
 
         val selectedCategories = state.value.selectableCategories
             .filter { it.isSelected }
             .map { it.item }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
     }
-
-    data class ViewState(
-        val recommendedPodcastsState: RecommendedPodcastsState = RecommendedPodcastsState.Loading,
-        val selectableCategories: List<SelectableItem<Category>> = emptyList(),
-        val trendingPodcastsState: TrendingPodcastsState = TrendingPodcastsState.Loading,
-    ) : State
-
-    sealed interface RecommendedPodcastsState {
-        object Loading : RecommendedPodcastsState
-        data class Success(val podcasts: List<Podcast>) : RecommendedPodcastsState
-    }
-
-    sealed interface TrendingPodcastsState {
-        object Loading : TrendingPodcastsState
-        data class Success(val podcasts: List<Podcast>) : TrendingPodcastsState
-        object Error : TrendingPodcastsState
-    }
-
-    sealed interface UserIntent : Intent {
-        class ToggleSelectableCategory(val category: Category) : UserIntent
-        class ClickPodcast(val podcast: Podcast) : UserIntent
-        class ChangeSubscription(val podcast: Podcast) : UserIntent
-        object RefreshTrendingPodcasts : UserIntent
-    }
-
-    sealed interface ViewSideEffect : SideEffect
 
     companion object {
         private const val TrendingPodcastCountMaxValue = 40

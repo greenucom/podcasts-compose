@@ -28,7 +28,8 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionParameters
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionPreviewParameterProvider
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverMviViewModel
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverTrendingPodcastsState
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverUserIntent
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
@@ -40,9 +41,9 @@ private const val PlaceholderCount = 5
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastsSection(
-    dispatchIntent: (DiscoverMviViewModel.UserIntent) -> Unit,
+    dispatchIntent: (DiscoverUserIntent) -> Unit,
     selectableCategories: List<SelectableItem<Category>>,
-    trendingPodcastsState: DiscoverMviViewModel.TrendingPodcastsState,
+    trendingPodcastsState: DiscoverTrendingPodcastsState,
 ) {
     item(KeyHeader) {
         Text(
@@ -58,7 +59,7 @@ fun LazyListScope.trendingPodcastsSection(
         TrendingCategorySelector(
             selectableCategories = selectableCategories,
             onCategoryClicked = {
-                val intent = DiscoverMviViewModel.UserIntent.ToggleSelectableCategory(it)
+                val intent = DiscoverUserIntent.ToggleSelectableCategory(it)
                 dispatchIntent(intent)
             },
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 2.dp),
@@ -66,7 +67,7 @@ fun LazyListScope.trendingPodcastsSection(
     }
 
     when (trendingPodcastsState) {
-        is DiscoverMviViewModel.TrendingPodcastsState.Success -> {
+        is DiscoverTrendingPodcastsState.Success -> {
             itemsIndexed(
                 items = trendingPodcastsState.podcasts,
                 key = { _, podcast -> "PodcastItem ${podcast.id}" }
@@ -75,11 +76,11 @@ fun LazyListScope.trendingPodcastsSection(
                 PodcastItem(
                     podcast = podcast,
                     onPodcastClicked = {
-                        val intent = DiscoverMviViewModel.UserIntent.ClickPodcast(it)
+                        val intent = DiscoverUserIntent.ClickPodcast(it)
                         dispatchIntent(intent)
                     },
                     onSubscribedChanged = {
-                        val intent = DiscoverMviViewModel.UserIntent.ChangeSubscription(it)
+                        val intent = DiscoverUserIntent.ChangeSubscription(it)
                         dispatchIntent(intent)
                     },
                 )
@@ -90,7 +91,7 @@ fun LazyListScope.trendingPodcastsSection(
             }
         }
 
-        DiscoverMviViewModel.TrendingPodcastsState.Loading -> {
+        DiscoverTrendingPodcastsState.Loading -> {
             item(KeyPlaceholders) {
                 val placeholderLoadingColor by animatePlaceholderLoadingEffectColor()
 
@@ -106,12 +107,12 @@ fun LazyListScope.trendingPodcastsSection(
             }
         }
 
-        DiscoverMviViewModel.TrendingPodcastsState.Error -> {
+        DiscoverTrendingPodcastsState.Error -> {
             item(KeyError) {
                 ErrorMessage(
                     modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                     onTryAgainClicked = {
-                        val intent = DiscoverMviViewModel.UserIntent.RefreshTrendingPodcasts
+                        val intent = DiscoverUserIntent.RefreshTrendingPodcasts
                         dispatchIntent(intent)
                     },
                 )
@@ -129,7 +130,7 @@ private fun Light(
     PodcastsComposeTheme {
         Surface {
             val trendingPodcastsState =
-                DiscoverMviViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
+                DiscoverTrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
                     dispatchIntent = {},
@@ -154,7 +155,7 @@ private fun Dark(
     PodcastsComposeTheme {
         Surface {
             val trendingPodcastsState =
-                DiscoverMviViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
+                DiscoverTrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
                     dispatchIntent = {},

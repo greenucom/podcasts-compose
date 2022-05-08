@@ -20,7 +20,8 @@ import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectC
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectEnd
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectStart
 import com.greencom.android.podcasts2.ui.common.preview.PodcastListPreviewParameterProvider
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverMviViewModel
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverRecommendedPodcastsState
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverUserIntent
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val KeyRecommendedPodcastsSection = "RecommendedPodcastsSection"
@@ -32,9 +33,9 @@ private val Colors.podcastCardPlaceholderLoadingEffectEnd: Color
     get() = if (isLight) placeholderLoadingEffectEnd else PodcastCardPlaceholderLoadingEffectEndDark
 
 fun LazyListScope.recommendedPodcastsSection(
-    dispatchIntent: (DiscoverMviViewModel.UserIntent) -> Unit,
+    dispatchIntent: (DiscoverUserIntent) -> Unit,
     innerLazyListState: LazyListState,
-    recommendedPodcastsState: DiscoverMviViewModel.RecommendedPodcastsState,
+    recommendedPodcastsState: DiscoverRecommendedPodcastsState,
     modifier: Modifier = Modifier,
 ) {
     item(KeyRecommendedPodcastsSection) {
@@ -48,7 +49,7 @@ fun LazyListScope.recommendedPodcastsSection(
             )
 
             val placeholderLoadingColor = if (
-                recommendedPodcastsState is DiscoverMviViewModel.RecommendedPodcastsState.Loading
+                recommendedPodcastsState is DiscoverRecommendedPodcastsState.Loading
             ) {
                 val placeholderLoadingColorStart =
                     MaterialTheme.colors.podcastCardPlaceholderLoadingEffectStart
@@ -70,7 +71,7 @@ fun LazyListScope.recommendedPodcastsSection(
             ) {
                 when (recommendedPodcastsState) {
 
-                    is DiscoverMviViewModel.RecommendedPodcastsState.Success -> {
+                    is DiscoverRecommendedPodcastsState.Success -> {
                         items(
                             items = recommendedPodcastsState.podcasts,
                             key = { "PodcastCard ${it.id}" },
@@ -78,14 +79,14 @@ fun LazyListScope.recommendedPodcastsSection(
                             PodcastCard(
                                 podcast = podcast,
                                 onPodcastClicked = {
-                                    val intent = DiscoverMviViewModel.UserIntent.ClickPodcast(it)
+                                    val intent = DiscoverUserIntent.ClickPodcast(it)
                                     dispatchIntent(intent)
                                 },
                             )
                         }
                     }
 
-                    DiscoverMviViewModel.RecommendedPodcastsState.Loading -> {
+                    DiscoverRecommendedPodcastsState.Loading -> {
                         items(
                             count = PlaceholderCount,
                             key = { "PodcastCardPlaceholder $it" },
@@ -108,7 +109,7 @@ private fun Light(
     PodcastsComposeTheme {
         Surface {
             val innerLazyListState = rememberLazyListState()
-            val recommendedPodcastsState = DiscoverMviViewModel.RecommendedPodcastsState.Success(podcasts)
+            val recommendedPodcastsState = DiscoverRecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
                     dispatchIntent = {},
@@ -133,7 +134,7 @@ private fun Dark(
     PodcastsComposeTheme {
         Surface {
             val innerLazyListState = rememberLazyListState()
-            val recommendedPodcastsState = DiscoverMviViewModel.RecommendedPodcastsState.Success(podcasts)
+            val recommendedPodcastsState = DiscoverRecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
                     dispatchIntent = {},
