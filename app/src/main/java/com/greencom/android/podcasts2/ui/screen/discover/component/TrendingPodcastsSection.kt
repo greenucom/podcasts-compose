@@ -76,7 +76,7 @@ fun LazyListScope.trendingPodcastsSection(
                 PodcastItem(
                     podcast = podcast,
                     onPodcastClicked = {
-                        val event = DiscoverViewEvent.ClickPodcast(it)
+                        val event = DiscoverViewEvent.ShowPodcast(it)
                         dispatchEvent(event)
                     },
                     onSubscribedChanged = {

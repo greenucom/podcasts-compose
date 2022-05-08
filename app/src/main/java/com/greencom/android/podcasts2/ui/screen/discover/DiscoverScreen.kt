@@ -38,7 +38,7 @@ fun DiscoverScreen(
 
     state.showPodcast?.let { podcast ->
         navigateToPodcastScreen(podcast)
-        val event = DiscoverViewEvent.PodcastClicked
+        val event = DiscoverViewEvent.PodcastShown
         viewModel.dispatchEvent(event)
     }
 
