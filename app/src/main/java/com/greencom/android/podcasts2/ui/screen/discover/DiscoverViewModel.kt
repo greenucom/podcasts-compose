@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverMviViewModel @Inject constructor(
+class DiscoverViewModel @Inject constructor(
     private val interactor: DiscoverInteractor,
 ) : MviViewModel<DiscoverViewState, DiscoverUserIntent, DiscoverViewSideEffect>() {
 

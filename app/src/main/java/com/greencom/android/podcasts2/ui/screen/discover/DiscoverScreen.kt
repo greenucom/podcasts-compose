@@ -21,7 +21,7 @@ fun DiscoverScreen(
     onPodcastClicked: (Podcast) -> Unit,
     onSearchClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DiscoverMviViewModel = hiltViewModel(),
+    viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberDiscoverScreenState(
