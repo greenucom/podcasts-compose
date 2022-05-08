@@ -111,7 +111,8 @@ fun LazyListScope.trendingPodcastsSection(
                 ErrorMessage(
                     modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                     onTryAgainClicked = {
-                        // TODO
+                        val intent = DiscoverMviViewModel.UserIntent.RefreshTrendingPodcasts
+                        dispatchIntent(intent)
                     },
                 )
             }

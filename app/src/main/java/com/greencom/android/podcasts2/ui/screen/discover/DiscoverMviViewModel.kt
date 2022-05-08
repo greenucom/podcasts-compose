@@ -31,6 +31,7 @@ class DiscoverMviViewModel @Inject constructor(
         is UserIntent.ToggleSelectableCategory -> reduceToggleSelectableCategory(intent.category)
         is UserIntent.ClickPodcast -> reduceClickPodcast(intent.podcast)
         is UserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
+        UserIntent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
@@ -111,6 +112,15 @@ class DiscoverMviViewModel @Inject constructor(
         interactor.updatePodcastSubscriptionUseCase(podcast)
     }
 
+    private fun reduceRefreshTrendingPodcasts() {
+        updateState { it.copy(trendingPodcastsState = TrendingPodcastsState.Loading) }
+
+        val selectedCategories = state.value.selectableCategories
+            .filter { it.isSelected }
+            .map { it.item }
+        requestTrendingPodcastsForSelectedCategories(selectedCategories)
+    }
+
     data class ViewState(
         val recommendedPodcastsState: RecommendedPodcastsState = RecommendedPodcastsState.Loading,
         val selectableCategories: List<SelectableItem<Category>> = emptyList(),
@@ -132,6 +142,7 @@ class DiscoverMviViewModel @Inject constructor(
         class ToggleSelectableCategory(val category: Category) : UserIntent
         class ClickPodcast(val podcast: Podcast) : UserIntent
         class ChangeSubscription(val podcast: Podcast) : UserIntent
+        object RefreshTrendingPodcasts : UserIntent
     }
 
     sealed interface ViewSideEffect : SideEffect
