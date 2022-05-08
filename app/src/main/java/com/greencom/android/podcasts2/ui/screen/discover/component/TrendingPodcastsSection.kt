@@ -29,7 +29,7 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionParameters
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverTrendingPodcastsState
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverUserIntent
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewEvent
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
@@ -41,7 +41,7 @@ private const val PlaceholderCount = 5
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastsSection(
-    dispatchIntent: (DiscoverUserIntent) -> Unit,
+    dispatchEvent: (DiscoverViewEvent) -> Unit,
     selectableCategories: List<SelectableItem<Category>>,
     trendingPodcastsState: DiscoverTrendingPodcastsState,
 ) {
@@ -59,8 +59,8 @@ fun LazyListScope.trendingPodcastsSection(
         TrendingCategorySelector(
             selectableCategories = selectableCategories,
             onCategoryClicked = {
-                val intent = DiscoverUserIntent.ToggleSelectableCategory(it)
-                dispatchIntent(intent)
+                val event = DiscoverViewEvent.ToggleSelectableCategory(it)
+                dispatchEvent(event)
             },
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 2.dp),
         )
@@ -76,12 +76,12 @@ fun LazyListScope.trendingPodcastsSection(
                 PodcastItem(
                     podcast = podcast,
                     onPodcastClicked = {
-                        val intent = DiscoverUserIntent.ClickPodcast(it)
-                        dispatchIntent(intent)
+                        val event = DiscoverViewEvent.ClickPodcast(it)
+                        dispatchEvent(event)
                     },
                     onSubscribedChanged = {
-                        val intent = DiscoverUserIntent.ChangeSubscription(it)
-                        dispatchIntent(intent)
+                        val event = DiscoverViewEvent.ChangeSubscription(it)
+                        dispatchEvent(event)
                     },
                 )
 
@@ -112,8 +112,8 @@ fun LazyListScope.trendingPodcastsSection(
                 ErrorMessage(
                     modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                     onTryAgainClicked = {
-                        val intent = DiscoverUserIntent.RefreshTrendingPodcasts
-                        dispatchIntent(intent)
+                        val event = DiscoverViewEvent.RefreshTrendingPodcasts
+                        dispatchEvent(event)
                     },
                 )
             }
@@ -133,7 +133,7 @@ private fun Light(
                 DiscoverTrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
-                    dispatchIntent = {},
+                    dispatchEvent = {},
                     selectableCategories = parameters.selectableCategories,
                     trendingPodcastsState = trendingPodcastsState,
                 )
@@ -158,7 +158,7 @@ private fun Dark(
                 DiscoverTrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
-                    dispatchIntent = {},
+                    dispatchEvent = {},
                     selectableCategories = parameters.selectableCategories,
                     trendingPodcastsState = trendingPodcastsState,
                 )

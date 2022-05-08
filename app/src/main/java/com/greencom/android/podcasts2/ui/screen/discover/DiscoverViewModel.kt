@@ -17,16 +17,16 @@ import javax.inject.Inject
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val interactor: DiscoverInteractor,
-) : MviViewModel<DiscoverViewState, DiscoverUserIntent, DiscoverViewSideEffect>() {
+) : MviViewModel<DiscoverViewState, DiscoverViewEvent, DiscoverViewSideEffect>() {
 
     override val initialViewState = DiscoverViewState()
 
-    override suspend fun handleIntent(intent: DiscoverUserIntent) = when (intent) {
-        is DiscoverUserIntent.ToggleSelectableCategory -> reduceToggleSelectableCategory(intent.category)
-        is DiscoverUserIntent.ClickPodcast -> reduceClickPodcast(intent.podcast)
-        is DiscoverUserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
-        DiscoverUserIntent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
-        DiscoverUserIntent.PodcastClicked -> reducePodcastClicked()
+    override suspend fun handleEvent(event: DiscoverViewEvent) = when (event) {
+        is DiscoverViewEvent.ToggleSelectableCategory -> reduceToggleSelectableCategory(event.category)
+        is DiscoverViewEvent.ClickPodcast -> reduceClickPodcast(event.podcast)
+        is DiscoverViewEvent.ChangeSubscription -> reduceChangeSubscription(event.podcast)
+        DiscoverViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        DiscoverViewEvent.PodcastClicked -> reducePodcastClicked()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)

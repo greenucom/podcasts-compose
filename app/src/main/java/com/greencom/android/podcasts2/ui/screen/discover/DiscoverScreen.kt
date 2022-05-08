@@ -38,8 +38,8 @@ fun DiscoverScreen(
 
     state.showPodcast?.let { podcast ->
         navigateToPodcastScreen(podcast)
-        val intent = DiscoverUserIntent.PodcastClicked
-        viewModel.dispatchIntent(intent)
+        val event = DiscoverViewEvent.PodcastClicked
+        viewModel.dispatchEvent(event)
     }
 
     Scaffold(
@@ -55,13 +55,13 @@ fun DiscoverScreen(
 
             recommendedPodcastsSection(
                 modifier = Modifier.padding(vertical = 8.dp),
-                dispatchIntent = viewModel::dispatchIntent,
+                dispatchEvent = viewModel::dispatchEvent,
                 innerLazyListState = screenState.recommendedPodcastsListState,
                 recommendedPodcastsState = state.recommendedPodcastsState,
             )
 
             trendingPodcastsSection(
-                dispatchIntent = viewModel::dispatchIntent,
+                dispatchEvent = viewModel::dispatchEvent,
                 selectableCategories = state.selectableCategories,
                 trendingPodcastsState = state.trendingPodcastsState,
             )

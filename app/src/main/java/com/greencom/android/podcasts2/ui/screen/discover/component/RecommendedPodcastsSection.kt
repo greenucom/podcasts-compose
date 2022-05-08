@@ -21,7 +21,7 @@ import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectEnd
 import com.greencom.android.podcasts2.ui.common.placeholderLoadingEffectStart
 import com.greencom.android.podcasts2.ui.common.preview.PodcastListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.screen.discover.DiscoverRecommendedPodcastsState
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverUserIntent
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewEvent
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 
 private const val KeyRecommendedPodcastsSection = "RecommendedPodcastsSection"
@@ -33,7 +33,7 @@ private val Colors.podcastCardPlaceholderLoadingEffectEnd: Color
     get() = if (isLight) placeholderLoadingEffectEnd else PodcastCardPlaceholderLoadingEffectEndDark
 
 fun LazyListScope.recommendedPodcastsSection(
-    dispatchIntent: (DiscoverUserIntent) -> Unit,
+    dispatchEvent: (DiscoverViewEvent) -> Unit,
     innerLazyListState: LazyListState,
     recommendedPodcastsState: DiscoverRecommendedPodcastsState,
     modifier: Modifier = Modifier,
@@ -79,8 +79,8 @@ fun LazyListScope.recommendedPodcastsSection(
                             PodcastCard(
                                 podcast = podcast,
                                 onPodcastClicked = {
-                                    val intent = DiscoverUserIntent.ClickPodcast(it)
-                                    dispatchIntent(intent)
+                                    val event = DiscoverViewEvent.ClickPodcast(it)
+                                    dispatchEvent(event)
                                 },
                             )
                         }
@@ -112,7 +112,7 @@ private fun Light(
             val recommendedPodcastsState = DiscoverRecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
-                    dispatchIntent = {},
+                    dispatchEvent = {},
                     innerLazyListState = innerLazyListState,
                     recommendedPodcastsState = recommendedPodcastsState,
                 )
@@ -137,7 +137,7 @@ private fun Dark(
             val recommendedPodcastsState = DiscoverRecommendedPodcastsState.Success(podcasts)
             LazyColumn {
                 recommendedPodcastsSection(
-                    dispatchIntent = {},
+                    dispatchEvent = {},
                     innerLazyListState = innerLazyListState,
                     recommendedPodcastsState = recommendedPodcastsState,
                 )
