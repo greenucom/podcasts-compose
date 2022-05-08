@@ -27,6 +27,8 @@ class DiscoverViewModel @Inject constructor(
         DiscoverViewEvent.PodcastScreenShown -> reducePodcastScreenShown()
         is DiscoverViewEvent.ChangeSubscription -> reduceChangeSubscription(event.podcast)
         DiscoverViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        DiscoverViewEvent.ShowSearchScreen -> reduceShowSearchScreen()
+        DiscoverViewEvent.SearchScreenShown -> reduceSearchScreenShown()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
@@ -118,6 +120,14 @@ class DiscoverViewModel @Inject constructor(
             .filter { it.isSelected }
             .map { it.item }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
+    }
+
+    private fun reduceShowSearchScreen() {
+        updateState { it.copy(showSearchScreen = true) }
+    }
+
+    private fun reduceSearchScreenShown() {
+        updateState { it.copy(showSearchScreen = false) }
     }
 
     companion object {

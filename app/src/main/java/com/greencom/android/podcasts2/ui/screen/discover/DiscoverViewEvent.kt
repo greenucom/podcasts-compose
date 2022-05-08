@@ -10,4 +10,6 @@ sealed interface DiscoverViewEvent : Event {
     object PodcastScreenShown : DiscoverViewEvent
     class ChangeSubscription(val podcast: Podcast) : DiscoverViewEvent
     object RefreshTrendingPodcasts : DiscoverViewEvent
+    object ShowSearchScreen : DiscoverViewEvent
+    object SearchScreenShown : DiscoverViewEvent
 }

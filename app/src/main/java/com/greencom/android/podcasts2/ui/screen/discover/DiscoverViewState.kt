@@ -12,6 +12,7 @@ data class DiscoverViewState(
     val trendingPodcastsState: DiscoverTrendingPodcastsState =
         DiscoverTrendingPodcastsState.Loading,
     val showPodcastScreen: Podcast? = null,
+    val showSearchScreen: Boolean = false,
 ) : State
 
 sealed interface DiscoverRecommendedPodcastsState {

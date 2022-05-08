@@ -20,6 +20,7 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodca
 fun DiscoverScreen(
     navigateToPodcastScreen: (Podcast) -> Unit,
     onSearchClicked: () -> Unit,
+    navigateToSearchScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -42,10 +43,23 @@ fun DiscoverScreen(
         viewModel.dispatchEvent(event)
     }
 
+    if (state.showSearchScreen) {
+        navigateToSearchScreen()
+        val event = DiscoverViewEvent.SearchScreenShown
+        viewModel.dispatchEvent(event)
+    }
+
     Scaffold(
         modifier = modifier,
         scaffoldState = screenState.scaffoldState,
-        topBar = { DiscoverTopBar(onSearchClicked = onSearchClicked) },
+        topBar = {
+            DiscoverTopBar(
+                onSearchClicked = {
+                    val event = DiscoverViewEvent.ShowSearchScreen
+                    viewModel.dispatchEvent(event)
+                },
+            )
+        },
     ) { paddingValues ->
 
         LazyColumn(

@@ -33,6 +33,7 @@ fun NavGraphBuilder.discoverNavGraph(
             DiscoverScreen(
                 navigateToPodcastScreen = navigateToPodcastScreen,
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
+                navigateToSearchScreen = { navController.navigate(Screen.Search.route) },
             )
         }
 
