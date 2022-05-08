@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 abstract class MviViewModel<ViewState : State, UserIntent : Intent, ViewSideEffect : SideEffect> :
     ViewModel(), Model<ViewState, UserIntent, ViewSideEffect> {
@@ -28,7 +29,13 @@ abstract class MviViewModel<ViewState : State, UserIntent : Intent, ViewSideEffe
     }
 
     init {
+        Timber.d("${this.javaClass.simpleName} init")
         consumeIntents()
+    }
+
+    override fun onCleared() {
+        Timber.d("${this.javaClass.simpleName} cleared")
+        super.onCleared()
     }
 
     private fun consumeIntents() = viewModelScope.launch {
