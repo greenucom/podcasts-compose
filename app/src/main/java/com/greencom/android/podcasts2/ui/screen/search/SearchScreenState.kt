@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -28,31 +30,26 @@ class SearchScreenState(
     val keyboardController: SoftwareKeyboardController?,
 ) {
 
-    private var onScrollJob: Job? = null
+    private val onScrollJob = MutableStateFlow<Job?>(null)
 
-    fun handleViewEvent(event: SearchViewModel.ViewEvent) {
-        when (event) {
-            SearchViewModel.ViewEvent.RequestFocusForSearchField -> {
-                searchFieldFocusRequester.requestFocus()
-            }
-
-            SearchViewModel.ViewEvent.ClearFocusForSearchField -> focusManager.clearFocus()
+    fun handleSideEffect(sideEffect: SearchViewSideEffect) = when (sideEffect) {
+        SearchViewSideEffect.RequestSearchFieldFocus -> {
+            searchFieldFocusRequester.requestFocus()
+            keyboardController?.show()
         }
+
+        SearchViewSideEffect.ClearSearchFieldFocus -> focusManager.clearFocus()
     }
 
     fun onScroll() {
-        if (onScrollJob?.isCompleted != false) {
-            onScrollJob = coroutineScope.launch {
-                focusManager.clearFocus()
-                delay(OnScrollRepetitionsDelay)
+        if (onScrollJob.value?.isCompleted != false) {
+            onScrollJob.update {
+                coroutineScope.launch {
+                    focusManager.clearFocus()
+                    delay(OnScrollRepetitionsDelay)
+                }
             }
         }
-    }
-
-    fun onBottomNavBarItemReselected(): Boolean {
-        searchFieldFocusRequester.requestFocus()
-        keyboardController?.show()
-        return true
     }
 
     companion object {

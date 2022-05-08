@@ -38,22 +38,29 @@ private const val LoadingPlaceholderCount = 5
 fun SearchScreen(
     navigateToPodcastScreen: (Podcast) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel(),
+    viewModel: SearchMviViewModel = hiltViewModel(),
 ) {
+
+    SpecificScreenBehavior {
+        onBottomNavBarItemReselected = {
+            val event = SearchViewEvent.RequestSearchFieldFocus
+            viewModel.dispatchEvent(event)
+            true
+        }
+    }
 
     val screenState = rememberSearchScreenState()
 
-    SpecificScreenBehavior {
-        onBottomNavBarItemReselected = { screenState.onBottomNavBarItemReselected() }
-    }
-
-    val viewState by viewModel.viewState.collectAsState()
-    val query by viewModel.query.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.viewEvents.collect {
-            screenState.handleViewEvent(it)
-        }
+        viewModel.sideEffects.collect(screenState::handleSideEffect)
+    }
+
+    state.showPodcastScreen?.let {
+        navigateToPodcastScreen(it)
+        val event = SearchViewEvent.PodcastScreenShown
+        viewModel.dispatchEvent(event)
     }
 
     Scaffold(
@@ -61,10 +68,19 @@ fun SearchScreen(
         topBar = {
             SearchTopBar(
                 modifier = modifier.focusRequester(screenState.searchFieldFocusRequester),
-                query = query,
-                onQueryChanged = viewModel::onQueryChanged,
-                onImeSearch = viewModel::onImeSearch,
-                onClearQuery = viewModel::onClearQuery,
+                query = state.query,
+                onQueryChanged = {
+                    val event = SearchViewEvent.QueryChanged(it)
+                    viewModel.dispatchEvent(event)
+                },
+                onImeSearch = {
+                    val event = SearchViewEvent.SearchPodcasts
+                    viewModel.dispatchEvent(event)
+                },
+                onClearQuery = {
+                    val event = SearchViewEvent.ClearQuery
+                    viewModel.dispatchEvent(event)
+                },
             )
         },
     ) { paddingValues ->
@@ -78,18 +94,24 @@ fun SearchScreen(
             state = screenState.searchResultListState,
             contentPadding = paddingValues,
         ) {
-            viewState.let { state ->
+            state.resultState.let { state ->
                 when (state) {
 
-                    is SearchViewModel.ViewState.Success -> {
+                    is SearchResultState.Success -> {
                         itemsIndexed(
                             items = state.podcasts,
                             key = { _, podcast -> podcast.id },
                         ) { index, podcast ->
                             PodcastItem(
                                 podcast = podcast,
-                                onPodcastClicked = viewModel::onPodcastClicked,
-                                onSubscribedChanged = viewModel::onSubscribedChanged,
+                                onPodcastClicked = {
+                                    val event = SearchViewEvent.ShowPodcastScreen(it)
+                                    viewModel.dispatchEvent(event)
+                                },
+                                onSubscribedChanged = {
+                                    val event = SearchViewEvent.ChangeSubscription(it)
+                                    viewModel.dispatchEvent(event)
+                                },
                             )
 
                             if (index != state.podcasts.lastIndex) {
@@ -98,7 +120,7 @@ fun SearchScreen(
                         }
                     }
 
-                    SearchViewModel.ViewState.Loading -> {
+                    SearchResultState.Loading -> {
                         item(key = KeyLoading) {
                             Column {
                                 val placeholderLoadingColor by animatePlaceholderLoadingEffectColor()
@@ -113,17 +135,20 @@ fun SearchScreen(
                         }
                     }
 
-                    SearchViewModel.ViewState.Empty -> {
+                    SearchResultState.Empty -> {
                         item(key = KeyEmpty) {
                             SearchEmptyMessage(modifier = Modifier.padding(vertical = 32.dp))
                         }
                     }
 
-                    SearchViewModel.ViewState.Error -> {
+                    SearchResultState.Error -> {
                         item(key = KeyError) {
                             ErrorMessage(
                                 modifier = Modifier.padding(vertical = 32.dp),
-                                onTryAgainClicked = viewModel::onTryAgainClicked,
+                                onTryAgainClicked = {
+                                    val event = SearchViewEvent.SearchPodcasts
+                                    viewModel.dispatchEvent(event)
+                                },
                             )
                         }
                     }
