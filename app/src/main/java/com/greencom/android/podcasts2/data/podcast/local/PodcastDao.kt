@@ -61,9 +61,9 @@ abstract class PodcastDao {
         FROM Podcast
         WHERE podcast_id = :id
     """)
-    protected abstract fun getPodcastByIdFlowRaw(id: Long): Flow<Podcast?>
+    protected abstract fun getPodcastByIdFlowRaw(id: Long): Flow<PodcastEntity?>
 
-    fun getPodcastByIdFlow(id: Long): Flow<Podcast?> =
+    fun getPodcastByIdFlow(id: Long): Flow<PodcastEntity?> =
         getPodcastByIdFlowRaw(id).distinctUntilChanged()
 
     @Query("""
