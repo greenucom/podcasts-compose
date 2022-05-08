@@ -38,10 +38,6 @@ class DiscoverScreenState(
         return true
     }
 
-    fun handleViewEvent(event: DiscoverViewModel.ViewEvent) = when (event) {
-        is DiscoverViewModel.ViewEvent.ShowPodcast -> onPodcastClicked(event.podcast)
-    }
-
 }
 
 @Composable
