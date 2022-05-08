@@ -37,14 +37,12 @@ private const val LoadingPlaceholderCount = 5
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    onPodcastClicked: (Podcast) -> Unit,
+    navigateToPodcastScreen: (Podcast) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
 
-    val screenState = rememberSearchScreenState(
-        onPodcastClicked = onPodcastClicked,
-    )
+    val screenState = rememberSearchScreenState()
 
     SpecificScreenBehavior {
         ScreenBehavior(

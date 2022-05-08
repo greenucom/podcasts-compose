@@ -26,6 +26,7 @@ class DiscoverViewModel @Inject constructor(
         is DiscoverUserIntent.ClickPodcast -> reduceClickPodcast(intent.podcast)
         is DiscoverUserIntent.ChangeSubscription -> reduceChangeSubscription(intent.podcast)
         DiscoverUserIntent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        DiscoverUserIntent.PodcastClicked -> reducePodcastClicked()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
@@ -99,7 +100,7 @@ class DiscoverViewModel @Inject constructor(
 
     private suspend fun reduceClickPodcast(podcast: Podcast) {
         interactor.savePodcastUseCase(podcast)
-        // TODO: Navigation
+        updateState { it.copy(showPodcast = podcast) }
     }
 
     private suspend fun reduceChangeSubscription(podcast: Podcast) {
@@ -113,6 +114,10 @@ class DiscoverViewModel @Inject constructor(
             .filter { it.isSelected }
             .map { it.item }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
+    }
+
+    private fun reducePodcastClicked() {
+        updateState { it.copy(showPodcast = null) }
     }
 
     companion object {

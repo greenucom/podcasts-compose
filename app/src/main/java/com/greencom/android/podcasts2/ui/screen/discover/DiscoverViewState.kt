@@ -11,6 +11,7 @@ data class DiscoverViewState(
     val selectableCategories: List<SelectableItem<Category>> = emptyList(),
     val trendingPodcastsState: DiscoverTrendingPodcastsState =
         DiscoverTrendingPodcastsState.Loading,
+    val showPodcast: Podcast? = null,
 ) : State
 
 sealed interface DiscoverRecommendedPodcastsState {

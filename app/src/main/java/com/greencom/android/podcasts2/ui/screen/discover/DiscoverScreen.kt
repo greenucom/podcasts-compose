@@ -18,14 +18,13 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.trendingPodca
 
 @Composable
 fun DiscoverScreen(
-    onPodcastClicked: (Podcast) -> Unit,
+    navigateToPodcastScreen: (Podcast) -> Unit,
     onSearchClicked: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
 
     val screenState = rememberDiscoverScreenState(
-        onPodcastClicked = onPodcastClicked,
         onSearchClicked = onSearchClicked,
     )
 
@@ -36,6 +35,12 @@ fun DiscoverScreen(
     }
 
     val state by viewModel.state.collectAsState()
+
+    state.showPodcast?.let { podcast ->
+        navigateToPodcastScreen(podcast)
+        val intent = DiscoverUserIntent.PodcastClicked
+        viewModel.dispatchIntent(intent)
+    }
 
     Scaffold(
         modifier = modifier,

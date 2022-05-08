@@ -13,7 +13,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -21,7 +20,6 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 class SearchScreenState(
-    val onPodcastClicked: (Podcast) -> Unit,
     val scaffoldState: ScaffoldState,
     val searchResultListState: LazyListState,
     val coroutineScope: CoroutineScope,
@@ -39,8 +37,6 @@ class SearchScreenState(
             }
 
             SearchViewModel.ViewEvent.ClearFocusForSearchField -> focusManager.clearFocus()
-
-            is SearchViewModel.ViewEvent.ShowPodcast -> onPodcastClicked(event.podcast)
         }
     }
 
@@ -68,7 +64,6 @@ class SearchScreenState(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun rememberSearchScreenState(
-    onPodcastClicked: (Podcast) -> Unit,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     searchResultListState: LazyListState = rememberLazyListState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
@@ -76,11 +71,10 @@ fun rememberSearchScreenState(
     searchFieldFocusRequester: FocusRequester = remember { FocusRequester() },
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) = remember(
-    onPodcastClicked, scaffoldState, searchResultListState, coroutineScope, focusManager,
+    scaffoldState, searchResultListState, coroutineScope, focusManager,
     searchFieldFocusRequester, keyboardController,
 ) {
     SearchScreenState(
-        onPodcastClicked = onPodcastClicked,
         scaffoldState = scaffoldState,
         searchResultListState = searchResultListState,
         coroutineScope = coroutineScope,

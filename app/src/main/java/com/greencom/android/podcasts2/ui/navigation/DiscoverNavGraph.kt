@@ -31,13 +31,13 @@ fun NavGraphBuilder.discoverNavGraph(
 
         composable(Screen.Discover.route) {
             DiscoverScreen(
-                onPodcastClicked = navigateToPodcastScreen,
+                navigateToPodcastScreen = navigateToPodcastScreen,
                 onSearchClicked = { navController.navigate(Screen.Search.route) },
             )
         }
 
         composable(Screen.Search.route) {
-            SearchScreen(onPodcastClicked = navigateToPodcastScreen)
+            SearchScreen(navigateToPodcastScreen = navigateToPodcastScreen)
         }
 
         composable(

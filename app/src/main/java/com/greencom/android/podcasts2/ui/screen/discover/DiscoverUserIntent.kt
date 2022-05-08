@@ -9,4 +9,5 @@ sealed interface DiscoverUserIntent : Intent {
     class ClickPodcast(val podcast: Podcast) : DiscoverUserIntent
     class ChangeSubscription(val podcast: Podcast) : DiscoverUserIntent
     object RefreshTrendingPodcasts : DiscoverUserIntent
+    object PodcastClicked : DiscoverUserIntent
 }

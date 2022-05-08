@@ -7,13 +7,11 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class DiscoverScreenState(
-    val onPodcastClicked: (Podcast) -> Unit,
     val onSearchClicked: () -> Unit,
     val scaffoldState: ScaffoldState,
     val screenListState: LazyListState,
@@ -42,18 +40,16 @@ class DiscoverScreenState(
 
 @Composable
 fun rememberDiscoverScreenState(
-    onPodcastClicked: (Podcast) -> Unit,
     onSearchClicked: () -> Unit,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     screenLazyColumnState: LazyListState = rememberLazyListState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     recommendedPodcastsLazyListState: LazyListState = rememberLazyListState(),
 ) = remember(
-    onPodcastClicked, onSearchClicked, scaffoldState, screenLazyColumnState, coroutineScope,
+    onSearchClicked, scaffoldState, screenLazyColumnState, coroutineScope,
     recommendedPodcastsLazyListState,
 ) {
     DiscoverScreenState(
-        onPodcastClicked = onPodcastClicked,
         onSearchClicked = onSearchClicked,
         scaffoldState = scaffoldState,
         screenListState = screenLazyColumnState,
