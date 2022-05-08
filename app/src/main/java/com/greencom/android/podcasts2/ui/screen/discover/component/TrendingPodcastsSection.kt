@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectColor
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
@@ -29,7 +28,7 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionParameters
 import com.greencom.android.podcasts2.ui.common.preview.TrendingPodcastSectionPreviewParameterProvider
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverViewModel
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverMviViewModel
 import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
@@ -41,12 +40,9 @@ private const val PlaceholderCount = 5
 
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.trendingPodcastsSection(
+    dispatchIntent: (DiscoverMviViewModel.UserIntent) -> Unit,
     selectableCategories: List<SelectableItem<Category>>,
-    onCategoryClicked: (Category) -> Unit,
-    trendingPodcastsState: DiscoverViewModel.TrendingPodcastsState,
-    onPodcastClicked: (Podcast) -> Unit,
-    onSubscribedChanged: (Podcast) -> Unit,
-    onTryAgainClicked: () -> Unit,
+    trendingPodcastsState: DiscoverMviViewModel.TrendingPodcastsState,
 ) {
     item(KeyHeader) {
         Text(
@@ -61,13 +57,16 @@ fun LazyListScope.trendingPodcastsSection(
     stickyHeader(KeyCategorySelector) {
         TrendingCategorySelector(
             selectableCategories = selectableCategories,
-            onCategoryClicked = onCategoryClicked,
+            onCategoryClicked = {
+                val intent = DiscoverMviViewModel.UserIntent.ToggleSelectableCategory(it)
+                dispatchIntent(intent)
+            },
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 2.dp),
         )
     }
 
     when (trendingPodcastsState) {
-        is DiscoverViewModel.TrendingPodcastsState.Success -> {
+        is DiscoverMviViewModel.TrendingPodcastsState.Success -> {
             itemsIndexed(
                 items = trendingPodcastsState.podcasts,
                 key = { _, podcast -> "PodcastItem ${podcast.id}" }
@@ -75,8 +74,14 @@ fun LazyListScope.trendingPodcastsSection(
 
                 PodcastItem(
                     podcast = podcast,
-                    onPodcastClicked = onPodcastClicked,
-                    onSubscribedChanged = onSubscribedChanged,
+                    onPodcastClicked = {
+                        val intent = DiscoverMviViewModel.UserIntent.ClickPodcast(it)
+                        dispatchIntent(intent)
+                    },
+                    onSubscribedChanged = {
+                        val intent = DiscoverMviViewModel.UserIntent.ChangeSubscription(it)
+                        dispatchIntent(intent)
+                    },
                 )
 
                 if (index != trendingPodcastsState.podcasts.lastIndex) {
@@ -85,7 +90,7 @@ fun LazyListScope.trendingPodcastsSection(
             }
         }
 
-        DiscoverViewModel.TrendingPodcastsState.Loading -> {
+        DiscoverMviViewModel.TrendingPodcastsState.Loading -> {
             item(KeyPlaceholders) {
                 val placeholderLoadingColor by animatePlaceholderLoadingEffectColor()
 
@@ -101,11 +106,13 @@ fun LazyListScope.trendingPodcastsSection(
             }
         }
 
-        DiscoverViewModel.TrendingPodcastsState.Error -> {
+        DiscoverMviViewModel.TrendingPodcastsState.Error -> {
             item(KeyError) {
                 ErrorMessage(
                     modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
-                    onTryAgainClicked = onTryAgainClicked,
+                    onTryAgainClicked = {
+                        // TODO
+                    },
                 )
             }
         }
@@ -121,15 +128,12 @@ private fun Light(
     PodcastsComposeTheme {
         Surface {
             val trendingPodcastsState =
-                DiscoverViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
+                DiscoverMviViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
+                    dispatchIntent = {},
                     selectableCategories = parameters.selectableCategories,
-                    onCategoryClicked = {},
                     trendingPodcastsState = trendingPodcastsState,
-                    onPodcastClicked = {},
-                    onSubscribedChanged = {},
-                    onTryAgainClicked = {},
                 )
             }
         }
@@ -149,15 +153,12 @@ private fun Dark(
     PodcastsComposeTheme {
         Surface {
             val trendingPodcastsState =
-                DiscoverViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
+                DiscoverMviViewModel.TrendingPodcastsState.Success(parameters.trendingPodcasts)
             LazyColumn {
                 trendingPodcastsSection(
+                    dispatchIntent = {},
                     selectableCategories = parameters.selectableCategories,
-                    onCategoryClicked = {},
                     trendingPodcastsState = trendingPodcastsState,
-                    onPodcastClicked = {},
-                    onSubscribedChanged = {},
-                    onTryAgainClicked = {},
                 )
             }
         }
