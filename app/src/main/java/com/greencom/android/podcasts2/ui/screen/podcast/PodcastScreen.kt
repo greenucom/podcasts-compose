@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.BottomNavBarState
 import com.greencom.android.podcasts2.ui.common.component.TopAppBarCustomWithBackButton
-import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.podcast.component.PodcastHeader
 
@@ -32,9 +31,7 @@ fun PodcastScreen(
     val screenState = rememberPodcastScreenState()
 
     SpecificScreenBehavior {
-        ScreenBehavior(
-            bottomNavBarState = BottomNavBarState.Gone,
-        )
+        bottomNavBarState = BottomNavBarState.Gone
     }
 
     val viewState by viewModel.viewState.collectAsState()

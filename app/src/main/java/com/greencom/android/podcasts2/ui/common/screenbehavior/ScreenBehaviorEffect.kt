@@ -4,10 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 
 @Composable
-fun SpecificScreenBehavior(screenBehaviorBuilder: (() -> ScreenBehavior)? = null) {
+fun SpecificScreenBehavior(builderAction: (ScreenBehaviorBuilder.() -> Unit)? = null) {
     val screenBehaviorController = LocalScreenBehaviorController.current
     DisposableEffect(Unit) {
-        val screenBehavior = screenBehaviorBuilder?.invoke() ?: ScreenBehavior.Default
+        val screenBehavior = if (builderAction != null) {
+            buildScreenBehavior(builderAction)
+        } else {
+            ScreenBehavior.Default
+        }
         screenBehaviorController.set(screenBehavior)
 
         onDispose { screenBehaviorController.remove(screenBehavior) }

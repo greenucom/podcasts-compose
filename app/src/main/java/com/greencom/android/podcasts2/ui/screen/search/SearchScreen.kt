@@ -22,7 +22,6 @@ import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingEffectC
 import com.greencom.android.podcasts2.ui.common.component.ErrorMessage
 import com.greencom.android.podcasts2.ui.common.component.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastItemPlaceholder
-import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchEmptyMessage
 import com.greencom.android.podcasts2.ui.screen.search.component.SearchTopBar
@@ -45,9 +44,7 @@ fun SearchScreen(
     val screenState = rememberSearchScreenState()
 
     SpecificScreenBehavior {
-        ScreenBehavior(
-            onBottomNavBarItemReselected = { screenState.onBottomNavBarItemReselected() },
-        )
+        onBottomNavBarItemReselected = { screenState.onBottomNavBarItemReselected() }
     }
 
     val viewState by viewModel.viewState.collectAsState()
