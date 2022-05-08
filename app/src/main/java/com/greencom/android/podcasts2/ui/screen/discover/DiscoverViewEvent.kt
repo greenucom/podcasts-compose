@@ -6,8 +6,8 @@ import com.greencom.android.podcasts2.ui.common.mvi.Event
 
 sealed interface DiscoverViewEvent : Event {
     class ToggleSelectableCategory(val category: Category) : DiscoverViewEvent
-    class ShowPodcast(val podcast: Podcast) : DiscoverViewEvent
+    class ShowPodcastScreen(val podcast: Podcast) : DiscoverViewEvent
+    object PodcastScreenShown : DiscoverViewEvent
     class ChangeSubscription(val podcast: Podcast) : DiscoverViewEvent
     object RefreshTrendingPodcasts : DiscoverViewEvent
-    object PodcastShown : DiscoverViewEvent
 }

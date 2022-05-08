@@ -79,7 +79,7 @@ fun LazyListScope.recommendedPodcastsSection(
                             PodcastCard(
                                 podcast = podcast,
                                 onPodcastClicked = {
-                                    val event = DiscoverViewEvent.ShowPodcast(it)
+                                    val event = DiscoverViewEvent.ShowPodcastScreen(it)
                                     dispatchEvent(event)
                                 },
                             )

@@ -23,10 +23,10 @@ class DiscoverViewModel @Inject constructor(
 
     override suspend fun handleEvent(event: DiscoverViewEvent) = when (event) {
         is DiscoverViewEvent.ToggleSelectableCategory -> reduceToggleSelectableCategory(event.category)
-        is DiscoverViewEvent.ShowPodcast -> reduceShowPodcast(event.podcast)
+        is DiscoverViewEvent.ShowPodcastScreen -> reduceShowPodcastScreen(event.podcast)
+        DiscoverViewEvent.PodcastScreenShown -> reducePodcastScreenShown()
         is DiscoverViewEvent.ChangeSubscription -> reduceChangeSubscription(event.podcast)
         DiscoverViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
-        DiscoverViewEvent.PodcastShown -> reducePodcastShown()
     }
 
     private val requestTrendingPodcastsJob = MutableStateFlow<Job?>(null)
@@ -98,9 +98,13 @@ class DiscoverViewModel @Inject constructor(
         interactor.toggleSelectableTrendingCategoryUseCase(category)
     }
 
-    private suspend fun reduceShowPodcast(podcast: Podcast) {
+    private suspend fun reduceShowPodcastScreen(podcast: Podcast) {
         interactor.savePodcastUseCase(podcast)
-        updateState { it.copy(showPodcast = podcast) }
+        updateState { it.copy(showPodcastScreen = podcast) }
+    }
+
+    private fun reducePodcastScreenShown() {
+        updateState { it.copy(showPodcastScreen = null) }
     }
 
     private suspend fun reduceChangeSubscription(podcast: Podcast) {
@@ -114,10 +118,6 @@ class DiscoverViewModel @Inject constructor(
             .filter { it.isSelected }
             .map { it.item }
         requestTrendingPodcastsForSelectedCategories(selectedCategories)
-    }
-
-    private fun reducePodcastShown() {
-        updateState { it.copy(showPodcast = null) }
     }
 
     companion object {
