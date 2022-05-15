@@ -6,7 +6,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -34,8 +33,8 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     }
 
     override fun onCleared() {
-        Timber.d("${this.javaClass.simpleName} cleared")
         super.onCleared()
+        Timber.d("${this.javaClass.simpleName} cleared")
     }
 
     private fun consumeEvents() = viewModelScope.launch {
@@ -43,10 +42,6 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     }
 
     protected abstract suspend fun handleEvent(event: ViewEvent)
-
-    protected inline fun updateState(function: (ViewState) -> ViewState) {
-        _state.update(function)
-    }
 
     protected fun emitSideEffect(sideEffect: ViewSideEffect) {
         _sideEffects.trySend(sideEffect)

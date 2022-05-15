@@ -1,13 +1,13 @@
 package com.greencom.android.podcasts2.di
 
-import com.greencom.android.podcasts2.data.ApiAuthInterceptor
-import com.greencom.android.podcasts2.data.podcast.remote.PodcastService
+import com.greencom.android.podcasts2.data.PodcastIndexApiAuthInterceptor
 import com.greencom.android.podcasts2.utils.addLoggingInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -20,17 +20,11 @@ object NetworkModule {
 
     private const val BASE_URL = "https://api.podcastindex.org/api/1.0/"
 
-    @Provides
-    @Singleton
-    fun providePodcastService(retrofit: Retrofit): PodcastService {
-        return retrofit.create(PodcastService::class.java)
-    }
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideRetrofit(json: Json, httpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
-        @Suppress("EXPERIMENTAL_API_USAGE")
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(json.asConverterFactory(contentType))
@@ -40,9 +34,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(apiAuthInterceptor: ApiAuthInterceptor): OkHttpClient {
+    fun provideHttpClient(
+        podcastIndexApiAuthInterceptor: PodcastIndexApiAuthInterceptor,
+    ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(apiAuthInterceptor)
+            .addInterceptor(podcastIndexApiAuthInterceptor)
             .addLoggingInterceptor()
             .build()
     }

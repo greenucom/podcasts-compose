@@ -6,13 +6,13 @@ import okhttp3.Response
 import java.security.MessageDigest
 import javax.inject.Inject
 
-class ApiAuthInterceptor @Inject constructor(): Interceptor {
+class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
 
     private val apiKey = BuildConfig.apiKey
     private val apiSecret = BuildConfig.apiSecret
 
     private val version = BuildConfig.VERSION_NAME.takeWhile { it.isDigit() || it == '.' }
-    private var userAgent = createUserAgent(version)
+    private var userAgent = USER_AGENT_FORMAT.format(version)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val epochSeconds = (System.currentTimeMillis() / SECOND_IN_MILLIS).toString()
@@ -26,15 +26,6 @@ class ApiAuthInterceptor @Inject constructor(): Interceptor {
             .build()
 
         return chain.proceed(request)
-    }
-
-    private fun createUserAgent(version: String): String {
-        return USER_AGENT_FORMAT.format(
-            USER_AGENT_NAME,
-            version,
-            USER_AGENT_LANGUAGE,
-            USER_AGENT_PLATFORM
-        )
     }
 
     private fun createAuthSha1Hash(epochSeconds: String): String {
@@ -51,8 +42,8 @@ class ApiAuthInterceptor @Inject constructor(): Interceptor {
         private const val USER_AGENT_LANGUAGE = "Language=Kotlin"
         private const val USER_AGENT_PLATFORM = "Platform=Android"
 
-        /** Format **NAME/VERSION (LANGUAGE; PLATFORM)** */
-        private const val USER_AGENT_FORMAT = "%1\$s/%2\$s (%3\$s; %4\$s)"
+        /** Format **Podcasts Compose/VERSION (Language=Kotlin; Platform=Android)** */
+        private const val USER_AGENT_FORMAT = "$USER_AGENT_NAME/%1\$s ($USER_AGENT_LANGUAGE; $USER_AGENT_PLATFORM)"
 
         private const val SECOND_IN_MILLIS = 1000
         private const val SHA_1 = "SHA-1"
