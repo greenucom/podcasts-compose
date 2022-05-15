@@ -5,15 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.greencom.android.podcasts2.ui.screen.app.AppScreen
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +28,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             TransparentSystemUi()
 
+            val windowSizeClass = calculateWindowSizeClass(activity = this)
             PodcastsTheme() {
                 Surface {
-
+                    AppScreen(windowSizeClass = windowSizeClass)
                 }
             }
         }

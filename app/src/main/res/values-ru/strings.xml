@@ -1,33 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Common -->
-    <string name="podcast_cover">Обложка подкаста</string>
-    <string name="subscribe">Подписаться</string>
-    <string name="subscribed">Вы подписаны</string>
-    <string name="something_went_wrong_check_internet_connection">
-        Что-то пошло не так…\nПроверьте интернет-соединение
-    </string>
-    <string name="try_again">Попробовать снова</string>
-    <string name="clear_search_field">Очистить поле поиска</string>
-    <string name="go_back">Вернуться назад</string>
-
-    <!-- BottomNavBar -->
+    <!-- Navigation items -->
     <string name="podcasts">Подкасты</string>
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
-    <string name="profile">Профиль</string>
-
-    <!-- Discover -->
-    <string name="search_for_podcasts">Поиск подкастов</string>
-    <string name="recommended">Рекомендации</string>
-    <string name="trending">Популярное</string>
-
-    <!-- Search -->
-    <string name="enter_query_to_start_searching">Введите запрос, чтобы начать поиск</string>
-
-    <!-- Podcast -->
-    <string name="season_d_episode_d">S%1$d E%2$d</string>
-    <string name="episode_d">E%1$d</string>
 
 </resources>

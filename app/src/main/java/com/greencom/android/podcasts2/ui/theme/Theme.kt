@@ -10,13 +10,17 @@ private val LightColorScheme = lightColorScheme()
 
 private val DarkColorScheme = darkColorScheme()
 
+private fun supportsDynamicColors(): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+}
+
 @Composable
 fun PodcastsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    val colorScheme = if (supportsDynamicColors()) {
         if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
         if (darkTheme) DarkColorScheme else LightColorScheme
