@@ -2,7 +2,7 @@ package com.greencom.android.podcasts2.di
 
 import com.greencom.android.podcasts2.data.ApiAuthInterceptor
 import com.greencom.android.podcasts2.data.podcast.remote.PodcastService
-import com.greencom.android.podcasts2.utils.addDebugLogger
+import com.greencom.android.podcasts2.utils.addLoggingInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -43,7 +43,7 @@ object NetworkModule {
     fun provideHttpClient(apiAuthInterceptor: ApiAuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(apiAuthInterceptor)
-            .addDebugLogger()
+            .addLoggingInterceptor()
             .build()
     }
 
