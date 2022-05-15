@@ -1,51 +1,29 @@
 package com.greencom.android.podcasts2.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
-private val LightColorPalette = lightColors(
-    primary = BluePrimaryLight,
-    primaryVariant = BluePrimaryLight,
-    secondary = BluePrimaryLight,
-    secondaryVariant = BluePrimaryLight,
-    background = SurfaceLight,
-    surface = SurfaceLight,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-)
+private val LightColorScheme = lightColorScheme()
 
-private val DarkColorPalette = darkColors(
-    primary = BluePrimaryDark,
-    primaryVariant = BluePrimaryDark,
-    secondary = BluePrimaryDark,
-    secondaryVariant = BluePrimaryDark,
-    background = SurfaceDark,
-    surface = SurfaceDark,
-    onPrimary = Color.Black,
-    onSecondary = Color.Black,
-    onBackground = Color.White,
-    onSurface = Color.White,
-)
+private val DarkColorScheme = darkColorScheme()
 
 @Composable
 fun PodcastsComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+    val context = LocalContext.current
+    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
-        LightColorPalette
+        if (darkTheme) DarkColorScheme else LightColorScheme
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colorScheme,
         typography = Typography,
         shapes = Shapes,
         content = content

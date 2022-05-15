@@ -165,8 +165,7 @@ kapt {
 dependencies {
 
     implementation(Dependencies.composeUi)
-    implementation(Dependencies.composeMaterial)
-//    implementation(Dependencies.composeMaterial3)
+    implementation(Dependencies.composeMaterial3)
     implementation(Dependencies.composeIconsExtended)
     implementation(Dependencies.composeUiToolingPreview)
     debugImplementation(Dependencies.composeUiTooling)
