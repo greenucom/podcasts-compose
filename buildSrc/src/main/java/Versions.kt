@@ -21,7 +21,7 @@ object Versions {
 
     const val lifecycle = "2.5.0-rc01"
 
-    const val navigation = "2.5.0-rc01"
+    const val navigation = "2.4.2"
 
     const val dataStore = "1.0.0"
 
