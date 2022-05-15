@@ -11,7 +11,7 @@ private val LightColorScheme = lightColorScheme()
 private val DarkColorScheme = darkColorScheme()
 
 @Composable
-fun PodcastsComposeTheme(
+fun PodcastsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

@@ -47,6 +47,9 @@ object Dependencies {
     const val hiltComposeNavigation =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltComposeNavigation}"
 
+    const val accompanistSystemUi =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
