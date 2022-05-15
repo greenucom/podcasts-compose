@@ -166,6 +166,7 @@ dependencies {
 
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeMaterial3)
+    implementation(Dependencies.composeMaterial3WindowSize)
     implementation(Dependencies.composeIconsExtended)
     implementation(Dependencies.composeUiToolingPreview)
     debugImplementation(Dependencies.composeUiTooling)

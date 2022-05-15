@@ -3,6 +3,8 @@ object Dependencies {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
+    const val composeMaterial3WindowSize =
+        "androidx.compose.material3:material3-window-size-class:${Versions.composeMaterial3}"
     const val composeIconsExtended =
         "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
@@ -21,8 +23,6 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleViewModelCompose =
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycle}"
-    const val lifecycleViewModelSavedState =
-        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
 
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigation}"
 
