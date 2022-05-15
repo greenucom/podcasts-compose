@@ -174,10 +174,10 @@ dependencies {
 
     implementation(Dependencies.coroutines)
 
-    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.core)
     implementation(Dependencies.coreSplashScreen)
     implementation(Dependencies.appCompat)
-    implementation(Dependencies.activityCompose)
+    implementation(Dependencies.activity)
 
     implementation(Dependencies.lifecycleRuntime)
     implementation(Dependencies.lifecycleViewModel)

@@ -11,10 +11,10 @@ object Dependencies {
 
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
 
-    const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
+    const val core = "androidx.core:core-ktx:${Versions.core}"
     const val coreSplashScreen = "androidx.core:core-splashscreen:${Versions.coreSplashScreen}"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-    const val activityCompose = "androidx.activity:activity-ktx:${Versions.activity}"
+    const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
 
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val lifecycleViewModel =
