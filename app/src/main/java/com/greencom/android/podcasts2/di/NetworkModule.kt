@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.di
 
 import com.greencom.android.podcasts2.data.PodcastIndexApiAuthInterceptor
+import com.greencom.android.podcasts2.data.podcast.remote.PodcastService
 import com.greencom.android.podcasts2.utils.addLoggingInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -19,6 +20,12 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val BASE_URL = "https://api.podcastindex.org/api/1.0/"
+
+    @Provides
+    @Singleton
+    fun providePodcastService(retrofit: Retrofit): PodcastService {
+        return retrofit.create(PodcastService::class.java)
+    }
 
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
