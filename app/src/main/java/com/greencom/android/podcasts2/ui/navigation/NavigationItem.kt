@@ -6,7 +6,7 @@ import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.PodcastsIcons
 
 val NavigationItems = listOf(
-    NavigationItem.Podcasts,
+    NavigationItem.MyPodcasts,
     NavigationItem.Discover,
     NavigationItem.Library,
 )
@@ -18,11 +18,11 @@ sealed class NavigationItem(
     val route: String,
 ) {
 
-    object Podcasts : NavigationItem(
-        labelResId = R.string.podcasts,
+    object MyPodcasts : NavigationItem(
+        labelResId = R.string.my_podcasts,
         iconSelectedResId = PodcastsIcons.GridViewFilled,
         iconUnselectedResId = PodcastsIcons.GridViewNotFilled,
-        route = "PodcastsGraph",
+        route = "MyPodcastsGraph",
     )
 
     object Discover : NavigationItem(

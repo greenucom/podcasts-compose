@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Navigation items -->
-    <string name="podcasts">Podcasts</string>
+    <string name="my_podcasts">My podcasts</string>
     <string name="discover">Discover</string>
     <string name="library">Library</string>
 
