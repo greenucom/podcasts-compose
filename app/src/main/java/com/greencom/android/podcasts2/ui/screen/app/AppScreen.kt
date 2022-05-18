@@ -9,8 +9,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.greencom.android.podcasts2.ui.screen.app.component.AppNavHost
-import com.greencom.android.podcasts2.ui.screen.app.component.NavigationBarCustomWithSystemBars
-import com.greencom.android.podcasts2.ui.screen.app.component.NavigationRailCustomWithSystemBars
+import com.greencom.android.podcasts2.ui.screen.app.component.NavigationBarCustomRespectingSystemNavigationBar
+import com.greencom.android.podcasts2.ui.screen.app.component.NavigationRailCustomRespectingSystemBars
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +25,7 @@ fun AppScreen(
         modifier = modifier,
         bottomBar = {
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                NavigationBarCustomWithSystemBars(screenState.navController)
+                NavigationBarCustomRespectingSystemNavigationBar(screenState.navController)
             }
         },
     ) {
@@ -35,7 +35,7 @@ fun AppScreen(
         } else {
             Row {
                 if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium) {
-                    NavigationRailCustomWithSystemBars(screenState.navController)
+                    NavigationRailCustomRespectingSystemBars(screenState.navController)
                 } else {
                     // TODO: Add ModalNavigationDrawer
                 }

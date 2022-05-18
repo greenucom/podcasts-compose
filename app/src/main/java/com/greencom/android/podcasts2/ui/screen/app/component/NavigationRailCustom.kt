@@ -48,7 +48,7 @@ fun NavigationRailCustom(
 }
 
 @Composable
-fun NavigationRailCustomWithSystemBars(
+fun NavigationRailCustomRespectingSystemBars(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {

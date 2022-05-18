@@ -52,7 +52,7 @@ fun NavigationBarCustom(
 }
 
 @Composable
-fun NavigationBarCustomWithSystemBars(
+fun NavigationBarCustomRespectingSystemNavigationBar(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
