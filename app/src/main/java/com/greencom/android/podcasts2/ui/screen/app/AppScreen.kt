@@ -34,11 +34,7 @@ fun AppScreen(
             AppNavHost(screenState.navController)
         } else {
             Row {
-                if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium) {
-                    NavigationRailCustomRespectingSystemBars(screenState.navController)
-                } else {
-                    // TODO: Add ModalNavigationDrawer
-                }
+                NavigationRailCustomRespectingSystemBars(screenState.navController)
                 AppNavHost(screenState.navController)
             }
         }
