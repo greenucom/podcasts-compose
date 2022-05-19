@@ -23,18 +23,13 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     private val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
     override val sideEffects = _sideEffects.receiveAsFlow()
 
-    override fun dispatchEvent(event: ViewEvent) {
-        _events.trySend(event)
-    }
-
     init {
         Timber.d("${this.javaClass.simpleName} init")
         consumeEvents()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Timber.d("${this.javaClass.simpleName} cleared")
+    override fun dispatchEvent(event: ViewEvent) {
+        _events.trySend(event)
     }
 
     private fun consumeEvents() = viewModelScope.launch {
@@ -45,6 +40,11 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
 
     protected fun emitSideEffect(sideEffect: ViewSideEffect) {
         _sideEffects.trySend(sideEffect)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Timber.d("${this.javaClass.simpleName} cleared")
     }
 
 }
