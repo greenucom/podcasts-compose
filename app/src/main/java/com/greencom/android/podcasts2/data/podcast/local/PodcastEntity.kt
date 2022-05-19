@@ -11,11 +11,11 @@ import com.greencom.android.podcasts2.data.category.local.dto.CategoryDto
 @TypeConverters(CategoryDtoListTypeConverter::class)
 data class PodcastEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: Long,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "author") val author: String,
-    @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "categories") val categories: List<CategoryDto>,
-    @ColumnInfo(name = "is_user_subscribed") val isUserSubscribed: Boolean,
+    @ColumnInfo(name = "podcast_id") val id: Long,
+    @ColumnInfo(name = "podcast_title") val title: String,
+    @ColumnInfo(name = "podcast_description") val description: String,
+    @ColumnInfo(name = "podcast_author") val author: String,
+    @ColumnInfo(name = "podcast_image_url") val imageUrl: String,
+    @ColumnInfo(name = "podcast_categories") val categories: List<CategoryDto>,
+    @ColumnInfo(name = "podcast_is_user_subscribed") val isUserSubscribed: Boolean,
 )
