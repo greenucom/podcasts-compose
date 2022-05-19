@@ -1,10 +1,13 @@
 package com.greencom.android.podcasts2.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.greencom.android.podcasts2.data.PodcastsDatabase
 import com.greencom.android.podcasts2.data.category.local.CategoryDtoListTypeConverter
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
+import com.greencom.android.podcasts2.utils.dataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +21,11 @@ import javax.inject.Singleton
 object PersistenceModule {
 
     private const val PODCASTS_DATABASE_NAME = "podcasts_database"
+
+    @Provides
+    fun provideDataStorePreferences(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.dataStorePreferences
+    }
 
     @Provides
     fun providePodcastDao(database: PodcastsDatabase): PodcastDao = database.podcastDao()
