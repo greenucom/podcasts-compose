@@ -18,4 +18,7 @@ sealed interface DiscoverViewState : State {
         val trendingPodcasts: List<Podcast>,
     ) : DiscoverViewState
 
+    @Immutable
+    object Error : DiscoverViewState
+
 }
