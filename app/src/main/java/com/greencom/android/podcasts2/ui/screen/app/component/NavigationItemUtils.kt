@@ -31,7 +31,7 @@ object NavigationItemUtils {
             val iconResId = if (selected) item.iconSelectedResId else item.iconUnselectedResId
             Icon(
                 painter = painterResource(iconResId),
-                contentDescription = stringResource(item.labelResId),
+                contentDescription = stringResource(id = item.labelResId),
             )
         }
     }
