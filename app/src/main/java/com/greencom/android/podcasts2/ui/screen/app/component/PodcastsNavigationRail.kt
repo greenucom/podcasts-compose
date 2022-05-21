@@ -2,16 +2,14 @@ package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.NavigationRail
+import androidx.compose.material.NavigationRailItem
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -19,14 +17,12 @@ import androidx.navigation.compose.rememberNavController
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
-private val NavigationBarTonalElevation = 3.dp
-
 @Composable
-fun NavigationBarCustom(
+fun PodcastsNavigationRail(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    NavigationBar(modifier = modifier) {
+    NavigationRail(modifier = modifier) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -34,7 +30,7 @@ fun NavigationBarCustom(
             val isSelected = currentDestination?.hierarchy
                 ?.any { it.route == item.route } == true
 
-            NavigationBarItem(
+            NavigationRailItem(
                 selected = isSelected,
                 onClick = {
                     NavigationItemUtils.onNavigationItemClicked(
@@ -52,20 +48,17 @@ fun NavigationBarCustom(
 }
 
 @Composable
-fun NavigationBarCustomRespectingWindowInsets(
+fun PodcastsNavigationRailRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        NavigationBarCustom(navController)
-
-        Surface(
-            modifier = Modifier
-                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                .fillMaxWidth(),
-            tonalElevation = NavigationBarTonalElevation,
-            content = {},
-        )
+    Row(modifier = modifier) {
+        Spacer(modifier = Modifier.windowInsetsStartWidth(WindowInsets.displayCutout))
+        Column {
+            Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
+            PodcastsNavigationRail(navController = navController)
+            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+        }
     }
 }
 
@@ -74,6 +67,6 @@ fun NavigationBarCustomRespectingWindowInsets(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun Preview() {
     PodcastsTheme {
-        NavigationBarCustom(navController = rememberNavController())
+        PodcastsNavigationRail(navController = rememberNavController())
     }
 }

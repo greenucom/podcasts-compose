@@ -10,7 +10,7 @@ import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
 import com.greencom.android.podcasts2.ui.navigation.podcastsNavGraph
 
 @Composable
-fun AppNavHost(
+fun PodcastsNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {

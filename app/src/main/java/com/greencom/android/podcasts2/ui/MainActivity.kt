@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -26,10 +27,10 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            TransparentSystemUi()
+            TransparentSystemBars()
 
             val windowSizeClass = calculateWindowSizeClass(activity = this)
-            PodcastsTheme() {
+            PodcastsTheme {
                 Surface {
                     AppScreen(windowSizeClass = windowSizeClass)
                 }
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TransparentSystemUi() {
+fun TransparentSystemBars() {
     val systemUiController = rememberSystemUiController()
     val darkIcons = !isSystemInDarkTheme()
 

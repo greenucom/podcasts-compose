@@ -20,22 +20,22 @@ sealed class NavigationItem(
 
     object Podcasts : NavigationItem(
         labelResId = R.string.podcasts,
-        iconSelectedResId = PodcastsIcons.GridViewFilled,
-        iconUnselectedResId = PodcastsIcons.GridViewNotFilled,
+        iconSelectedResId = PodcastsIcons.PodcastsFilled,
+        iconUnselectedResId = PodcastsIcons.PodcastsOutlined,
         route = "PodcastsGraph",
     )
 
     object Discover : NavigationItem(
         labelResId = R.string.discover,
-        iconSelectedResId = PodcastsIcons.AssistantFilled,
-        iconUnselectedResId = PodcastsIcons.AssistantNotFilled,
+        iconSelectedResId = PodcastsIcons.DiscoverFilled,
+        iconUnselectedResId = PodcastsIcons.DiscoverOutlined,
         route = "DiscoverGraph",
     )
 
     object Library : NavigationItem(
         labelResId = R.string.library,
-        iconSelectedResId = PodcastsIcons.LibraryMusicFilled,
-        iconUnselectedResId = PodcastsIcons.LibraryMusicNotFilled,
+        iconSelectedResId = PodcastsIcons.LibraryFilled,
+        iconUnselectedResId = PodcastsIcons.LibraryOutlined,
         route = "LibraryGraph",
     )
 

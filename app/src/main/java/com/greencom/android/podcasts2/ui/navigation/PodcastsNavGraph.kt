@@ -8,10 +8,10 @@ import androidx.navigation.navigation
 fun NavGraphBuilder.podcastsNavGraph(navController: NavHostController) {
     navigation(
         route = NavigationItem.Podcasts.route,
-        startDestination = Screen.MyPodcasts.scheme,
+        startDestination = Screen.Podcasts.scheme,
     ) {
 
-        composable(route = Screen.MyPodcasts.scheme) {
+        composable(route = Screen.Podcasts.scheme) {
 
         }
 

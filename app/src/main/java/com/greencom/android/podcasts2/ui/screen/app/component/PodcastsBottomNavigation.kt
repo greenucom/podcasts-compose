@@ -2,9 +2,9 @@ package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
-import androidx.compose.material3.Text
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,11 +18,11 @@ import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
 @Composable
-fun NavigationRailCustom(
+fun PodcastsBottomNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    NavigationRail(modifier = modifier) {
+    BottomNavigation(modifier = modifier) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -30,7 +30,7 @@ fun NavigationRailCustom(
             val isSelected = currentDestination?.hierarchy
                 ?.any { it.route == item.route } == true
 
-            NavigationRailItem(
+            BottomNavigationItem(
                 selected = isSelected,
                 onClick = {
                     NavigationItemUtils.onNavigationItemClicked(
@@ -48,17 +48,17 @@ fun NavigationRailCustom(
 }
 
 @Composable
-fun NavigationRailCustomRespectingWindowInsets(
+fun PodcastsBottomNavigationRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier) {
-        Spacer(modifier = Modifier.windowInsetsStartWidth(WindowInsets.displayCutout))
-        Column {
-            Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-            NavigationRailCustom(navController)
-            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
-        }
+    Column(modifier = modifier) {
+        PodcastsBottomNavigation(navController = navController)
+        Spacer(
+            modifier = Modifier
+                .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                .fillMaxWidth()
+        )
     }
 }
 
@@ -67,6 +67,6 @@ fun NavigationRailCustomRespectingWindowInsets(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun Preview() {
     PodcastsTheme {
-        NavigationRailCustom(navController = rememberNavController())
+        PodcastsBottomNavigation(navController = rememberNavController())
     }
 }

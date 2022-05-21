@@ -4,7 +4,7 @@ sealed class Screen<Args>(val scheme: String) {
 
     abstract fun createRoute(args: Args): String
 
-    object MyPodcasts : Screen<Unit>("myPodcasts") {
+    object Podcasts : Screen<Unit>("podcasts") {
         override fun createRoute(args: Unit): String = scheme
     }
 

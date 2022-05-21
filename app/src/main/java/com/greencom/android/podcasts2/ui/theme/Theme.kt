@@ -1,35 +1,24 @@
 package com.greencom.android.podcasts2.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 
-private val LightColorScheme = lightColorScheme()
+private val LightColors = lightColors()
 
-private val DarkColorScheme = darkColorScheme()
-
-private fun supportsDynamicColors(): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-}
+private val DarkColors = darkColors()
 
 @Composable
 fun PodcastsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
-    val colorScheme = if (supportsDynamicColors()) {
-        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-    } else {
-        if (darkTheme) DarkColorScheme else LightColorScheme
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colors = if (darkTheme) DarkColors else LightColors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }
