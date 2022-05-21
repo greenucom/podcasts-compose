@@ -8,9 +8,14 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.ui.screen.app.component.AppNavHost
-import com.greencom.android.podcasts2.ui.screen.app.component.NavigationBarCustomRespectingSystemNavigationBar
-import com.greencom.android.podcasts2.ui.screen.app.component.NavigationRailCustomRespectingSystemBars
+import com.greencom.android.podcasts2.ui.screen.app.component.NavigationBarCustomRespectingWindowInsets
+import com.greencom.android.podcasts2.ui.screen.app.component.NavigationRailCustomRespectingWindowInsets
+import com.greencom.android.podcasts2.ui.screen.app.component.PermanentNavigationDrawerCustomRespectingWindowInsets
+
+private val ScreenWidthForPermanentNavigationDrawer = 1240.dp
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,17 +30,26 @@ fun AppScreen(
         modifier = modifier,
         bottomBar = {
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                NavigationBarCustomRespectingSystemNavigationBar(screenState.navController)
+                NavigationBarCustomRespectingWindowInsets(navController = screenState.navController)
             }
         },
     ) {
 
         if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-            AppNavHost(screenState.navController)
+            AppNavHost(navController = screenState.navController)
         } else {
-            Row {
-                NavigationRailCustomRespectingSystemBars(screenState.navController)
-                AppNavHost(screenState.navController)
+            val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
+            if (screenWidthDp < ScreenWidthForPermanentNavigationDrawer) {
+                Row {
+                    NavigationRailCustomRespectingWindowInsets(navController = screenState.navController)
+                    AppNavHost(navController = screenState.navController)
+                }
+            } else {
+                PermanentNavigationDrawerCustomRespectingWindowInsets(
+                    navController = screenState.navController,
+                ) {
+                    AppNavHost(navController = screenState.navController)
+                }
             }
         }
     }
