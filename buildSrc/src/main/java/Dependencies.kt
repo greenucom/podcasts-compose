@@ -36,11 +36,11 @@ object Dependencies {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitLoggingInterceptor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.retrofitLoggingInterceptor}"
-    const val retrofitSerializationConverter =
-        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerializationConverter}"
+    const val retrofitKotlinxSerializationConverter =
+        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitKotlinxSerializationConverter}"
 
-    const val serializationJson =
-        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serializationJson}"
+    const val kotlinxSerializationJson =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerializationJson}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"

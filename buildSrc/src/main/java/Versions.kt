@@ -17,7 +17,7 @@ object Versions {
     const val core = "1.8.0-rc02"
     const val coreSplashScreen = "1.0.0-rc01"
     const val appCompat = "1.4.1"
-    const val activity = "1.4.0"
+    const val activity = "1.5.0-rc01"
 
     const val lifecycle = "2.5.0-rc01"
 
@@ -29,23 +29,23 @@ object Versions {
 
     const val retrofit = "2.9.0"
     const val retrofitLoggingInterceptor = "4.9.0"
-    const val retrofitSerializationConverter = "0.8.0"
+    const val retrofitKotlinxSerializationConverter = "0.8.0"
 
-    const val serializationJson = "1.3.3"
+    const val kotlinxSerializationJson = "1.3.3"
 
     const val hilt = "2.42"
     const val hiltComposeNavigation = "1.0.0"
 
-    const val accompanist = "0.24.8-beta"
+    const val accompanist = "0.24.9-beta"
 
-    const val coil = "2.0.0"
+    const val coil = "2.1.0"
     const val timber = "5.0.1"
 
     const val leakCanary = "2.9.1"
 
     const val googleServices = "4.3.10"
     const val crashlyticsPlugin = "2.8.1"
-    const val firebaseBom = "30.0.1"
+    const val firebaseBom = "30.0.2"
 
     const val junit = "4.13.2"
     const val androidJunit = "1.1.3"

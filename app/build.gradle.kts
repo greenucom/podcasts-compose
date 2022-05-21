@@ -165,7 +165,7 @@ kapt {
 dependencies {
 
     implementation(Dependencies.composeUi)
-    implementation(Dependencies.composeMaterial3)
+    implementation(Dependencies.composeMaterial)
     implementation(Dependencies.composeMaterial3WindowSize)
     implementation(Dependencies.composeIconsExtended)
     implementation(Dependencies.composeUiToolingPreview)
@@ -193,9 +193,9 @@ dependencies {
 
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofitLoggingInterceptor)
-    implementation(Dependencies.retrofitSerializationConverter)
+    implementation(Dependencies.retrofitKotlinxSerializationConverter)
 
-    implementation(Dependencies.serializationJson)
+    implementation(Dependencies.kotlinxSerializationJson)
 
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)
