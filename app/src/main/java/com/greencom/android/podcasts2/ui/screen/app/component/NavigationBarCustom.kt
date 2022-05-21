@@ -45,14 +45,14 @@ fun NavigationBarCustom(
                 icon = {
                     NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
                 },
-                label = { Text(text = stringResource(item.labelResId)) },
+                label = { Text(text = stringResource(id = item.labelResId)) },
             )
         }
     }
 }
 
 @Composable
-fun NavigationBarCustomRespectingSystemNavigationBar(
+fun NavigationBarCustomRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {

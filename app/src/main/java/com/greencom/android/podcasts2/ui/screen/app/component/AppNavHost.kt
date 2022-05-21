@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
 import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
-import com.greencom.android.podcasts2.ui.navigation.myPodcastsNavGraph
+import com.greencom.android.podcasts2.ui.navigation.podcastsNavGraph
 
 @Composable
 fun AppNavHost(
@@ -17,10 +17,10 @@ fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = NavigationItem.MyPodcasts.route,
+        startDestination = NavigationItem.Podcasts.route,
     ) {
 
-        myPodcastsNavGraph(navController = navController)
+        podcastsNavGraph(navController = navController)
 
         discoverNavGraph(navController = navController)
 

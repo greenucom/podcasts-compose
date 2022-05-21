@@ -5,9 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 
-fun NavGraphBuilder.myPodcastsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.podcastsNavGraph(navController: NavHostController) {
     navigation(
-        route = NavigationItem.MyPodcasts.route,
+        route = NavigationItem.Podcasts.route,
         startDestination = Screen.MyPodcasts.scheme,
     ) {
 
