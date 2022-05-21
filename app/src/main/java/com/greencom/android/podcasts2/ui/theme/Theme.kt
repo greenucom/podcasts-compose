@@ -5,10 +5,33 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val LightColors = lightColors()
+private val LightColors = lightColors(
+    primary = BluePrimaryLight,
+    primaryVariant = BluePrimaryLight,
+    secondary = BluePrimaryLight,
+    secondaryVariant = BluePrimaryLight,
+    background = SurfaceLight,
+    surface = SurfaceLight,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+)
 
-private val DarkColors = darkColors()
+private val DarkColors = darkColors(
+    primary = BluePrimaryDark,
+    primaryVariant = BluePrimaryDark,
+    secondary = BluePrimaryDark,
+    secondaryVariant = BluePrimaryDark,
+    background = SurfaceDark,
+    surface = SurfaceDark,
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
+    onBackground = Color.White,
+    onSurface = Color.White,
+)
 
 @Composable
 fun PodcastsTheme(
