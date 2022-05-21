@@ -48,7 +48,8 @@ fun PodcastsBottomNavigation(
                     },
                     label = { Text(text = stringResource(id = item.labelResId)) },
                     selectedContentColor = MaterialTheme.colors.primary,
-                    unselectedContentColor = MaterialTheme.colors.onSurface,
+                    unselectedContentColor = MaterialTheme.colors.onSurface
+                        .copy(alpha = ContentAlpha.high),
                 )
             }
         }
