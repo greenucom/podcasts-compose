@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Navigation items -->
-    <string name="my_podcasts">Мои подкасты</string>
+    <string name="podcasts">Подкасты</string>
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 

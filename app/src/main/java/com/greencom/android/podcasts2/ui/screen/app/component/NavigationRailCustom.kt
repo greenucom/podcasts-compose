@@ -41,21 +41,24 @@ fun NavigationRailCustom(
                 icon = {
                     NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
                 },
-                label = { Text(text = stringResource(item.labelResId)) },
+                label = { Text(text = stringResource(id = item.labelResId)) },
             )
         }
     }
 }
 
 @Composable
-fun NavigationRailCustomRespectingSystemBars(
+fun NavigationRailCustomRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-        NavigationRailCustom(navController)
-        Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+    Row(modifier = modifier) {
+        Spacer(modifier = Modifier.windowInsetsStartWidth(WindowInsets.displayCutout))
+        Column {
+            Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
+            NavigationRailCustom(navController)
+            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+        }
     }
 }
 
