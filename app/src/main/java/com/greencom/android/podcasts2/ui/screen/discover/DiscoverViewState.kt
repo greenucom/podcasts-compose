@@ -1,24 +1,21 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.compose.runtime.Immutable
-import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.mvi.State
+import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
+import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 
-@Immutable
 sealed interface DiscoverViewState : State {
 
-    @Immutable
     object InitialLoading : DiscoverViewState
 
     @Immutable
     data class Success(
-        val selectableTrendingCategories: List<SelectableItem<Category>>,
-        val trendingPodcasts: List<Podcast>,
+        val selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
+        val trendingPodcasts: List<PodcastUiModel>,
     ) : DiscoverViewState
 
-    @Immutable
     object Error : DiscoverViewState
 
 }
