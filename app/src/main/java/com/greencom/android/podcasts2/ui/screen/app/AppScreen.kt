@@ -33,7 +33,7 @@ fun AppScreen(
                 navController = screenState.navController,
             )
         } else {
-            Row {
+            Row(modifier = Modifier.padding(paddingValues)) {
                 PodcastsNavigationRailRespectingWindowInsets(navController = screenState.navController)
                 PodcastsNavHost(navController = screenState.navController)
             }
