@@ -4,5 +4,5 @@ import com.greencom.android.podcasts2.domain.podcast.usecase.GetTrendingPodcasts
 import javax.inject.Inject
 
 class DiscoverInteractor @Inject constructor(
-    val getTrendingPodcastsUseCase: GetTrendingPodcastsUseCase,
+    val getTrendingPodcasts: GetTrendingPodcastsUseCase,
 )

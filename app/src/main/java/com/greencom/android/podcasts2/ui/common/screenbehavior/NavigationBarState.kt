@@ -1,5 +1,8 @@
 package com.greencom.android.podcasts2.ui.common.screenbehavior
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed class NavigationBarState(open val animateTransition: Boolean) {
 
     data class Visible(
