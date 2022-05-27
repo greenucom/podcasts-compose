@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+// TODO: Remove
 class GetSelectedTrendingCategoriesIdsUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val categoryRepository: CategoryRepository,
