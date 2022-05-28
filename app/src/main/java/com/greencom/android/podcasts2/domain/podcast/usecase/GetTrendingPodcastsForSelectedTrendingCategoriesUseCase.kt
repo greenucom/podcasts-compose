@@ -41,8 +41,8 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
         selectedCategories: List<Category>,
     ): Int {
         return if (selectedCategories.isNotEmpty()) {
-            (selectedCategories.size * TRENDING_PODCAST_COUNT_PER_CATEGORY)
-                .coerceIn(TRENDING_PODCAST_MIN_SIZE, TRENDING_PODCAST_MAX_SIZE)
+            val value = selectedCategories.size * TRENDING_PODCAST_COUNT_PER_CATEGORY
+            value.coerceIn(TRENDING_PODCAST_MIN_SIZE, TRENDING_PODCAST_MAX_SIZE)
         } else {
             TRENDING_PODCAST_MAX_SIZE
         }
