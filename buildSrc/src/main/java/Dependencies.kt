@@ -11,7 +11,7 @@ object Dependencies {
     const val composeJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     const val core = "androidx.core:core-ktx:${Versions.core}"
     const val coreSplashScreen = "androidx.core:core-splashscreen:${Versions.coreSplashScreen}"

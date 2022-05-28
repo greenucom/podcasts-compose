@@ -9,7 +9,7 @@ object Versions {
 
     const val androidGitVersion = "0.4.14"
 
-    const val coroutines = "1.6.1"
+    const val coroutines = "1.6.2"
 
     const val compose = "1.2.0-beta02"
     const val composeMaterial3 = "1.0.0-alpha12"
