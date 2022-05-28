@@ -7,13 +7,13 @@ import com.greencom.android.podcasts2.domain.category.Category
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class ToggleTrendingCategoryUseCase @Inject constructor(
+class ToggleSelectableTrendingCategoryUseCase @Inject constructor(
     @IODispatcher dispatcher: CoroutineDispatcher,
     private val categoryRepository: CategoryRepository,
 ) : UseCase<Category, Unit>(dispatcher) {
 
     override suspend fun execute(params: Category) {
-        categoryRepository.toggleTrendingCategory(params)
+        categoryRepository.toggleSelectableTrendingCategory(params)
     }
 
 }
