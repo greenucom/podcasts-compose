@@ -16,7 +16,6 @@ plugins {
 
 androidGitVersion {
     format = "%tag%"
-    hideBranches = listOf("demo")
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
