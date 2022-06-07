@@ -5,7 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 
 @Composable
 fun SpecificScreenBehavior(builderAction: (ScreenBehaviorBuilder.() -> Unit)) {
-    val screenBehaviorController = LocalScreenBehaviorController.current
+    val screenBehaviorController = LocalScreenBehaviorController.current ?: return
     DisposableEffect(Unit) {
         val screenBehavior = buildScreenBehavior(builderAction)
         screenBehaviorController.setScreenBehavior(screenBehavior)
@@ -16,7 +16,7 @@ fun SpecificScreenBehavior(builderAction: (ScreenBehaviorBuilder.() -> Unit)) {
 
 @Composable
 fun DefaultScreenBehavior() {
-    val screenBehaviorController = LocalScreenBehaviorController.current
+    val screenBehaviorController = LocalScreenBehaviorController.current ?: return
     DisposableEffect(Unit) {
         val defaultScreenBehavior = ScreenBehavior.Default
         screenBehaviorController.setScreenBehavior(defaultScreenBehavior)
