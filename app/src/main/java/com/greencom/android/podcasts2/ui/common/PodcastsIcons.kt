@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.ui.common
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material.icons.outlined.Search
 import com.greencom.android.podcasts2.R
 
@@ -13,4 +14,5 @@ object PodcastsIcons {
     const val LibraryOutlined = R.drawable.ic_library_outlined_24
 
     val Search = Icons.Outlined.Search
+    val Done = Icons.Outlined.Done
 }
