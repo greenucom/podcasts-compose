@@ -46,7 +46,7 @@ jobs:
       - name: Run unit tests and build release artifacts
         run: |
           ./gradlew test
-          ./gradlew assembleRelease --stacktrace -P.enableComposeCompilerReports=true --rerun-tasks
+          ./gradlew assembleRelease -P.enableComposeCompilerReports=true --rerun-tasks
           ./gradlew bundleRelease
 
       - name: Upload release APK
