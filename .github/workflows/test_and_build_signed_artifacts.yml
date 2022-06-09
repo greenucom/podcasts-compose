@@ -21,10 +21,10 @@ jobs:
 
     steps:
       - name: Checkout private repository with keystore
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           repository: greenucom/podcasts-compose-keystore
-          ref: development
+          token: KEYSTORE_ACCESS_TOKEN
           path: keystore
 
       - name: Checkout repository code
