@@ -42,7 +42,11 @@ println("Api keys exist: $apiKeysExist")
 android {
     compileSdk = Versions.compileSdk
 
-    val generatedVersionCode = androidGitVersion.code()
+    val generatedVersionCode = if (androidGitVersion.code() != 0) {
+        androidGitVersion.code()
+    } else {
+        1
+    }
     val generatedVersionName = androidGitVersion.name()
     println("Generated version code: $generatedVersionCode")
     println("Generated version name: $generatedVersionName")
