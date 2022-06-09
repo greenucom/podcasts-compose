@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: greenucom/podcasts-compose-keystore
+          ref: 'development'
           token: KEYSTORE_ACCESS_TOKEN
           path: keystore
 
