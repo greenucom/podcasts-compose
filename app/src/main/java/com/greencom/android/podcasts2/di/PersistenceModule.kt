@@ -5,9 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.greencom.android.podcasts2.data.PodcastsDatabase
-import com.greencom.android.podcasts2.data.category.local.CategoryEntityListTypeConverter
+import com.greencom.android.podcasts2.data.category.local.CategoryDtoListTypeConverter
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
-import com.greencom.android.podcasts2.utils.dataStore
+import com.greencom.android.podcasts2.utils.dataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PersistenceModule {
 
-    private const val DATABASE_NAME = "podcasts_compose_database"
+    private const val PODCASTS_DATABASE_NAME = "podcasts_database"
+
+    @Provides
+    fun provideDataStorePreferences(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.dataStorePreferences
+    }
 
     @Provides
     fun providePodcastDao(database: PodcastsDatabase): PodcastDao = database.podcastDao()
@@ -31,15 +36,10 @@ object PersistenceModule {
         @ApplicationContext context: Context,
         json: Json,
     ): PodcastsDatabase {
-        return Room.databaseBuilder(context, PodcastsDatabase::class.java, DATABASE_NAME)
-            .addTypeConverter(CategoryEntityListTypeConverter(json))
+        return Room.databaseBuilder(context, PodcastsDatabase::class.java, PODCASTS_DATABASE_NAME)
+            .addTypeConverter(CategoryDtoListTypeConverter(json))
             .fallbackToDestructiveMigration()
             .build()
-    }
-
-    @Provides
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.dataStore
     }
 
 }

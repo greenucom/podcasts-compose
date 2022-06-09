@@ -3,34 +3,35 @@ package com.greencom.android.podcasts2.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.greencom.android.podcasts2.ui.screen.app.AppScreen
-import com.greencom.android.podcasts2.ui.theme.PodcastsComposeTheme
+import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            PodcastsComposeTheme {
-                SystemUi()
+            TransparentSystemBars()
 
-                ProvideWindowInsets {
-                    Surface {
-                        AppScreen()
-                    }
+            val windowSizeClass = calculateWindowSizeClass(activity = this)
+            PodcastsTheme {
+                Surface {
+                    AppScreen(windowSizeClass = windowSizeClass)
                 }
             }
         }
@@ -38,14 +39,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun SystemUi() {
+fun TransparentSystemBars() {
     val systemUiController = rememberSystemUiController()
-    val systemUiColor = Color.Transparent
-    val systemUiDarkIcons = MaterialTheme.colors.isLight
+    val darkIcons = !isSystemInDarkTheme()
+
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = systemUiColor,
-            darkIcons = systemUiDarkIcons,
+            color = Color.Transparent,
+            darkIcons = darkIcons,
         )
     }
 }

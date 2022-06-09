@@ -5,25 +5,6 @@ import androidx.room.*
 @Dao
 abstract class PodcastDao {
 
-    @Query("DELETE FROM podcasts_temp")
-    protected abstract suspend fun clearTemp()
-
-    @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
-    protected abstract suspend fun insertToTemp(podcast: PodcastEntity)
-
-    @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
-    protected abstract suspend fun insertToTemp(podcasts: List<PodcastEntity>)
-
-    @Query("""
-        INSERT INTO podcasts (id, title, description, author, image_url, categories, is_subscribed)
-        SELECT tmp.id, tmp.title, tmp.description, tmp.author, tmp.image_url, tmp.categories, 
-            tmp.is_subscribed
-        FROM podcasts_temp tmp
-        LEFT JOIN podcasts ON tmp.id = podcasts.id 
-        WHERE podcasts.id IS NULL
-    """)
-    protected abstract suspend fun mergeTemp()
-
     @Transaction
     open suspend fun insert(podcast: PodcastEntity) {
         insertToTemp(podcast)
@@ -40,13 +21,35 @@ abstract class PodcastDao {
         clearTemp()
     }
 
+    @Query("SELECT podcast_id FROM Podcasts WHERE podcast_is_user_subscribed = 1")
+    abstract suspend fun getUserSubscriptionsIds(): List<Long>
+
+    @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
+    protected abstract suspend fun insertToTemp(podcast: PodcastEntity)
+
+    @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
+    protected abstract suspend fun insertToTemp(podcasts: List<PodcastEntity>)
+
+    @Query("""
+        INSERT INTO 
+            Podcasts (podcast_id, podcast_title, podcast_description, podcast_author, 
+                podcast_image_url, podcast_categories, podcast_is_user_subscribed)
+        SELECT 
+            Tmp.podcast_id, Tmp.podcast_title, Tmp.podcast_description, Tmp.podcast_author,
+                Tmp.podcast_image_url, Tmp.podcast_categories, Tmp.podcast_is_user_subscribed
+        FROM PodcastsTemp Tmp
+        LEFT JOIN Podcasts ON Tmp.podcast_id = Podcasts.podcast_id
+        WHERE Podcasts.podcast_id IS NULL
+    """)
+    protected abstract suspend fun mergeTemp()
+
     @Update
     protected abstract suspend fun update(podcast: PodcastEntity)
 
     @Update
     protected abstract suspend fun update(podcasts: List<PodcastEntity>)
 
-    @Query("SELECT id FROM podcasts WHERE is_subscribed = 1")
-    abstract suspend fun getSubscriptionIds(): List<Long>
+    @Query("DELETE FROM PodcastsTemp")
+    protected abstract suspend fun clearTemp()
 
 }

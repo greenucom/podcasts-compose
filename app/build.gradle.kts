@@ -1,5 +1,4 @@
 import java.io.FileInputStream
-import java.io.IOException
 import java.util.*
 
 plugins {
@@ -15,41 +14,47 @@ plugins {
 }
 
 androidGitVersion {
-    format = "%tag%"
-    hideBranches = listOf("demo")
+    format = "%tag%%-count%%-commit%%-dirty%"
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+val isBuildLocal = System.getenv("CI") == null
+
+
 val keystoreProperties = Properties()
-val keystoreExists = try {
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-    true
-} catch (e: IOException) {
-    false
+} else {
+    keystoreProperties["storeFile"] = System.getenv("KEYSTORE_FILE")
+    keystoreProperties["storePassword"] = System.getenv("KEYSTORE_PASSWORD")
+    keystoreProperties["keyAlias"] = System.getenv("KEYSTORE_SIGN_KEY_ALIAS")
+    keystoreProperties["keyPassword"] = System.getenv("KEYSTORE_SIGN_KEY_PASSWORD")
 }
-println("Keystore exists: $keystoreExists")
 
-val apiPropertiesFile = rootProject.file("api.properties")
-val apiProperties = Properties()
-val apiKeysExist = try {
-    apiProperties.load(FileInputStream(apiPropertiesFile))
-    true
-} catch (e: IOException) {
-    false
+
+val podcastIndexApiProperties = Properties()
+val podcastIndexApiPropertiesFile = rootProject.file("podcast_index_api.properties")
+if (podcastIndexApiPropertiesFile.exists()) {
+    podcastIndexApiProperties.load(FileInputStream(podcastIndexApiPropertiesFile))
+} else {
+    podcastIndexApiProperties["key"] = System.getenv("PODCAST_INDEX_API_KEY")
+    podcastIndexApiProperties["secretKey"] = System.getenv("PODCAST_INDEX_API_SECRET_KEY")
 }
-println("Api keys exist: $apiKeysExist")
+
 
 android {
     compileSdk = Versions.compileSdk
 
     val generatedVersionCode = androidGitVersion.code()
     val generatedVersionName = androidGitVersion.name()
+    val versionCodeValue = if (generatedVersionCode != 0) generatedVersionCode else 1
 
     defaultConfig {
         applicationId = "com.greencom.android.podcasts2"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
-        versionCode = generatedVersionCode
+        versionCode = versionCodeValue
         versionName = generatedVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -59,21 +64,12 @@ android {
         }
     }
 
-    applicationVariants.all {
-        outputs.all {
-            val variant = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            variant.outputFileName = "app.apk"
-        }
-    }
-
     signingConfigs {
-        if (keystoreExists) {
-            create("defaultConfigs") {
-                storeFile = file(keystoreProperties.getProperty("storeFile"))
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
-            }
+        create("defaultConfigs") {
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
 
@@ -85,41 +81,18 @@ android {
             versionNameSuffix = " debug"
         }
 
-        create("qa") {
-            resValue("string", "app_name", "Podcasts qa")
-            applicationIdSuffix = ".qa"
-            versionNameSuffix = " qa"
-            isMinifyEnabled = true
-        }
-
-        create("demo") {
-            resValue("string", "app_name", "Podcasts demo")
-            applicationIdSuffix = ".demo"
-            versionNameSuffix = " demo"
-            isMinifyEnabled = true
-        }
-
         getByName("release") {
             resValue("string", "app_name", "Podcasts")
             isMinifyEnabled = true
         }
 
         all {
-            if (keystoreExists) {
-                signingConfig = signingConfigs.getByName("defaultConfigs")
-            }
+            signingConfig = signingConfigs.getByName("defaultConfigs")
 
-            val apiKey: String
-            val apiSecret: String
-            if (apiKeysExist) {
-                apiKey = apiProperties.getProperty("apiKey", "")
-                apiSecret = apiProperties.getProperty("apiSecret", "")
-            } else {
-                apiKey = ""
-                apiSecret = ""
-            }
-            buildConfigField("String", "apiKey", "\"$apiKey\"")
-            buildConfigField("String", "apiSecret", "\"$apiSecret\"")
+            val podcastIndexApiKey = podcastIndexApiProperties.getProperty("key", "")
+            val podcastIndexApiSecretKey = podcastIndexApiProperties.getProperty("secretKey", "")
+            buildConfigField("String", "PODCAST_INDEX_API_KEY", "\"$podcastIndexApiKey\"")
+            buildConfigField("String", "PODCAST_INDEX_API_SECRET_KEY", "\"$podcastIndexApiSecretKey\"")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -156,6 +129,17 @@ android {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+
+    // Compose metrics
+    // ./gradlew assembleRelease -P.enableComposeCompilerReports=true --rerun-tasks
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${project.buildDir.absolutePath}/compose_metrics"
+    )
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${project.buildDir.absolutePath}/compose_metrics"
+    )
 }
 
 kapt {
@@ -166,7 +150,7 @@ dependencies {
 
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeMaterial)
-//    implementation(Dependencies.composeMaterial3)
+    implementation(Dependencies.composeMaterial3WindowSize)
     implementation(Dependencies.composeIconsExtended)
     implementation(Dependencies.composeUiToolingPreview)
     debugImplementation(Dependencies.composeUiTooling)
@@ -174,10 +158,10 @@ dependencies {
 
     implementation(Dependencies.coroutines)
 
-    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.core)
     implementation(Dependencies.coreSplashScreen)
     implementation(Dependencies.appCompat)
-    implementation(Dependencies.activityCompose)
+    implementation(Dependencies.activity)
 
     implementation(Dependencies.lifecycleRuntime)
     implementation(Dependencies.lifecycleViewModel)
@@ -193,18 +177,15 @@ dependencies {
 
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofitLoggingInterceptor)
-    implementation(Dependencies.retrofitSerializationConverter)
+    implementation(Dependencies.retrofitKotlinxSerializationConverter)
 
-    implementation(Dependencies.serializationJson)
+    implementation(Dependencies.kotlinxSerializationJson)
 
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltComposeNavigation)
 
     implementation(Dependencies.accompanistSystemUi)
-    implementation(Dependencies.accompanistInsets)
-//    implementation(Dependencies.accompanistInsetsUi)
-    implementation(Dependencies.accompanistSwipeRefresh)
 
     implementation(Dependencies.coil)
     implementation(Dependencies.timber)

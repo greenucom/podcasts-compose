@@ -1,11 +1,10 @@
 package com.greencom.android.podcasts2.data.podcast
 
 import com.greencom.android.podcasts2.data.podcast.local.PodcastDao
-import com.greencom.android.podcasts2.data.podcast.local.PodcastEntity
 import com.greencom.android.podcasts2.di.ApplicationScope
-import com.greencom.android.podcasts2.domain.podcast.Podcast
+import com.greencom.android.podcasts2.di.IODispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,36 +14,21 @@ import javax.inject.Singleton
 
 @Singleton
 class PodcastLocalDataSource @Inject constructor(
+    private val dao: PodcastDao,
     @ApplicationScope private val applicationScope: CoroutineScope,
-    private val podcastDao: PodcastDao,
+    @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    private val _subscriptionIds = MutableStateFlow(setOf<Long>())
-    val subscriptionIds = _subscriptionIds.asStateFlow()
+    private val _userSubscriptionsIds = MutableStateFlow(setOf<Long>())
+    val userSubscriptionsIds = _userSubscriptionsIds.asStateFlow()
 
     init {
-        loadSubscriptionIds()
+        loadUserSubscriptionsIds()
     }
 
-    private fun loadSubscriptionIds() {
-        applicationScope.launch(Dispatchers.IO) {
-            val ids = podcastDao.getSubscriptionIds().toSet()
-            _subscriptionIds.update { ids }
-        }
-    }
-
-    suspend fun insert(podcast: Podcast) {
-        val entity = PodcastEntity.fromDomain(podcast)
-        podcastDao.insert(entity)
-        updateSubscriptionIds(podcast)
-    }
-
-    private fun updateSubscriptionIds(podcast: Podcast) {
-        if (podcast.isSubscribed) {
-            _subscriptionIds.update { it + podcast.id }
-        } else {
-            _subscriptionIds.update { it - podcast.id }
-        }
+    private fun loadUserSubscriptionsIds() = applicationScope.launch(ioDispatcher) {
+        val userSubscriptionsIds = dao.getUserSubscriptionsIds().toSet()
+        _userSubscriptionsIds.update { userSubscriptionsIds }
     }
 
 }

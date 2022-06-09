@@ -4,7 +4,7 @@ import com.greencom.android.podcasts2.domain.category.Category
 
 typealias CategoriesDto = Map<Int, String>
 
-fun CategoriesDto.toDomain(): List<Category> {
+fun CategoriesDto.toCategories(): List<Category> {
     val categories = mutableListOf<Category>()
     for ((id, name) in this) {
         val category = Category(id, name)

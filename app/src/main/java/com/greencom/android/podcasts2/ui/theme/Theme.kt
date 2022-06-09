@@ -7,7 +7,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColorPalette = lightColors(
+private val LightColors = lightColors(
     primary = BluePrimaryLight,
     primaryVariant = BluePrimaryLight,
     secondary = BluePrimaryLight,
@@ -20,7 +20,7 @@ private val LightColorPalette = lightColors(
     onSurface = Color.Black,
 )
 
-private val DarkColorPalette = darkColors(
+private val DarkColors = darkColors(
     primary = BluePrimaryDark,
     primaryVariant = BluePrimaryDark,
     secondary = BluePrimaryDark,
@@ -34,20 +34,14 @@ private val DarkColorPalette = darkColors(
 )
 
 @Composable
-fun PodcastsComposeTheme(
+fun PodcastsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-
     MaterialTheme(
-        colors = colors,
+        colors = if (darkTheme) DarkColors else LightColors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

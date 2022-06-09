@@ -9,5 +9,5 @@ data class Podcast(
     val author: String,
     val imageUrl: String,
     val categories: List<Category>,
-    val isSubscribed: Boolean,
+    val isUserSubscribed: Boolean,
 )

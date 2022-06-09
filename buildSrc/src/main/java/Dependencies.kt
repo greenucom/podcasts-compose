@@ -3,26 +3,26 @@ object Dependencies {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
+    const val composeMaterial3WindowSize =
+        "androidx.compose.material3:material3-window-size-class:${Versions.composeMaterial3}"
     const val composeIconsExtended =
         "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val composeJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
-    const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
+    const val core = "androidx.core:core-ktx:${Versions.core}"
     const val coreSplashScreen = "androidx.core:core-splashscreen:${Versions.coreSplashScreen}"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-    const val activityCompose = "androidx.activity:activity-ktx:${Versions.activityCompose}"
+    const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
 
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val lifecycleViewModel =
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleViewModelCompose =
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycle}"
-    const val lifecycleViewModelSavedState =
-        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
 
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigation}"
 
@@ -36,11 +36,11 @@ object Dependencies {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitLoggingInterceptor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.retrofitLoggingInterceptor}"
-    const val retrofitSerializationConverter =
-        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerializationConverter}"
+    const val retrofitKotlinxSerializationConverter =
+        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitKotlinxSerializationConverter}"
 
-    const val serializationJson =
-        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serializationJson}"
+    const val kotlinxSerializationJson =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerializationJson}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
@@ -49,12 +49,6 @@ object Dependencies {
 
     const val accompanistSystemUi =
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
-    const val accompanistInsets =
-        "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
-    const val accompanistInsetsUi =
-        "com.google.accompanist:accompanist-insets-ui:${Versions.accompanist}"
-    const val accompanistSwipeRefresh =
-        "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
 
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"

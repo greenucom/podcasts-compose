@@ -5,56 +5,46 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.greencom.android.podcasts2.data.category.local.TrendingCategoryProvider
+import com.greencom.android.podcasts2.data.category.local.TrendingCategoriesProvider
 import com.greencom.android.podcasts2.domain.category.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
 class CategoryLocalDataSource @Inject constructor(
-    private val trendingCategoryProvider: TrendingCategoryProvider,
-    private val dataStore: DataStore<Preferences>,
+    private val dataStorePreferences: DataStore<Preferences>,
+    private val trendingCategoriesProvider: TrendingCategoriesProvider,
 ) {
 
     fun getTrendingCategories(): List<Category> {
-        return trendingCategoryProvider.getTrendingCategories()
+        return trendingCategoriesProvider.getTrendingCategories()
     }
 
-    private val SELECTED_TRENDING_CATEGORIES_IDS_KEY = stringPreferencesKey(
-        SELECTED_TRENDING_CATEGORIES_IDS_KEY_NAME
-    )
-
-    fun getSelectedTrendingCategoriesIds(): Flow<Set<Int>> = dataStore.data
+    fun getSelectedTrendingCategoriesIds(): Flow<Set<Int>> = dataStorePreferences.data
         .catch { e ->
-            if (e is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw e
-            }
+            if (e is IOException) emit(emptyPreferences()) else throw e
         }
         .map { preferences ->
-            val string = preferences[SELECTED_TRENDING_CATEGORIES_IDS_KEY]
+            val string = preferences[selectedTrendingCategoriesIdsKey]
             selectedTrendingCategoriesIdsStringToMutableSet(string)
         }
-        .distinctUntilChanged()
 
-    suspend fun toggleSelectableTrendingCategory(category: Category) {
-        dataStore.edit { preferences ->
-            val id = category.id
-            val string = preferences[SELECTED_TRENDING_CATEGORIES_IDS_KEY]
+    suspend fun toggleTrendingCategory(category: Category) {
+        dataStorePreferences.edit { preferences ->
+            val string = preferences[selectedTrendingCategoriesIdsKey]
             val set = selectedTrendingCategoriesIdsStringToMutableSet(string)
+            val id = category.id
             if (id in set) set.remove(id) else set.add(id)
-            preferences[SELECTED_TRENDING_CATEGORIES_IDS_KEY] = set.joinToString(SEPARATOR)
+            preferences[selectedTrendingCategoriesIdsKey] = set.joinToString(Separator)
         }
     }
 
     private fun selectedTrendingCategoriesIdsStringToMutableSet(string: String?): MutableSet<Int> {
         return try {
             string
-                ?.split(SEPARATOR)
+                ?.split(Separator)
                 ?.map { it.toInt() }
                 ?.toMutableSet()
                 ?: mutableSetOf()
@@ -63,13 +53,13 @@ class CategoryLocalDataSource @Inject constructor(
         }
     }
 
+    private val selectedTrendingCategoriesIdsKey = stringPreferencesKey(
+        SelectedTrendingCategoriesIdsKeyName
+    )
+
     companion object {
-
-        private const val SELECTED_TRENDING_CATEGORIES_IDS_KEY_NAME =
-            "selected_trending_categories_ids"
-
-        private const val SEPARATOR = ","
-
+        private const val SelectedTrendingCategoriesIdsKeyName = "selected_trending_categories_ids"
+        private const val Separator = ","
     }
 
 }

@@ -1,58 +1,36 @@
 package com.greencom.android.podcasts2.data.podcast
 
-import com.greencom.android.podcasts2.di.DefaultDispatcher
 import com.greencom.android.podcasts2.domain.category.Category
-import com.greencom.android.podcasts2.domain.language.Language
 import com.greencom.android.podcasts2.domain.podcast.Podcast
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PodcastRepository @Inject constructor(
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
-    private val remoteDataSource: PodcastRemoteDataSource,
     private val localDataSource: PodcastLocalDataSource,
+    private val remoteDataSource: PodcastRemoteDataSource,
 ) {
 
-    val trendingPodcasts = combine(
-        remoteDataSource.trendingPodcasts,
-        localDataSource.subscriptionIds,
-    ) { trendingPodcasts, subscriptionIds ->
-        trendingPodcasts.map { podcast ->
-            podcast.copy(isSubscribed = podcast.id in subscriptionIds)
-        }
-    }.flowOn(defaultDispatcher)
-
-    val lastSearchPodcastsResult = combine(
-        remoteDataSource.lastSearchPodcastsResult,
-        localDataSource.subscriptionIds,
-    ) { searchResult, subscriptionIds ->
-        searchResult.map { podcast ->
-            podcast.copy(isSubscribed = podcast.id in subscriptionIds)
-        }
-    }.flowOn(defaultDispatcher)
-
-    suspend fun loadTrendingPodcasts(
+    fun getTrendingPodcasts(
         max: Int,
-        languages: List<Language>,
         inCategories: List<Category>,
         notInCategories: List<Category>,
-    ) {
-        remoteDataSource.loadTrendingPodcasts(
-            max = max,
-            languages = languages,
-            inCategories = inCategories,
-            notInCategories = notInCategories,
-        )
-    }
-
-    suspend fun searchPodcasts(query: String) {
-        remoteDataSource.searchPodcasts(query)
-    }
-
-    suspend fun updatePodcast(podcast: Podcast) {
-        localDataSource.insert(podcast)
+    ): Flow<List<Podcast>> {
+        val podcastsFlow = flow {
+            val podcasts = remoteDataSource.getTrendingPodcasts(
+                max = max,
+                inCategories = inCategories,
+                notInCategories = notInCategories,
+            )
+            emit(podcasts)
+        }
+        return combine(
+            podcastsFlow,
+            localDataSource.userSubscriptionsIds,
+        ) { podcasts, userSubscriptionsIds ->
+            podcasts.map { it.copy(isUserSubscribed = it.id in userSubscriptionsIds) }
+        }
     }
 
 }

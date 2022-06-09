@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- TODO: Setup backup -->
     <application
         android:name=".PodcastsApplication"
         android:allowBackup="false"
@@ -16,7 +17,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.PodcastsCompose.Starting"
             android:windowSoftInputMode="adjustResize">
 

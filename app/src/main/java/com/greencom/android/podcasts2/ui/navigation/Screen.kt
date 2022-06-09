@@ -1,25 +1,19 @@
 package com.greencom.android.podcasts2.ui.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+sealed class Screen<Args>(val scheme: String) {
 
-sealed class Screen(val route: String) {
+    abstract fun createRoute(args: Args): String
 
-    object MyPodcasts : Screen("myPodcasts")
-    object Discover : Screen("discover")
-    object Library : Screen("library")
-    object Profile : Screen("profile")
+    object Podcasts : Screen<Unit>("podcasts") {
+        override fun createRoute(args: Unit): String = scheme
+    }
 
-    object Search : Screen("search")
+    object Discover : Screen<Unit>("discover") {
+        override fun createRoute(args: Unit): String = scheme
+    }
 
-    object Podcast : Screen("podcasts/{podcastId}") {
-        const val PodcastId = "podcastId"
-
-        fun createRoute(podcastId: Long): String = "podcasts/$podcastId"
-
-        val arguments: List<NamedNavArgument>
-            get() = listOf(navArgument(PodcastId) { type = NavType.LongType })
+    object Library : Screen<Unit>("library") {
+        override fun createRoute(args: Unit): String = scheme
     }
 
 }

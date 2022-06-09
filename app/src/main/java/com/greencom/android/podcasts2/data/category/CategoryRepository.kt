@@ -17,7 +17,7 @@ class CategoryRepository @Inject constructor(
     }
 
     suspend fun toggleSelectableTrendingCategory(category: Category) {
-        localDataSource.toggleSelectableTrendingCategory(category)
+        localDataSource.toggleTrendingCategory(category)
     }
 
 }

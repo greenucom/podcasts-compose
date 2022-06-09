@@ -1,72 +1,41 @@
 package com.greencom.android.podcasts2.ui.screen.app
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
-import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
-import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehaviorController
-import com.greencom.android.podcasts2.ui.navigation.*
-import com.greencom.android.podcasts2.ui.screen.app.component.BottomNavBar
+import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsBottomNavigationRespectingWindowInsets
+import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsNavHost
+import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsNavigationRailRespectingWindowInsets
 
 @Composable
-fun AppScreen(modifier: Modifier = Modifier) {
-
+fun AppScreen(
+    windowSizeClass: WindowSizeClass,
+    modifier: Modifier = Modifier,
+) {
     val screenState = rememberAppScreenState()
-
-    var currentScreenBehavior by remember {
-        mutableStateOf(ScreenBehavior.Default)
-    }
-    val screenBehaviorController = remember {
-        object : ScreenBehaviorController {
-            override fun set(screenBehavior: ScreenBehavior) {
-                currentScreenBehavior = screenBehavior
-            }
-
-            override fun remove(screenBehavior: ScreenBehavior) {
-                if (currentScreenBehavior == screenBehavior) {
-                    currentScreenBehavior = ScreenBehavior.Default
-                }
-            }
-        }
-    }
 
     Scaffold(
         modifier = modifier,
-        scaffoldState = screenState.scaffoldState,
         bottomBar = {
-            BottomNavBar(
-                navController = screenState.navController,
-                state = currentScreenBehavior.bottomNavBarState,
-                onItemReselected = currentScreenBehavior.onBottomNavBarItemReselected,
-            )
+            if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                PodcastsBottomNavigationRespectingWindowInsets(navController = screenState.navController)
+            }
         },
     ) { paddingValues ->
 
-        CompositionLocalProvider(LocalScreenBehaviorController provides screenBehaviorController) {
-
-            NavHost(
+        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+            PodcastsNavHost(
                 modifier = Modifier.padding(paddingValues),
                 navController = screenState.navController,
-                startDestination = BottomNavBarItem.MyPodcasts.route,
-            ) {
-                myPodcastsNavGraph(
-                    navController = screenState.navController,
-                )
-
-                discoverNavGraph(
-                    navController = screenState.navController,
-                )
-
-                libraryNavGraph(
-                    navController = screenState.navController,
-                )
-
-                profileNavGraph(
-                    navController = screenState.navController,
-                )
+            )
+        } else {
+            Row(modifier = Modifier.padding(paddingValues)) {
+                PodcastsNavigationRailRespectingWindowInsets(navController = screenState.navController)
+                PodcastsNavHost(navController = screenState.navController)
             }
         }
     }
