@@ -1,8 +1,9 @@
 <resources>
 
-    <!-- Navigation items -->
     <string name="podcasts">Podcasts</string>
     <string name="discover">Discover</string>
     <string name="library">Library</string>
+
+    <string name="search_for_podcasts">Search for podcasts</string>
 
 </resources>

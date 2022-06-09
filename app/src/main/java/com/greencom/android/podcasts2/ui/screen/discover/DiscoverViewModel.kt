@@ -1,7 +1,14 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
+import androidx.lifecycle.viewModelScope
+import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.getAndUpdate
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -11,8 +18,39 @@ class DiscoverViewModel @Inject constructor(
 
     override val initialViewState = DiscoverViewState.InitialLoading
 
-    override suspend fun handleEvent(event: DiscoverViewEvent) {
-        TODO("Not yet implemented")
+    private val collectSelectableTrendingCategoriesJob = MutableStateFlow<Job?>(null)
+
+    init {
+        collectSelectableTrendingCategories()
+    }
+
+    override suspend fun handleEvent(event: DiscoverViewEvent) = when (event) {
+        is DiscoverViewEvent.ToggleSelectableTrendingCategory ->
+            reduceToggleSelectableTrendingCategory(event.category)
+    }
+
+    private fun collectSelectableTrendingCategories() {
+        collectSelectableTrendingCategoriesJob.getAndUpdate {
+            viewModelScope.launch {
+                interactor.getSelectableTrendingCategories(Unit).collect { result ->
+                    result.onSuccess(::updateStateWithSelectableTrendingCategories)
+                }
+            }
+        }?.cancel()
+    }
+
+    private fun reduceToggleSelectableTrendingCategory(category: Category) {
+        viewModelScope.launch {
+            interactor.toggleSelectableTrendingCategory(category)
+        }
+    }
+
+    private fun updateStateWithSelectableTrendingCategories(
+        selectableTrendingCategories: List<SelectableItem<Category>>,
+    ) = updateState {
+        DiscoverViewState.Success(
+            selectableTrendingCategories = selectableTrendingCategories,
+        )
     }
 
 }

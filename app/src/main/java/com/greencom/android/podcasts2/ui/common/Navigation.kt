@@ -5,7 +5,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 
-fun NavHostController.findNavBarItemStartDestination(): NavDestination {
+fun NavHostController.findSelectedNavigationItemStartDestination(): NavDestination {
     val topmostGraph = this.graph
     var currentGraph = this.currentDestination?.parent
     while (currentGraph?.parent != topmostGraph) {

@@ -8,9 +8,4 @@ interface ScreenBehaviorController {
 }
 
 val LocalScreenBehaviorController =
-    staticCompositionLocalOf<ScreenBehaviorController> {
-        object : ScreenBehaviorController {
-            override fun setScreenBehavior(screenBehavior: ScreenBehavior) {}
-            override fun removeScreenBehavior(screenBehavior: ScreenBehavior) {}
-        }
-    }
+    staticCompositionLocalOf<ScreenBehaviorController?> { null }

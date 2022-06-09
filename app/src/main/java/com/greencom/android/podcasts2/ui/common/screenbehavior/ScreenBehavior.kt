@@ -1,5 +1,8 @@
 package com.greencom.android.podcasts2.ui.common.screenbehavior
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class ScreenBehavior(
     val navigationBarState: NavigationBarState = NavigationBarState.Visible(),
     val navigationRailState: NavigationBarState = NavigationBarState.Visible(),

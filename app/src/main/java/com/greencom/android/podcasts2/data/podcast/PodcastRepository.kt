@@ -26,9 +26,9 @@ class PodcastRepository @Inject constructor(
             emit(podcasts)
         }
         return combine(
-            localDataSource.userSubscriptionsIds,
             podcastsFlow,
-        ) { userSubscriptionsIds, podcasts ->
+            localDataSource.userSubscriptionsIds,
+        ) { podcasts, userSubscriptionsIds ->
             podcasts.map { it.copy(isUserSubscribed = it.id in userSubscriptionsIds) }
         }
     }

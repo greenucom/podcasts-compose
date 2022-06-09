@@ -5,18 +5,18 @@ object Versions {
     const val targetSdk = 32
 
     const val kotlin = "1.6.21"
-    const val androidGradlePlugin = "7.2.0"
+    const val androidGradlePlugin = "7.2.1"
 
     const val androidGitVersion = "0.4.14"
 
-    const val coroutines = "1.6.1"
+    const val coroutines = "1.6.2"
 
-    const val compose = "1.2.0-beta02"
-    const val composeMaterial3 = "1.0.0-alpha12"
+    const val compose = "1.2.0-beta03"
+    const val composeMaterial3 = "1.0.0-alpha13"
 
-    const val core = "1.8.0-rc02"
+    const val core = "1.8.0"
     const val coreSplashScreen = "1.0.0-rc01"
-    const val appCompat = "1.4.1"
+    const val appCompat = "1.4.2"
     const val activity = "1.5.0-rc01"
 
     const val lifecycle = "2.5.0-rc01"
@@ -36,7 +36,7 @@ object Versions {
     const val hilt = "2.42"
     const val hiltComposeNavigation = "1.0.0"
 
-    const val accompanist = "0.24.9-beta"
+    const val accompanist = "0.24.10-beta"
 
     const val coil = "2.1.0"
     const val timber = "5.0.1"
@@ -44,8 +44,8 @@ object Versions {
     const val leakCanary = "2.9.1"
 
     const val googleServices = "4.3.10"
-    const val crashlyticsPlugin = "2.8.1"
-    const val firebaseBom = "30.0.2"
+    const val crashlyticsPlugin = "2.9.0"
+    const val firebaseBom = "30.1.0"
 
     const val junit = "4.13.2"
     const val androidJunit = "1.1.3"
