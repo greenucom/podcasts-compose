@@ -15,6 +15,7 @@ env:
 
 jobs:
   test-and-build-signed-release-artifacts:
+    if: github.head_ref == 'development'
     name: Test and build signed release artifacts
     runs-on: ubuntu-latest
 
