@@ -44,6 +44,8 @@ android {
 
     val generatedVersionCode = androidGitVersion.code()
     val generatedVersionName = androidGitVersion.name()
+    println("Generated version code: $generatedVersionCode")
+    println("Generated version name: $generatedVersionName")
 
     defaultConfig {
         applicationId = "com.greencom.android.podcasts2"
