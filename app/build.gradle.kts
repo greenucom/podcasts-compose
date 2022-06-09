@@ -48,12 +48,13 @@ android {
 
     val generatedVersionCode = androidGitVersion.code()
     val generatedVersionName = androidGitVersion.name()
+    val versionCodeValue = if (generatedVersionCode != 0) generatedVersionCode else 1
 
     defaultConfig {
         applicationId = "com.greencom.android.podcasts2"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
-        versionCode = generatedVersionCode
+        versionCode = versionCodeValue
         versionName = generatedVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
