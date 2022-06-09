@@ -81,20 +81,6 @@ android {
             versionNameSuffix = " debug"
         }
 
-        create("qa") {
-            resValue("string", "app_name", "Podcasts qa")
-            applicationIdSuffix = ".qa"
-            versionNameSuffix = " qa"
-            isMinifyEnabled = true
-        }
-
-        create("demo") {
-            resValue("string", "app_name", "Podcasts demo")
-            applicationIdSuffix = ".demo"
-            versionNameSuffix = " demo"
-            isMinifyEnabled = true
-        }
-
         getByName("release") {
             resValue("string", "app_name", "Podcasts")
             isMinifyEnabled = true

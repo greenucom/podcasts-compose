@@ -16,8 +16,8 @@ env:
   PODCAST_INDEX_API_SECRET_KEY: ${{ secrets.PODCAST_INDEX_API_SECRET_KEY }}
 
 jobs:
-  Build-signed-release-artifacts:
-    name: Build signed release artifacts
+  test-and-build-signed-release-artifacts:
+    name: Test and build signed release artifacts
     runs-on: ubuntu-latest
 
     steps:
