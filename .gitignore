@@ -15,5 +15,5 @@
 .cxx
 local.properties
 keystore.properties
-api.properties
+podcast_index_api.properties
 /app/src/main/java/com/greencom/android/podcasts2/json

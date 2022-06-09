@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
 
-    private val apiKey = BuildConfig.apiKey
-    private val apiSecret = BuildConfig.apiSecret
+    private val key = BuildConfig.PODCAST_INDEX_API_KEY
+    private val secretKey = BuildConfig.PODCAST_INDEX_API_SECRET_KEY
 
     private val version = BuildConfig.VERSION_NAME.takeWhile { it.isDigit() || it == '.' }
     private var userAgent = USER_AGENT_FORMAT.format(version)
@@ -20,7 +20,7 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
 
         val request = chain.request().newBuilder()
             .addHeader("User-Agent", userAgent)
-            .addHeader("X-Auth-Key", apiKey)
+            .addHeader("X-Auth-Key", key)
             .addHeader("X-Auth-Date", epochSeconds)
             .addHeader("Authorization", authSha1Hash)
             .build()
@@ -29,7 +29,7 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
     }
 
     private fun createAuthSha1Hash(epochSeconds: String): String {
-        val input = apiKey + apiSecret + epochSeconds
+        val input = key + secretKey + epochSeconds
         val bytes = MessageDigest
             .getInstance(SHA_1)
             .digest(input.toByteArray())

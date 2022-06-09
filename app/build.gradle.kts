@@ -1,5 +1,4 @@
 import java.io.FileInputStream
-import java.io.IOException
 import java.util.*
 
 plugins {
@@ -19,25 +18,31 @@ androidGitVersion {
     hideBranches = listOf("demo")
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties()
-val keystoreExists = try {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-    true
-} catch (e: IOException) {
-    false
-}
-println("Keystore exists: $keystoreExists")
 
-val apiPropertiesFile = rootProject.file("api.properties")
-val apiProperties = Properties()
-val apiKeysExist = try {
-    apiProperties.load(FileInputStream(apiPropertiesFile))
-    true
-} catch (e: IOException) {
-    false
+val isBuildLocal = System.getenv("CI") == null
+
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+} else {
+    keystoreProperties["storeFile"] = System.getenv("KEYSTORE_FILE")
+    keystoreProperties["storePassword"] = System.getenv("KEYSTORE_PASSWORD")
+    keystoreProperties["keyAlias"] = System.getenv("KEYSTORE_SIGN_KEY_ALIAS")
+    keystoreProperties["keyPassword"] = System.getenv("KEYSTORE_SIGN_KEY_PASSWORD")
 }
-println("Api keys exist: $apiKeysExist")
+
+
+val podcastIndexApiProperties = Properties()
+val podcastIndexApiPropertiesFile = rootProject.file("podcast_index_api.properties")
+if (podcastIndexApiPropertiesFile.exists()) {
+    podcastIndexApiProperties.load(FileInputStream(podcastIndexApiPropertiesFile))
+} else {
+    podcastIndexApiProperties["key"] = System.getenv("PODCAST_INDEX_API_KEY")
+    podcastIndexApiProperties["secretKey"] = System.getenv("PODCAST_INDEX_API_SECRET_KEY")
+}
+
 
 android {
     compileSdk = Versions.compileSdk
@@ -67,13 +72,11 @@ android {
     }
 
     signingConfigs {
-        if (keystoreExists) {
-            create("defaultConfigs") {
-                storeFile = file(keystoreProperties.getProperty("storeFile"))
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
-            }
+        create("defaultConfigs") {
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
 
@@ -105,21 +108,12 @@ android {
         }
 
         all {
-            if (keystoreExists) {
-                signingConfig = signingConfigs.getByName("defaultConfigs")
-            }
+            signingConfig = signingConfigs.getByName("defaultConfigs")
 
-            val apiKey: String
-            val apiSecret: String
-            if (apiKeysExist) {
-                apiKey = apiProperties.getProperty("apiKey", "")
-                apiSecret = apiProperties.getProperty("apiSecret", "")
-            } else {
-                apiKey = ""
-                apiSecret = ""
-            }
-            buildConfigField("String", "apiKey", "\"$apiKey\"")
-            buildConfigField("String", "apiSecret", "\"$apiSecret\"")
+            val podcastIndexApiKey = podcastIndexApiProperties.getProperty("key", "")
+            val podcastIndexApiSecretKey = podcastIndexApiProperties.getProperty("secretKey", "")
+            buildConfigField("String", "PODCAST_INDEX_API_KEY", "\"$podcastIndexApiKey\"")
+            buildConfigField("String", "PODCAST_INDEX_API_SECRET_KEY", "\"$podcastIndexApiSecretKey\"")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
