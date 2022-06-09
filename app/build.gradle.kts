@@ -15,7 +15,6 @@ plugins {
 
 androidGitVersion {
     format = "%tag%"
-    hideBranches = listOf("demo")
 }
 
 
@@ -61,13 +60,6 @@ android {
 
         vectorDrawables {
             useSupportLibrary = true
-        }
-    }
-
-    applicationVariants.all {
-        outputs.all {
-            val variant = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            variant.outputFileName = "app.apk"
         }
     }
 
