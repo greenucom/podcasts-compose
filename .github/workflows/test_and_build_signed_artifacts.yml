@@ -20,7 +20,8 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v3
-        run: |
+
+      - run: |
           echo "${{ secrets.KEYSTORE }}" > podcasts-compose-keystore.jks.asc
           gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > keystore/keystore.jks
 
