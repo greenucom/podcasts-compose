@@ -21,6 +21,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout private repository with keystore
+        uses: actions/checkout@v3
+        with:
+          repository: KEYSTORE_REPOSITORY
+          token: KEYSTORE_ACCESS_TOKEN
+          path: keystore
+
       - name: Checkout repository code
         uses: actions/checkout@v3
 
