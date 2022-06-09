@@ -24,7 +24,7 @@ jobs:
       - name: Checkout private repository with keystore
         uses: actions/checkout@v3
         with:
-          repository: KEYSTORE_REPOSITORY
+          repository: greenucom/podcasts-compose-keystore
           token: KEYSTORE_ACCESS_TOKEN
           path: keystore
 
