@@ -1,13 +1,29 @@
 package com.greencom.android.podcasts2.ui.model.category
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.category.Category
 
 object CategoryUiHelper {
 
+    fun getCategoryDisplayName(category: Category, context: Context): String? {
+        val resId = getCategoryDisplayNameResId(category)
+        return resId?.let { context.getString(it) }
+    }
+
+    fun getCategoryDisplayName(category: CategoryUiModel, context: Context): String? {
+        val resId = getCategoryDisplayNameResId(category)
+        return resId?.let { context.getString(it) }
+    }
+
     @StringRes
     fun getCategoryDisplayNameResId(category: Category): Int? {
+        return categoryIdToDisplayNameResId[category.id]
+    }
+
+    @StringRes
+    fun getCategoryDisplayNameResId(category: CategoryUiModel): Int? {
         return categoryIdToDisplayNameResId[category.id]
     }
 
