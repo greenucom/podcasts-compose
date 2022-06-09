@@ -3,8 +3,7 @@ name: Test and build signed release artifacts
 on:
   push:
     tags:
-      - '+([0-9]).+([0-9]).+([0-9])'
-      - '1.0.0'
+      - '[1-9]+.[0-9]+.[0-9]+'
 
 env:
   KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
@@ -53,13 +52,13 @@ jobs:
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
-          name: podcasts-compose-release.apk
+          name: release-apk
           path: app/build/outputs/apk/release/app-release.apk
 
       - name: Upload release Bundle
         uses: actions/upload-artifact@v3
         with:
-          name: podcasts-compose-release.aab
+          name: release-bundle
           path: app/build/outputs/bundle/release/app-release.aab
 
       - name: Upload Compose compiler metrics
