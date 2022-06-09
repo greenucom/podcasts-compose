@@ -14,7 +14,7 @@ plugins {
 }
 
 androidGitVersion {
-    format = "%tag%"
+    format = "%tag%%-count%%-commit%%-dirty%"
 }
 
 
