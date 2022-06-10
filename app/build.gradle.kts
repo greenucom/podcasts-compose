@@ -35,8 +35,9 @@ android {
         }
     }
 
+    val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
+
     signingConfigs {
-        val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
         if (keystoreProperties != null) {
             create("defaultConfigs") {
                 storeFile = file(keystoreProperties.getProperty(util.KeystoreHelper.STORE_FILE))
@@ -61,7 +62,9 @@ android {
         }
 
         all {
-            signingConfig = signingConfigs.getByName("defaultConfigs")
+            if (keystoreProperties != null) {
+                signingConfig = signingConfigs.getByName("defaultConfigs")
+            }
 
             val podcastIndexApiProperties = util.PodcastIndexApiHelper
                 .createPodcastIndexApiProperties(project)
