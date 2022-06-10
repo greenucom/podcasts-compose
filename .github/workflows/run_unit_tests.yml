@@ -28,10 +28,10 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Retrieve Android keystore
-        run: |
-          echo "${{ secrets.KEYSTORE }}" > podcasts-compose-keystore.jks.asc
-          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > app/keystore.jks
+#      - name: Retrieve Android keystore
+#        run: |
+#          echo "${{ secrets.KEYSTORE }}" > podcasts-compose-keystore.jks.asc
+#          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > app/keystore.jks
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
