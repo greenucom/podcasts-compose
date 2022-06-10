@@ -12,3 +12,4 @@ jobs:
   generate-compose-compiler-metrics:
     needs: run-unit-tests
     uses: ./.github/workflows/generate_compose_compiler_metrics.yml
+    secrets: inherit

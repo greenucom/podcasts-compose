@@ -2,7 +2,6 @@ name: Generate Compose compiler metrics
 
 on:
   workflow_call:
-    secrets: inherit
 
 env:
   KEYSTORE_STORE_FILE: ${{ secrets.KEYSTORE_STORE_FILE }}
