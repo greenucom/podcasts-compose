@@ -2,6 +2,7 @@ name: Generate Compose compiler metrics
 
 on:
   workflow_call:
+    secrets: inherit
 
 env:
   KEYSTORE_STORE_FILE: ${{ secrets.KEYSTORE_STORE_FILE }}
@@ -18,16 +19,16 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v3
 
+      - name: Retrieve Android keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" > podcasts-compose-keystore.jks.asc
+          gpg -d --passphrase "${{ secrets.KEYSTORE_BASE64_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > app/keystore.jks
+
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
-
-      - name: Retrieve Android keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" > podcasts-compose-keystore.jks.asc
-          gpg -d --passphrase "${{ secrets.KEYSTORE_BASE64_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > app/keystore.jks
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
