@@ -5,14 +5,6 @@ on:
     branches:
       - 'development'
 
-#env:
-#  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-#  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-#  KEYSTORE_SIGN_KEY_ALIAS: ${{ secrets.KEYSTORE_SIGN_KEY_ALIAS }}
-#  KEYSTORE_SIGN_KEY_PASSWORD: ${{ secrets.KEYSTORE_SIGN_KEY_PASSWORD }}
-#  PODCAST_INDEX_API_KEY: ${{ secrets.PODCAST_INDEX_API_KEY }}
-#  PODCAST_INDEX_API_SECRET_KEY: ${{ secrets.PODCAST_INDEX_API_SECRET_KEY }}
-
 jobs:
   run-unit-tests:
     name: Run unit tests
