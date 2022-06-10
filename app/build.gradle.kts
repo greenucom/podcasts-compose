@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinAndroid)
@@ -16,32 +13,6 @@ plugins {
 androidGitVersion {
     format = "%tag%"
 }
-
-
-val isBuildLocal = System.getenv("CI") == null
-
-
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-} else {
-    keystoreProperties["storeFile"] = System.getenv("KEYSTORE_FILE")
-    keystoreProperties["storePassword"] = System.getenv("KEYSTORE_PASSWORD")
-    keystoreProperties["keyAlias"] = System.getenv("KEYSTORE_SIGN_KEY_ALIAS")
-    keystoreProperties["keyPassword"] = System.getenv("KEYSTORE_SIGN_KEY_PASSWORD")
-}
-
-
-val podcastIndexApiProperties = Properties()
-val podcastIndexApiPropertiesFile = rootProject.file("podcast_index_api.properties")
-if (podcastIndexApiPropertiesFile.exists()) {
-    podcastIndexApiProperties.load(FileInputStream(podcastIndexApiPropertiesFile))
-} else {
-    podcastIndexApiProperties["key"] = System.getenv("PODCAST_INDEX_API_KEY")
-    podcastIndexApiProperties["secretKey"] = System.getenv("PODCAST_INDEX_API_SECRET_KEY")
-}
-
 
 android {
     compileSdk = Versions.compileSdk
@@ -64,12 +35,16 @@ android {
         }
     }
 
+    val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
+
     signingConfigs {
-        create("defaultConfigs") {
-            storeFile = file(keystoreProperties.getProperty("storeFile"))
-            storePassword = keystoreProperties.getProperty("storePassword")
-            keyAlias = keystoreProperties.getProperty("keyAlias")
-            keyPassword = keystoreProperties.getProperty("keyPassword")
+        if (keystoreProperties != null) {
+            create("defaultConfigs") {
+                storeFile = file(keystoreProperties.getProperty(util.KeystoreHelper.STORE_FILE))
+                storePassword = keystoreProperties.getProperty(util.KeystoreHelper.STORE_PASSWORD)
+                keyAlias = keystoreProperties.getProperty(util.KeystoreHelper.KEY_ALIAS)
+                keyPassword = keystoreProperties.getProperty(util.KeystoreHelper.KEY_PASSWORD)
+            }
         }
     }
 
@@ -87,10 +62,16 @@ android {
         }
 
         all {
-            signingConfig = signingConfigs.getByName("defaultConfigs")
+            if (keystoreProperties != null) {
+                signingConfig = signingConfigs.getByName("defaultConfigs")
+            }
 
-            val podcastIndexApiKey = podcastIndexApiProperties.getProperty("key", "")
-            val podcastIndexApiSecretKey = podcastIndexApiProperties.getProperty("secretKey", "")
+            val podcastIndexApiProperties = util.PodcastIndexApiHelper
+                .createPodcastIndexApiProperties(project)
+            val podcastIndexApiKey = podcastIndexApiProperties
+                .getProperty(util.PodcastIndexApiHelper.KEY, "")
+            val podcastIndexApiSecretKey = podcastIndexApiProperties
+                .getProperty(util.PodcastIndexApiHelper.SECRET_KEY, "")
             buildConfigField("String", "PODCAST_INDEX_API_KEY", "\"$podcastIndexApiKey\"")
             buildConfigField("String", "PODCAST_INDEX_API_SECRET_KEY", "\"$podcastIndexApiSecretKey\"")
 
