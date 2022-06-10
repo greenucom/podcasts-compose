@@ -38,10 +38,10 @@ object KeystoreHelper {
     const val KEY_ALIAS = "keyAlias"
     const val KEY_PASSWORD = "keyPassword"
 
-    private const val CI_CD_STORE_FILE = "KEYSTORE_FILE"
-    private const val CI_CD_STORE_PASSWORD = "KEYSTORE_PASSWORD"
-    private const val CI_CD_KEY_ALIAS = "KEYSTORE_SIGN_KEY_ALIAS"
-    private const val CI_CD_KEY_PASSWORD = "KEYSTORE_SIGN_KEY_PASSWORD"
+    private const val CI_CD_STORE_FILE = "KEYSTORE_STORE_FILE"
+    private const val CI_CD_STORE_PASSWORD = "KEYSTORE_STORE_PASSWORD"
+    private const val CI_CD_KEY_ALIAS = "KEYSTORE_KEY_ALIAS"
+    private const val CI_CD_KEY_PASSWORD = "KEYSTORE_KEY_PASSWORD"
 
     private const val LOCAL_KEYSTORE_PROPERTIES_FILE = "keystore.properties"
 
