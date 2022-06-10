@@ -1,0 +1,14 @@
+name: Check pull request
+
+on:
+  pull_request:
+    branches:
+      - 'development'
+
+jobs:
+  run-unit-tests:
+    uses: ./.github/workflows/run_unit_tests.yml
+
+  generate-compose-compiler-metrics:
+    needs: run-unit-tests
+    uses: ./.github/workflows/generate_compose_compiler_metrics.yml
