@@ -6,10 +6,10 @@ on:
       - 'development'
 
 env:
-  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-  KEYSTORE_SIGN_KEY_ALIAS: ${{ secrets.KEYSTORE_SIGN_KEY_ALIAS }}
-  KEYSTORE_SIGN_KEY_PASSWORD: ${{ secrets.KEYSTORE_SIGN_KEY_PASSWORD }}
+#  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+#  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#  KEYSTORE_SIGN_KEY_ALIAS: ${{ secrets.KEYSTORE_SIGN_KEY_ALIAS }}
+#  KEYSTORE_SIGN_KEY_PASSWORD: ${{ secrets.KEYSTORE_SIGN_KEY_PASSWORD }}
   PODCAST_INDEX_API_KEY: ${{ secrets.PODCAST_INDEX_API_KEY }}
   PODCAST_INDEX_API_SECRET_KEY: ${{ secrets.PODCAST_INDEX_API_SECRET_KEY }}
 
@@ -28,11 +28,6 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-#      - name: Retrieve Android keystore
-#        run: |
-#          echo "${{ secrets.KEYSTORE }}" > podcasts-compose-keystore.jks.asc
-#          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch podcasts-compose-keystore.jks.asc > app/keystore.jks
-
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
@@ -48,7 +43,7 @@ jobs:
       - name: Upload html test report
         uses: actions/upload-artifact@v3
         with:
-          name: test_report.html
+          name: test_report
           path: app/build/reports/tests/testDebugUnitTest/index.html
 
       - name: Upload test report directory
