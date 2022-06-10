@@ -26,10 +26,10 @@ val keystorePropertiesFile = rootProject.file("keystore.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 } else {
-    keystoreProperties["storeFile"] = System.getenv("KEYSTORE_FILE")
-    keystoreProperties["storePassword"] = System.getenv("KEYSTORE_PASSWORD")
-    keystoreProperties["keyAlias"] = System.getenv("KEYSTORE_SIGN_KEY_ALIAS")
-    keystoreProperties["keyPassword"] = System.getenv("KEYSTORE_SIGN_KEY_PASSWORD")
+    keystoreProperties["storeFile"] = System.getenv("KEYSTORE_FILE").orEmpty()
+    keystoreProperties["storePassword"] = System.getenv("KEYSTORE_PASSWORD").orEmpty()
+    keystoreProperties["keyAlias"] = System.getenv("KEYSTORE_SIGN_KEY_ALIAS").orEmpty()
+    keystoreProperties["keyPassword"] = System.getenv("KEYSTORE_SIGN_KEY_PASSWORD").orEmpty()
 }
 
 
@@ -38,8 +38,8 @@ val podcastIndexApiPropertiesFile = rootProject.file("podcast_index_api.properti
 if (podcastIndexApiPropertiesFile.exists()) {
     podcastIndexApiProperties.load(FileInputStream(podcastIndexApiPropertiesFile))
 } else {
-    podcastIndexApiProperties["key"] = System.getenv("PODCAST_INDEX_API_KEY")
-    podcastIndexApiProperties["secretKey"] = System.getenv("PODCAST_INDEX_API_SECRET_KEY")
+    podcastIndexApiProperties["key"] = System.getenv("PODCAST_INDEX_API_KEY").orEmpty()
+    podcastIndexApiProperties["secretKey"] = System.getenv("PODCAST_INDEX_API_SECRET_KEY").orEmpty()
 }
 
 
