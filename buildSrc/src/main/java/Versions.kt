@@ -11,7 +11,7 @@ object Versions {
 
     const val coroutines = "1.6.2"
 
-    const val compose = "1.2.0-beta03"
+    const val compose = "1.2.0-rc01"
     const val composeMaterial3 = "1.0.0-alpha13"
 
     const val core = "1.8.0"
@@ -19,9 +19,9 @@ object Versions {
     const val appCompat = "1.4.2"
     const val activity = "1.5.0-rc01"
 
-    const val lifecycle = "2.5.0-rc01"
+    const val lifecycle = "2.5.0-rc02"
 
-    const val navigation = "2.4.2"
+    const val navigation = "2.5.0-rc02"
 
     const val dataStore = "1.0.0"
 
