@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
+import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,8 +26,9 @@ class DiscoverViewModel @Inject constructor(
     }
 
     override suspend fun handleEvent(event: DiscoverViewEvent) = when (event) {
-        is DiscoverViewEvent.ToggleSelectableTrendingCategory ->
+        is DiscoverViewEvent.ToggleSelectableTrendingCategory -> {
             reduceToggleSelectableTrendingCategory(event.category)
+        }
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -39,18 +41,27 @@ class DiscoverViewModel @Inject constructor(
         }?.cancel()
     }
 
-    private fun reduceToggleSelectableTrendingCategory(category: Category) {
+    private fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
+        val categoryDomain = category.toCategory()
         viewModelScope.launch {
-            interactor.toggleSelectableTrendingCategory(category)
+            interactor.toggleSelectableTrendingCategory(categoryDomain)
         }
     }
 
     private fun updateStateWithSelectableTrendingCategories(
         selectableTrendingCategories: List<SelectableItem<Category>>,
-    ) = updateState {
-        DiscoverViewState.Success(
-            selectableTrendingCategories = selectableTrendingCategories,
-        )
+    ) {
+        val categories = selectableTrendingCategories.map {
+            SelectableItem(
+                item = CategoryUiModel.fromCategory(it.item),
+                isSelected = it.isSelected,
+            )
+        }
+        updateState {
+            DiscoverViewState.Success(
+                selectableTrendingCategories = categories,
+            )
+        }
     }
 
 }
