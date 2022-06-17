@@ -51,7 +51,7 @@ android {
     buildTypes {
 
         getByName("debug") {
-            resValue("string", "app_name", "Podcasts debug")
+            resValue("string", "app_name", "Debug")
             applicationIdSuffix = ".debug"
             versionNameSuffix = " debug"
         }
