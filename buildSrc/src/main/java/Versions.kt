@@ -11,7 +11,7 @@ object Versions {
 
     const val coroutines = "1.6.2"
 
-    const val compose = "1.2.0-rc01"
+    const val compose = "1.2.0-rc02"
     const val composeMaterial3 = "1.0.0-alpha13"
 
     const val core = "1.8.0"
@@ -36,7 +36,7 @@ object Versions {
     const val hilt = "2.42"
     const val hiltComposeNavigation = "1.0.0"
 
-    const val accompanist = "0.24.10-beta"
+    const val accompanist = "0.24.12-rc"
 
     const val coil = "2.1.0"
     const val timber = "5.0.1"
