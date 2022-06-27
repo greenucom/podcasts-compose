@@ -2,9 +2,10 @@ package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.dp
@@ -18,15 +19,7 @@ fun DiscoverScreen(
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
     val screenState = rememberDiscoverScreenState()
-
-    Scaffold(
-        modifier = modifier,
-        scaffoldState = screenState.scaffoldState,
-        topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
-    ) { paddingValues ->
-
-
-    }
+    val viewState by viewModel.state.collectAsState()
 }
 
 @Composable
@@ -35,6 +28,7 @@ private fun DiscoverTopBar(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
+
         val surfaceColor = MaterialTheme.colors.surface
         Spacer(
             modifier = Modifier
