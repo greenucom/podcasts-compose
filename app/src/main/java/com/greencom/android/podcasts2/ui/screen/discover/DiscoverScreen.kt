@@ -2,6 +2,8 @@ package com.greencom.android.podcasts2.ui.screen.discover
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
@@ -43,21 +45,11 @@ fun DiscoverScreen(
                 DiscoverViewModel.ViewState.InitialLoading -> {}
 
                 is DiscoverViewModel.ViewState.Success -> {
-                    LazyColumn(state = screenState.lazyColumnState) {
-                        item(
-                            key = KeyTrendingCategorySelector,
-                            contentType = ContentTypeTrendingCategorySelector,
-                        ) {
-                            TrendingCategorySelector(
-                                selectableTrendingCategories = state.selectableTrendingCategories,
-                                onCategoryClicked = {
-                                    val event = DiscoverViewModel.ViewEvent.ToggleSelectableTrendingCategory(it)
-                                    viewModel.dispatchEvent(event)
-                                },
-                                contentPadding = PaddingValues(horizontal = 16.dp),
-                            )
-                        }
-                    }
+                    SuccessScreen(
+                        state = state,
+                        dispatchEvent = viewModel::dispatchEvent,
+                        lazyColumnState = screenState.lazyColumnState,
+                    )
                 }
             }
         }
@@ -86,6 +78,30 @@ private fun DiscoverTopBar(
             SearchPodcastsButton(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = onSearchPodcastsClicked,
+            )
+        }
+    }
+}
+
+@Composable
+private fun SuccessScreen(
+    state: DiscoverViewModel.ViewState.Success,
+    dispatchEvent: (DiscoverViewModel.ViewEvent) -> Unit,
+    modifier: Modifier = Modifier,
+    lazyColumnState: LazyListState = rememberLazyListState(),
+) {
+    LazyColumn(modifier = modifier, state = lazyColumnState) {
+        item(
+            key = KeyTrendingCategorySelector,
+            contentType = ContentTypeTrendingCategorySelector,
+        ) {
+            TrendingCategorySelector(
+                selectableTrendingCategories = state.selectableTrendingCategories,
+                onCategoryClicked = {
+                    val event = DiscoverViewModel.ViewEvent.ToggleSelectableTrendingCategory(it)
+                    dispatchEvent(event)
+                },
+                contentPadding = PaddingValues(horizontal = 16.dp),
             )
         }
     }
