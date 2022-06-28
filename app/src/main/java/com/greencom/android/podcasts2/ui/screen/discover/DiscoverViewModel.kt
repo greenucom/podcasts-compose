@@ -1,9 +1,14 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.SelectableItem
+import com.greencom.android.podcasts2.ui.common.mvi.Event
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
+import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
+import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -15,9 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val interactor: DiscoverInteractor,
-) : MviViewModel<DiscoverViewState, DiscoverViewEvent, DiscoverViewSideEffect>() {
+) : MviViewModel<DiscoverViewModel.ViewState, DiscoverViewModel.ViewEvent, DiscoverViewModel.ViewSideEffect>() {
 
-    override val initialViewState = DiscoverViewState.InitialLoading
+    override val initialViewState = ViewState.InitialLoading
 
     private val collectSelectableTrendingCategoriesJob = MutableStateFlow<Job?>(null)
 
@@ -25,8 +30,8 @@ class DiscoverViewModel @Inject constructor(
         collectSelectableTrendingCategories()
     }
 
-    override suspend fun handleEvent(event: DiscoverViewEvent) = when (event) {
-        is DiscoverViewEvent.ToggleSelectableTrendingCategory -> {
+    override suspend fun handleEvent(event: ViewEvent) = when (event) {
+        is ViewEvent.ToggleSelectableTrendingCategory -> {
             reduceToggleSelectableTrendingCategory(event.category)
         }
     }
@@ -58,10 +63,26 @@ class DiscoverViewModel @Inject constructor(
             )
         }
         updateState {
-            DiscoverViewState.Success(
-                selectableTrendingCategories = categories,
-            )
+            ViewState.Success(selectableTrendingCategories = categories)
         }
     }
+
+    @Stable
+    sealed interface ViewState : State {
+        object InitialLoading : ViewState
+
+        @Immutable
+        data class Success(
+            val selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
+        ) : ViewState
+    }
+
+    @Stable
+    sealed interface ViewEvent : Event {
+        data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
+    }
+
+    @Stable
+    sealed interface ViewSideEffect : SideEffect
 
 }
