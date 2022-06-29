@@ -25,6 +25,5 @@ fun PodcastsNavHost(
         discoverNavGraph(navController = navController)
 
         libraryNavGraph(navController = navController)
-
     }
 }
