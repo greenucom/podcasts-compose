@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.greencom.android.podcasts2.ui.common.CrossfadeStable
+import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
 
@@ -37,7 +37,7 @@ fun DiscoverScreen(
         topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
     ) { paddingValues ->
 
-        CrossfadeStable(
+        CrossfadeTyped(
             modifier = Modifier.padding(paddingValues),
             targetState = viewState,
         ) { state ->
