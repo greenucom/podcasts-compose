@@ -28,28 +28,29 @@ fun TrendingCategorySelector(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
+    Surface(modifier = modifier) {
 
-    LazyRow(
-        modifier = modifier,
-        contentPadding = contentPadding,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
+        LazyRow(
+            contentPadding = contentPadding,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
 
-        items(
-            items = selectableTrendingCategories,
-            key = { it.item.id },
-            contentType = { ContentTypePodcastsFilterChip },
-        ) { selectableCategory ->
-            val category = selectableCategory.item
-            val context = LocalContext.current
-            val displayName = CategoryDisplayNameResolver.getCategoryDisplayName(category, context)
+            items(
+                items = selectableTrendingCategories,
+                key = { it.item.id },
+                contentType = { ContentTypePodcastsFilterChip },
+            ) { selectableCategory ->
+                val category = selectableCategory.item
+                val context = LocalContext.current
+                val displayName = CategoryDisplayNameResolver.getCategoryDisplayName(category, context)
 
-            if (displayName != null) {
-                PodcastsFilterChip(
-                    text = displayName,
-                    isSelected = selectableCategory.isSelected,
-                    onSelectedChanged = { onCategoryClicked(category) },
-                )
+                if (displayName != null) {
+                    PodcastsFilterChip(
+                        text = displayName,
+                        isSelected = selectableCategory.isSelected,
+                        onSelectedChanged = { onCategoryClicked(category) },
+                    )
+                }
             }
         }
     }

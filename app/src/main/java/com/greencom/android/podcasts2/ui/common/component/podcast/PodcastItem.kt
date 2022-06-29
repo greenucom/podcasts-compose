@@ -48,7 +48,7 @@ fun PodcastItem(
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 12.dp),
+                .padding(top = 16.dp, bottom = 16.dp),
         ) {
 
             Row {

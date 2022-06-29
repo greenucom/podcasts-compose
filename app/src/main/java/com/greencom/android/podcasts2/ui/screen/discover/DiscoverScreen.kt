@@ -4,8 +4,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
@@ -20,6 +21,7 @@ import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
+import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 private const val KeyTrendingCategorySelector = "KeyTrendingCategorySelector"
 
@@ -112,16 +114,20 @@ private fun SuccessScreen(
         }
 
         if (state.trendingPodcastsState is DiscoverViewModel.TrendingPodcastsState.Success) {
-            items(
+            itemsIndexed(
                 items = state.trendingPodcastsState.trendingPodcasts,
-                key = { it.id },
-                contentType = { ContentTypePodcastItem },
-            ) { podcast ->
+                key = { _, podcast -> podcast.id },
+                contentType = { _, _ -> ContentTypePodcastItem },
+            ) { idx, podcast ->
                 PodcastItem(
                     podcast = podcast,
                     onPodcastClicked = { /* TODO */ },
                     onSubscribedChanged = { /* TODO */ },
                 )
+
+                if (idx != state.trendingPodcastsState.trendingPodcasts.lastIndex) {
+                    Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                }
             }
         }
     }
