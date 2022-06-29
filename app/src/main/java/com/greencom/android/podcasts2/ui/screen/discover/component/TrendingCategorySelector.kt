@@ -19,6 +19,8 @@ import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.category.CategoryUiModelListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
+private const val ContentTypePodcastsFilterChip = "ContentTypePodcastsFilterChip"
+
 @Composable
 fun TrendingCategorySelector(
     selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
@@ -36,6 +38,7 @@ fun TrendingCategorySelector(
         items(
             items = selectableTrendingCategories,
             key = { it.item.id },
+            contentType = { ContentTypePodcastsFilterChip },
         ) { selectableCategory ->
             val category = selectableCategory.item
             val context = LocalContext.current
