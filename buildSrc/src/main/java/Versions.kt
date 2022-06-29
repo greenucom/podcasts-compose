@@ -4,24 +4,25 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 32
 
-    const val kotlin = "1.6.21"
+    const val kotlin = "1.7.0"
     const val androidGradlePlugin = "7.2.1"
 
     const val androidGitVersion = "0.4.14"
 
     const val coroutines = "1.6.2"
 
-    const val compose = "1.2.0-rc02"
+    const val composeCompiler = "1.2.0"
+    const val compose = "1.2.0-rc03"
     const val composeMaterial3 = "1.0.0-alpha13"
 
     const val core = "1.8.0"
     const val coreSplashScreen = "1.0.0-rc01"
     const val appCompat = "1.4.2"
-    const val activity = "1.5.0-rc01"
+    const val activity = "1.5.0"
 
-    const val lifecycle = "2.5.0-rc02"
+    const val lifecycle = "2.5.0"
 
-    const val navigation = "2.5.0-rc02"
+    const val navigation = "2.5.0"
 
     const val dataStore = "1.0.0"
 
