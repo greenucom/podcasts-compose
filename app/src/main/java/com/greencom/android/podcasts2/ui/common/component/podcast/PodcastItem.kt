@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,6 +30,7 @@ private const val TitleMaxLines = 2
 private const val AuthorMaxLines = 1
 private const val DescriptionMaxLines = 2
 private const val CategoryLabelMaxCount = 3
+private const val AuthorAlpha = 0.74f
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -64,15 +68,13 @@ fun PodcastItem(
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            modifier = Modifier.padding(top = 4.dp),
-                            text = podcast.author,
-                            style = MaterialTheme.typography.caption,
-                            maxLines = AuthorMaxLines,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp).alpha(AuthorAlpha),
+                        text = podcast.author,
+                        style = MaterialTheme.typography.caption,
+                        maxLines = AuthorMaxLines,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 }
             }
 

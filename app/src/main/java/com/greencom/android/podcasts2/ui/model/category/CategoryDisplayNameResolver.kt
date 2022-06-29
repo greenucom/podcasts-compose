@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.greencom.android.podcasts2.R
 
-object CategoryUiHelper {
+object CategoryDisplayNameResolver {
 
     fun getCategoryDisplayName(category: CategoryUiModel, context: Context): String? {
         val resId = getCategoryDisplayNameResId(category)

@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.greencom.android.podcasts2.ui.model.category.CategoryUiHelper
+import com.greencom.android.podcasts2.ui.model.category.CategoryDisplayNameResolver
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.category.CategoryUiModelListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
@@ -31,7 +31,7 @@ fun CategoryLabelRow(
         val count = categories.size.coerceAtMost(maxCount)
         for (i in 0 until count) {
             val category = categories[i]
-            val name = CategoryUiHelper.getCategoryDisplayName(category, LocalContext.current)
+            val name = CategoryDisplayNameResolver.getCategoryDisplayName(category, LocalContext.current)
             if (name != null) {
                 CategoryLabel(categoryName = name)
             }

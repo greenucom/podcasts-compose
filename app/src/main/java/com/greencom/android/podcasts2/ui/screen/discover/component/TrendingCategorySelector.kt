@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.component.PodcastsFilterChip
-import com.greencom.android.podcasts2.ui.model.category.CategoryUiHelper
+import com.greencom.android.podcasts2.ui.model.category.CategoryDisplayNameResolver
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.category.CategoryUiModelListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
@@ -42,7 +42,7 @@ fun TrendingCategorySelector(
         ) { selectableCategory ->
             val category = selectableCategory.item
             val context = LocalContext.current
-            val displayName = CategoryUiHelper.getCategoryDisplayName(category, context)
+            val displayName = CategoryDisplayNameResolver.getCategoryDisplayName(category, context)
 
             if (displayName != null) {
                 PodcastsFilterChip(
