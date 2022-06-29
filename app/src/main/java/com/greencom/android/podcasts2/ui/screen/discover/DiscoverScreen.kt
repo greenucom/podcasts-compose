@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -83,6 +84,7 @@ private fun DiscoverTopBar(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SuccessScreen(
     state: DiscoverViewModel.ViewState.Success,
@@ -91,7 +93,8 @@ private fun SuccessScreen(
     lazyColumnState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(modifier = modifier, state = lazyColumnState) {
-        item(
+
+        stickyHeader(
             key = KeyTrendingCategorySelector,
             contentType = ContentTypeTrendingCategorySelector,
         ) {
