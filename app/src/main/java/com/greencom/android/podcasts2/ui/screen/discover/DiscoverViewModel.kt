@@ -4,17 +4,20 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import com.greencom.android.podcasts2.ui.common.mvi.Event
 import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
 import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
+import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,9 +28,12 @@ class DiscoverViewModel @Inject constructor(
     override val initialViewState = ViewState.InitialLoading
 
     private val collectSelectableTrendingCategoriesJob = MutableStateFlow<Job?>(null)
+    private val collectTrendingPodcastsForSelectedTrendingCategoriesJob =
+        MutableStateFlow<Job?>(null)
 
     init {
         collectSelectableTrendingCategories()
+        collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
     override suspend fun handleEvent(event: ViewEvent) = when (event) {
@@ -44,6 +50,18 @@ class DiscoverViewModel @Inject constructor(
                 }
             }
         }?.cancel()
+    }
+
+    private fun collectTrendingPodcastsForSelectedTrendingCategories() {
+        collectTrendingPodcastsForSelectedTrendingCategoriesJob.getAndUpdate {
+            viewModelScope.launch {
+                interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
+                    result
+                        .onSuccess(::updateStateWithTrendingPodcasts)
+                        .onFailure(::updateStateWithTrendingPodcastsError)
+                }
+            }
+        }
     }
 
     private fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
@@ -63,7 +81,33 @@ class DiscoverViewModel @Inject constructor(
             )
         }
         updateState {
-            ViewState.Success(selectableTrendingCategories = categories)
+            ViewState.Success(
+                selectableTrendingCategories = categories,
+                trendingPodcastsState = TrendingPodcastsState.Loading,
+            )
+        }
+    }
+
+    private fun updateStateWithTrendingPodcasts(trendingPodcasts: List<Podcast>) {
+        Timber.d("Trending podcasts received")
+        val podcasts = trendingPodcasts.map { PodcastUiModel.fromPodcast(it) }
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Success(podcasts))
+            } else {
+                it
+            }
+        }
+    }
+
+    private fun updateStateWithTrendingPodcastsError(e: Throwable) {
+        Timber.d("An error occurred while receiving trending podcasts")
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Error)
+            } else {
+                it
+            }
         }
     }
 
@@ -74,6 +118,7 @@ class DiscoverViewModel @Inject constructor(
         @Immutable
         data class Success(
             val selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
+            val trendingPodcastsState: TrendingPodcastsState,
         ) : ViewState
     }
 
@@ -84,5 +129,15 @@ class DiscoverViewModel @Inject constructor(
 
     @Stable
     sealed interface ViewSideEffect : SideEffect
+
+    @Stable
+    sealed interface TrendingPodcastsState {
+        object Loading : TrendingPodcastsState
+
+        @Immutable
+        data class Success(val trendingPodcasts: List<PodcastUiModel>) : TrendingPodcastsState
+
+        object Error : TrendingPodcastsState
+    }
 
 }
