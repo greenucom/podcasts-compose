@@ -27,9 +27,9 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
                 .collectLatest { idsOfSelectedCategories ->
                     val selectedCategories = trendingCategories
                         .filter { it.id in idsOfSelectedCategories }
-                    val trendingPodcastMaxSize = calculateTrendingPodcastMaxSize(selectedCategories)
+                    val trendingPodcastsMaxSize = calculateTrendingPodcastsMaxSize(selectedCategories)
                     podcastRepository.getTrendingPodcasts(
-                        max = trendingPodcastMaxSize,
+                        max = trendingPodcastsMaxSize,
                         inCategories = selectedCategories,
                         notInCategories = emptyList(),
                     ).collect { emit(it) }
@@ -37,7 +37,7 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
         }.map { Result.success(it) }
     }
 
-    private fun calculateTrendingPodcastMaxSize(
+    private fun calculateTrendingPodcastsMaxSize(
         selectedCategories: List<Category>,
     ): Int {
         return if (selectedCategories.isNotEmpty()) {
