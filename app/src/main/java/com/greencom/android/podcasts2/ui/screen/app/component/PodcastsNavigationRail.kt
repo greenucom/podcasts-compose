@@ -14,6 +14,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.greencom.android.podcasts2.ui.common.navigateToNavigationItem
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -39,7 +40,7 @@ fun PodcastsNavigationRail(
                 NavigationRailItem(
                     selected = isSelected,
                     onClick = {
-                        navController.popUpToNavigationItemStartDestination(item = item)
+                        navController.navigateToNavigationItem(item = item)
                     },
                     icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },
