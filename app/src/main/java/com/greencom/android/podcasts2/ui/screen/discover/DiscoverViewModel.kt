@@ -40,9 +40,7 @@ class DiscoverViewModel @Inject constructor(
         is ViewEvent.ToggleSelectableTrendingCategory -> {
             reduceToggleSelectableTrendingCategory(event.category)
         }
-        is ViewEvent.UpdateSubscriptionToPodcast -> {
-            // TODO: Update subscription
-        }
+        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -71,6 +69,12 @@ class DiscoverViewModel @Inject constructor(
         val categoryDomain = category.toCategory()
         viewModelScope.launch {
             interactor.toggleSelectableTrendingCategory(categoryDomain)
+        }
+    }
+
+    private fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
+        viewModelScope.launch {
+            interactor.updateSubscriptionToPodcast(podcast.toPodcast())
         }
     }
 

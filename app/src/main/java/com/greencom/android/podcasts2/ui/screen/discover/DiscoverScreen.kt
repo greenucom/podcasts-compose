@@ -22,9 +22,6 @@ import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcast
 import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
-private const val KeyTrendingCategorySelector = "KeyTrendingCategorySelector"
-
-private const val ContentTypeTrendingCategorySelector = "ContentTypeTrendingCategorySelector"
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable

@@ -15,6 +15,16 @@ data class PodcastUiModel(
     val isUserSubscribed: Boolean,
 ) {
 
+    fun toPodcast(): Podcast = Podcast(
+        id = id,
+        title = title,
+        description = description,
+        author = author,
+        imageUrl = imageUrl,
+        categories = categories.map { it.toCategory() },
+        isUserSubscribed = isUserSubscribed,
+    )
+
     companion object {
 
         fun fromPodcast(podcast: Podcast): PodcastUiModel = PodcastUiModel(
