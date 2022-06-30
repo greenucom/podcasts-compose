@@ -39,14 +39,9 @@ fun PodcastsNavigationRail(
                 NavigationRailItem(
                     selected = isSelected,
                     onClick = {
-                        NavigationItemUtils.onNavigationItemClicked(
-                            item = item,
-                            navController = navController,
-                        )
+                        navController.popUpToNavigationItemStartDestination(item = item)
                     },
-                    icon = {
-                        NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
-                    },
+                    icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },
                     alwaysShowLabel = false,
                     selectedContentColor = MaterialTheme.colors.primary,

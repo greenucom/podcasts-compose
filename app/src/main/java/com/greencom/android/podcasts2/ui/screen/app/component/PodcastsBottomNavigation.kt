@@ -38,14 +38,9 @@ fun PodcastsBottomNavigation(
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = {
-                        NavigationItemUtils.onNavigationItemClicked(
-                            item = item,
-                            navController = navController,
-                        )
+                        navController.popUpToNavigationItemStartDestination(item = item)
                     },
-                    icon = {
-                        NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
-                    },
+                    icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },
                     selectedContentColor = MaterialTheme.colors.primary,
                     unselectedContentColor = MaterialTheme.colors.onSurface
