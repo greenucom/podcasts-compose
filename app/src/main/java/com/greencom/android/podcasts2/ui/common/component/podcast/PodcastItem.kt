@@ -1,10 +1,7 @@
 package com.greencom.android.podcasts2.ui.common.component.podcast
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -13,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +23,8 @@ import com.greencom.android.podcasts2.ui.common.component.category.CategoryLabel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.podcast.PodcastUiModelPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
+import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+import com.greencom.android.podcasts2.ui.theme.placeholder
 
 private val CoverSize = 80.dp
 private const val TitleMaxLines = 2
@@ -106,10 +107,69 @@ fun PodcastItem(
     }
 }
 
+@Composable
+fun PodcastItemPlaceholder(
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    Surface(modifier = modifier.fillMaxWidth()) {
+
+        Column(modifier = Modifier.padding(16.dp)) {
+
+            Row {
+                Box(
+                    modifier = Modifier
+                        .size(CoverSize)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .drawBehind { drawRect(color = color) }
+                )
+
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(0.75f)
+                            .height(24.dp)
+                            .clip(shape = MaterialTheme.shapes.placeholder)
+                            .drawBehind { drawRect(color = color) }
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(0.5f)
+                            .height(12.dp)
+                            .clip(shape = MaterialTheme.shapes.placeholder)
+                            .drawBehind { drawRect(color = color) }
+                    )
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .clip(shape = MaterialTheme.shapes.placeholder)
+                    .drawBehind { drawRect(color = color) }
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(top = 6.dp)
+                    .fillMaxWidth(0.4f)
+                    .height(16.dp)
+                    .clip(shape = MaterialTheme.shapes.placeholder)
+                    .drawBehind { drawRect(color = color) }
+            )
+        }
+    }
+}
+
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun Preview(
+private fun PodcastItemPreview(
     @PreviewParameter(PodcastUiModelPreviewParameterProvider::class)
     podcast: PodcastUiModel,
 ) {
@@ -119,6 +179,19 @@ private fun Preview(
                 podcast = podcast,
                 onPodcastClicked = {},
                 onIsUserSubscribedChanged = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun PodcastItemPlaceholderPreview() {
+    PodcastsTheme {
+        Surface {
+            PodcastItemPlaceholder(
+                color = MaterialTheme.colors.onSurfaceUtil,
             )
         }
     }
