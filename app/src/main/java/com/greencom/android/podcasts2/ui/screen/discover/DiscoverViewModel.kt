@@ -17,7 +17,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -96,7 +95,6 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun updateStateWithTrendingPodcasts(trendingPodcasts: List<Podcast>) {
-        Timber.d("Trending podcasts received")
         val podcasts = trendingPodcasts.map { PodcastUiModel.fromPodcast(it) }
         updateState {
             if (it is ViewState.Success) {
@@ -108,7 +106,6 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun updateStateWithTrendingPodcastsError(e: Throwable) {
-        Timber.d("An error occurred while receiving trending podcasts")
         updateState {
             if (it is ViewState.Success) {
                 it.copy(trendingPodcastsState = TrendingPodcastsState.Error)

@@ -14,7 +14,7 @@ class UpdateSubscriptionToPodcastUseCase @Inject constructor(
 ) : UseCase<Podcast, Unit>(dispatcher) {
 
     override suspend fun execute(params: Podcast) {
-        Timber.d("Update subscription to podcast: $params")
+        Timber.i("Update subscription to podcast ${params.title}, is user subscribed: ${params.isUserSubscribed}")
         podcastRepository.updateSubscriptionToPodcast(params)
     }
 

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import javax.inject.Inject
 
 class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructor(
@@ -26,7 +25,6 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
         return channelFlow {
             categoryRepository.getSelectedTrendingCategoriesIds()
                 .collectLatest { idsOfSelectedCategories ->
-                    Timber.d("Request trending podcasts from PodcastsRepository")
                     val selectedCategories = trendingCategories
                         .filter { it.id in idsOfSelectedCategories }
                     val trendingPodcastsMaxSize = calculateTrendingPodcastsMaxSize(selectedCategories)
@@ -35,7 +33,6 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
                         inCategories = selectedCategories,
                         notInCategories = emptyList(),
                     ).collect {
-                        Timber.d("Collect trending podcasts from PodcastsRepository")
                         send(it)
                     }
                 }
