@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -31,6 +32,7 @@ fun SubscribeButton(
         modifier = modifier,
         isChecked = isUserSubscribed,
         onClick = { onIsUserSubscribedChanged(!isUserSubscribed) },
+        contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 16.dp, bottom = 8.dp),
     ) {
 
         AnimatedContent(
