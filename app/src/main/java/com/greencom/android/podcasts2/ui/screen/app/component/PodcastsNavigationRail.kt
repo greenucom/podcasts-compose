@@ -1,7 +1,10 @@
 package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,21 +62,6 @@ fun PodcastsNavigationRail(
                 .fillMaxHeight()
                 .drawBehind { drawRect(color = dividerColor) }
         )
-    }
-}
-
-@Composable
-fun PodcastsNavigationRailRespectingWindowInsets(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
-    Row(modifier = modifier) {
-        Spacer(modifier = Modifier.windowInsetsStartWidth(WindowInsets.displayCutout))
-        Column {
-            Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-            PodcastsNavigationRail(navController = navController)
-            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
-        }
     }
 }
 

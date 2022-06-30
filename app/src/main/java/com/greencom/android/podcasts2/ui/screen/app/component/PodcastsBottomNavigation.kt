@@ -1,13 +1,11 @@
 package com.greencom.android.podcasts2.ui.screen.app.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -49,24 +47,6 @@ fun PodcastsBottomNavigation(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun PodcastsBottomNavigationRespectingWindowInsets(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-        PodcastsBottomNavigation(navController = navController)
-
-        val spacerColor = MaterialTheme.colors.surface
-        Spacer(
-            modifier = Modifier
-                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                .fillMaxWidth()
-                .drawBehind { drawRect(color = spacerColor) }
-        )
     }
 }
 
