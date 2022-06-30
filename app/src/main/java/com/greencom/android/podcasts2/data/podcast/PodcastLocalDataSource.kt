@@ -28,7 +28,16 @@ class PodcastLocalDataSource @Inject constructor(
         loadUserSubscriptionsIds()
     }
 
-    suspend fun updatePodcast(podcast: Podcast) {
+    suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
+        updatePodcast(podcast)
+
+        val isUserSubscribed = podcast.isUserSubscribed
+        _userSubscriptionsIds.update {
+            if (isUserSubscribed) it + podcast.id else it - podcast.id
+        }
+    }
+
+    private suspend fun updatePodcast(podcast: Podcast) {
         val podcastEntity = PodcastEntity.fromPodcast(podcast)
         dao.update(podcastEntity)
     }
