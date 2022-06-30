@@ -9,16 +9,16 @@ import androidx.compose.runtime.remember
 
 class DiscoverScreenState(
     val scaffoldState: ScaffoldState,
-    val lazyColumnState: LazyListState,
+    val trendingPodcastsLazyColumnState: LazyListState,
 )
 
 @Composable
 fun rememberDiscoverScreenState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    lazyColumnState: LazyListState = rememberLazyListState(),
-) = remember(scaffoldState, lazyColumnState) {
+    trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
+) = remember(scaffoldState, trendingPodcastsLazyColumnState) {
     DiscoverScreenState(
         scaffoldState = scaffoldState,
-        lazyColumnState = lazyColumnState,
+        trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
     )
 }

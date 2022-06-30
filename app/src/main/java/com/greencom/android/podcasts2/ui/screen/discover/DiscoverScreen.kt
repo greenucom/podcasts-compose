@@ -1,6 +1,5 @@
 package com.greencom.android.podcasts2.ui.screen.discover
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -54,7 +53,7 @@ fun DiscoverScreen(
                     SuccessScreen(
                         state = state,
                         dispatchEvent = viewModel::dispatchEvent,
-                        lazyColumnState = screenState.lazyColumnState,
+                        trendingPodcastsLazyColumnState = screenState.trendingPodcastsLazyColumnState,
                     )
                 }
             }
@@ -89,44 +88,52 @@ private fun DiscoverTopBar(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SuccessScreen(
     state: DiscoverViewModel.ViewState.Success,
     dispatchEvent: (DiscoverViewModel.ViewEvent) -> Unit,
     modifier: Modifier = Modifier,
-    lazyColumnState: LazyListState = rememberLazyListState(),
+    trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) {
-    LazyColumn(modifier = modifier, state = lazyColumnState) {
+    Column(modifier = modifier) {
 
-        stickyHeader(
-            key = KeyTrendingCategorySelector,
-            contentType = ContentTypeTrendingCategorySelector,
-        ) {
-            TrendingCategorySelector(
-                selectableTrendingCategories = state.selectableTrendingCategories,
-                onCategoryClicked = {
-                    val event = DiscoverViewModel.ViewEvent.ToggleSelectableTrendingCategory(it)
-                    dispatchEvent(event)
-                },
-                contentPadding = PaddingValues(horizontal = 16.dp),
-            )
-        }
+        TrendingCategorySelector(
+            selectableTrendingCategories = state.selectableTrendingCategories,
+            onCategoryClicked = {
+                val event = DiscoverViewModel.ViewEvent.ToggleSelectableTrendingCategory(it)
+                dispatchEvent(event)
+            },
+            contentPadding = PaddingValues(horizontal = 16.dp),
+        )
 
-        if (state.trendingPodcastsState is DiscoverViewModel.TrendingPodcastsState.Success) {
-            itemsIndexed(
-                items = state.trendingPodcastsState.trendingPodcasts,
-                key = { _, podcast -> podcast.id },
-                contentType = { _, _ -> ContentTypePodcastItem },
-            ) { idx, podcast ->
-                PodcastItem(
-                    podcast = podcast,
-                    onPodcastClicked = { /* TODO */ },
-                    onSubscribedChanged = { /* TODO */ },
-                )
+        CrossfadeTyped(targetState = state.trendingPodcastsState) {
+            when (it) {
+                DiscoverViewModel.TrendingPodcastsState.Loading -> {
+                    // TODO()
+                }
 
-                if (idx != state.trendingPodcastsState.trendingPodcasts.lastIndex) {
-                    Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                is DiscoverViewModel.TrendingPodcastsState.Success -> {
+                    LazyColumn(state = trendingPodcastsLazyColumnState) {
+                        itemsIndexed(
+                            items = it.trendingPodcasts,
+                            key = { _, podcast -> podcast.id },
+                            contentType = { _, _ -> ContentTypePodcastItem },
+                        ) { idx, podcast ->
+                            PodcastItem(
+                                podcast = podcast,
+                                onPodcastClicked = { /* TODO */ },
+                                onSubscribedChanged = { /* TODO */ },
+                            )
+
+                            if (idx != it.trendingPodcasts.lastIndex) {
+                                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                            }
+                        }
+                    }
+                }
+
+                DiscoverViewModel.TrendingPodcastsState.Error -> {
+                    // TODO()
                 }
             }
         }
