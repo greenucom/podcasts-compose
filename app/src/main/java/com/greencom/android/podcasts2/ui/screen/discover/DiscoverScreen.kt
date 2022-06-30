@@ -22,13 +22,13 @@ import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 private const val PodcastItemPlaceholderCount = 5
 
-private const val ContentTypePodcastItemPlaceholder = "ContentTypePodcastItemPlaceholder"
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
@@ -39,6 +39,10 @@ fun DiscoverScreen(
 ) {
     val screenState = rememberDiscoverScreenState()
     val viewState by viewModel.state.collectAsState()
+
+    SpecificScreenBehavior {
+        onNavigationItemReselected = screenState::onNavigationItemReselected
+    }
 
     Scaffold(
         modifier = modifier,
