@@ -12,6 +12,10 @@ class PodcastRepository @Inject constructor(
     private val remoteDataSource: PodcastRemoteDataSource,
 ) {
 
+    suspend fun updatePodcast(podcast: Podcast) {
+        localDataSource.updatePodcast(podcast)
+    }
+
     suspend fun getTrendingPodcasts(
         max: Int,
         inCategories: List<Category>,
