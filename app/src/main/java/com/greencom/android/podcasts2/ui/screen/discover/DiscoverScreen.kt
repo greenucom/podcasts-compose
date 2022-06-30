@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -17,11 +19,16 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
+import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
+private const val PodcastItemPlaceholderCount = 5
+
+private const val ContentTypePodcastItemPlaceholder = "ContentTypePodcastItemPlaceholder"
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
@@ -105,8 +112,18 @@ private fun SuccessScreen(
 
         CrossfadeTyped(targetState = state.trendingPodcastsState) { trendingPodcastsState ->
             when (trendingPodcastsState) {
+
                 DiscoverViewModel.TrendingPodcastsState.Loading -> {
-                    // TODO()
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        val placeholderLoadingColor by animatePlaceholderLoadingColor()
+                        repeat(PodcastItemPlaceholderCount) {
+                            PodcastItemPlaceholder(color = placeholderLoadingColor)
+
+                            if (it < PodcastItemPlaceholderCount - 1) {
+                                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                            }
+                        }
+                    }
                 }
 
                 is DiscoverViewModel.TrendingPodcastsState.Success -> {
