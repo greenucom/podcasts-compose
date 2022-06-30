@@ -1,8 +1,9 @@
-package com.greencom.android.podcasts2.ui.model.category
+package com.greencom.android.podcasts2.ui.common
 
 import android.content.Context
 import androidx.annotation.StringRes
 import com.greencom.android.podcasts2.R
+import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 
 object CategoryDisplayNameResolver {
 
