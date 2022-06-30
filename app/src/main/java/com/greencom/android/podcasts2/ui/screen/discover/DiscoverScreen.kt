@@ -106,8 +106,8 @@ private fun SuccessScreen(
             contentPadding = PaddingValues(horizontal = 16.dp),
         )
 
-        CrossfadeTyped(targetState = state.trendingPodcastsState) {
-            when (it) {
+        CrossfadeTyped(targetState = state.trendingPodcastsState) { trendingPodcastsState ->
+            when (trendingPodcastsState) {
                 DiscoverViewModel.TrendingPodcastsState.Loading -> {
                     // TODO()
                 }
@@ -115,17 +115,20 @@ private fun SuccessScreen(
                 is DiscoverViewModel.TrendingPodcastsState.Success -> {
                     LazyColumn(state = trendingPodcastsLazyColumnState) {
                         itemsIndexed(
-                            items = it.trendingPodcasts,
+                            items = trendingPodcastsState.trendingPodcasts,
                             key = { _, podcast -> podcast.id },
                             contentType = { _, _ -> ContentTypePodcastItem },
                         ) { idx, podcast ->
                             PodcastItem(
                                 podcast = podcast,
                                 onPodcastClicked = { /* TODO */ },
-                                onSubscribedChanged = { /* TODO */ },
+                                onIsUserSubscribedChanged = {
+                                    val event = DiscoverViewModel.ViewEvent.UpdateSubscriptionToPodcast(it)
+                                    dispatchEvent(event)
+                                },
                             )
 
-                            if (idx != it.trendingPodcasts.lastIndex) {
+                            if (idx != trendingPodcastsState.trendingPodcasts.lastIndex) {
                                 Divider(color = MaterialTheme.colors.onSurfaceUtil)
                             }
                         }

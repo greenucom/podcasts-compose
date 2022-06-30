@@ -37,7 +37,7 @@ private const val AuthorAlpha = 0.74f
 fun PodcastItem(
     podcast: PodcastUiModel,
     onPodcastClicked: (PodcastUiModel) -> Unit,
-    onSubscribedChanged: (PodcastUiModel) -> Unit,
+    onIsUserSubscribedChanged: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -48,7 +48,7 @@ fun PodcastItem(
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 16.dp),
+                .padding(top = 16.dp, bottom = 12.dp),
         ) {
 
             Row {
@@ -69,7 +69,9 @@ fun PodcastItem(
                     )
 
                     Text(
-                        modifier = Modifier.padding(top = 4.dp).alpha(AuthorAlpha),
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .alpha(AuthorAlpha),
                         text = podcast.author,
                         style = MaterialTheme.typography.caption,
                         maxLines = AuthorMaxLines,
@@ -91,6 +93,15 @@ fun PodcastItem(
                 categories = podcast.categories,
                 maxCount = CategoryLabelMaxCount,
             )
+
+            SubscribeButton(
+                modifier = Modifier.padding(top = 6.dp),
+                isUserSubscribed = podcast.isUserSubscribed,
+                onIsUserSubscribedChanged = {
+                    val newPodcast = podcast.copy(isUserSubscribed = it)
+                    onIsUserSubscribedChanged(newPodcast)
+                },
+            )
         }
     }
 }
@@ -107,7 +118,7 @@ private fun Preview(
             PodcastItem(
                 podcast = podcast,
                 onPodcastClicked = {},
-                onSubscribedChanged = {},
+                onIsUserSubscribedChanged = {},
             )
         }
     }
