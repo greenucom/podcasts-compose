@@ -105,6 +105,7 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun updateStateWithTrendingPodcastsError(e: Throwable) {
         updateState {
             if (it is ViewState.Success) {
