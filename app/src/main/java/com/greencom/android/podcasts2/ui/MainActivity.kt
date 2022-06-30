@@ -7,12 +7,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
+import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
+import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehaviorController
 import com.greencom.android.podcasts2.ui.screen.app.AppScreen
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +30,34 @@ class MainActivity : ComponentActivity() {
         setContent {
             TransparentSystemBars()
 
-            val windowSizeClass = calculateWindowSizeClass(activity = this)
+            val currentScreenBehavior = remember {
+                mutableStateOf(ScreenBehavior.Default)
+            }
+            val screenBehaviorController = remember {
+                object : ScreenBehaviorController {
+                    override val currentScreenBehaviorAsState: State<ScreenBehavior>
+                        get() = currentScreenBehavior
+
+                    override fun setScreenBehavior(screenBehavior: ScreenBehavior) {
+                        currentScreenBehavior.value = screenBehavior
+                    }
+
+                    override fun removeScreenBehavior(screenBehavior: ScreenBehavior) {
+                        if (currentScreenBehavior.value == screenBehavior) {
+                            currentScreenBehavior.value = ScreenBehavior.Default
+                        }
+                    }
+                }
+            }
+
             PodcastsTheme {
                 Surface {
-                    AppScreen(windowSizeClass = windowSizeClass)
+                    CompositionLocalProvider(
+                        LocalScreenBehaviorController provides screenBehaviorController,
+                    ) {
+                        val windowSizeClass = calculateWindowSizeClass(activity = this)
+                        AppScreen(windowSizeClass = windowSizeClass)
+                    }
                 }
             }
         }
