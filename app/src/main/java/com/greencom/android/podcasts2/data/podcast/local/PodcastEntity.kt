@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.greencom.android.podcasts2.data.category.local.CategoryDtoListTypeConverter
 import com.greencom.android.podcasts2.data.category.local.dto.CategoryDto
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 
 @Entity(tableName = "Podcasts")
 @TypeConverters(CategoryDtoListTypeConverter::class)
@@ -18,4 +19,20 @@ data class PodcastEntity(
     @ColumnInfo(name = "podcast_image_url") val imageUrl: String,
     @ColumnInfo(name = "podcast_categories") val categories: List<CategoryDto>,
     @ColumnInfo(name = "podcast_is_user_subscribed") val isUserSubscribed: Boolean,
-)
+) {
+
+    companion object {
+
+        fun fromPodcast(podcast: Podcast): PodcastEntity = PodcastEntity(
+            id = podcast.id,
+            title = podcast.title,
+            description = podcast.description,
+            author = podcast.author,
+            imageUrl = podcast.imageUrl,
+            categories = podcast.categories.map { CategoryDto.fromCategory(it) },
+            isUserSubscribed = podcast.isUserSubscribed,
+        )
+
+    }
+
+}
