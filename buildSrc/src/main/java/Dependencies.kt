@@ -41,6 +41,8 @@ object Dependencies {
 
     const val kotlinxSerializationJson =
         "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerializationJson}"
+    const val kotlinxImmutableCollections =
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.kotlinxImmutableCollections}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"

@@ -33,6 +33,7 @@ object Versions {
     const val retrofitKotlinxSerializationConverter = "0.8.0"
 
     const val kotlinxSerializationJson = "1.3.3"
+    const val kotlinxImmutableCollections = "0.3.5"
 
     const val hilt = "2.42"
     const val hiltComposeNavigation = "1.0.0"

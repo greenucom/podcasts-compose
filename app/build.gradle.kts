@@ -161,6 +161,7 @@ dependencies {
     implementation(Dependencies.retrofitKotlinxSerializationConverter)
 
     implementation(Dependencies.kotlinxSerializationJson)
+    implementation(Dependencies.kotlinxImmutableCollections)
 
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)
