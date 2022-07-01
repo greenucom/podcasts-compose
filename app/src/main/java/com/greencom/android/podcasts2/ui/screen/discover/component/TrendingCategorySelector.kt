@@ -18,12 +18,14 @@ import com.greencom.android.podcasts2.ui.common.component.PodcastsFilterChip
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.category.CategoryUiModelListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 private const val ContentTypePodcastsFilterChip = "ContentTypePodcastsFilterChip"
 
 @Composable
 fun TrendingCategorySelector(
-    selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
+    selectableTrendingCategories: ImmutableList<SelectableItem<CategoryUiModel>>,
     onCategoryClicked: (category: CategoryUiModel) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -61,11 +63,11 @@ fun TrendingCategorySelector(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun Preview(
     @PreviewParameter(CategoryUiModelListPreviewParameterProvider::class)
-    categories: List<CategoryUiModel>,
+    categories: ImmutableList<CategoryUiModel>,
 ) {
-    val selectableCategories = categories.map {
-        SelectableItem(item = it, isSelected = it.id % 2 != 0)
-    }
+    val selectableCategories = categories
+        .map { SelectableItem(item = it, isSelected = it.id % 2 != 0) }
+        .toImmutableList()
 
     PodcastsTheme {
         Surface {

@@ -3,6 +3,7 @@ package com.greencom.android.podcasts2.ui.previewparameter.podcast
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
+import kotlinx.collections.immutable.persistentListOf
 
 class PodcastUiModelPreviewParameterProvider : PreviewParameterProvider<PodcastUiModel> {
 
@@ -21,7 +22,7 @@ class PodcastUiModelPreviewParameterProvider : PreviewParameterProvider<PodcastU
         """.trimIndent(),
         author = "#BeardyCast",
         imageUrl = "https://beardycast.com/wp-content/uploads/2018/11/borodigest-tbbt.jpg",
-        categories = listOf(
+        categories = persistentListOf(
             CategoryUiModel(id = 67, name = "Science"),
             CategoryUiModel(id = 75, name = "Physics"),
             CategoryUiModel(id = 68, name = "Astronomy"),
@@ -35,7 +36,7 @@ class PodcastUiModelPreviewParameterProvider : PreviewParameterProvider<PodcastU
         description = "В этом подкасте обсуждается самый заметный текст «Медузы» за неделю. Тут можно услышать голоса героев, беседу с автором, подробности, не вошедшие в текст, и специально написанную для этой истории музыку.",
         author = "Meduza",
         imageUrl = "https://is5-ssl.mzstatic.com/image/thumb/Podcasts115/v4/cf/e9/fd/cfe9fde2-dd5c-269e-7156-99987c5aaa53/mza_5046606765607931942.png/600x600bb.jpg",
-        categories = listOf(
+        categories = persistentListOf(
             CategoryUiModel(id = 77, name = "Society"),
             CategoryUiModel(id = 55, name = "News"),
         ),

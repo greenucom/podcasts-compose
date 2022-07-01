@@ -13,6 +13,8 @@ import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
@@ -80,12 +82,15 @@ class DiscoverViewModel @Inject constructor(
     private fun updateStateWithSelectableTrendingCategories(
         selectableTrendingCategories: List<SelectableItem<Category>>,
     ) {
-        val categories = selectableTrendingCategories.map {
-            SelectableItem(
-                item = CategoryUiModel.fromCategory(it.item),
-                isSelected = it.isSelected,
-            )
-        }
+        val categories = selectableTrendingCategories
+            .map {
+                SelectableItem(
+                    item = CategoryUiModel.fromCategory(it.item),
+                    isSelected = it.isSelected,
+                )
+            }
+            .toImmutableList()
+
         updateState {
             ViewState.Success(
                 selectableTrendingCategories = categories,
@@ -95,7 +100,10 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun updateStateWithTrendingPodcasts(trendingPodcasts: List<Podcast>) {
-        val podcasts = trendingPodcasts.map { PodcastUiModel.fromPodcast(it) }
+        val podcasts = trendingPodcasts
+            .map { PodcastUiModel.fromPodcast(it) }
+            .toImmutableList()
+
         updateState {
             if (it is ViewState.Success) {
                 it.copy(trendingPodcastsState = TrendingPodcastsState.Success(podcasts))
@@ -122,7 +130,7 @@ class DiscoverViewModel @Inject constructor(
 
         @Immutable
         data class Success(
-            val selectableTrendingCategories: List<SelectableItem<CategoryUiModel>>,
+            val selectableTrendingCategories: ImmutableList<SelectableItem<CategoryUiModel>>,
             val trendingPodcastsState: TrendingPodcastsState,
         ) : ViewState
     }
@@ -141,7 +149,7 @@ class DiscoverViewModel @Inject constructor(
         object Loading : TrendingPodcastsState
 
         @Immutable
-        data class Success(val trendingPodcasts: List<PodcastUiModel>) : TrendingPodcastsState
+        data class Success(val trendingPodcasts: ImmutableList<PodcastUiModel>) : TrendingPodcastsState
 
         object Error : TrendingPodcastsState
     }

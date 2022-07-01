@@ -15,12 +15,13 @@ import com.greencom.android.podcasts2.ui.common.CategoryDisplayNameResolver
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.previewparameter.category.CategoryUiModelListPreviewParameterProvider
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
+import kotlinx.collections.immutable.ImmutableList
 
 private const val MaxCountDefault = 2
 
 @Composable
 fun CategoryLabelRow(
-    categories: List<CategoryUiModel>,
+    categories: ImmutableList<CategoryUiModel>,
     modifier: Modifier = Modifier,
     maxCount: Int = MaxCountDefault,
 ) {
@@ -44,7 +45,7 @@ fun CategoryLabelRow(
 @Composable
 private fun Preview(
     @PreviewParameter(CategoryUiModelListPreviewParameterProvider::class)
-    categories: List<CategoryUiModel>,
+    categories: ImmutableList<CategoryUiModel>,
 ) {
     PodcastsTheme {
         Surface {
