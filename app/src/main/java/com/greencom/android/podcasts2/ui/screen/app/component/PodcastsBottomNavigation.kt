@@ -13,6 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.greencom.android.podcasts2.ui.common.navigateToNavigationItem
+import com.greencom.android.podcasts2.ui.common.popBackStackToSelectedNavigationItemStartDestination
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
@@ -30,6 +32,9 @@ fun PodcastsBottomNavigation(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
 
+            val currentScreenBehavior =
+                LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
+
             NavigationItems.forEach { item ->
                 val isSelected = currentDestination?.hierarchy
                     ?.any { it.route == item.route } == true
@@ -37,7 +42,15 @@ fun PodcastsBottomNavigation(
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = {
-                        navController.navigateToNavigationItem(item = item)
+                        if (isSelected) {
+                            val isHandled =
+                                currentScreenBehavior?.onNavigationItemReselected?.invoke(item)
+                            if (isHandled != true) {
+                                navController.popBackStackToSelectedNavigationItemStartDestination()
+                            }
+                        } else {
+                            navController.navigateToNavigationItem(item = item)
+                        }
                     },
                     icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },

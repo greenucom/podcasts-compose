@@ -16,6 +16,14 @@ fun NavHostController.navigateToNavigationItem(item: NavigationItem) {
     }
 }
 
+fun NavHostController.popBackStackToSelectedNavigationItemStartDestination() {
+    val selectedItemStartDestination = this.findSelectedNavigationItemStartDestination()
+    popBackStack(
+        destinationId = selectedItemStartDestination.id,
+        inclusive = false,
+    )
+}
+
 fun NavHostController.findSelectedNavigationItemStartDestination(): NavDestination {
     val topmostGraph = this.graph
     var currentGraph = this.currentDestination?.parent
