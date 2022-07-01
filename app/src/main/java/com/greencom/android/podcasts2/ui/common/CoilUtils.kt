@@ -31,9 +31,9 @@ fun PodcastsAsyncImage(
     alpha: Float = DefaultAlpha,
 ) {
     val defaultPlaceholderResId = if (MaterialTheme.colors.isLight) {
-        R.drawable.img_image_placeholder_light
+        R.drawable.vec_image_placeholder_light
     } else {
-        R.drawable.img_image_placeholder_dark
+        R.drawable.vec_image_placeholder_dark
     }
     val defaultPlaceholder = painterResource(id = defaultPlaceholderResId)
 
