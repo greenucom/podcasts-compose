@@ -27,21 +27,22 @@ class DiscoverScreenState(
         scrollToTopJob.getAndUpdate { null }?.cancel()
         val isScrolledToTop = trendingPodcastsLazyColumnState.firstVisibleItemIndex == 0 &&
                 trendingPodcastsLazyColumnState.firstVisibleItemScrollOffset == 0
-        trendingPodcastsLazyColumnState.firstVisibleItemIndex
 
         if (isScrolledToTop) {
             // TODO: Open search
         } else {
-            scrollToTop()
+            val currentPosition = trendingPodcastsLazyColumnState.firstVisibleItemIndex
+            scrollToTop(animate = currentPosition <= MAX_POSITION_FOR_SMOOTH_SCROLL)
         }
 
         return true
     }
 
-    private fun scrollToTop() {
-        val animate =
-            trendingPodcastsLazyColumnState.firstVisibleItemIndex <= MAX_POSITION_FOR_SMOOTH_SCROLL
+    fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
+        DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
+    }
 
+    private fun scrollToTop(animate: Boolean) {
         scrollToTopJob.getAndUpdate {
             scope.launch {
                 trendingPodcastsLazyColumnState.let {

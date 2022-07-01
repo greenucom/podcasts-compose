@@ -32,6 +32,8 @@ class DiscoverViewModel @Inject constructor(
     private val collectTrendingPodcastsForSelectedTrendingCategoriesJob =
         MutableStateFlow<Job?>(null)
 
+    private var scrollNextTrendingPodcastListToTop = false
+
     init {
         collectSelectableTrendingCategories()
         collectTrendingPodcastsForSelectedTrendingCategories()
@@ -71,6 +73,8 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.toggleSelectableTrendingCategory(categoryDomain)
         }
+
+        scrollNextTrendingPodcastListToTop = true
     }
 
     private fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
@@ -111,6 +115,11 @@ class DiscoverViewModel @Inject constructor(
                 it
             }
         }
+
+        if (scrollNextTrendingPodcastListToTop) {
+            emitSideEffect(ViewSideEffect.ScrollToTop)
+            scrollNextTrendingPodcastListToTop = false
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -142,7 +151,9 @@ class DiscoverViewModel @Inject constructor(
     }
 
     @Stable
-    sealed interface ViewSideEffect : SideEffect
+    sealed interface ViewSideEffect : SideEffect {
+        object ScrollToTop : ViewSideEffect
+    }
 
     @Stable
     sealed interface TrendingPodcastsState {
