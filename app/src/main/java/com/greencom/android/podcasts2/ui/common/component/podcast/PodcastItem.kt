@@ -57,7 +57,7 @@ fun PodcastItem(
                     modifier = Modifier
                         .size(CoverSize)
                         .clip(MaterialTheme.shapes.medium),
-                    data = podcast.imageUrl,
+                    url = podcast.imageUrl,
                     contentDescription = stringResource(id = R.string.content_desc_podcast_cover),
                 )
 

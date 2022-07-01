@@ -17,7 +17,7 @@ private const val DefaultAlpha = 1.0f
 
 @Composable
 fun PodcastsAsyncImage(
-    data: Any?,
+    url: String,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     placeholder: Painter? = null,
@@ -40,7 +40,7 @@ fun PodcastsAsyncImage(
     AsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
-            .data(data)
+            .data(url)
             .crossfade(true)
             .build(),
         contentDescription = contentDescription,
