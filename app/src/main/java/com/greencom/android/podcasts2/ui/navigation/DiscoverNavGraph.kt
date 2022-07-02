@@ -9,10 +9,10 @@ import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
     navigation(
         route = NavigationItem.Discover.route,
-        startDestination = Screen.Discover.scheme,
+        startDestination = Route.Discover.scheme,
     ) {
 
-        composable(route = Screen.Discover.scheme) {
+        composable(route = Route.Discover.scheme) {
             DiscoverScreen(
                 onSearchPodcastsClicked = { /* TODO */ },
             )

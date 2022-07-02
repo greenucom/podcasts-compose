@@ -8,10 +8,10 @@ import androidx.navigation.navigation
 fun NavGraphBuilder.libraryNavGraph(navController: NavHostController) {
     navigation(
         route = NavigationItem.Library.route,
-        startDestination = Screen.Library.scheme,
+        startDestination = Route.Library.scheme,
     ) {
 
-        composable(route = Screen.Library.scheme) {
+        composable(route = Route.Library.scheme) {
 
         }
 

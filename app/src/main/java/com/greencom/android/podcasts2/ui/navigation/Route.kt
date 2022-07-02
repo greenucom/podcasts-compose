@@ -1,18 +1,18 @@
 package com.greencom.android.podcasts2.ui.navigation
 
-sealed class Screen<Args>(val scheme: String) {
+sealed class Route<Args>(val scheme: String) {
 
     abstract fun createRoute(args: Args): String
 
-    object Podcasts : Screen<Unit>("podcasts") {
+    object Podcasts : Route<Unit>("podcasts") {
         override fun createRoute(args: Unit): String = scheme
     }
 
-    object Discover : Screen<Unit>("discover") {
+    object Discover : Route<Unit>("discover") {
         override fun createRoute(args: Unit): String = scheme
     }
 
-    object Library : Screen<Unit>("library") {
+    object Library : Route<Unit>("library") {
         override fun createRoute(args: Unit): String = scheme
     }
 
