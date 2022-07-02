@@ -7,14 +7,14 @@ on:
 
 jobs:
   run-unit-tests:
-    uses: ./.github/workflows/run_unit_tests.yml
+    uses: ./.github/workflows/reusable/run_unit_tests.yml
 
   generate-compose-compiler-metrics:
     needs: run-unit-tests
-    uses: ./.github/workflows/generate_compose_compiler_metrics.yml
+    uses: ./.github/workflows/reusable/generate_compose_compiler_metrics.yml
     secrets: inherit
 
   build-release-artifacts:
     needs: generate-compose-compiler-metrics
-    uses: ./.github/workflows/build_release_artifacts.yml
+    uses: ./.github/workflows/reusable/build_release_artifacts.yml
     secrets: inherit
