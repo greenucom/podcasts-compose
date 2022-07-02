@@ -1,4 +1,4 @@
-name: Build release artifacts
+name: Build release artifacts and create release
 
 on:
   workflow_call:
@@ -13,8 +13,8 @@ env:
   PODCAST_INDEX_API_SECRET_KEY: ${{ secrets.PODCAST_INDEX_API_SECRET_KEY }}
 
 jobs:
-  build-release-artifacts:
-    name: Build release artifacts
+  build-release-artifacts-and-create-release:
+    name: Build release artifacts and create release
     runs-on: ubuntu-latest
 
     steps:
@@ -44,17 +44,21 @@ jobs:
       - name: Build release artifacts
         run: |
           ./gradlew assembleRelease
-          ./gradlew clean
           ./gradlew bundleRelease
 
-      - name: Upload release APK
+      - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/release/podcasts?.apk
 
-      - name: Upload release Bundle
+      - name: Upload Bundle
         uses: actions/upload-artifact@v3
         with:
-          name: release-bundle
-          path: app/build/outputs/bundle/release/app-release.aab
+          path: app/build/outputs/bundle/release/podcasts?.aab
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            app/build/outputs/apk/release/podcasts?.apk
+            app/build/outputs/bundle/release/podcasts?.aab
