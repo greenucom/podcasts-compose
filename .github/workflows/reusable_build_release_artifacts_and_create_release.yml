@@ -51,17 +51,13 @@ jobs:
           mv app/build/outputs/apk/release/podcasts-${{ github.ref_name }}-release.apk app/build/outputs/apk/release/podcasts-${{ github.ref_name }}.apk
           mv app/build/outputs/bundle/release/podcasts-${{ github.ref_name }}-release.aab app/build/outputs/bundle/release/podcasts-${{ github.ref_name }}.aab
 
-      - name: Upload APK
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: podcasts-${{ github.ref_name }}-apk
-          path: app/build/outputs/apk/release/podcasts*.apk
-
-      - name: Upload Bundle
-        uses: actions/upload-artifact@v3
-        with:
-          name: podcasts-${{ github.ref_name }}-aab
-          path: app/build/outputs/bundle/release/podcasts*.aab
+          name: artifacts
+          path: |
+            app/build/outputs/apk/release/podcasts*.apk
+            app/build/outputs/bundle/release/podcasts*.aab
 
       - name: Create release
         uses: softprops/action-gh-release@v1
