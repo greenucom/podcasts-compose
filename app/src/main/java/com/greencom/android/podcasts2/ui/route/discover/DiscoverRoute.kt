@@ -1,6 +1,5 @@
 package com.greencom.android.podcasts2.ui.route.discover
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -8,21 +7,20 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
+import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
@@ -156,24 +154,11 @@ private fun SuccessScreen(
                 }
 
                 DiscoverViewModel.TrendingPodcastsState.Error -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Image(
-                            modifier = Modifier.widthIn(max = 240.dp).aspectRatio(1f),
-                            painter = painterResource(id = R.drawable.vec_connection_issue),
-                            contentDescription = stringResource(id = R.string.something_went_wrong_check_connection),
-                        )
-
-                        Text(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            text = stringResource(id = R.string.something_went_wrong_check_connection),
-                            style = MaterialTheme.typography.h6,
-                            textAlign = TextAlign.Center,
-                        )
-                    }
+                    ConnectionError(
+                        onTryAgainClicked = {
+                            dispatchEvent(DiscoverViewModel.ViewEvent.RefreshTrendingPodcasts)
+                        },
+                    )
                 }
             }
         }

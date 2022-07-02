@@ -40,10 +40,9 @@ class DiscoverViewModel @Inject constructor(
     }
 
     override suspend fun handleEvent(event: ViewEvent) = when (event) {
-        is ViewEvent.ToggleSelectableTrendingCategory -> {
-            reduceToggleSelectableTrendingCategory(event.category)
-        }
+        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event.category)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
+        ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -81,6 +80,17 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.updateSubscriptionToPodcast(podcast.toPodcast())
         }
+    }
+
+    private fun reduceRefreshTrendingPodcasts() {
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Loading)
+            } else {
+                it
+            }
+        }
+        collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
     private fun updateStateWithSelectableTrendingCategories(
@@ -148,6 +158,7 @@ class DiscoverViewModel @Inject constructor(
     sealed interface ViewEvent : Event {
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
+        object RefreshTrendingPodcasts : ViewEvent
     }
 
     @Stable
