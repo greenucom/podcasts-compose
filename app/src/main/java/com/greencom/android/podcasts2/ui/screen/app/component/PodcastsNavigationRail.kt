@@ -29,9 +29,8 @@ fun PodcastsNavigationRail(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Row {
+    Row(modifier = modifier) {
         NavigationRail(
-            modifier = modifier,
             backgroundColor = MaterialTheme.colors.surface,
             elevation = 0.dp,
         ) {
