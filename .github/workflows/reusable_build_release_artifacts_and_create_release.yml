@@ -1,4 +1,4 @@
-name: Build release artifacts
+name: Build release artifacts and create release
 
 on:
   workflow_call:
@@ -13,8 +13,8 @@ env:
   PODCAST_INDEX_API_SECRET_KEY: ${{ secrets.PODCAST_INDEX_API_SECRET_KEY }}
 
 jobs:
-  build-release-artifacts:
-    name: Build release artifacts
+  build-release-artifacts-and-create-release:
+    name: Build release artifacts and create release
     runs-on: ubuntu-latest
 
     steps:
