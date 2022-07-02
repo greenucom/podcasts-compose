@@ -5,6 +5,7 @@
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 
+    <string name="try_again">Попробовать снова</string>
     <string name="something_went_wrong_check_connection">
         Что-то пошло не так\n
         Проверьте соединение с интернетом
