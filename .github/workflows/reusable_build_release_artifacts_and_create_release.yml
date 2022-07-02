@@ -49,16 +49,16 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          path: app/build/outputs/apk/release/podcasts?.apk
+          path: app/build/outputs/apk/release/podcasts*.apk
 
       - name: Upload Bundle
         uses: actions/upload-artifact@v3
         with:
-          path: app/build/outputs/bundle/release/podcasts?.aab
+          path: app/build/outputs/bundle/release/podcasts*.aab
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            app/build/outputs/apk/release/podcasts?.apk
-            app/build/outputs/bundle/release/podcasts?.aab
+            app/build/outputs/apk/release/podcasts*.apk
+            app/build/outputs/bundle/release/podcasts*.aab
