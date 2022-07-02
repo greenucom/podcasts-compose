@@ -35,7 +35,7 @@ private const val PodcastItemPlaceholderCount = 5
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
-fun DiscoverScreen(
+fun DiscoverRoute(
     onSearchPodcastsClicked: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),

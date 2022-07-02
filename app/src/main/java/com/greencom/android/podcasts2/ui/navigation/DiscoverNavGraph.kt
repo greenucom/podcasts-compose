@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverScreen
+import com.greencom.android.podcasts2.ui.screen.discover.DiscoverRoute
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
     navigation(
@@ -13,7 +13,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
     ) {
 
         composable(route = Route.Discover.routeSchema) {
-            DiscoverScreen(
+            DiscoverRoute(
                 onSearchPodcastsClicked = { /* TODO */ },
             )
         }
