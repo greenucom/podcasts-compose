@@ -53,7 +53,7 @@ fun DiscoverScreen(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End)),
         scaffoldState = screenState.scaffoldState,
         topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
     ) { paddingValues ->
