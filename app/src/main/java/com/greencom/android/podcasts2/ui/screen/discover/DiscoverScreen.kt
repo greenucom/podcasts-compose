@@ -42,7 +42,7 @@ fun DiscoverScreen(
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
     val screenState = rememberDiscoverScreenState()
-    val viewState by viewModel.state.collectAsState()
+    val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {
         onNavigationItemReselected = screenState::onNavigationItemReselected
@@ -60,10 +60,12 @@ fun DiscoverScreen(
 
         CrossfadeTyped(
             modifier = Modifier.padding(paddingValues),
-            targetState = viewState,
+            targetState = viewState.value,
         ) { state ->
             when (state) {
-                DiscoverViewModel.ViewState.InitialLoading -> {}
+                DiscoverViewModel.ViewState.InitialLoading -> {
+                    // TODO: Add initial loading screen
+                }
 
                 is DiscoverViewModel.ViewState.Success -> {
                     SuccessScreen(
