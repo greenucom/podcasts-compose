@@ -46,15 +46,18 @@ jobs:
           ./gradlew assembleRelease
           ./gradlew bundleRelease
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          path: app/build/outputs/apk/release/podcasts*.apk
+      - name: Rename artifacts
+        run: |
+          mv app/build/outputs/apk/release/podcasts-${{ github.ref_name }}-release.apk app/build/outputs/apk/release/podcasts-${{ github.ref_name }}.apk
+          mv app/build/outputs/bundle/release/podcasts-${{ github.ref_name }}-release.aab app/build/outputs/bundle/release/podcasts-${{ github.ref_name }}.aab
 
-      - name: Upload Bundle
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: app/build/outputs/bundle/release/podcasts*.aab
+          name: artifacts
+          path: |
+            app/build/outputs/apk/release/podcasts*.apk
+            app/build/outputs/bundle/release/podcasts*.aab
 
       - name: Create release
         uses: softprops/action-gh-release@v1
