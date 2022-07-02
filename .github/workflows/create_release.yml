@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/reusable_generate_compose_compiler_metrics.yml
     secrets: inherit
 
-  build-release-artifacts:
+  build-release-artifacts-and-create-release:
     needs: generate-compose-compiler-metrics
     uses: ./.github/workflows/reusable_build_release_artifacts_and_create_release.yml
     secrets: inherit
