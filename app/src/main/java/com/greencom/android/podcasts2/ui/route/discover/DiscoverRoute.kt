@@ -139,7 +139,7 @@ private fun SuccessScreen(
                         ) { idx, podcast ->
                             PodcastItem(
                                 podcast = podcast,
-                                onPodcastClicked = { /* TODO */ },
+                                onPodcastClicked = { /* TODO: Open podcast */ },
                                 onIsUserSubscribedChanged = {
                                     val event = DiscoverViewModel.ViewEvent.UpdateSubscriptionToPodcast(it)
                                     dispatchEvent(event)
