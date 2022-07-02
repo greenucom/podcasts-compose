@@ -15,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -84,25 +83,16 @@ private fun DiscoverTopBar(
     onSearchPodcastsClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        val surfaceColor = MaterialTheme.colors.surface
-        Spacer(
-            modifier = Modifier
-                .windowInsetsTopHeight(WindowInsets.statusBars)
-                .fillMaxWidth()
-                .drawBehind { drawRect(color = surfaceColor) }
+    TopAppBar(
+        modifier = modifier.windowInsetsPadding(WindowInsets.statusBars),
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 0.dp,
+        contentPadding = PaddingValues(0.dp),
+    ) {
+        SearchPodcastsButton(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            onClick = onSearchPodcastsClicked,
         )
-
-        TopAppBar(
-            backgroundColor = MaterialTheme.colors.surface,
-            elevation = 0.dp,
-            contentPadding = PaddingValues(0.dp),
-        ) {
-            SearchPodcastsButton(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onClick = onSearchPodcastsClicked,
-            )
-        }
     }
 }
 
