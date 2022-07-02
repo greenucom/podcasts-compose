@@ -22,7 +22,7 @@ fun AppScreen(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
 ) {
-    val screenState = rememberAppScreenState()
+    val screenState = rememberAppState()
 
     Scaffold(
         modifier = modifier,
