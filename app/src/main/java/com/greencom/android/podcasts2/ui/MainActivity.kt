@@ -12,10 +12,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.greencom.android.podcasts2.ui.app.App
 import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
 import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehaviorController
-import com.greencom.android.podcasts2.ui.screen.app.App
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import dagger.hilt.android.AndroidEntryPoint
 

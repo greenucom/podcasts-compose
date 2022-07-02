@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.app
+package com.greencom.android.podcasts2.ui.app
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -10,12 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.greencom.android.podcasts2.ui.app.component.PodcastsBottomNavigation
+import com.greencom.android.podcasts2.ui.app.component.PodcastsNavigationRail
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
 import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
 import com.greencom.android.podcasts2.ui.navigation.podcastsNavGraph
-import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsBottomNavigation
-import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsNavigationRail
 
 @Composable
 fun App(

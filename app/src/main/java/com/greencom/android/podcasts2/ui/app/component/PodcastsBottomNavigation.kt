@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.app.component
+package com.greencom.android.podcasts2.ui.app.component
 
 import android.content.res.Configuration
 import androidx.compose.material.*

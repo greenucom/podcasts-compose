@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.app.component
+package com.greencom.android.podcasts2.ui.app.component
 
 import androidx.compose.animation.*
 import androidx.compose.material.Icon
