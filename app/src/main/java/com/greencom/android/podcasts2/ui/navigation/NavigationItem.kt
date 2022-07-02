@@ -12,31 +12,31 @@ val NavigationItems = listOf(
 )
 
 sealed class NavigationItem(
+    val route: String,
     @StringRes val labelResId: Int,
     @DrawableRes val iconSelectedResId: Int,
     @DrawableRes val iconUnselectedResId: Int,
-    val route: String,
 ) {
 
     object Podcasts : NavigationItem(
+        route = "PodcastsGraph",
         labelResId = R.string.podcasts,
         iconSelectedResId = PodcastsIcons.PodcastsFilled,
         iconUnselectedResId = PodcastsIcons.PodcastsOutlined,
-        route = "PodcastsGraph",
     )
 
     object Discover : NavigationItem(
+        route = "DiscoverGraph",
         labelResId = R.string.discover,
         iconSelectedResId = PodcastsIcons.DiscoverFilled,
         iconUnselectedResId = PodcastsIcons.DiscoverOutlined,
-        route = "DiscoverGraph",
     )
 
     object Library : NavigationItem(
+        route = "LibraryGraph",
         labelResId = R.string.library,
         iconSelectedResId = PodcastsIcons.LibraryFilled,
         iconUnselectedResId = PodcastsIcons.LibraryOutlined,
-        route = "LibraryGraph",
     )
 
 }
