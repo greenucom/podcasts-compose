@@ -30,7 +30,6 @@ fun PodcastsFilterChip(
     onSelectedChanged: (isSelected: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     val textColorTargetValue = if (isSelected) {
         MaterialTheme.colors.primary
     } else {

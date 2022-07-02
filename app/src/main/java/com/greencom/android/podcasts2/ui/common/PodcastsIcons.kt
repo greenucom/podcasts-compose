@@ -1,6 +1,7 @@
 package com.greencom.android.podcasts2.ui.common
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material.icons.outlined.Search
 import com.greencom.android.podcasts2.R
@@ -15,4 +16,5 @@ object PodcastsIcons {
 
     val Search = Icons.Outlined.Search
     val Done = Icons.Outlined.Done
+    val Add = Icons.Outlined.Add
 }

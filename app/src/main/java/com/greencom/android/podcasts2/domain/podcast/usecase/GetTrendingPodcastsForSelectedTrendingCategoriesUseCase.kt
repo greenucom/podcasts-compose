@@ -7,10 +7,9 @@ import com.greencom.android.podcasts2.di.IODispatcher
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructor(
@@ -19,38 +18,36 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
     private val categoryRepository: CategoryRepository,
 ) : FlowUseCase<Unit, List<Podcast>>(dispatcher) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun execute(params: Unit): Flow<Result<List<Podcast>>> {
         val trendingCategories = categoryRepository.getTrendingCategories()
-
-        return flow {
-            categoryRepository.getSelectedTrendingCategoriesIds()
-                .collectLatest { idsOfSelectedCategories ->
-                    val selectedCategories = trendingCategories
-                        .filter { it.id in idsOfSelectedCategories }
-                    val trendingPodcastMaxSize = calculateTrendingPodcastMaxSize(selectedCategories)
-                    podcastRepository.getTrendingPodcasts(
-                        max = trendingPodcastMaxSize,
-                        inCategories = selectedCategories,
-                        notInCategories = emptyList(),
-                    ).collect { emit(it) }
-                }
-        }.map { Result.success(it) }
+        return categoryRepository.getSelectedTrendingCategoriesIds()
+            .flatMapLatest { idsOfSelectedCategories ->
+                val selectedCategories = trendingCategories
+                    .filter { it.id in idsOfSelectedCategories }
+                val trendingPodcastsMaxSize = calculateTrendingPodcastsMaxSize(selectedCategories)
+                podcastRepository.getTrendingPodcasts(
+                    max = trendingPodcastsMaxSize,
+                    inCategories = selectedCategories,
+                    notInCategories = emptyList(),
+                )
+            }
     }
 
-    private fun calculateTrendingPodcastMaxSize(
+    private fun calculateTrendingPodcastsMaxSize(
         selectedCategories: List<Category>,
     ): Int {
         return if (selectedCategories.isNotEmpty()) {
             val value = selectedCategories.size * TRENDING_PODCAST_COUNT_PER_CATEGORY
-            value.coerceIn(TRENDING_PODCAST_MIN_SIZE, TRENDING_PODCAST_MAX_SIZE)
+            value.coerceIn(TRENDING_PODCASTS_MIN_SIZE, TRENDING_PODCASTS_MAX_SIZE)
         } else {
-            TRENDING_PODCAST_MAX_SIZE
+            TRENDING_PODCASTS_MAX_SIZE
         }
     }
 
     companion object {
-        private const val TRENDING_PODCAST_MIN_SIZE = 15
-        private const val TRENDING_PODCAST_MAX_SIZE = 40
+        private const val TRENDING_PODCASTS_MIN_SIZE = 15
+        private const val TRENDING_PODCASTS_MAX_SIZE = 40
         private const val TRENDING_PODCAST_COUNT_PER_CATEGORY = 5
     }
 

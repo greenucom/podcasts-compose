@@ -21,7 +21,7 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     private val _events = Channel<ViewEvent>(Channel.UNLIMITED)
     private val events = _events.consumeAsFlow()
 
-    protected val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
+    private val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
     override val sideEffects = _sideEffects.receiveAsFlow()
 
     init {

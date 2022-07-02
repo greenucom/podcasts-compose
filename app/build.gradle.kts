@@ -51,7 +51,7 @@ android {
     buildTypes {
 
         getByName("debug") {
-            resValue("string", "app_name", "Podcasts debug")
+            resValue("string", "app_name", "Debug")
             applicationIdSuffix = ".debug"
             versionNameSuffix = " debug"
         }
@@ -97,7 +97,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
 
     packagingOptions {
@@ -161,6 +161,7 @@ dependencies {
     implementation(Dependencies.retrofitKotlinxSerializationConverter)
 
     implementation(Dependencies.kotlinxSerializationJson)
+    implementation(Dependencies.kotlinxImmutableCollections)
 
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)

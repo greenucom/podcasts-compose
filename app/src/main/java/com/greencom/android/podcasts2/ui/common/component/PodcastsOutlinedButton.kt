@@ -31,7 +31,6 @@ fun PodcastsOutlinedButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable RowScope.() -> Unit,
 ) {
-
     val borderColorTargetValue = if (isChecked) {
         MaterialTheme.colors.primary.copy(alpha = BorderColorAlphaChecked)
     } else {

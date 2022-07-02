@@ -14,8 +14,7 @@ abstract class UseCase<in P, out R>(private val dispatcher: CoroutineDispatcher)
                 }
             }
         } catch (e: Exception) {
-            Timber.e("Exception executing UseCase $this with parameters $params")
-            Timber.e(e)
+            Timber.e(e, "Exception occurred while executing UseCase $this with parameters $params")
             Result.failure(e)
         }
     }

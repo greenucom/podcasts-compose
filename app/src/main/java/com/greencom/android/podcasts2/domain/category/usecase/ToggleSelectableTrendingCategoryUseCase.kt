@@ -5,6 +5,7 @@ import com.greencom.android.podcasts2.data.category.CategoryRepository
 import com.greencom.android.podcasts2.di.IODispatcher
 import com.greencom.android.podcasts2.domain.category.Category
 import kotlinx.coroutines.CoroutineDispatcher
+import timber.log.Timber
 import javax.inject.Inject
 
 class ToggleSelectableTrendingCategoryUseCase @Inject constructor(
@@ -13,6 +14,7 @@ class ToggleSelectableTrendingCategoryUseCase @Inject constructor(
 ) : UseCase<Category, Unit>(dispatcher) {
 
     override suspend fun execute(params: Category) {
+        Timber.i("Toggle selectable trending category ${params.name}")
         categoryRepository.toggleSelectableTrendingCategory(params)
     }
 

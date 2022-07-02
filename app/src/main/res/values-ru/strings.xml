@@ -5,6 +5,14 @@
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 
+    <string name="try_again">Попробовать снова</string>
+    <string name="something_went_wrong_check_connection">
+        Что-то пошло не так\n
+        Проверьте соединение с интернетом
+    </string>
+
     <string name="search_for_podcasts">Поиск подкастов</string>
+    <string name="subscribe">Подписаться</string>
+    <string name="subscribed">Вы подписаны</string>
 
 </resources>

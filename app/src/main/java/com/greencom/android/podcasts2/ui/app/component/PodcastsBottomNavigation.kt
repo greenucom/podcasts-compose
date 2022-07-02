@@ -1,19 +1,20 @@
-package com.greencom.android.podcasts2.ui.screen.app.component
+package com.greencom.android.podcasts2.ui.app.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.greencom.android.podcasts2.ui.common.navigateToNavigationItem
+import com.greencom.android.podcasts2.ui.common.popBackStackToSelectedNavigationItemStartDestination
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
@@ -31,6 +32,9 @@ fun PodcastsBottomNavigation(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
 
+            val currentScreenBehavior =
+                LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
+
             NavigationItems.forEach { item ->
                 val isSelected = currentDestination?.hierarchy
                     ?.any { it.route == item.route } == true
@@ -38,14 +42,17 @@ fun PodcastsBottomNavigation(
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = {
-                        NavigationItemUtils.onNavigationItemClicked(
-                            item = item,
-                            navController = navController,
-                        )
+                        if (isSelected) {
+                            val isHandled =
+                                currentScreenBehavior?.onNavigationItemReselected?.invoke(item)
+                            if (isHandled != true) {
+                                navController.popBackStackToSelectedNavigationItemStartDestination()
+                            }
+                        } else {
+                            navController.navigateToNavigationItem(item = item)
+                        }
                     },
-                    icon = {
-                        NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
-                    },
+                    icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },
                     selectedContentColor = MaterialTheme.colors.primary,
                     unselectedContentColor = MaterialTheme.colors.onSurface
@@ -53,24 +60,6 @@ fun PodcastsBottomNavigation(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun PodcastsBottomNavigationRespectingWindowInsets(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-        PodcastsBottomNavigation(navController = navController)
-
-        val spacerColor = MaterialTheme.colors.surface
-        Spacer(
-            modifier = Modifier
-                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                .fillMaxWidth()
-                .drawBehind { drawRect(color = spacerColor) }
-        )
     }
 }
 

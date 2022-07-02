@@ -1,33 +1,31 @@
-package com.greencom.android.podcasts2.ui.screen.discover.component
+package com.greencom.android.podcasts2.ui.route.discover.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.PodcastsIcons
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
-
-private val SearchBackgroundColorLight = Color(0xFFF0F0F0)
-private val SearchBackgroundColorDark = Color(0xFF373737)
-private val Colors.searchBackground: Color
-    get() = if (isLight) SearchBackgroundColorLight else SearchBackgroundColorDark
+import com.greencom.android.podcasts2.ui.theme.searchBackground
 
 private val MinHeight = 40.dp
+
+private const val IconAlpha = 0.74f
+private const val TextAlpha = 0.87f
 
 @Composable
 fun SearchPodcastsButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
     val colors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.searchBackground,
     )
@@ -42,22 +40,22 @@ fun SearchPodcastsButton(
     Button(
         modifier = modifier.heightIn(min = MinHeight),
         onClick = onClick,
-        shape = RoundedCornerShape(percent = 50),
+        shape = MaterialTheme.shapes.small,
         colors = colors,
         elevation = elevation,
     ) {
 
         Icon(
-            modifier = Modifier.alpha(ContentAlpha.medium),
+            modifier = Modifier.alpha(IconAlpha),
             imageVector = PodcastsIcons.Search,
             contentDescription = null,
         )
 
         Text(
             modifier = Modifier
+                .alpha(TextAlpha)
                 .padding(start = 8.dp)
-                .weight(1f)
-                .alpha(ContentAlpha.high),
+                .weight(1f),
             text = stringResource(id = R.string.search_for_podcasts),
             style = MaterialTheme.typography.body1,
         )

@@ -1,7 +1,10 @@
-package com.greencom.android.podcasts2.ui.screen.app.component
+package com.greencom.android.podcasts2.ui.app.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +17,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.greencom.android.podcasts2.ui.common.navigateToNavigationItem
+import com.greencom.android.podcasts2.ui.common.popBackStackToSelectedNavigationItemStartDestination
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -23,14 +29,16 @@ fun PodcastsNavigationRail(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Row {
+    Row(modifier = modifier) {
         NavigationRail(
-            modifier = modifier,
             backgroundColor = MaterialTheme.colors.surface,
             elevation = 0.dp,
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
+
+            val currentScreenBehavior =
+                LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
 
             NavigationItems.forEach { item ->
                 val isSelected = currentDestination?.hierarchy
@@ -39,14 +47,17 @@ fun PodcastsNavigationRail(
                 NavigationRailItem(
                     selected = isSelected,
                     onClick = {
-                        NavigationItemUtils.onNavigationItemClicked(
-                            item = item,
-                            navController = navController,
-                        )
+                        if (isSelected) {
+                            val isHandled =
+                                currentScreenBehavior?.onNavigationItemReselected?.invoke(item)
+                            if (isHandled != true) {
+                                navController.popBackStackToSelectedNavigationItemStartDestination()
+                            }
+                        } else {
+                            navController.navigateToNavigationItem(item = item)
+                        }
                     },
-                    icon = {
-                        NavigationItemUtils.NavigationItemIcon(item = item, isSelected = isSelected)
-                    },
+                    icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
                     label = { Text(text = stringResource(id = item.labelResId)) },
                     alwaysShowLabel = false,
                     selectedContentColor = MaterialTheme.colors.primary,
@@ -63,21 +74,6 @@ fun PodcastsNavigationRail(
                 .fillMaxHeight()
                 .drawBehind { drawRect(color = dividerColor) }
         )
-    }
-}
-
-@Composable
-fun PodcastsNavigationRailRespectingWindowInsets(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
-    Row(modifier = modifier) {
-        Spacer(modifier = Modifier.windowInsetsStartWidth(WindowInsets.displayCutout))
-        Column {
-            Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-            PodcastsNavigationRail(navController = navController)
-            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
-        }
     }
 }
 

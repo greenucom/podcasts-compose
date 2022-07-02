@@ -9,6 +9,11 @@ data class CategoryUiModel(
     val name: String,
 ) {
 
+    fun toCategory(): Category = Category(
+        id = id,
+        name = name,
+    )
+
     companion object {
 
         fun fromCategory(category: Category): CategoryUiModel = CategoryUiModel(

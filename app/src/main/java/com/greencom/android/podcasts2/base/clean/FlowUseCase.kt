@@ -10,8 +10,7 @@ abstract class FlowUseCase<in P, out R>(private val dispatcher: CoroutineDispatc
 
     operator fun invoke(params: P): Flow<Result<R>> = execute(params)
         .catch { e ->
-            Timber.e("Exception executing FlowUseCase $this with parameters $params")
-            Timber.e(e)
+            Timber.e(e, "Exception occurred while executing FlowUseCase $this with parameters $params")
             emit(Result.failure(e))
         }
         .flowOn(dispatcher)

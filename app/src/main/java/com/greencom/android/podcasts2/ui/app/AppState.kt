@@ -1,15 +1,15 @@
-package com.greencom.android.podcasts2.ui.screen.app
+package com.greencom.android.podcasts2.ui.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-class AppScreenState(val navController: NavHostController)
+class AppState(val navController: NavHostController)
 
 @Composable
-fun rememberAppScreenState(
+fun rememberAppState(
     navController: NavHostController = rememberNavController(),
 ) = remember (navController) {
-    AppScreenState(navController = navController)
+    AppState(navController = navController)
 }
