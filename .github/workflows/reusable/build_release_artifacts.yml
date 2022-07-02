@@ -50,10 +50,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/release/podcasts?.apk
 
       - name: Upload release Bundle
         uses: actions/upload-artifact@v3
         with:
           name: release-bundle
-          path: app/build/outputs/bundle/release/app-release.aab
+          path: app/build/outputs/bundle/release/podcasts?.aab

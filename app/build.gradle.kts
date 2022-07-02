@@ -106,6 +106,13 @@ android {
         }
     }
 
+    applicationVariants.all {
+        outputs.all {
+            val variant = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            variant.outputFileName = "podcasts-$generatedVersionName.apk"
+        }
+    }
+
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
