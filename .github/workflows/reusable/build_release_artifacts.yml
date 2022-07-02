@@ -44,7 +44,6 @@ jobs:
       - name: Build release artifacts
         run: |
           ./gradlew assembleRelease
-          ./gradlew clean
           ./gradlew bundleRelease
 
       - name: Upload release APK
