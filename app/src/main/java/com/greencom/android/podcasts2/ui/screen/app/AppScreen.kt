@@ -70,15 +70,13 @@ fun NavigationRailRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    PodcastsNavigationRail(
         modifier = modifier
             .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Start))
+            .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
             .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Start)),
-    ) {
-        Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-        PodcastsNavigationRail(navController = navController)
-        Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
-    }
+        navController = navController,
+    )
 }
 
 @Composable
