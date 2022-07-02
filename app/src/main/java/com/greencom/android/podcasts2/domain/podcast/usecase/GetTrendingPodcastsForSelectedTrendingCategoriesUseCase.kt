@@ -39,15 +39,15 @@ class GetTrendingPodcastsForSelectedTrendingCategoriesUseCase @Inject constructo
     ): Int {
         return if (selectedCategories.isNotEmpty()) {
             val value = selectedCategories.size * TRENDING_PODCAST_COUNT_PER_CATEGORY
-            value.coerceIn(TRENDING_PODCAST_MIN_SIZE, TRENDING_PODCAST_MAX_SIZE)
+            value.coerceIn(TRENDING_PODCASTS_MIN_SIZE, TRENDING_PODCASTS_MAX_SIZE)
         } else {
-            TRENDING_PODCAST_MAX_SIZE
+            TRENDING_PODCASTS_MAX_SIZE
         }
     }
 
     companion object {
-        private const val TRENDING_PODCAST_MIN_SIZE = 15
-        private const val TRENDING_PODCAST_MAX_SIZE = 40
+        private const val TRENDING_PODCASTS_MIN_SIZE = 15
+        private const val TRENDING_PODCASTS_MAX_SIZE = 40
         private const val TRENDING_PODCAST_COUNT_PER_CATEGORY = 5
     }
 
