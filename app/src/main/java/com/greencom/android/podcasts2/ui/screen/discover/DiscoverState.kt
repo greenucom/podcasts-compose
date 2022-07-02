@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 
-class DiscoverScreenState(
+class DiscoverState(
     val scope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
@@ -59,12 +59,12 @@ class DiscoverScreenState(
 }
 
 @Composable
-fun rememberDiscoverScreenState(
+fun rememberDiscoverState(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) = remember(scaffoldState, trendingPodcastsLazyColumnState) {
-    DiscoverScreenState(
+    DiscoverState(
         scope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,

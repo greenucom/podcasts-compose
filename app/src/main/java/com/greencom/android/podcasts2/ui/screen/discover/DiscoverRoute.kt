@@ -40,22 +40,22 @@ fun DiscoverRoute(
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val screenState = rememberDiscoverScreenState()
+    val discoverState = rememberDiscoverState()
     val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {
-        onNavigationItemReselected = screenState::onNavigationItemReselected
+        onNavigationItemReselected = discoverState::onNavigationItemReselected
     }
 
     LaunchedEffect(Unit) {
-        viewModel.sideEffects.collect(screenState::handleSideEffect)
+        viewModel.sideEffects.collect(discoverState::handleSideEffect)
     }
 
     Scaffold(
         modifier = modifier
             .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End))
             .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.End)),
-        scaffoldState = screenState.scaffoldState,
+        scaffoldState = discoverState.scaffoldState,
         topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
     ) { paddingValues ->
 
@@ -72,7 +72,7 @@ fun DiscoverRoute(
                     SuccessScreen(
                         state = state,
                         dispatchEvent = viewModel::dispatchEvent,
-                        trendingPodcastsLazyColumnState = screenState.trendingPodcastsLazyColumnState,
+                        trendingPodcastsLazyColumnState = discoverState.trendingPodcastsLazyColumnState,
                     )
                 }
             }
