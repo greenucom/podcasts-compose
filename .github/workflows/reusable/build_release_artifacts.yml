@@ -46,12 +46,12 @@ jobs:
           ./gradlew assembleRelease
           ./gradlew bundleRelease
 
-      - name: Upload release APK
+      - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           path: app/build/outputs/apk/release/podcasts?.apk
 
-      - name: Upload release Bundle
+      - name: Upload Bundle
         uses: actions/upload-artifact@v3
         with:
           path: app/build/outputs/bundle/release/podcasts?.aab
