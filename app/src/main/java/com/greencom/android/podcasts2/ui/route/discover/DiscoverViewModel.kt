@@ -72,7 +72,6 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.toggleSelectableTrendingCategory(categoryDomain)
         }
-
         scrollNextTrendingPodcastListToTop = true
     }
 
@@ -90,6 +89,7 @@ class DiscoverViewModel @Inject constructor(
                 it
             }
         }
+        scrollNextTrendingPodcastListToTop = true
         collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
