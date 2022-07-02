@@ -18,17 +18,17 @@ import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsBottomNavi
 import com.greencom.android.podcasts2.ui.screen.app.component.PodcastsNavigationRail
 
 @Composable
-fun AppScreen(
+fun App(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
 ) {
-    val screenState = rememberAppState()
+    val appState = rememberAppState()
 
     Scaffold(
         modifier = modifier,
         bottomBar = {
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                BottomNavigationRespectingWindowInsets(navController = screenState.navController)
+                BottomNavigationRespectingWindowInsets(navController = appState.navController)
             }
         },
     ) { paddingValues ->
@@ -36,12 +36,12 @@ fun AppScreen(
         if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
             PodcastsNavHost(
                 modifier = Modifier.padding(paddingValues),
-                navController = screenState.navController,
+                navController = appState.navController,
             )
         } else {
             Row(modifier = Modifier.padding(paddingValues)) {
-                NavigationRailRespectingWindowInsets(navController = screenState.navController)
-                PodcastsNavHost(navController = screenState.navController)
+                NavigationRailRespectingWindowInsets(navController = appState.navController)
+                PodcastsNavHost(navController = appState.navController)
             }
         }
     }
