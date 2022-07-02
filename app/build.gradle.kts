@@ -106,12 +106,8 @@ android {
         }
     }
 
-    applicationVariants.all {
-        outputs.all {
-            val variant = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            variant.outputFileName = "podcasts-$generatedVersionName.apk"
-        }
-    }
+    // Rename outputs
+    setProperty("archivesBaseName", "podcasts-$generatedVersionName")
 
 }
 
