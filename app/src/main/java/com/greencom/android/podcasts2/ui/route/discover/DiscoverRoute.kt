@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.discover
+package com.greencom.android.podcasts2.ui.route.discover
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -26,8 +26,8 @@ import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
-import com.greencom.android.podcasts2.ui.screen.discover.component.SearchPodcastsButton
-import com.greencom.android.podcasts2.ui.screen.discover.component.TrendingCategorySelector
+import com.greencom.android.podcasts2.ui.route.discover.component.SearchPodcastsButton
+import com.greencom.android.podcasts2.ui.route.discover.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 private const val PodcastItemPlaceholderCount = 5

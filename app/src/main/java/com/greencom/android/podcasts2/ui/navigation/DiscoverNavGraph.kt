@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.greencom.android.podcasts2.ui.screen.discover.DiscoverRoute
+import com.greencom.android.podcasts2.ui.route.discover.DiscoverRoute
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
     navigation(

@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.discover
+package com.greencom.android.podcasts2.ui.route.discover
 
 import com.greencom.android.podcasts2.domain.category.usecase.GetSelectableTrendingCategoriesUseCase
 import com.greencom.android.podcasts2.domain.category.usecase.ToggleSelectableTrendingCategoryUseCase

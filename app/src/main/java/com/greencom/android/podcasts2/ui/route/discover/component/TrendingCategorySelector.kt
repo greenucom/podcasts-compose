@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.discover.component
+package com.greencom.android.podcasts2.ui.route.discover.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

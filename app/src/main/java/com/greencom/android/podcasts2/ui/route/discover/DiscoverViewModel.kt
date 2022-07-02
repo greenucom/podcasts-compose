@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.screen.discover
+package com.greencom.android.podcasts2.ui.route.discover
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
