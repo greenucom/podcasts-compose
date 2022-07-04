@@ -140,6 +140,7 @@ private fun SuccessScreen(
                             contentType = { _, _ -> ContentTypePodcastItem },
                         ) { idx, podcast ->
                             PodcastItem(
+                                modifier = Modifier.fillMaxWidth(),
                                 podcast = podcast,
                                 onPodcastClicked = { /* TODO: Open podcast */ },
                                 onIsUserSubscribedChanged = {
