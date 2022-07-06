@@ -10,6 +10,7 @@ import com.greencom.android.podcasts2.utils.Size.Companion.kilobytes
 import com.greencom.android.podcasts2.utils.Size.Companion.megabits
 import com.greencom.android.podcasts2.utils.Size.Companion.megabytes
 import org.junit.Test
+import java.text.DecimalFormat
 
 class SizeTest {
 
@@ -460,6 +461,58 @@ class SizeTest {
         val sizeInBytes = size.inUnit(SizeUnit.BYTES)
 
         assertThat(sizeInBytes).isEqualTo(bytes.toFloat())
+    }
+
+    @Test
+    fun format_withDefaultValueFormat() {
+        val decimalFormat = DecimalFormat("#.##")
+        val bits = 1_234
+        val kilobits = bits.toFloat() / 1000
+        val size = bits.bits
+
+        val formatted = size.format(SizeUnit.KILOBITS)
+
+        assertThat(formatted).isEqualTo(decimalFormat.format(kilobits))
+    }
+
+    @Test
+    fun format_withCustomValueFormat() {
+        val decimalFormat = DecimalFormat("#.###")
+        val bits = 1_234_456
+        val megabits = bits.toFloat() / 1000 / 1000
+        val size = bits.bits
+
+        val formatted = size.format(SizeUnit.MEGABITS, decimalFormat)
+
+        assertThat(formatted).isEqualTo(decimalFormat.format(megabits))
+    }
+
+    @Test
+    fun formatWithUnitSymbol_withDefaultUnitSymbolFormat() {
+        val decimalFormat = DecimalFormat("#.##")
+        val bits = 1_234_456
+        val megabits = decimalFormat.format(bits.toFloat() / 1000 / 1000)
+        val megabitsWithSymbol = "$megabits ${SizeUnit.MEGABITS.symbol}"
+        val size = bits.bits
+
+        val formatted = size.formatWithUnitSymbol(SizeUnit.MEGABITS)
+
+        assertThat(formatted).isEqualTo(megabitsWithSymbol)
+    }
+
+    @Test
+    fun formatWithUnitSymbol_withCustomUnitSymbolFormat() {
+        val decimalFormat = DecimalFormat("#.##")
+        val unitSymbolFormat = "%2\$s %1\$s"
+        val bits = 1_234_456
+        val megabits = decimalFormat.format(bits.toFloat() / 1000 / 1000)
+        val megabitsWithSymbol = unitSymbolFormat.format(megabits, SizeUnit.MEGABITS.symbol)
+        val size = bits.bits
+
+        val formatted =
+            size.formatWithUnitSymbol(SizeUnit.MEGABITS, unitSymbolFormat = unitSymbolFormat).also { println(it) }
+
+        assertThat(formatted).isEqualTo(megabitsWithSymbol)
     }
 
 }

@@ -16,21 +16,22 @@ value class Size(private val bits: Long) : Comparable<Size> {
         return bits / getBitsInUnit(unit).toFloat()
     }
 
-    // TODO: Finish
-    fun formatToUnit(
+    fun format(
         unit: SizeUnit,
-        valueFormat: DecimalFormat? = null,
-        unitSymbolFormat: String? = null,
+        valueFormat: DecimalFormat = defaultDecimalFormat,
     ): String {
-        val format = valueFormat ?: defaultDecimalFormat
         val value = inUnit(unit)
-        val formatted = format.format(value)
-
-        return unitSymbolFormat?.format(formatted, unit.symbol) ?: formatted
+        return valueFormat.format(value)
     }
 
-    override fun compareTo(other: Size): Int {
-        return this.bits.compareTo(other.bits)
+    fun formatWithUnitSymbol(
+        unit: SizeUnit,
+        valueFormat: DecimalFormat = defaultDecimalFormat,
+        unitSymbolFormat: String = DEFAULT_UNIT_SYMBOL_FORMAT,
+    ): String {
+        val value = inUnit(unit)
+        val formatted = valueFormat.format(value)
+        return unitSymbolFormat.format(formatted, unit.symbol)
     }
 
     operator fun plus(size: Size): Size {
@@ -51,6 +52,10 @@ value class Size(private val bits: Long) : Comparable<Size> {
     operator fun div(other: Int): Size {
         val bits = bits / other
         return Size(bits)
+    }
+
+    override fun compareTo(other: Size): Int {
+        return this.bits.compareTo(other.bits)
     }
 
     private val defaultDecimalFormat: DecimalFormat
@@ -168,6 +173,7 @@ value class Size(private val bits: Long) : Comparable<Size> {
         private const val UNIT_CONVERSION_FACTOR_BITS_IN_ONE_BYTE = 8
 
         private const val DEFAULT_DECIMAL_FORMAT_PATTERN = "#.##"
+        private const val DEFAULT_UNIT_SYMBOL_FORMAT = "%1\$s %2\$s"
 
     }
 
