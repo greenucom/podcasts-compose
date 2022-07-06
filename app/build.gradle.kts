@@ -186,7 +186,9 @@ dependencies {
     androidTestImplementation(Dependencies.androidEspresso)
 
     testImplementation(Dependencies.truth)
-    testImplementation(Dependencies.truthJava8)
+    androidTestImplementation(Dependencies.truth)
+
     testImplementation(Dependencies.mockk)
+    androidTestImplementation(Dependencies.mockk)
 
 }
