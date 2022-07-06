@@ -38,7 +38,7 @@ object Versions {
     const val hilt = "2.42"
     const val hiltComposeNavigation = "1.0.0"
 
-    const val accompanist = "0.24.12-rc"
+    const val accompanist = "0.24.13-rc"
 
     const val coil = "2.1.0"
     const val timber = "5.0.1"
