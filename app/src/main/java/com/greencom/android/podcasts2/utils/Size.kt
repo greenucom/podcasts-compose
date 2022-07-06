@@ -3,6 +3,8 @@ package com.greencom.android.podcasts2.utils
 import java.math.BigInteger
 import java.text.DecimalFormat
 
+// TODO: Implement equals(), hashCode(), toString()
+
 @JvmInline
 value class Size(private val bits: Long) : Comparable<Size> {
 
