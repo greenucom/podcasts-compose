@@ -131,7 +131,7 @@ value class Size(private val bits: Long) : Comparable<Size> {
         }
 
         private fun getBitsInUnit(unit: SizeUnit): Long {
-            val unitPowerBase = getUnitPowerBase(unit)
+            val unitPowerBase = UNIT_POWER_BASE_DECIMAL
             val unitPower = getUnitPower(unit)
             val unitConversionFactor = getUnitConversionFactor(unit)
 
@@ -141,34 +141,25 @@ value class Size(private val bits: Long) : Comparable<Size> {
                 .toLong()
         }
 
-        private fun getUnitPowerBase(unit: SizeUnit): Long = when (unit) {
-            SizeUnit.KIBIBITS, SizeUnit.KIBIBYTES, SizeUnit.MEBIBITS, SizeUnit.MEBIBYTES,
-            SizeUnit.GIBIBITS, SizeUnit.GIBIBYTES, SizeUnit.TEBIBITS, SizeUnit.TEBIBYTES ->
-                UNIT_POWER_BASE_BINARY
-
-            else -> UNIT_POWER_BASE_DECIMAL
-        }
-
         private fun getUnitPower(unit: SizeUnit): Int = when (unit) {
             SizeUnit.BITS, SizeUnit.BYTES -> UNIT_POWER_NONE
-            SizeUnit.KILOBITS, SizeUnit.KIBIBITS, SizeUnit.KILOBYTES, SizeUnit.KIBIBYTES -> UNIT_POWER_KILO
-            SizeUnit.MEGABITS, SizeUnit.MEBIBITS, SizeUnit.MEGABYTES, SizeUnit.MEBIBYTES -> UNIT_POWER_MEGA
-            SizeUnit.GIGABITS, SizeUnit.GIBIBITS, SizeUnit.GIGABYTES, SizeUnit.GIBIBYTES -> UNIT_POWER_GIGA
-            SizeUnit.TERABITS, SizeUnit.TEBIBITS, SizeUnit.TERABYTES, SizeUnit.TEBIBYTES -> UNIT_POWER_TERA
+            SizeUnit.KILOBITS, SizeUnit.KILOBYTES -> UNIT_POWER_KILO
+            SizeUnit.MEGABITS, SizeUnit.MEGABYTES -> UNIT_POWER_MEGA
+            SizeUnit.GIGABITS, SizeUnit.GIGABYTES -> UNIT_POWER_GIGA
+            SizeUnit.TERABITS, SizeUnit.TERABYTES -> UNIT_POWER_TERA
         }
 
         private fun getUnitConversionFactor(unit: SizeUnit): Int = when (unit) {
             SizeUnit.BITS,
-            SizeUnit.KILOBITS, SizeUnit.KIBIBITS,
-            SizeUnit.MEGABITS, SizeUnit.MEBIBITS,
-            SizeUnit.GIGABITS, SizeUnit.GIBIBITS,
-            SizeUnit.TERABITS, SizeUnit.TEBIBITS -> UNIT_CONVERSION_FACTOR_BITS_IN_ONE_BIT
+            SizeUnit.KILOBITS,
+            SizeUnit.MEGABITS,
+            SizeUnit.GIGABITS,
+            SizeUnit.TERABITS -> UNIT_CONVERSION_FACTOR_BITS_IN_ONE_BIT
 
             else -> UNIT_CONVERSION_FACTOR_BITS_IN_ONE_BYTE
         }
 
         private const val UNIT_POWER_BASE_DECIMAL = 1_000L
-        private const val UNIT_POWER_BASE_BINARY = 1_024L
 
         private const val UNIT_POWER_NONE = 0
         private const val UNIT_POWER_KILO = 1
@@ -192,19 +183,9 @@ enum class SizeUnit(val symbol: String) {
     GIGABITS("Gbit"),
     TERABITS("Tbit"),
 
-    KIBIBITS("Kibit"),
-    MEBIBITS("Mibit"),
-    GIBIBITS("Gibit"),
-    TEBIBITS("Tibit"),
-
     BYTES("B"),
     KILOBYTES("kB"),
     MEGABYTES("MB"),
     GIGABYTES("GB"),
     TERABYTES("TB"),
-
-    KIBIBYTES("KiB"),
-    MEBIBYTES("MiB"),
-    GIBIBYTES("GiB"),
-    TEBIBYTES("TiB"),
 }
