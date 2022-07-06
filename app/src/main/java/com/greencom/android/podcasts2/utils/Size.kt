@@ -16,20 +16,17 @@ value class Size(private val bits: Long) : Comparable<Size> {
         return bits / getBitsInUnit(unit).toFloat()
     }
 
+    // TODO: Finish
     fun formatToUnit(
         unit: SizeUnit,
-        decimalFormat: DecimalFormat? = null,
-        appendUnitSymbol: Boolean = false,
+        valueFormat: DecimalFormat? = null,
+        unitSymbolFormat: String? = null,
     ): String {
-        val format = decimalFormat ?: defaultDecimalFormat
+        val format = valueFormat ?: defaultDecimalFormat
         val value = inUnit(unit)
         val formatted = format.format(value)
 
-        return if (appendUnitSymbol) {
-            "$formatted ${unit.symbol}"
-        } else {
-            formatted
-        }
+        return unitSymbolFormat?.format(formatted, unit.symbol) ?: formatted
     }
 
     override fun compareTo(other: Size): Int {
