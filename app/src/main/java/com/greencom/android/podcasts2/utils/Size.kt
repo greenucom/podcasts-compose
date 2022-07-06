@@ -4,6 +4,7 @@ import java.math.BigInteger
 import java.text.DecimalFormat
 
 // TODO: Implement equals(), hashCode(), toString()
+// TODO: Add docs
 
 @JvmInline
 value class Size(private val bits: Long) : Comparable<Size> {
