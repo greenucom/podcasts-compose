@@ -184,5 +184,7 @@ dependencies {
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidJunit)
     androidTestImplementation(Dependencies.androidEspresso)
+    testImplementation(Dependencies.truth)
+    testImplementation(Dependencies.truthJava8)
 
 }
