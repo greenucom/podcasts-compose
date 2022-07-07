@@ -510,7 +510,7 @@ class SizeTest {
         val size = bits.bits
 
         val formatted =
-            size.formatWithUnitSymbol(SizeUnit.MEGABITS, unitSymbolFormat = unitSymbolFormat).also { println(it) }
+            size.formatWithUnitSymbol(SizeUnit.MEGABITS, unitSymbolFormat = unitSymbolFormat)
 
         assertThat(formatted).isEqualTo(megabitsWithSymbol)
     }
