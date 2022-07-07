@@ -243,13 +243,23 @@ class SizeTest {
     }
 
     @Test
-    fun equals_same_returnsTrue() {
+    fun equals() {
         val kilobit1 = 1.kilobits
         val kilobit2 = 1.kilobits
         val megabit = 1.megabits
 
         assertThat(kilobit1 == kilobit2).isTrue()
         assertThat(kilobit1 == megabit).isFalse()
+    }
+
+    @Test
+    fun hashCodeTest() {
+        val megabit = 1.megabits
+        val thousandKilobits = 1000.kilobits
+        val kilobit = 1.kilobits
+
+        assertThat(megabit.hashCode()).isEqualTo(thousandKilobits.hashCode())
+        assertThat(megabit.hashCode()).isNotEqualTo(kilobit.hashCode())
     }
 
     @Test
