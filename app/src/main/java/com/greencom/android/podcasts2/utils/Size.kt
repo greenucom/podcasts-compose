@@ -1,11 +1,22 @@
 package com.greencom.android.podcasts2.utils
 
+import com.greencom.android.podcasts2.utils.Size.Companion.bytes
+import com.greencom.android.podcasts2.utils.Size.Companion.megabytes
+import com.greencom.android.podcasts2.utils.Size.Companion.of
 import java.math.BigInteger
 import java.text.DecimalFormat
 
 // TODO: Implement toString()
-// TODO: Add docs
 
+/**
+ * Value class that represents the size of the information. Note that the underlying value is
+ * represented by the number of bits in [Long], so the maximum size that can be correctly
+ * represented by this class is ~1100 petabytes. Measurement units are represented by
+ * [SizeUnit].
+ *
+ * Use [of] to create an instance of the class. Alternatively, you can use extension properties
+ * such as [bits], [bytes], [megabytes] etc.
+ */
 @JvmInline
 value class Size(private val bits: Long) : Comparable<Size> {
 
@@ -19,20 +30,16 @@ value class Size(private val bits: Long) : Comparable<Size> {
 
     fun format(
         unit: SizeUnit,
+        appendUnitSymbol: Boolean = false,
         valueFormat: DecimalFormat = defaultDecimalFormat,
-    ): String {
-        val value = inUnit(unit)
-        return valueFormat.format(value)
-    }
-
-    fun formatSymbolic(
-        unit: SizeUnit,
-        valueFormat: DecimalFormat = defaultDecimalFormat,
-        unitSymbolFormat: String = DEFAULT_UNIT_SYMBOL_FORMAT,
     ): String {
         val value = inUnit(unit)
         val formatted = valueFormat.format(value)
-        return unitSymbolFormat.format(formatted, unit.symbol)
+        return if (appendUnitSymbol) {
+            FORMAT_WITH_UNIT_SYMBOL.format(formatted, unit.symbol)
+        } else {
+            formatted
+        }
     }
 
     operator fun plus(size: Size): Size {
@@ -174,7 +181,7 @@ value class Size(private val bits: Long) : Comparable<Size> {
         private const val UNIT_CONVERSION_FACTOR_BITS_IN_ONE_BYTE = 8
 
         private const val DEFAULT_DECIMAL_FORMAT_PATTERN = "#.##"
-        private const val DEFAULT_UNIT_SYMBOL_FORMAT = "%1\$s %2\$s"
+        private const val FORMAT_WITH_UNIT_SYMBOL = "%1\$s %2\$s"
 
     }
 
