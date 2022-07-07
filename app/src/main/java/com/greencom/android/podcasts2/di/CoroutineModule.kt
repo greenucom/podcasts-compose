@@ -8,7 +8,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -16,28 +15,20 @@ import javax.inject.Singleton
 object CoroutineModule {
 
     @Provides
-    @DefaultDispatcher
-    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
-
-    @Provides
-    @IODispatcher
-    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @Provides
     @ApplicationScope
     @Singleton
     fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob())
 
+    @Provides
+    @Dispatcher(PodcastsDispatcher.MAIN)
+    fun provideDispatcherMain(): CoroutineDispatcher = Dispatchers.Main
+
+    @Provides
+    @Dispatcher(PodcastsDispatcher.DEFAULT)
+    fun provideDispatcherDefault(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @Dispatcher(PodcastsDispatcher.IO)
+    fun provideDispatcherIO(): CoroutineDispatcher = Dispatchers.IO
+
 }
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class DefaultDispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class IODispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class ApplicationScope
