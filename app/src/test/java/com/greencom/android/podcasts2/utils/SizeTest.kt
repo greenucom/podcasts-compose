@@ -498,20 +498,20 @@ class SizeTest {
     }
 
     @Test
-    fun formatWithUnitSymbol_withDefaultUnitSymbolFormat() {
+    fun formatSymbolic_withDefaultUnitSymbolFormat() {
         val decimalFormat = DecimalFormat("#.##")
         val bits = 1_234_456
         val megabits = decimalFormat.format(bits.toFloat() / 1000 / 1000)
         val megabitsWithSymbol = "$megabits ${SizeUnit.MEGABITS.symbol}"
         val size = bits.bits
 
-        val formatted = size.formatWithUnitSymbol(SizeUnit.MEGABITS)
+        val formatted = size.formatSymbolic(SizeUnit.MEGABITS)
 
         assertThat(formatted).isEqualTo(megabitsWithSymbol)
     }
 
     @Test
-    fun formatWithUnitSymbol_withCustomUnitSymbolFormat() {
+    fun formatSymbolic_withCustomUnitSymbolFormat() {
         val decimalFormat = DecimalFormat("#.##")
         val unitSymbolFormat = "%2\$s %1\$s"
         val bits = 1_234_456
@@ -519,8 +519,7 @@ class SizeTest {
         val megabitsWithSymbol = unitSymbolFormat.format(megabits, SizeUnit.MEGABITS.symbol)
         val size = bits.bits
 
-        val formatted =
-            size.formatWithUnitSymbol(SizeUnit.MEGABITS, unitSymbolFormat = unitSymbolFormat)
+        val formatted = size.formatSymbolic(SizeUnit.MEGABITS, unitSymbolFormat = unitSymbolFormat)
 
         assertThat(formatted).isEqualTo(megabitsWithSymbol)
     }

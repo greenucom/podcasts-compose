@@ -25,7 +25,7 @@ value class Size(private val bits: Long) : Comparable<Size> {
         return valueFormat.format(value)
     }
 
-    fun formatWithUnitSymbol(
+    fun formatSymbolic(
         unit: SizeUnit,
         valueFormat: DecimalFormat = defaultDecimalFormat,
         unitSymbolFormat: String = DEFAULT_UNIT_SYMBOL_FORMAT,
