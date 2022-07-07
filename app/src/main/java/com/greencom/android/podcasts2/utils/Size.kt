@@ -3,7 +3,7 @@ package com.greencom.android.podcasts2.utils
 import java.math.BigInteger
 import java.text.DecimalFormat
 
-// TODO: Implement equals(), hashCode(), toString()
+// TODO: Implement toString()
 // TODO: Add docs
 
 @JvmInline
