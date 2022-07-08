@@ -30,7 +30,7 @@ class ScreenBehaviorBuilder {
 
 }
 
-fun buildScreenBehavior(builderAction: ScreenBehaviorBuilder.() -> Unit): ScreenBehavior {
+inline fun buildScreenBehavior(builderAction: ScreenBehaviorBuilder.() -> Unit): ScreenBehavior {
     val builder = ScreenBehaviorBuilder()
     builder.builderAction()
     return builder.build()

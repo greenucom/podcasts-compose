@@ -185,4 +185,10 @@ dependencies {
     androidTestImplementation(Dependencies.androidJunit)
     androidTestImplementation(Dependencies.androidEspresso)
 
+    testImplementation(Dependencies.truth)
+    androidTestImplementation(Dependencies.truth)
+
+    testImplementation(Dependencies.mockk)
+    androidTestImplementation(Dependencies.mockk)
+
 }

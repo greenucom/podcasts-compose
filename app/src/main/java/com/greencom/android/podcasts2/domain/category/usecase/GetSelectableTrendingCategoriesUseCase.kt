@@ -2,7 +2,8 @@ package com.greencom.android.podcasts2.domain.category.usecase
 
 import com.greencom.android.podcasts2.base.clean.FlowUseCase
 import com.greencom.android.podcasts2.data.category.CategoryRepository
-import com.greencom.android.podcasts2.di.IODispatcher
+import com.greencom.android.podcasts2.di.Dispatcher
+import com.greencom.android.podcasts2.di.PodcastsDispatcher
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.ui.common.SelectableItem
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetSelectableTrendingCategoriesUseCase @Inject constructor(
-    @IODispatcher dispatcher: CoroutineDispatcher,
+    @Dispatcher(PodcastsDispatcher.IO) dispatcher: CoroutineDispatcher,
     private val categoryRepository: CategoryRepository,
 ) : FlowUseCase<Unit, List<SelectableItem<Category>>>(dispatcher) {
 
