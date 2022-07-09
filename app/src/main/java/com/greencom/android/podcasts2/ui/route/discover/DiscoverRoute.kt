@@ -24,6 +24,7 @@ import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
+import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.route.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.route.discover.component.TrendingCategorySelector
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -37,6 +38,7 @@ private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 @Composable
 fun DiscoverRoute(
     onSearchPodcastsClicked: () -> Unit,
+    onPodcastLongClicked: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {

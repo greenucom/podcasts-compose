@@ -15,6 +15,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
         composable(route = Route.Discover.routeSchema) {
             DiscoverRoute(
                 onSearchPodcastsClicked = { /* TODO: Open search */ },
+                onPodcastLongClicked = { /* TODO: Open podcast description dialog */ },
             )
         }
 
