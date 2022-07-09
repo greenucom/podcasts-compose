@@ -20,7 +20,7 @@ fun <T : Any> CrossfadeTyped(
     animationSpec: FiniteAnimationSpec<Float> = tween(),
     content: @Composable (T) -> Unit,
 ) {
-    val transition = updateTransition(targetState = targetState, label = "CrossfadeStable")
+    val transition = updateTransition(targetState = targetState, label = "CrossfadeTyped")
     transition.Crossfade(
         modifier = modifier,
         animationSpec = animationSpec,
