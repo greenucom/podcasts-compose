@@ -1,8 +1,9 @@
 package com.greencom.android.podcasts2.ui.common.component.podcast
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -33,17 +34,20 @@ private const val DescriptionMaxLines = 2
 private const val CategoryLabelMaxCount = 3
 private const val AuthorAlpha = 0.74f
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PodcastItem(
     podcast: PodcastUiModel,
     onPodcastClicked: (PodcastUiModel) -> Unit,
     onIsUserSubscribedChanged: (PodcastUiModel) -> Unit,
     modifier: Modifier = Modifier,
+    onPodcastLongClicked: (PodcastUiModel) -> Unit = {},
 ) {
     Surface(
-        modifier = modifier,
-        onClick = { onPodcastClicked(podcast) },
+        modifier = modifier.combinedClickable(
+            onClick = { onPodcastClicked(podcast) },
+            onLongClick = { onPodcastLongClicked(podcast) }
+        ),
     ) {
 
         Column(
