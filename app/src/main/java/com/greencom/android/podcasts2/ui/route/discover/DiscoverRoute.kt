@@ -147,6 +147,10 @@ private fun SuccessScreen(
                                     val event = DiscoverViewModel.ViewEvent.UpdateSubscriptionToPodcast(it)
                                     dispatchEvent(event)
                                 },
+                                onPodcastLongClicked = {
+                                    val event = DiscoverViewModel.ViewEvent.PodcastLongClicked(it)
+                                    dispatchEvent(event)
+                                }
                             )
 
                             if (idx != trendingPodcastsState.trendingPodcasts.lastIndex) {
