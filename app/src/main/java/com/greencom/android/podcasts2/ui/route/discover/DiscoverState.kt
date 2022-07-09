@@ -41,6 +41,7 @@ class DiscoverState(
 
     fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
         DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
+        is DiscoverViewModel.ViewSideEffect.PodcastLongClicked -> { /* TODO: Navigate to dialog */ }
     }
 
     private fun scrollToTop(animate: Boolean) {

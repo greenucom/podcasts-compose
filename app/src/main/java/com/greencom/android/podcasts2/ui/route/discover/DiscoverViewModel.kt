@@ -95,7 +95,8 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
-        // TODO: Reduce event
+        val sideEffect = ViewSideEffect.PodcastLongClicked(podcast)
+        emitSideEffect(sideEffect)
     }
 
     private fun updateStateWithSelectableTrendingCategories(
@@ -171,6 +172,7 @@ class DiscoverViewModel @Inject constructor(
     @Stable
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
+        data class PodcastLongClicked(val podcast: PodcastUiModel) : ViewSideEffect
     }
 
     @Stable
