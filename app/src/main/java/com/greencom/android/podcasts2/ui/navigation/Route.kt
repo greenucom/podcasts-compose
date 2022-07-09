@@ -1,8 +1,13 @@
 package com.greencom.android.podcasts2.ui.navigation
 
+import androidx.navigation.NamedNavArgument
+
 sealed class Route<Args>(val routeSchema: String) {
 
     abstract fun createRoute(args: Args): String
+
+    open val arguments: List<NamedNavArgument>
+        get() = emptyList()
 
     object Podcasts : Route<Unit>(routeSchema = "podcasts") {
         override fun createRoute(args: Unit): String = routeSchema
