@@ -42,8 +42,8 @@ class DiscoverViewModel @Inject constructor(
     override suspend fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event.category)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
-        ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
         is ViewEvent.PodcastLongClicked -> reducePodcastLongClicked(event.podcast)
+        ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -82,6 +82,11 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
+    private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
+        val sideEffect = ViewSideEffect.PodcastLongClicked(podcast)
+        emitSideEffect(sideEffect)
+    }
+
     private fun reduceRefreshTrendingPodcasts() {
         updateState {
             if (it is ViewState.Success) {
@@ -92,11 +97,6 @@ class DiscoverViewModel @Inject constructor(
         }
         scrollNextTrendingPodcastListToTop = true
         collectTrendingPodcastsForSelectedTrendingCategories()
-    }
-
-    private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
-        val sideEffect = ViewSideEffect.PodcastLongClicked(podcast)
-        emitSideEffect(sideEffect)
     }
 
     private fun updateStateWithSelectableTrendingCategories(
@@ -160,13 +160,12 @@ class DiscoverViewModel @Inject constructor(
         ) : ViewState
     }
 
-    // TODO: Rename events
     @Stable
     sealed interface ViewEvent : Event {
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
-        object RefreshTrendingPodcasts : ViewEvent
         data class PodcastLongClicked(val podcast: PodcastUiModel) : ViewEvent
+        object RefreshTrendingPodcasts : ViewEvent
     }
 
     @Stable
