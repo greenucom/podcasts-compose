@@ -42,7 +42,10 @@ fun DiscoverRoute(
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val discoverState = rememberDiscoverState()
+    val discoverState = rememberDiscoverState(
+        onPodcastLongClicked = onPodcastLongClicked,
+    )
+
     val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {
