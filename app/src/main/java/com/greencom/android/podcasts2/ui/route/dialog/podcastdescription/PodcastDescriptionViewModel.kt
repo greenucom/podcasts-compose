@@ -58,7 +58,7 @@ class PodcastDescriptionViewModel @Inject constructor(
                 }.collect { result ->
                     result
                         .onSuccess(::updateStateWithPodcast)
-                        .onFailure { emitSideEffect(ViewSideEffect.DismissDialog) }
+                        .onFailure(::dismissDialog)
                 }
             }
         }?.cancel()
@@ -73,16 +73,22 @@ class PodcastDescriptionViewModel @Inject constructor(
         updateState { state }
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    private fun dismissDialog(e: Throwable) {
+        updateState {
+            it.copy(dismissDialog = true)
+        }
+    }
+
     data class ViewState(
         val imageUrl: String,
         val title: String,
         val description: String,
+        val dismissDialog: Boolean = false,
     ) : State
 
     sealed interface ViewEvent : Event
 
-    sealed interface ViewSideEffect : SideEffect {
-        object DismissDialog : ViewSideEffect
-    }
+    sealed interface ViewSideEffect : SideEffect
 
 }
