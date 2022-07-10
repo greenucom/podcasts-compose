@@ -19,6 +19,8 @@ class PodcastRepository @Inject constructor(
         localDataSource.updateSubscriptionToPodcast(podcast)
     }
 
+    fun getPodcastById(id: Long): Flow<Podcast> = localDataSource.getPodcastById(id)
+
     fun getTrendingPodcasts(
         max: Int,
         inCategories: List<Category>,

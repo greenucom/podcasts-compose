@@ -32,8 +32,6 @@ class PodcastLocalDataSource @Inject constructor(
         podcastDao.insert(podcastEntity)
     }
 
-    fun getPodcastById(id: Long): Flow<Podcast> = podcastDao.getPodcastById(id).map { it.toPodcast() }
-
     suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
         savePodcast(podcast)
 
@@ -42,6 +40,8 @@ class PodcastLocalDataSource @Inject constructor(
             if (isUserSubscribed) it + podcast.id else it - podcast.id
         }
     }
+
+    fun getPodcastById(id: Long): Flow<Podcast> = podcastDao.getPodcastById(id).map { it.toPodcast() }
 
     private fun loadUserSubscriptionsIds() = applicationScope.launch(dispatcher) {
         val userSubscriptionsIds = podcastDao.getUserSubscriptionsIds().toSet()
