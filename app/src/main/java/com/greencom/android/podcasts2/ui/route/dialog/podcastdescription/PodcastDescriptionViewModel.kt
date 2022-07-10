@@ -77,7 +77,7 @@ class PodcastDescriptionViewModel @Inject constructor(
 
     private fun dismissDialog(e: Throwable) {
         updateState {
-            it.copy(error = e)
+            it.copy(errorMessage = e.localizedMessage)
         }
     }
 
@@ -86,7 +86,7 @@ class PodcastDescriptionViewModel @Inject constructor(
         val imageUrl: String,
         val title: String,
         val description: String,
-        val error: Throwable? = null,
+        val errorMessage: String? = null,
     ) : State
 
     @Stable
