@@ -12,6 +12,7 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.navigation.DialogRoute
 import com.greencom.android.podcasts2.utils.emptyString
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PodcastDescriptionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val interactor: PodcastDescriptionInteractor,
