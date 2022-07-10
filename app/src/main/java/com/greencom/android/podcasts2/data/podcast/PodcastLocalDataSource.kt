@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PodcastLocalDataSource @Inject constructor(
-    private val dao: PodcastDao,
+    private val podcastDao: PodcastDao,
     @ApplicationScope private val applicationScope: CoroutineScope,
     @Dispatcher(PodcastsDispatcher.IO) private val dispatcher: CoroutineDispatcher,
 ) {
@@ -40,11 +40,11 @@ class PodcastLocalDataSource @Inject constructor(
 
     private suspend fun savePodcast(podcast: Podcast) {
         val podcastEntity = PodcastEntity.fromPodcast(podcast)
-        dao.insert(podcastEntity)
+        podcastDao.insert(podcastEntity)
     }
 
     private fun loadUserSubscriptionsIds() = applicationScope.launch(dispatcher) {
-        val userSubscriptionsIds = dao.getUserSubscriptionsIds().toSet()
+        val userSubscriptionsIds = podcastDao.getUserSubscriptionsIds().toSet()
         _userSubscriptionsIds.update { userSubscriptionsIds }
     }
 
