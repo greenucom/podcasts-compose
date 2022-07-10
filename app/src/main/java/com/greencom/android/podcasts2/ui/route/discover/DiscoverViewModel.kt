@@ -78,10 +78,8 @@ class DiscoverViewModel @Inject constructor(
         interactor.updateSubscriptionToPodcast(podcast.toPodcast())
     }
 
-    private suspend fun reducePodcastLongClicked(podcast: PodcastUiModel) {
-        interactor.savePodcast(podcast.toPodcast())
-        val sideEffect = ViewSideEffect.PodcastLongClicked(podcast)
-        emitSideEffect(sideEffect)
+    private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
+        // TODO: Show full podcast description
     }
 
     private fun reduceRefreshTrendingPodcasts() {
@@ -168,7 +166,6 @@ class DiscoverViewModel @Inject constructor(
     @Stable
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
-        data class PodcastLongClicked(val podcast: PodcastUiModel) : ViewSideEffect
     }
 
     @Stable

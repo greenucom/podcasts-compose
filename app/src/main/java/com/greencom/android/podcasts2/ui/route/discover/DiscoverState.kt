@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.greencom.android.podcasts2.ui.common.fastScrollTo
-import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 
 class DiscoverState(
-    val onPodcastLongClicked: (PodcastUiModel) -> Unit,
     val scope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
@@ -43,7 +41,6 @@ class DiscoverState(
 
     fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
         DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
-        is DiscoverViewModel.ViewSideEffect.PodcastLongClicked -> onPodcastLongClicked(sideEffect.podcast)
     }
 
     private fun scrollToTop(animate: Boolean) {
@@ -72,13 +69,11 @@ class DiscoverState(
 
 @Composable
 fun rememberDiscoverState(
-    onPodcastLongClicked: (PodcastUiModel) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) = remember(scaffoldState, trendingPodcastsLazyColumnState) {
     DiscoverState(
-        onPodcastLongClicked = onPodcastLongClicked,
         scope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
