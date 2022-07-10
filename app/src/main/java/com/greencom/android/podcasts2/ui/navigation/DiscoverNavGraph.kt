@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
+import com.greencom.android.podcasts2.ui.route.dialog.podcastdescription.PodcastDescriptionDialog
 import com.greencom.android.podcasts2.ui.route.discover.DiscoverRoute
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
@@ -28,7 +29,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
             route = DialogRoute.PodcastDescription.routeSchema,
             arguments = DialogRoute.PodcastDescription.arguments,
         ) {
-            // TODO: Create dialog
+            PodcastDescriptionDialog(onDismissRequest = { navController.navigateUp() })
         }
 
     }
