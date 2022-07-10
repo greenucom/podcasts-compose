@@ -30,7 +30,7 @@ class PodcastLocalDataSource @Inject constructor(
     }
 
     suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
-        updatePodcast(podcast)
+        savePodcast(podcast)
 
         val isUserSubscribed = podcast.isUserSubscribed
         _userSubscriptionsIds.update {
@@ -41,11 +41,6 @@ class PodcastLocalDataSource @Inject constructor(
     private suspend fun savePodcast(podcast: Podcast) {
         val podcastEntity = PodcastEntity.fromPodcast(podcast)
         dao.insert(podcastEntity)
-    }
-
-    private suspend fun updatePodcast(podcast: Podcast) {
-        val podcastEntity = PodcastEntity.fromPodcast(podcast)
-        dao.update(podcastEntity)
     }
 
     private fun loadUserSubscriptionsIds() = applicationScope.launch(dispatcher) {

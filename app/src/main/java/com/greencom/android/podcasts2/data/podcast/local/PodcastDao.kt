@@ -21,9 +21,6 @@ abstract class PodcastDao {
         clearTemp()
     }
 
-    @Update
-    abstract suspend fun update(podcast: PodcastEntity)
-
     @Query("SELECT podcast_id FROM Podcasts WHERE podcast_is_user_subscribed = 1")
     abstract suspend fun getUserSubscriptionsIds(): List<Long>
 
@@ -45,6 +42,9 @@ abstract class PodcastDao {
         WHERE Podcasts.podcast_id IS NULL
     """)
     protected abstract suspend fun mergeTemp()
+
+    @Update
+    protected abstract suspend fun update(podcast: PodcastEntity)
 
     @Update
     protected abstract suspend fun update(podcasts: List<PodcastEntity>)
