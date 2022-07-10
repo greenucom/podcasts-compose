@@ -1,5 +1,7 @@
 package com.greencom.android.podcasts2.ui.route.dialog.podcastdescription
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.podcast.Podcast
@@ -73,22 +75,24 @@ class PodcastDescriptionViewModel @Inject constructor(
         updateState { state }
     }
 
-    @Suppress("UNUSED_PARAMETER")
     private fun dismissDialog(e: Throwable) {
         updateState {
-            it.copy(dismissDialog = true)
+            it.copy(error = e)
         }
     }
 
+    @Immutable
     data class ViewState(
         val imageUrl: String,
         val title: String,
         val description: String,
-        val dismissDialog: Boolean = false,
+        val error: Throwable? = null,
     ) : State
 
+    @Stable
     sealed interface ViewEvent : Event
 
+    @Stable
     sealed interface ViewSideEffect : SideEffect
 
 }
