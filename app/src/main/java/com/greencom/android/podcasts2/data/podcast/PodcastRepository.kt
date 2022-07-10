@@ -11,6 +11,10 @@ class PodcastRepository @Inject constructor(
     private val remoteDataSource: PodcastRemoteDataSource,
 ) {
 
+    suspend fun savePodcast(podcast: Podcast) {
+        localDataSource.savePodcast(podcast)
+    }
+
     suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
         localDataSource.updateSubscriptionToPodcast(podcast)
     }
