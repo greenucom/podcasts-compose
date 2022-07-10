@@ -82,7 +82,8 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
+    private suspend fun reducePodcastLongClicked(podcast: PodcastUiModel) {
+        interactor.savePodcast(podcast.toPodcast())
         val sideEffect = ViewSideEffect.PodcastLongClicked(podcast)
         emitSideEffect(sideEffect)
     }
