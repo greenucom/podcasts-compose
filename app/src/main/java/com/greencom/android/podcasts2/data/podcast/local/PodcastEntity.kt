@@ -21,6 +21,16 @@ data class PodcastEntity(
     @ColumnInfo(name = "podcast_is_user_subscribed") val isUserSubscribed: Boolean,
 ) {
 
+    fun toPodcast(): Podcast = Podcast(
+        id = id,
+        title = title,
+        description = description,
+        author = author,
+        imageUrl = imageUrl,
+        categories = categories.map { it.toCategory() },
+        isUserSubscribed = isUserSubscribed,
+    )
+
     companion object {
 
         fun fromPodcast(podcast: Podcast): PodcastEntity = PodcastEntity(

@@ -8,9 +8,7 @@ import com.greencom.android.podcasts2.di.PodcastsDispatcher
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,6 +31,8 @@ class PodcastLocalDataSource @Inject constructor(
         val podcastEntity = PodcastEntity.fromPodcast(podcast)
         podcastDao.insert(podcastEntity)
     }
+
+    fun getPodcastById(id: Long): Flow<Podcast> = podcastDao.getPodcastById(id).map { it.toPodcast() }
 
     suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
         savePodcast(podcast)
