@@ -1,13 +1,16 @@
 package com.greencom.android.podcasts2.ui.common.screenbehavior
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Immutable
 data class ScreenBehavior(
     val navigationBarState: NavigationBarState = NavigationBarState.Visible(),
     val navigationRailState: NavigationBarState = NavigationBarState.Visible(),
     val onNavigationItemReselected: OnNavigationItemReselected? = null,
-) {
+) : Parcelable {
 
     companion object {
         val Default = ScreenBehavior()
