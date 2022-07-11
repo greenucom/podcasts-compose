@@ -1,12 +1,9 @@
 package com.greencom.android.podcasts2.ui.common.screenbehavior
 
-import android.os.Parcelable
 import androidx.compose.runtime.Stable
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Stable
-sealed class NavigationBarState(open val animateTransition: Boolean) : Parcelable {
+sealed class NavigationBarState(open val animateTransition: Boolean) {
 
     data class Visible(
         override val animateTransition: Boolean = true
