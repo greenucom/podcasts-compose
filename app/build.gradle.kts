@@ -3,6 +3,7 @@ plugins {
     id(Plugins.kotlinAndroid)
     kotlin(Plugins.kapt)
     id(Plugins.hilt)
+    id(Plugins.kotlinParcelize)
     kotlin(Plugins.serialization).version(Versions.kotlin)
     id(Plugins.googleService)
     id(Plugins.crashlytics)
