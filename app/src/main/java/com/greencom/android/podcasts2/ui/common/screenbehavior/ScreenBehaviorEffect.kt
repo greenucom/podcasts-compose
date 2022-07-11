@@ -7,23 +7,38 @@ import timber.log.Timber
 const val TagScreenBehavior = "ScreenBehavior"
 
 @Composable
-inline fun SpecificScreenBehavior(
-    vararg keys: Any? = arrayOf(Unit),
-    crossinline builderAction: (ScreenBehaviorBuilder.() -> Unit),
+fun SpecificScreenBehavior(
+    key1: Any?,
+    builderAction: (ScreenBehaviorBuilder.() -> Unit),
 ) {
-    val screenBehaviorController = LocalScreenBehaviorController.current ?: return
-    DisposableEffect(*keys) {
-        val screenBehaviorBuilder = ScreenBehaviorBuilder()
-        screenBehaviorBuilder.builderAction()
-        val screenBehavior = screenBehaviorBuilder.build()
-        screenBehaviorController.setScreenBehavior(screenBehavior)
-        Timber.tag(TagScreenBehavior).d("$screenBehavior set")
+    SpecificScreenBehaviorImpl(key1, builderAction = builderAction)
+}
 
-        onDispose {
-            screenBehaviorController.removeScreenBehavior(screenBehavior)
-            Timber.tag(TagScreenBehavior).d("$screenBehavior removed")
-        }
-    }
+@Composable
+fun SpecificScreenBehavior(
+    key1: Any?,
+    key2: Any?,
+    builderAction: (ScreenBehaviorBuilder.() -> Unit),
+) {
+    SpecificScreenBehaviorImpl(key1, key2, builderAction = builderAction)
+}
+
+@Composable
+fun SpecificScreenBehavior(
+    key1: Any?,
+    key2: Any?,
+    key3: Any?,
+    builderAction: (ScreenBehaviorBuilder.() -> Unit),
+) {
+    SpecificScreenBehaviorImpl(key1, key2, key3, builderAction = builderAction)
+}
+
+@Composable
+fun SpecificScreenBehavior(
+    vararg keys: Any?,
+    builderAction: (ScreenBehaviorBuilder.() -> Unit),
+) {
+    SpecificScreenBehaviorImpl(*keys, builderAction = builderAction)
 }
 
 @Composable
@@ -37,6 +52,26 @@ fun DefaultScreenBehavior() {
         onDispose {
             screenBehaviorController.removeScreenBehavior(defaultScreenBehavior)
             Timber.tag(TagScreenBehavior).d("DefaultScreenBehavior removed")
+        }
+    }
+}
+
+@Composable
+private inline fun SpecificScreenBehaviorImpl(
+    vararg keys: Any?,
+    crossinline builderAction: (ScreenBehaviorBuilder.() -> Unit),
+) {
+    val screenBehaviorController = LocalScreenBehaviorController.current ?: return
+    DisposableEffect(keys) {
+        val screenBehaviorBuilder = ScreenBehaviorBuilder()
+        screenBehaviorBuilder.builderAction()
+        val screenBehavior = screenBehaviorBuilder.build()
+        screenBehaviorController.setScreenBehavior(screenBehavior)
+        Timber.tag(TagScreenBehavior).d("$screenBehavior set")
+
+        onDispose {
+            screenBehaviorController.removeScreenBehavior(screenBehavior)
+            Timber.tag(TagScreenBehavior).d("$screenBehavior removed")
         }
     }
 }
