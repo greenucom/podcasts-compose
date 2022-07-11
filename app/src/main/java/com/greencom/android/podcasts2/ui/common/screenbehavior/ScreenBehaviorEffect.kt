@@ -17,11 +17,11 @@ inline fun SpecificScreenBehavior(
         screenBehaviorBuilder.builderAction()
         val screenBehavior = screenBehaviorBuilder.build()
         screenBehaviorController.setScreenBehavior(screenBehavior)
-        Timber.tag(TagScreenBehavior).d("SpecificScreenBehavior set")
+        Timber.tag(TagScreenBehavior).d("$screenBehavior set")
 
         onDispose {
             screenBehaviorController.removeScreenBehavior(screenBehavior)
-            Timber.tag(TagScreenBehavior).d("SpecificScreenBehavior removed")
+            Timber.tag(TagScreenBehavior).d("$screenBehavior removed")
         }
     }
 }
