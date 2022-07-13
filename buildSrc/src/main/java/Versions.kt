@@ -1,7 +1,7 @@
 object Versions {
 
     const val compileSdk = 32
-    const val minSdk = 21
+    const val minSdk = 24
     const val targetSdk = 32
 
     const val kotlin = "1.7.0"
