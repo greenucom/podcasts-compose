@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 
 class DiscoverState(
-    val scope: CoroutineScope,
+    val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
 ) {
@@ -45,7 +45,7 @@ class DiscoverState(
 
     private fun scrollToTop(animate: Boolean) {
         scrollToTopJob.getAndUpdate {
-            scope.launch {
+            coroutineScope.launch {
                 trendingPodcastsLazyColumnState.let {
                     if (animate) {
                         it.animateScrollToItem(0)
@@ -74,7 +74,7 @@ fun rememberDiscoverState(
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) = remember(scaffoldState, trendingPodcastsLazyColumnState) {
     DiscoverState(
-        scope = coroutineScope,
+        coroutineScope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
     )
