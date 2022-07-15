@@ -23,13 +23,12 @@ import androidx.compose.ui.unit.dp
 
 private val MinHeight = 40.dp
 
-private val StartPaddingWithoutLabel = 16.dp
-private val EndPaddingWithoutLabel = 16.dp
+private val StartPadding = 16.dp
+private val EndPadding = 16.dp
+
 private val TopPaddingWithoutLabel = 8.dp
 private val BottomPaddingWithoutLabel = 8.dp
 
-private val StartPaddingWithLabel = 16.dp
-private val EndPaddingWithLabel = 16.dp
 private val TopPaddingWithLabel = 20.dp
 private val BottomPaddingWithLabel = 10.dp
 
@@ -54,7 +53,9 @@ fun TextFieldCustom(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
         MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-    colors: TextFieldColors = TextFieldDefaults.textFieldColors()
+    colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
+    startPadding: Dp = StartPadding,
+    endPadding: Dp = EndPadding,
 ) {
     // If color is not provided via the text style, use content color as a default
     val textColor = textStyle.color.takeOrElse {
@@ -84,7 +85,6 @@ fun TextFieldCustom(
         singleLine = singleLine,
         maxLines = maxLines,
         decorationBox = @Composable { innerTextField ->
-            // places leading icon, text field with label and placeholder, trailing icon
             TextFieldDefaults.TextFieldDecorationBox(
                 value = value,
                 visualTransformation = visualTransformation,
@@ -99,25 +99,11 @@ fun TextFieldCustom(
                 interactionSource = interactionSource,
                 colors = colors,
                 contentPadding = if (label == null) {
-                    textFieldWithoutLabelPadding()
+                    PaddingValues(startPadding, TopPaddingWithoutLabel, endPadding, BottomPaddingWithoutLabel)
                 } else {
-                    textFieldWithLabelPadding()
+                    PaddingValues(startPadding, TopPaddingWithLabel, endPadding, BottomPaddingWithLabel)
                 },
             )
         },
     )
 }
-
-private fun textFieldWithoutLabelPadding(
-    start: Dp = StartPaddingWithoutLabel,
-    top: Dp = TopPaddingWithoutLabel,
-    end: Dp = EndPaddingWithoutLabel,
-    bottom: Dp = BottomPaddingWithoutLabel,
-): PaddingValues = PaddingValues(start, top, end, bottom)
-
-fun textFieldWithLabelPadding(
-    start: Dp = StartPaddingWithLabel,
-    top: Dp = TopPaddingWithLabel,
-    end: Dp = EndPaddingWithLabel,
-    bottom: Dp = BottomPaddingWithLabel,
-): PaddingValues = PaddingValues(start, top, end, bottom)

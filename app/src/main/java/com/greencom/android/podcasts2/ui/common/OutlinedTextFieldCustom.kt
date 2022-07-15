@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 private val MinHeight = 40.dp
@@ -24,8 +25,8 @@ private val MinHeight = 40.dp
 private val OutlinedTextFieldTopPadding = 8.dp
 
 private val StartPadding = 16.dp
-private val EndPadding = 16.dp
 private val TopPadding = 8.dp
+private val EndPadding = 16.dp
 private val BottomPadding = 8.dp
 
 @Composable
@@ -48,7 +49,9 @@ fun OutlinedTextFieldCustom(
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
+    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
+    startPadding: Dp = StartPadding,
+    endPadding: Dp = EndPadding,
 ) {
     // If color is not provided via the text style, use content color as a default
     val textColor = textStyle.color.takeOrElse {
@@ -104,9 +107,9 @@ fun OutlinedTextFieldCustom(
                     )
                 },
                 contentPadding = PaddingValues(
-                    start = StartPadding,
+                    start = startPadding,
                     top = TopPadding,
-                    end = EndPadding,
+                    end = endPadding,
                     bottom = BottomPadding,
                 ),
             )
