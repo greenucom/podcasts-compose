@@ -18,5 +18,8 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
             )
         }
 
+        composable(route = Route.Search.routeSchema) {
+            // TODO: Add Search route
+        }
     }
 }
