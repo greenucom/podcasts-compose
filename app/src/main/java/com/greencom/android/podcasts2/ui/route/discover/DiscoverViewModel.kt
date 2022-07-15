@@ -40,6 +40,9 @@ class DiscoverViewModel @Inject constructor(
     }
 
     override fun handleEvent(event: ViewEvent) = when (event) {
+        is ViewEvent.SelectableTrendingCategoriesReceived -> reduceSelectableTrendingCategoriesReceived(event)
+        is ViewEvent.TrendingPodcastsReceived -> reduceTrendingPodcastsReceived(event)
+        is ViewEvent.TrendingPodcastsReceivingFailed -> reduceTrendingPodcastsReceivingFailed(event)
         is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
@@ -49,7 +52,10 @@ class DiscoverViewModel @Inject constructor(
         collectSelectableTrendingCategoriesJob.getAndUpdate {
             viewModelScope.launch {
                 interactor.getSelectableTrendingCategories(Unit).collect { result ->
-                    result.onSuccess(::updateStateWithSelectableTrendingCategories)
+                    result.onSuccess {
+                        val event = ViewEvent.SelectableTrendingCategoriesReceived(it)
+                        dispatchEvent(event)
+                    }
                 }
             }
         }?.cancel()
@@ -60,19 +66,77 @@ class DiscoverViewModel @Inject constructor(
             viewModelScope.launch {
                 interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
                     result
-                        .onSuccess(::updateStateWithTrendingPodcasts)
-                        .onFailure(::updateStateWithTrendingPodcastsError)
+                        .onSuccess {
+                            val event = ViewEvent.TrendingPodcastsReceived(it)
+                            dispatchEvent(event)
+                        }
+                        .onFailure {
+                            val event = ViewEvent.TrendingPodcastsReceivingFailed(it)
+                            dispatchEvent(event)
+                        }
                 }
+            }
+        }
+    }
+
+    private fun reduceSelectableTrendingCategoriesReceived(
+        event: ViewEvent.SelectableTrendingCategoriesReceived,
+    ) {
+        val categories = event.selectableTrendingCategories
+            .map {
+                SelectableItem(
+                    item = CategoryUiModel.fromCategory(it.item),
+                    isSelected = it.isSelected,
+                )
+            }
+            .toImmutableList()
+
+        updateState {
+            ViewState.Success(
+                selectableTrendingCategories = categories,
+                trendingPodcastsState = TrendingPodcastsState.Loading,
+            )
+        }
+    }
+
+    private fun reduceTrendingPodcastsReceived(event: ViewEvent.TrendingPodcastsReceived) {
+        val podcasts = event.trendingPodcasts
+            .map { PodcastUiModel.fromPodcast(it) }
+            .toImmutableList()
+
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Success(podcasts))
+            } else {
+                it
+            }
+        }
+
+        if (scrollNextTrendingPodcastListToTop) {
+            emitSideEffect(ViewSideEffect.ScrollToTop)
+            scrollNextTrendingPodcastListToTop = false
+        }
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun reduceTrendingPodcastsReceivingFailed(event: ViewEvent.TrendingPodcastsReceivingFailed) {
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Error)
+            } else {
+                it
             }
         }
     }
 
     private fun reduceToggleSelectableTrendingCategory(
         event: ViewEvent.ToggleSelectableTrendingCategory,
-    ) = viewModelScope.launch {
-        val categoryDomain = event.category.toCategory()
-        interactor.toggleSelectableTrendingCategory(categoryDomain)
-        scrollNextTrendingPodcastListToTop = true
+    ) {
+        viewModelScope.launch {
+            val categoryDomain = event.category.toCategory()
+            interactor.toggleSelectableTrendingCategory(categoryDomain)
+            scrollNextTrendingPodcastListToTop = true
+        }
     }
 
     private fun reduceUpdateSubscriptionToPodcast(event: ViewEvent.UpdateSubscriptionToPodcast) {
@@ -93,56 +157,6 @@ class DiscoverViewModel @Inject constructor(
         collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
-    private fun updateStateWithSelectableTrendingCategories(
-        selectableTrendingCategories: List<SelectableItem<Category>>,
-    ) {
-        val categories = selectableTrendingCategories
-            .map {
-                SelectableItem(
-                    item = CategoryUiModel.fromCategory(it.item),
-                    isSelected = it.isSelected,
-                )
-            }
-            .toImmutableList()
-
-        updateState {
-            ViewState.Success(
-                selectableTrendingCategories = categories,
-                trendingPodcastsState = TrendingPodcastsState.Loading,
-            )
-        }
-    }
-
-    private fun updateStateWithTrendingPodcasts(trendingPodcasts: List<Podcast>) {
-        val podcasts = trendingPodcasts
-            .map { PodcastUiModel.fromPodcast(it) }
-            .toImmutableList()
-
-        updateState {
-            if (it is ViewState.Success) {
-                it.copy(trendingPodcastsState = TrendingPodcastsState.Success(podcasts))
-            } else {
-                it
-            }
-        }
-
-        if (scrollNextTrendingPodcastListToTop) {
-            emitSideEffect(ViewSideEffect.ScrollToTop)
-            scrollNextTrendingPodcastListToTop = false
-        }
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    private fun updateStateWithTrendingPodcastsError(e: Throwable) {
-        updateState {
-            if (it is ViewState.Success) {
-                it.copy(trendingPodcastsState = TrendingPodcastsState.Error)
-            } else {
-                it
-            }
-        }
-    }
-
     @Stable
     sealed interface ViewState : State {
         object InitialLoading : ViewState
@@ -156,6 +170,11 @@ class DiscoverViewModel @Inject constructor(
 
     @Stable
     sealed interface ViewEvent : Event {
+        data class SelectableTrendingCategoriesReceived(
+            val selectableTrendingCategories: List<SelectableItem<Category>>,
+        ) : ViewEvent
+        data class TrendingPodcastsReceived(val trendingPodcasts: List<Podcast>) : ViewEvent
+        data class TrendingPodcastsReceivingFailed(val exception: Throwable) : ViewEvent
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object RefreshTrendingPodcasts : ViewEvent
