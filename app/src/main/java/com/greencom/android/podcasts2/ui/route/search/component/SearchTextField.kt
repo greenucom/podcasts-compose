@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -23,6 +24,11 @@ import com.greencom.android.podcasts2.ui.common.PodcastsIcons
 import com.greencom.android.podcasts2.ui.common.TextFieldCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import com.greencom.android.podcasts2.ui.theme.searchBackground
+
+private const val TextAlpha = 0.87f
+private const val IconAlpha = 0.74f
+
+private val IconSize = 40.dp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -38,9 +44,17 @@ fun SearchTextField(
         shape = MaterialTheme.shapes.small,
         color = MaterialTheme.colors.searchBackground,
     ) {
-        Row {
-            val textColor = MaterialTheme.colors.onSurface.copy(alpha = 0.87f)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                modifier = Modifier.padding(start = 16.dp),
+                imageVector = PodcastsIcons.Search,
+                contentDescription = null,
+                tint = MaterialTheme.colors.onSurface.copy(alpha = IconAlpha),
+            )
+
+            val textColor = MaterialTheme.colors.onSurface.copy(alpha = TextAlpha)
             TextFieldCustom(
+                modifier = Modifier.weight(1f),
                 value = value,
                 onValueChange = onValueChanged,
                 placeholder = { Text(text = stringResource(R.string.search_for_podcasts)) },
@@ -55,10 +69,11 @@ fun SearchTextField(
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                 ),
+                startPadding = 8.dp,
             )
 
             AnimatedVisibility(
-                modifier = Modifier.height(40.dp),
+                modifier = Modifier.height(IconSize),
                 visible = value.isNotEmpty(),
                 enter = scaleIn(spring()) + fadeIn(spring()),
                 exit = scaleOut(spring(stiffness = Spring.StiffnessLow)) +
@@ -68,6 +83,7 @@ fun SearchTextField(
                     Icon(
                         imageVector = PodcastsIcons.Close,
                         contentDescription = stringResource(R.string.content_desc_clear_text_field),
+                        tint = MaterialTheme.colors.onSurface.copy(alpha = IconAlpha),
                     )
                 }
             }
