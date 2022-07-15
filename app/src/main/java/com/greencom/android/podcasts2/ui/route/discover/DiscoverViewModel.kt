@@ -40,8 +40,8 @@ class DiscoverViewModel @Inject constructor(
     }
 
     override suspend fun handleEvent(event: ViewEvent) = when (event) {
-        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event.category)
-        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
+        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
+        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
@@ -67,14 +67,16 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private suspend fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
-        val categoryDomain = category.toCategory()
+    private suspend fun reduceToggleSelectableTrendingCategory(
+        event: ViewEvent.ToggleSelectableTrendingCategory,
+    ) {
+        val categoryDomain = event.category.toCategory()
         interactor.toggleSelectableTrendingCategory(categoryDomain)
         scrollNextTrendingPodcastListToTop = true
     }
 
-    private suspend fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
-        interactor.updateSubscriptionToPodcast(podcast.toPodcast())
+    private suspend fun reduceUpdateSubscriptionToPodcast(event: ViewEvent.UpdateSubscriptionToPodcast) {
+        interactor.updateSubscriptionToPodcast(event.podcast.toPodcast())
     }
 
     private fun reduceRefreshTrendingPodcasts() {
