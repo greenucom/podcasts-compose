@@ -17,7 +17,7 @@ class SearchViewModel @Inject constructor(
 
     override val initialViewState = ViewState()
 
-    override suspend fun handleEvent(event: ViewEvent) = when (event) {
+    override fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.TextFieldValueChanged -> reduceTextFieldValueChanged(event)
         ViewEvent.ClearTextField -> reduceClearTextField()
     }

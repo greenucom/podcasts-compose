@@ -37,7 +37,7 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
         events.collect(::handleEvent)
     }
 
-    protected abstract suspend fun handleEvent(event: ViewEvent)
+    protected abstract fun handleEvent(event: ViewEvent)
 
     protected inline fun updateState(function: (state: ViewState) -> ViewState) {
         _state.update(function)
