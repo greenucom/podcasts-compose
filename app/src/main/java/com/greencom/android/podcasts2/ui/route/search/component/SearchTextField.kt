@@ -70,6 +70,7 @@ fun SearchTextField(
                     focusedIndicatorColor = Color.Transparent,
                 ),
                 startPadding = 8.dp,
+                endPadding = 0.dp,
             )
 
             AnimatedVisibility(
