@@ -34,6 +34,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf("room.schemaLocation" to "$projectDir/room_schemas")
+            }
+        }
     }
 
     val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
