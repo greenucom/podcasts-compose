@@ -8,16 +8,14 @@ import com.greencom.android.podcasts2.di.PodcastsDispatcher
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PodcastLocalDataSource @Inject constructor(
-    private val dao: PodcastDao,
+    private val podcastDao: PodcastDao,
     @ApplicationScope private val applicationScope: CoroutineScope,
     @Dispatcher(PodcastsDispatcher.IO) private val dispatcher: CoroutineDispatcher,
 ) {
@@ -29,8 +27,13 @@ class PodcastLocalDataSource @Inject constructor(
         loadUserSubscriptionsIds()
     }
 
+    suspend fun savePodcast(podcast: Podcast) {
+        val podcastEntity = PodcastEntity.fromPodcast(podcast)
+        podcastDao.insert(podcastEntity)
+    }
+
     suspend fun updateSubscriptionToPodcast(podcast: Podcast) {
-        updatePodcast(podcast)
+        savePodcast(podcast)
 
         val isUserSubscribed = podcast.isUserSubscribed
         _userSubscriptionsIds.update {
@@ -38,13 +41,10 @@ class PodcastLocalDataSource @Inject constructor(
         }
     }
 
-    private suspend fun updatePodcast(podcast: Podcast) {
-        val podcastEntity = PodcastEntity.fromPodcast(podcast)
-        dao.update(podcastEntity)
-    }
+    fun getPodcastById(id: Long): Flow<Podcast> = podcastDao.getPodcastById(id).map { it.toPodcast() }
 
     private fun loadUserSubscriptionsIds() = applicationScope.launch(dispatcher) {
-        val userSubscriptionsIds = dao.getUserSubscriptionsIds().toSet()
+        val userSubscriptionsIds = podcastDao.getUserSubscriptionsIds().toSet()
         _userSubscriptionsIds.update { userSubscriptionsIds }
     }
 

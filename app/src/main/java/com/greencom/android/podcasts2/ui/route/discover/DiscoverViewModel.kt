@@ -67,18 +67,14 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
+    private suspend fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
         val categoryDomain = category.toCategory()
-        viewModelScope.launch {
-            interactor.toggleSelectableTrendingCategory(categoryDomain)
-        }
+        interactor.toggleSelectableTrendingCategory(categoryDomain)
         scrollNextTrendingPodcastListToTop = true
     }
 
-    private fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
-        viewModelScope.launch {
-            interactor.updateSubscriptionToPodcast(podcast.toPodcast())
-        }
+    private suspend fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
+        interactor.updateSubscriptionToPodcast(podcast.toPodcast())
     }
 
     private fun reduceRefreshTrendingPodcasts() {

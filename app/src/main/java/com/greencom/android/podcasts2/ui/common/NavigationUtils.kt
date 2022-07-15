@@ -33,14 +33,14 @@ fun NavHostController.findSelectedNavigationItemStartDestination(): NavDestinati
     return currentGraph.findStartDestination()
 }
 
-fun NavBackStackEntry.requireString(key: String): String {
-    return requireNotNull(this.arguments?.getString(key)) { "$key nav argument is null" }
+fun NavBackStackEntry.requireString(name: String): String {
+    return requireNotNull(this.arguments?.getString(name)) { "$name nav argument is null" }
 }
 
-fun NavBackStackEntry.requireInt(key: String): Int {
-    return requireNotNull(this.arguments?.getInt(key)) { "$key nav argument is null" }
+fun NavBackStackEntry.requireInt(name: String): Int {
+    return requireNotNull(this.arguments?.getInt(name)) { "$name nav argument is null" }
 }
 
-fun NavBackStackEntry.requireLong(key: String): Long {
-    return requireNotNull(this.arguments?.getLong(key)) { "$key nav argument is null" }
+fun NavBackStackEntry.requireLong(name: String): Long {
+    return requireNotNull(this.arguments?.getLong(name)) { "$name nav argument is null" }
 }

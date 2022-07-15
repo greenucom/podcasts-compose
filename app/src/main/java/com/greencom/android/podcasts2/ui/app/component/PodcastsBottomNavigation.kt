@@ -1,6 +1,9 @@
 package com.greencom.android.podcasts2.ui.app.component
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -15,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.greencom.android.podcasts2.ui.common.navigateToNavigationItem
 import com.greencom.android.podcasts2.ui.common.popBackStackToSelectedNavigationItemStartDestination
 import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
+import com.greencom.android.podcasts2.ui.common.screenbehavior.NavigationBarState
 import com.greencom.android.podcasts2.ui.navigation.NavigationItems
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
@@ -24,40 +28,45 @@ fun PodcastsBottomNavigation(
     modifier: Modifier = Modifier,
 ) {
     CompositionLocalProvider(LocalElevationOverlay provides null) {
+        val currentScreenBehavior =
+            LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
 
-        BottomNavigation(
+        val isVisible = currentScreenBehavior?.navigationBarState !is NavigationBarState.Gone
+        AnimatedVisibility(
             modifier = modifier,
-            backgroundColor = MaterialTheme.colors.surface,
+            visible = isVisible,
+            enter = slideInVertically { it },
+            exit = slideOutVertically { it },
         ) {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
 
-            val currentScreenBehavior =
-                LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
+            BottomNavigation(backgroundColor = MaterialTheme.colors.surface) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
 
-            NavigationItems.forEach { item ->
-                val isSelected = currentDestination?.hierarchy
-                    ?.any { it.route == item.route } == true
+                NavigationItems.forEach { item ->
+                    val isSelected = currentDestination?.hierarchy
+                        ?.any { it.route == item.route } == true
 
-                BottomNavigationItem(
-                    selected = isSelected,
-                    onClick = {
-                        if (isSelected) {
-                            val isHandled =
-                                currentScreenBehavior?.onNavigationItemReselected?.invoke(item)
-                            if (isHandled != true) {
-                                navController.popBackStackToSelectedNavigationItemStartDestination()
+                    BottomNavigationItem(
+                        selected = isSelected,
+                        onClick = {
+                            if (isSelected) {
+                                val isHandled =
+                                    currentScreenBehavior?.onNavigationItemReselected?.invoke(item)
+                                if (isHandled != true) {
+                                    navController.popBackStackToSelectedNavigationItemStartDestination()
+                                }
+                            } else {
+                                navController.navigateToNavigationItem(item = item)
                             }
-                        } else {
-                            navController.navigateToNavigationItem(item = item)
-                        }
-                    },
-                    icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
-                    label = { Text(text = stringResource(id = item.labelResId)) },
-                    selectedContentColor = MaterialTheme.colors.primary,
-                    unselectedContentColor = MaterialTheme.colors.onSurface
-                        .copy(alpha = ContentAlpha.high),
-                )
+                        },
+                        icon = { NavigationItemIcon(item = item, isSelected = isSelected) },
+                        label = { Text(text = stringResource(id = item.labelResId)) },
+                        selectedContentColor = MaterialTheme.colors.primary,
+                        unselectedContentColor = MaterialTheme.colors.onSurface
+                            .copy(alpha = ContentAlpha.high),
+                    )
+                }
             }
         }
     }

@@ -41,6 +41,7 @@ fun DiscoverRoute(
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
     val discoverState = rememberDiscoverState()
+
     val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {

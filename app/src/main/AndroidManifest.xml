@@ -14,9 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PodcastsCompose">
 
+        <!-- TODO: Make sure configChanges works correctly -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.PodcastsCompose.Starting"
             android:windowSoftInputMode="adjustResize">
 

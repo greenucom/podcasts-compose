@@ -10,6 +10,11 @@ data class CategoryDto(
     @SerialName("name") val name: String,
 ) {
 
+    fun toCategory(): Category = Category(
+        id = id,
+        name = name,
+    )
+
     companion object {
 
         fun fromCategory(category: Category): CategoryDto = CategoryDto(

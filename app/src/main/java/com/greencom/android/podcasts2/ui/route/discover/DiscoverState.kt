@@ -7,7 +7,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.greencom.android.podcasts2.ui.common.fastScrollTo
+import com.greencom.android.podcasts2.ui.common.fastScroll
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -33,7 +33,7 @@ class DiscoverState(
             // TODO: Open search
         } else {
             val firstVisibleItemIndex = trendingPodcastsLazyColumnState.firstVisibleItemIndex
-            scrollToTop(animate = firstVisibleItemIndex <= MAX_POSITION_FOR_SMOOTH_SCROLL)
+            scrollToTop(animate = firstVisibleItemIndex <= MaxPositionForSmoothScroll)
         }
 
         return true
@@ -50,8 +50,8 @@ class DiscoverState(
                     if (animate) {
                         it.animateScrollToItem(0)
                     } else {
-                        it.fastScrollTo(
-                            instantScrollIndex = ITEM_INDEX_INSTANT_SCROLL_BEFORE_SMOOTH,
+                        it.fastScroll(
+                            instantScrollIndex = ItemIndexInstantScrollBeforeSmooth,
                             smoothScrollIndex = 0,
                         )
                     }
@@ -61,8 +61,8 @@ class DiscoverState(
     }
 
     companion object {
-        private const val MAX_POSITION_FOR_SMOOTH_SCROLL = 10
-        private const val ITEM_INDEX_INSTANT_SCROLL_BEFORE_SMOOTH = 2
+        private const val MaxPositionForSmoothScroll = 8
+        private const val ItemIndexInstantScrollBeforeSmooth = 2
     }
 
 }

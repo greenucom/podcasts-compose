@@ -89,7 +89,6 @@ fun PodcastsNavHost(
         navController = navController,
         startDestination = NavigationItem.Podcasts.route,
     ) {
-
         podcastsNavGraph(navController = navController)
 
         discoverNavGraph(navController = navController)

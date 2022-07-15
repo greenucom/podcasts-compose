@@ -3,6 +3,7 @@ plugins {
     id(Plugins.kotlinAndroid)
     kotlin(Plugins.kapt)
     id(Plugins.hilt)
+    id(Plugins.kotlinParcelize)
     kotlin(Plugins.serialization).version(Versions.kotlin)
     id(Plugins.googleService)
     id(Plugins.crashlytics)
@@ -32,6 +33,12 @@ android {
 
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf("room.schemaLocation" to "$projectDir/room_schemas")
+            }
         }
     }
 

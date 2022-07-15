@@ -1,6 +1,8 @@
 package com.greencom.android.podcasts2.data.podcast.local
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Dao
 abstract class PodcastDao {
@@ -21,11 +23,11 @@ abstract class PodcastDao {
         clearTemp()
     }
 
-    @Update
-    abstract suspend fun update(podcast: PodcastEntity)
-
     @Query("SELECT podcast_id FROM Podcasts WHERE podcast_is_user_subscribed = 1")
     abstract suspend fun getUserSubscriptionsIds(): List<Long>
+
+    fun getPodcastById(id: Long): Flow<PodcastEntity> =
+        getPodcastByIdImpl(id).distinctUntilChanged()
 
     @Insert(entity = PodcastEntityTemp::class, onConflict = OnConflictStrategy.REPLACE)
     protected abstract suspend fun insertToTemp(podcast: PodcastEntity)
@@ -47,9 +49,20 @@ abstract class PodcastDao {
     protected abstract suspend fun mergeTemp()
 
     @Update
+    protected abstract suspend fun update(podcast: PodcastEntity)
+
+    @Update
     protected abstract suspend fun update(podcasts: List<PodcastEntity>)
 
     @Query("DELETE FROM PodcastsTemp")
     protected abstract suspend fun clearTemp()
+
+    @Query("""
+        SELECT podcast_id, podcast_title, podcast_description, podcast_author, podcast_image_url,
+            podcast_categories, podcast_is_user_subscribed
+        FROM Podcasts
+        WHERE podcast_id = :id
+    """)
+    protected abstract fun getPodcastByIdImpl(id: Long): Flow<PodcastEntity>
 
 }
