@@ -12,12 +12,12 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
+import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,32 +49,28 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun collectSelectableTrendingCategories() {
-        collectSelectableTrendingCategoriesJob.getAndUpdate {
-            viewModelScope.launch {
-                interactor.getSelectableTrendingCategories(Unit).collect { result ->
-                    result.onSuccess {
-                        val event = ViewEvent.SelectableTrendingCategoriesReceived(it)
-                        dispatchEvent(event)
-                    }
+        collectSelectableTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+            interactor.getSelectableTrendingCategories(Unit).collect { result ->
+                result.onSuccess {
+                    val event = ViewEvent.SelectableTrendingCategoriesReceived(it)
+                    dispatchEvent(event)
                 }
             }
-        }?.cancel()
+        }
     }
 
     private fun collectTrendingPodcastsForSelectedTrendingCategories() {
-        collectTrendingPodcastsForSelectedTrendingCategoriesJob.getAndUpdate {
-            viewModelScope.launch {
-                interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
-                    result
-                        .onSuccess {
-                            val event = ViewEvent.TrendingPodcastsReceived(it)
-                            dispatchEvent(event)
-                        }
-                        .onFailure {
-                            val event = ViewEvent.TrendingPodcastsReceivingFailed(it)
-                            dispatchEvent(event)
-                        }
-                }
+        collectTrendingPodcastsForSelectedTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+            interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
+                result
+                    .onSuccess {
+                        val event = ViewEvent.TrendingPodcastsReceived(it)
+                        dispatchEvent(event)
+                    }
+                    .onFailure {
+                        val event = ViewEvent.TrendingPodcastsReceivingFailed(it)
+                        dispatchEvent(event)
+                    }
             }
         }
     }
