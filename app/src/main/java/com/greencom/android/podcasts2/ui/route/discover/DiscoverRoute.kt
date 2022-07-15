@@ -36,7 +36,7 @@ private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
 fun DiscoverRoute(
-    onSearchPodcastsClicked: () -> Unit,
+    navigateToSearchRoute: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
@@ -57,7 +57,7 @@ fun DiscoverRoute(
             .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End))
             .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.End)),
         scaffoldState = discoverState.scaffoldState,
-        topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
+        topBar = { DiscoverTopBar(onSearchPodcastsClicked = navigateToSearchRoute) },
     ) { paddingValues ->
 
         CrossfadeTyped(

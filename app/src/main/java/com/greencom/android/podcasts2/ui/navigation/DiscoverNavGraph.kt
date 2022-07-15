@@ -15,7 +15,10 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
 
         composable(route = Route.Discover.routeSchema) {
             DiscoverRoute(
-                onSearchPodcastsClicked = { /* TODO: Open search */ },
+                navigateToSearchRoute = {
+                    val route = Route.Search.createRoute(Unit)
+                    navController.navigate(route)
+                },
             )
         }
 
