@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,8 +15,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +36,7 @@ private const val IconAlpha = 0.74f
 
 private val IconSize = 40.dp
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(
     value: String,
@@ -45,8 +51,18 @@ fun SearchTextField(
         color = MaterialTheme.colors.searchBackground,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+            val focusRequester = remember { FocusRequester() }
+            val keyboardController = LocalSoftwareKeyboardController.current
             Icon(
-                modifier = Modifier.padding(start = 16.dp),
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {
+                        focusRequester.requestFocus()
+                        keyboardController?.show()
+                    },
                 imageVector = PodcastsIcons.Search,
                 contentDescription = null,
                 tint = MaterialTheme.colors.onSurface.copy(alpha = IconAlpha),
@@ -54,7 +70,9 @@ fun SearchTextField(
 
             val textColor = MaterialTheme.colors.onSurface.copy(alpha = TextAlpha)
             TextFieldCustom(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(focusRequester),
                 value = value,
                 onValueChange = onValueChanged,
                 placeholder = { Text(text = stringResource(R.string.search_for_podcasts)) },
