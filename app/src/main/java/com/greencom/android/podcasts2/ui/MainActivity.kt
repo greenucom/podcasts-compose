@@ -13,6 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.greencom.android.podcasts2.ui.app.App
+import com.greencom.android.podcasts2.ui.common.LocalWindowSizeClass
 import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
 import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehavior
 import com.greencom.android.podcasts2.ui.common.screenbehavior.ScreenBehaviorController
@@ -52,10 +53,12 @@ class MainActivity : ComponentActivity() {
 
             PodcastsTheme {
                 Surface {
+                    val windowSizeClass = calculateWindowSizeClass(activity = this)
+
                     CompositionLocalProvider(
+                        LocalWindowSizeClass provides windowSizeClass,
                         LocalScreenBehaviorController provides screenBehaviorController,
                     ) {
-                        val windowSizeClass = calculateWindowSizeClass(activity = this)
                         App(windowSizeClass = windowSizeClass)
                     }
                 }

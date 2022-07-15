@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.utils
+package com.greencom.android.podcasts2.ui.common
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
