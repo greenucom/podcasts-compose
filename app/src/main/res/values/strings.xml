@@ -1,17 +1,22 @@
 <resources>
 
+    <!-- Navigation items -->
     <string name="podcasts">Podcasts</string>
     <string name="discover">Discover</string>
     <string name="library">Library</string>
 
+    <!-- Misc -->
     <string name="try_again">Try again</string>
     <string name="something_went_wrong_check_connection">
         Something went wrong\n
         Check your internet connection
     </string>
 
+    <!-- DiscoverRoute -->
     <string name="search_for_podcasts">Search for podcasts</string>
     <string name="subscribe">Subscribe</string>
     <string name="subscribed">Subscribed</string>
+
+    <!-- SearchRoute -->
 
 </resources>

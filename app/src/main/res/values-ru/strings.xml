@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Navigation items -->
     <string name="podcasts">Подкасты</string>
     <string name="discover">Находки</string>
     <string name="library">Библиотека</string>
 
+    <!-- Misc -->
     <string name="try_again">Попробовать снова</string>
     <string name="something_went_wrong_check_connection">
         Что-то пошло не так\n
         Проверьте соединение с интернетом
     </string>
 
+    <!-- DiscoverRoute -->
     <string name="search_for_podcasts">Поиск подкастов</string>
     <string name="subscribe">Подписаться</string>
     <string name="subscribed">Вы подписаны</string>
+
+    <!-- SearchRoute -->
 
 </resources>
