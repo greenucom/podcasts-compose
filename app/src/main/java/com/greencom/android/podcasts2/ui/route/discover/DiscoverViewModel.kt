@@ -42,7 +42,6 @@ class DiscoverViewModel @Inject constructor(
     override suspend fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event.category)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
-        is ViewEvent.PodcastLongClicked -> reducePodcastLongClicked(event.podcast)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
     }
 
@@ -76,10 +75,6 @@ class DiscoverViewModel @Inject constructor(
 
     private suspend fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
         interactor.updateSubscriptionToPodcast(podcast.toPodcast())
-    }
-
-    private fun reducePodcastLongClicked(podcast: PodcastUiModel) {
-        // TODO: Show full podcast description
     }
 
     private fun reduceRefreshTrendingPodcasts() {
@@ -159,7 +154,6 @@ class DiscoverViewModel @Inject constructor(
     sealed interface ViewEvent : Event {
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
-        data class PodcastLongClicked(val podcast: PodcastUiModel) : ViewEvent
         object RefreshTrendingPodcasts : ViewEvent
     }
 
