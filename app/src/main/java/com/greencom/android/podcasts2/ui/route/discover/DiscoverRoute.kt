@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
@@ -88,7 +89,7 @@ private fun DiscoverTopBar(
 ) {
     TopAppBar(
         modifier = modifier.windowInsetsPadding(WindowInsets.statusBars),
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = Color.Transparent,
         elevation = 0.dp,
         contentPadding = PaddingValues(0.dp),
     ) {
