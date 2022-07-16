@@ -9,11 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.greencom.android.podcasts2.ui.common.fastScroll
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
+import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
 
 class DiscoverState(
     val navigateToSearchRoute: () -> Unit,
@@ -26,7 +26,7 @@ class DiscoverState(
 
     @Suppress("UNUSED_PARAMETER")
     fun onNavigationItemReselected(navigationItem: NavigationItem): Boolean {
-        scrollToTopJob.getAndUpdate { null }?.cancel()
+        scrollToTopJob.cancel()
         val isScrolledToTop = trendingPodcastsLazyColumnState.firstVisibleItemIndex == 0 &&
                 trendingPodcastsLazyColumnState.firstVisibleItemScrollOffset == 0
 
