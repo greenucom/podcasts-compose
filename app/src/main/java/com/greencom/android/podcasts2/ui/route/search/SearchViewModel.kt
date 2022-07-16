@@ -33,25 +33,9 @@ class SearchViewModel @Inject constructor(
     override fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.TextFieldValueChanged -> reduceTextFieldValueChanged(event)
         ViewEvent.ClearTextField -> reduceClearTextField()
+        ViewEvent.SearchPodcasts -> reduceSearchPodcasts()
         is ViewEvent.SearchCompleted -> reduceSearchCompleted(event)
         is ViewEvent.SearchFailed -> reduceSearchFailed(event)
-    }
-
-    private fun searchPodcasts(query: String) {
-        searchPodcastsJob.cancelAndLaunchIn(viewModelScope) {
-            val params = SearchPodcastsUseCase.Params(query.trim())
-            interactor.searchPodcasts(params).collect { result ->
-                result
-                    .onSuccess {
-                        val event = ViewEvent.SearchCompleted(it)
-                        dispatchEvent(event)
-                    }
-                    .onFailure {
-                        val event = ViewEvent.SearchFailed(it)
-                        dispatchEvent(event)
-                    }
-            }
-        }
     }
 
     private fun reduceTextFieldValueChanged(event: ViewEvent.TextFieldValueChanged) {
@@ -60,6 +44,10 @@ class SearchViewModel @Inject constructor(
 
     private fun reduceClearTextField() {
         updateState { it.copy(textFieldValue = emptyString()) }
+    }
+
+    private fun reduceSearchPodcasts() {
+        searchPodcasts()
     }
 
     private fun reduceSearchCompleted(event: ViewEvent.SearchCompleted) {
@@ -79,6 +67,24 @@ class SearchViewModel @Inject constructor(
     private fun reduceSearchFailed(event: ViewEvent.SearchFailed) {
         val searchResultsState = SearchResultsState.Error(R.string.something_went_wrong_check_connection)
         updateState { it.copy(searchResultsState = searchResultsState) }
+    }
+
+    private fun searchPodcasts() {
+        searchPodcastsJob.cancelAndLaunchIn(viewModelScope) {
+            val query = state.value.textFieldValue.trim()
+            val params = SearchPodcastsUseCase.Params(query)
+            interactor.searchPodcasts(params).collect { result ->
+                result
+                    .onSuccess {
+                        val event = ViewEvent.SearchCompleted(it)
+                        dispatchEvent(event)
+                    }
+                    .onFailure {
+                        val event = ViewEvent.SearchFailed(it)
+                        dispatchEvent(event)
+                    }
+            }
+        }
     }
 
     @Immutable
@@ -104,6 +110,7 @@ class SearchViewModel @Inject constructor(
     sealed interface ViewEvent : Event {
         data class TextFieldValueChanged(val textFieldValue: String) : ViewEvent
         object ClearTextField : ViewEvent
+        object SearchPodcasts : ViewEvent
         data class SearchCompleted(val podcasts: List<Podcast>) : ViewEvent
         data class SearchFailed(val exception: Throwable) : ViewEvent
     }
