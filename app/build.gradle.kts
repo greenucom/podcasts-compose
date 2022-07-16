@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.capitalizeAsciiOnly
+
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinAndroid)
@@ -22,6 +24,8 @@ android {
     val generatedVersionName = androidGitVersion.name()
     val versionCodeValue = if (generatedVersionCode != 0) generatedVersionCode else 1
 
+    setupOutputNames()
+
     defaultConfig {
         applicationId = "com.greencom.android.podcasts2"
         minSdk = Versions.minSdk
@@ -43,7 +47,6 @@ android {
     }
 
     val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
-
     signingConfigs {
         if (keystoreProperties != null) {
             create("defaultConfigs") {
@@ -112,9 +115,6 @@ android {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
-
-    // Rename outputs
-    setProperty("archivesBaseName", "podcasts-$generatedVersionName")
 
 }
 
@@ -198,4 +198,36 @@ dependencies {
     testImplementation(Dependencies.mockk)
     androidTestImplementation(Dependencies.mockk)
 
+}
+
+fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputNames() {
+    applicationVariants.all {
+        outputs.all {
+            val outputName = "podcasts-$versionName"
+
+            // Rename .apk
+            val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            outputImpl.outputFileName = "$outputName.apk"
+
+            // Rename .aab
+            // AAB file name that you want. Flavor name also can be accessed here.
+            val aabPackageName = "$outputName.aab"
+            // Get final bundle task name for this variant
+            val bundleFinalizeTaskName = StringBuilder("sign").run {
+                // Add each flavor dimension for this variant here
+                productFlavors.forEach {
+                    append(it.name.capitalizeAsciiOnly())
+                }
+                // Add build type of this variant
+                append(buildType.name.capitalizeAsciiOnly())
+                append("Bundle")
+                toString()
+            }
+            tasks.named(bundleFinalizeTaskName, com.android.build.gradle.internal.tasks.FinalizeBundleTask::class.java) {
+                val file = finalBundleFile.asFile.get()
+                val finalFile = File(file.parentFile, aabPackageName)
+                finalBundleFile.set(finalFile)
+            }
+        }
+    }
 }
