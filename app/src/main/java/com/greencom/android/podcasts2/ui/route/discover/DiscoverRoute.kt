@@ -41,7 +41,9 @@ fun DiscoverRoute(
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val discoverState = rememberDiscoverState()
+    val discoverState = rememberDiscoverState(
+        navigateToSearchRoute = navigateToSearchRoute,
+    )
 
     val viewState = viewModel.state.collectAsState()
 

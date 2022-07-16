@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 
 class DiscoverState(
+    val navigateToSearchRoute: () -> Unit,
     val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
@@ -30,7 +31,7 @@ class DiscoverState(
                 trendingPodcastsLazyColumnState.firstVisibleItemScrollOffset == 0
 
         if (isScrolledToTop) {
-            // TODO: Open search
+            navigateToSearchRoute()
         } else {
             val firstVisibleItemIndex = trendingPodcastsLazyColumnState.firstVisibleItemIndex
             scrollToTop(animate = firstVisibleItemIndex <= MaxPositionForSmoothScroll)
@@ -69,11 +70,15 @@ class DiscoverState(
 
 @Composable
 fun rememberDiscoverState(
+    navigateToSearchRoute: () -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
-) = remember(scaffoldState, trendingPodcastsLazyColumnState) {
+) = remember(
+    navigateToSearchRoute, coroutineScope, scaffoldState, trendingPodcastsLazyColumnState
+) {
     DiscoverState(
+        navigateToSearchRoute = navigateToSearchRoute,
         coroutineScope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
