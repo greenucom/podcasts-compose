@@ -44,4 +44,19 @@ class PodcastRepository @Inject constructor(
             }
     }
 
+    fun searchPodcasts(query: String): Flow<Result<List<Podcast>>> {
+        return flow {
+            val searchResults = remoteDataSource.searchPodcasts(query)
+            emit(searchResults)
+        }
+            .combine(localDataSource.userSubscriptionsIds) { searchResults, userSubscriptionsIds ->
+                searchResults.map { it.copy(isUserSubscribed = it.id in userSubscriptionsIds) }
+            }
+            .map { Result.success(it) }
+            .catch { e ->
+                Timber.e(e, "Exception occurred while receiving search results")
+                emit(Result.failure(e))
+            }
+    }
+
 }

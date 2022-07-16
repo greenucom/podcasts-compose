@@ -23,4 +23,9 @@ class PodcastRemoteDataSource @Inject constructor(
         return dto.toPodcasts()
     }
 
+    suspend fun searchPodcasts(query: String): List<Podcast> {
+        val dto = podcastService.searchPodcasts(query)
+        return dto.toPodcasts()
+    }
+
 }
