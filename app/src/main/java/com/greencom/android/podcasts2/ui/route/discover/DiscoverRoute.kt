@@ -73,7 +73,7 @@ fun DiscoverRoute(
                 }
 
                 is DiscoverViewModel.ViewState.Success -> {
-                    SuccessScreen(
+                    Success(
                         state = state,
                         dispatchEvent = viewModel::dispatchEvent,
                         trendingPodcastsLazyColumnState = discoverState.trendingPodcastsLazyColumnState,
@@ -103,7 +103,7 @@ private fun DiscoverTopBar(
 }
 
 @Composable
-private fun SuccessScreen(
+private fun Success(
     state: DiscoverViewModel.ViewState.Success,
     dispatchEvent: (DiscoverViewModel.ViewEvent) -> Unit,
     modifier: Modifier = Modifier,
