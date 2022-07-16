@@ -6,10 +6,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,7 +51,10 @@ fun SearchRoute(
             targetState = viewState.value.searchResultsState,
         ) { searchResultsState ->
             when (searchResultsState) {
-                SearchViewModel.SearchResultsState.QueryIsEmpty -> TODO()
+                SearchViewModel.SearchResultsState.QueryIsEmpty -> {
+                    // TODO
+                    Text("QueryIsEmpty")
+                }
 
                 SearchViewModel.SearchResultsState.Loading -> Loading()
 
@@ -67,7 +67,10 @@ fun SearchRoute(
                     )
                 }
 
-                SearchViewModel.SearchResultsState.NothingFound -> TODO()
+                SearchViewModel.SearchResultsState.NothingFound -> {
+                    // TODO
+                    Text("NothingFound")
+                }
 
                 is SearchViewModel.SearchResultsState.Error -> {
                     Error(
