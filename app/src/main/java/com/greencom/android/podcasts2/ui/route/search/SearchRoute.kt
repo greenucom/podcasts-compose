@@ -4,21 +4,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
+import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+
+private const val PodcastItemPlaceholderCount = 5
 
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
@@ -48,7 +55,8 @@ fun SearchRoute(
         ) { searchResultsState ->
             when (searchResultsState) {
                 SearchViewModel.SearchResultsState.QueryIsEmpty -> TODO()
-                SearchViewModel.SearchResultsState.Loading -> TODO()
+
+                SearchViewModel.SearchResultsState.Loading -> Loading()
 
                 is SearchViewModel.SearchResultsState.Success -> {
                     Success(
@@ -100,6 +108,20 @@ fun SearchTopBar(
                 dispatchEvent(event)
             },
         )
+    }
+}
+
+@Composable
+private fun Loading(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+        val placeholderLoadingColor by animatePlaceholderLoadingColor()
+        repeat(PodcastItemPlaceholderCount) {
+            PodcastItemPlaceholder(color = placeholderLoadingColor)
+
+            if (it < PodcastItemPlaceholderCount - 1) {
+                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+            }
+        }
     }
 }
 
