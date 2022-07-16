@@ -12,6 +12,7 @@ import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
 import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
+import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import com.greencom.android.podcasts2.utils.emptyString
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,8 +50,14 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun reduceSearchPodcasts() {
-        updateState { it.copy(searchResultsState = SearchResultsState.Loading) }
-        searchPodcasts()
+        val query = state.value.textFieldValue.trim()
+        if (query.isNotBlank()) {
+            updateState { it.copy(searchResultsState = SearchResultsState.Loading) }
+            searchPodcasts()
+        } else {
+            searchPodcastsJob.cancel()
+            updateState { it.copy(searchResultsState = SearchResultsState.QueryIsEmpty) }
+        }
     }
 
     private fun reduceSearchCompleted(event: ViewEvent.SearchCompleted) {
