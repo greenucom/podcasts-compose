@@ -12,7 +12,7 @@ plugins {
 }
 
 androidGitVersion {
-    format = "%tag%"
+    format = "%tag%%--commit%%--branch%"
 }
 
 android {
@@ -60,7 +60,7 @@ android {
         getByName("debug") {
             resValue("string", "app_name", "Debug")
             applicationIdSuffix = ".debug"
-            versionNameSuffix = " debug"
+            versionNameSuffix = "--debug"
         }
 
         getByName("release") {
