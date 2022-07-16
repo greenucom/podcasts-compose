@@ -9,11 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.greencom.android.podcasts2.ui.common.fastScroll
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
+import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
-import kotlinx.coroutines.launch
 
 class DiscoverState(
     val navigateToSearchRoute: () -> Unit,
@@ -45,20 +45,18 @@ class DiscoverState(
     }
 
     private fun scrollToTop(animate: Boolean) {
-        scrollToTopJob.getAndUpdate {
-            coroutineScope.launch {
-                trendingPodcastsLazyColumnState.let {
-                    if (animate) {
-                        it.animateScrollToItem(0)
-                    } else {
-                        it.fastScroll(
-                            instantScrollIndex = ItemIndexInstantScrollBeforeSmooth,
-                            smoothScrollIndex = 0,
-                        )
-                    }
+        scrollToTopJob.cancelAndLaunchIn(coroutineScope) {
+            trendingPodcastsLazyColumnState.let {
+                if (animate) {
+                    it.animateScrollToItem(0)
+                } else {
+                    it.fastScroll(
+                        instantScrollIndex = ItemIndexInstantScrollBeforeSmooth,
+                        smoothScrollIndex = 0,
+                    )
                 }
             }
-        }?.cancel()
+        }
     }
 
     companion object {
