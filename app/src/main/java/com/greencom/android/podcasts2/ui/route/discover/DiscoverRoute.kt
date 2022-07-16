@@ -106,8 +106,8 @@ private fun DiscoverTopBar(
 private fun Success(
     state: DiscoverViewModel.ViewState.Success,
     dispatchEvent: (DiscoverViewModel.ViewEvent) -> Unit,
+    trendingPodcastsLazyColumnState: LazyListState,
     modifier: Modifier = Modifier,
-    trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) {
     Column(modifier = modifier) {
 
