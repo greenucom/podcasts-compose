@@ -19,6 +19,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +37,7 @@ class SearchViewModel @Inject constructor(
         ViewEvent.SearchPodcasts -> reduceSearchPodcasts()
         is ViewEvent.SearchCompleted -> reduceSearchCompleted(event)
         is ViewEvent.SearchFailed -> reduceSearchFailed(event)
+        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
     }
 
     private fun reduceTextFieldValueChanged(event: ViewEvent.TextFieldValueChanged) {
@@ -68,6 +70,12 @@ class SearchViewModel @Inject constructor(
     private fun reduceSearchFailed(event: ViewEvent.SearchFailed) {
         val searchResultsState = SearchResultsState.Error(R.string.something_went_wrong_check_connection)
         updateState { it.copy(searchResultsState = searchResultsState) }
+    }
+
+    private fun reduceUpdateSubscriptionToPodcast(event: ViewEvent.UpdateSubscriptionToPodcast) {
+        viewModelScope.launch {
+            interactor.updateSubscriptionToPodcast(event.podcast.toPodcast())
+        }
     }
 
     private fun searchPodcasts() {
@@ -115,6 +123,7 @@ class SearchViewModel @Inject constructor(
         object SearchPodcasts : ViewEvent
         data class SearchCompleted(val podcasts: List<Podcast>) : ViewEvent
         data class SearchFailed(val exception: Throwable) : ViewEvent
+        data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
     }
 
     @Stable

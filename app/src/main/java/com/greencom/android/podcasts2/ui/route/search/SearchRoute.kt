@@ -1,6 +1,11 @@
 package com.greencom.android.podcasts2.ui.route.search
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -9,7 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
+import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+
+private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
 fun SearchRoute(
@@ -31,6 +41,27 @@ fun SearchRoute(
         }
     ) { paddingValues ->
 
+        CrossfadeTyped(
+            modifier = Modifier.padding(paddingValues),
+            targetState = viewState.value.searchResultsState,
+        ) { searchResultsState ->
+            when (searchResultsState) {
+                SearchViewModel.SearchResultsState.QueryIsEmpty -> TODO()
+                SearchViewModel.SearchResultsState.Loading -> TODO()
+
+                is SearchViewModel.SearchResultsState.Success -> {
+                    Success(
+                        modifier = Modifier.fillMaxSize(),
+                        state = searchResultsState,
+                        dispatchEvent = viewModel::dispatchEvent,
+                        searchResultsLazyColumnState = searchState.searchResultsLazyColumnState,
+                    )
+                }
+
+                SearchViewModel.SearchResultsState.NothingFound -> TODO()
+                is SearchViewModel.SearchResultsState.Error -> TODO()
+            }
+        }
     }
 }
 
@@ -62,5 +93,38 @@ fun SearchTopBar(
                 dispatchEvent(event)
             },
         )
+    }
+}
+
+@Composable
+fun Success(
+    state: SearchViewModel.SearchResultsState.Success,
+    dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
+    searchResultsLazyColumnState: LazyListState,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier,
+        state = searchResultsLazyColumnState,
+    ) {
+        itemsIndexed(
+            items = state.podcasts,
+            key = { _, podcast -> podcast.id },
+            contentType = { _, _ -> ContentTypePodcastItem},
+        ) { idx, podcast ->
+            PodcastItem(
+                modifier = modifier.fillMaxWidth(),
+                podcast = podcast,
+                onPodcastClicked = { /* TODO: Open podcast */ },
+                onIsUserSubscribedChanged = {
+                    val event = SearchViewModel.ViewEvent.UpdateSubscriptionToPodcast(it)
+                    dispatchEvent(event)
+                },
+            )
+
+            if (idx != state.podcasts.lastIndex) {
+                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+            }
+        }
     }
 }
