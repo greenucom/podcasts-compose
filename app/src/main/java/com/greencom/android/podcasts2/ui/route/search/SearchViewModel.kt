@@ -47,6 +47,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun reduceSearchPodcasts() {
+        updateState { it.copy(searchResultsState = SearchResultsState.Loading) }
         searchPodcasts()
     }
 
@@ -96,6 +97,7 @@ class SearchViewModel @Inject constructor(
     @Stable
     sealed interface SearchResultsState {
         object QueryIsEmpty : SearchResultsState
+        object Loading : SearchResultsState
 
         @Immutable
         data class Success(val podcasts: ImmutableList<PodcastUiModel>) : SearchResultsState
