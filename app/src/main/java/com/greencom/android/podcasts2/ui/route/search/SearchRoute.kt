@@ -58,7 +58,8 @@ fun SearchTopBar(
                 dispatchEvent(event)
             },
             onImeSearch = {
-                // TODO
+                val event = SearchViewModel.ViewEvent.SearchPodcasts
+                dispatchEvent(event)
             },
         )
     }
