@@ -162,6 +162,7 @@ private fun Success(
 
                 DiscoverViewModel.TrendingPodcastsState.Error -> {
                     ConnectionError(
+                        modifier = Modifier.fillMaxSize(),
                         onTryAgainClicked = {
                             dispatchEvent(DiscoverViewModel.ViewEvent.RefreshTrendingPodcasts)
                         },

@@ -144,7 +144,7 @@ private fun Error(
     modifier: Modifier = Modifier,
 ) {
     ConnectionError(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         onTryAgainClicked = {
             val event = SearchViewModel.ViewEvent.SearchPodcasts
             dispatchEvent(event)
