@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -59,7 +60,13 @@ fun SearchRoute(
                 }
 
                 SearchViewModel.SearchResultsState.NothingFound -> TODO()
-                is SearchViewModel.SearchResultsState.Error -> TODO()
+
+                is SearchViewModel.SearchResultsState.Error -> {
+                    Error(
+                        state = searchResultsState,
+                        dispatchEvent = viewModel::dispatchEvent,
+                    )
+                }
             }
         }
     }
@@ -97,7 +104,7 @@ fun SearchTopBar(
 }
 
 @Composable
-fun Success(
+private fun Success(
     state: SearchViewModel.SearchResultsState.Success,
     dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
     searchResultsLazyColumnState: LazyListState,
@@ -127,4 +134,20 @@ fun Success(
             }
         }
     }
+}
+
+@Suppress("UNUSED_PARAMETER")
+@Composable
+private fun Error(
+    state: SearchViewModel.SearchResultsState.Error,
+    dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ConnectionError(
+        modifier = modifier,
+        onTryAgainClicked = {
+            val event = SearchViewModel.ViewEvent.SearchPodcasts
+            dispatchEvent(event)
+        }
+    )
 }
