@@ -7,7 +7,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.greencom.android.podcasts2.ui.common.fastScroll
 import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import kotlinx.coroutines.CoroutineScope
@@ -45,22 +44,15 @@ class DiscoverState(
     private fun scrollToTop(animate: Boolean) {
         scrollToTopJob.cancelAndLaunchIn(coroutineScope) {
             trendingPodcastsLazyColumnState.run {
-                if (animate) {
-                    animateScrollToItem(0)
-                } else {
-                    fastScroll(
-                        instantScrollIndex = FastScrollInstantItemIndex,
-                        smoothScrollIndex = FastScrollSmoothItemIndex,
-                    )
-                }
+                if (!animate) scrollToItem(ScrollToItemIndex)
+                animateScrollToItem(0)
             }
         }
     }
 
     companion object {
         private const val MaxFirstVisibleItemIndexForSmoothScroll = 6
-        private const val FastScrollInstantItemIndex = 2
-        private const val FastScrollSmoothItemIndex = 0
+        private const val ScrollToItemIndex = 2
     }
 
 }
