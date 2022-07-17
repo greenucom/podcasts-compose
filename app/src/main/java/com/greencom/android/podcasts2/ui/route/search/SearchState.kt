@@ -27,7 +27,9 @@ fun rememberSearchState(
     searchResultsLazyColumnState: LazyListState = rememberLazyListState(),
     focusManager: FocusManager = LocalFocusManager.current,
 ) = remember(
-    scaffoldState, searchResultsLazyColumnState, focusManager,
+    scaffoldState,
+    searchResultsLazyColumnState,
+    focusManager,
 ) {
     SearchState(
         scaffoldState = scaffoldState,
