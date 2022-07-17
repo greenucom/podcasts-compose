@@ -30,6 +30,7 @@ import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.NothingFoundError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
@@ -48,6 +49,14 @@ fun SearchRoute(
     val searchState = rememberSearchState()
 
     val viewState = viewModel.state.collectAsState()
+
+    SpecificScreenBehavior {
+        onNavigationItemReselected = {
+            val event = SearchViewModel.ViewEvent.NavigationItemReselected
+            viewModel.dispatchEvent(event)
+            true
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.sideEffects.collect(searchState::handleSideEffect)

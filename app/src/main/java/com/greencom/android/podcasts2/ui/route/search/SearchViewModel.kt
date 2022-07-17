@@ -46,6 +46,7 @@ class SearchViewModel @Inject constructor(
         is ViewEvent.SearchFailed -> reduceSearchFailed(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.SearchResultsScrolled -> reduceSearchResultsScrolled()
+        ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
     private fun reduceTextFieldValueChanged(event: ViewEvent.TextFieldValueChanged) {
@@ -121,6 +122,10 @@ class SearchViewModel @Inject constructor(
         emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
     }
 
+    private fun reduceNavigationItemReselected() {
+        emitSideEffect(ViewSideEffect.NavigationItemReselected)
+    }
+
     @Immutable
     data class ViewState(
         val textFieldValue: String = emptyString(),
@@ -150,12 +155,15 @@ class SearchViewModel @Inject constructor(
         data class SearchFailed(val exception: Throwable) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object SearchResultsScrolled : ViewEvent
+        object NavigationItemReselected : ViewEvent
     }
 
     @Stable
     sealed interface ViewSideEffect : SideEffect {
         object RequestTextFieldFocus : ViewSideEffect
         object ClearTextFieldFocus : ViewSideEffect
+        object ScrollSearchResultsToTop : ViewSideEffect
+        object NavigationItemReselected : ViewSideEffect
     }
 
 }
