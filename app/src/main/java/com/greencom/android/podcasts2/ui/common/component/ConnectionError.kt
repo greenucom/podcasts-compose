@@ -38,14 +38,12 @@ fun ConnectionError(
             modifier = Modifier
                 .widthIn(max = MaxImageSize)
                 .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.vec_connection_issue),
+            painter = painterResource(id = R.drawable.vec_connection_error),
             contentDescription = stringResource(id = R.string.something_went_wrong_check_connection),
         )
 
         Text(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .alpha(TextAlpha),
+            modifier = Modifier.alpha(TextAlpha),
             text = stringResource(id = R.string.something_went_wrong_check_connection),
             style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center,

@@ -169,7 +169,7 @@ private fun Error(
     modifier: Modifier = Modifier,
 ) {
     ConnectionError(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp),
         onTryAgainClicked = {
             val event = SearchViewModel.ViewEvent.SearchPodcasts
             dispatchEvent(event)
