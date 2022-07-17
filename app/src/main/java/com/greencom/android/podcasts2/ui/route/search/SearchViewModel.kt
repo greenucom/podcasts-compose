@@ -116,7 +116,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun requestInitialTextFieldFocus() = viewModelScope.launch {
-        delay(75.milliseconds)
+        delay(100.milliseconds)
         emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
     }
 
