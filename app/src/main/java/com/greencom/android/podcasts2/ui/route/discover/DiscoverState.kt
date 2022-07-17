@@ -23,7 +23,7 @@ class DiscoverState(
     private val scrollToTopJob = MutableStateFlow<Job?>(null)
 
     fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
-        DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
+        DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop()
         DiscoverViewModel.ViewSideEffect.NavigateToSearchRoute -> navigateToSearchRoute()
         DiscoverViewModel.ViewSideEffect.NavigationItemReselected -> onNavigationItemReselected()
     }
@@ -36,15 +36,16 @@ class DiscoverState(
         if (isScrolledToTop) {
             navigateToSearchRoute()
         } else {
-            val firstVisibleItemIndex = trendingPodcastsLazyColumnState.firstVisibleItemIndex
-            scrollToTop(animate = firstVisibleItemIndex <= MaxFirstVisibleItemIndexForSmoothScroll)
+            scrollToTop()
         }
     }
 
-    private fun scrollToTop(animate: Boolean) {
+    private fun scrollToTop() {
         scrollToTopJob.cancelAndLaunchIn(coroutineScope) {
             trendingPodcastsLazyColumnState.run {
-                if (!animate) scrollToItem(ScrollToItemIndex)
+                if (firstVisibleItemIndex > MaxFirstVisibleItemIndexForSmoothScroll) {
+                    scrollToItem(ScrollToItemIndex)
+                }
                 animateScrollToItem(0)
             }
         }
