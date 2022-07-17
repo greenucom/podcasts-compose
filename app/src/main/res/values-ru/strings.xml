@@ -12,6 +12,7 @@
         Что-то пошло не так\n
         Проверьте соединение с интернетом
     </string>
+    <string name="nothing_found">Nothing found</string>
 
     <!-- DiscoverRoute -->
     <string name="search_for_podcasts">Поиск подкастов</string>

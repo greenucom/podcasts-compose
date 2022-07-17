@@ -11,6 +11,7 @@
         Something went wrong\n
         Check your internet connection
     </string>
+    <string name="nothing_found">Nothing found</string>
 
     <!-- DiscoverRoute -->
     <string name="search_for_podcasts">Search for podcasts</string>

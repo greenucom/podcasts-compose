@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
+import com.greencom.android.podcasts2.ui.common.component.NothingFoundError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
@@ -79,8 +80,7 @@ fun SearchRoute(
                 }
 
                 SearchViewModel.SearchResultsState.NothingFound -> {
-                    // TODO
-                    Text("NothingFound")
+                    NothingFoundError(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp))
                 }
 
                 is SearchViewModel.SearchResultsState.Error -> {
