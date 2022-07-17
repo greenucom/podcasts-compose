@@ -12,12 +12,12 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
+import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,60 +39,48 @@ class DiscoverViewModel @Inject constructor(
         collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
-    override suspend fun handleEvent(event: ViewEvent) = when (event) {
-        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event.category)
-        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event.podcast)
+    override fun handleEvent(event: ViewEvent) = when (event) {
+        is ViewEvent.SelectableTrendingCategoriesReceived -> reduceSelectableTrendingCategoriesReceived(event)
+        is ViewEvent.TrendingPodcastsReceived -> reduceTrendingPodcastsReceived(event)
+        is ViewEvent.TrendingPodcastsReceivingFailed -> reduceTrendingPodcastsReceivingFailed(event)
+        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
+        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        ViewEvent.SearchPodcastsClicked -> reduceSearchButtonClicked()
+        ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
     private fun collectSelectableTrendingCategories() {
-        collectSelectableTrendingCategoriesJob.getAndUpdate {
-            viewModelScope.launch {
-                interactor.getSelectableTrendingCategories(Unit).collect { result ->
-                    result.onSuccess(::updateStateWithSelectableTrendingCategories)
+        collectSelectableTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+            interactor.getSelectableTrendingCategories(Unit).collect { result ->
+                result.onSuccess {
+                    val event = ViewEvent.SelectableTrendingCategoriesReceived(it)
+                    dispatchEvent(event)
                 }
             }
-        }?.cancel()
+        }
     }
 
     private fun collectTrendingPodcastsForSelectedTrendingCategories() {
-        collectTrendingPodcastsForSelectedTrendingCategoriesJob.getAndUpdate {
-            viewModelScope.launch {
-                interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
-                    result
-                        .onSuccess(::updateStateWithTrendingPodcasts)
-                        .onFailure(::updateStateWithTrendingPodcastsError)
-                }
+        collectTrendingPodcastsForSelectedTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+            interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
+                result
+                    .onSuccess {
+                        val event = ViewEvent.TrendingPodcastsReceived(it)
+                        dispatchEvent(event)
+                    }
+                    .onFailure {
+                        val event = ViewEvent.TrendingPodcastsReceivingFailed(it)
+                        dispatchEvent(event)
+                    }
             }
         }
     }
 
-    private suspend fun reduceToggleSelectableTrendingCategory(category: CategoryUiModel) {
-        val categoryDomain = category.toCategory()
-        interactor.toggleSelectableTrendingCategory(categoryDomain)
-        scrollNextTrendingPodcastListToTop = true
-    }
-
-    private suspend fun reduceUpdateSubscriptionToPodcast(podcast: PodcastUiModel) {
-        interactor.updateSubscriptionToPodcast(podcast.toPodcast())
-    }
-
-    private fun reduceRefreshTrendingPodcasts() {
-        updateState {
-            if (it is ViewState.Success) {
-                it.copy(trendingPodcastsState = TrendingPodcastsState.Loading)
-            } else {
-                it
-            }
-        }
-        scrollNextTrendingPodcastListToTop = true
-        collectTrendingPodcastsForSelectedTrendingCategories()
-    }
-
-    private fun updateStateWithSelectableTrendingCategories(
-        selectableTrendingCategories: List<SelectableItem<Category>>,
+    private fun reduceSelectableTrendingCategoriesReceived(
+        event: ViewEvent.SelectableTrendingCategoriesReceived,
     ) {
-        val categories = selectableTrendingCategories
+        val categories = event.selectableTrendingCategories
             .map {
                 SelectableItem(
                     item = CategoryUiModel.fromCategory(it.item),
@@ -109,8 +97,8 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun updateStateWithTrendingPodcasts(trendingPodcasts: List<Podcast>) {
-        val podcasts = trendingPodcasts
+    private fun reduceTrendingPodcastsReceived(event: ViewEvent.TrendingPodcastsReceived) {
+        val podcasts = event.trendingPodcasts
             .map { PodcastUiModel.fromPodcast(it) }
             .toImmutableList()
 
@@ -129,7 +117,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     @Suppress("UNUSED_PARAMETER")
-    private fun updateStateWithTrendingPodcastsError(e: Throwable) {
+    private fun reduceTrendingPodcastsReceivingFailed(event: ViewEvent.TrendingPodcastsReceivingFailed) {
         updateState {
             if (it is ViewState.Success) {
                 it.copy(trendingPodcastsState = TrendingPodcastsState.Error)
@@ -137,6 +125,42 @@ class DiscoverViewModel @Inject constructor(
                 it
             }
         }
+    }
+
+    private fun reduceToggleSelectableTrendingCategory(
+        event: ViewEvent.ToggleSelectableTrendingCategory,
+    ) {
+        viewModelScope.launch {
+            val categoryDomain = event.category.toCategory()
+            interactor.toggleSelectableTrendingCategory(categoryDomain)
+            scrollNextTrendingPodcastListToTop = true
+        }
+    }
+
+    private fun reduceUpdateSubscriptionToPodcast(event: ViewEvent.UpdateSubscriptionToPodcast) {
+        viewModelScope.launch {
+            interactor.updateSubscriptionToPodcast(event.podcast.toPodcast())
+        }
+    }
+
+    private fun reduceRefreshTrendingPodcasts() {
+        updateState {
+            if (it is ViewState.Success) {
+                it.copy(trendingPodcastsState = TrendingPodcastsState.Loading)
+            } else {
+                it
+            }
+        }
+        scrollNextTrendingPodcastListToTop = true
+        collectTrendingPodcastsForSelectedTrendingCategories()
+    }
+
+    private fun reduceSearchButtonClicked() {
+        emitSideEffect(ViewSideEffect.NavigateToSearchRoute)
+    }
+
+    private fun reduceNavigationItemReselected() {
+        emitSideEffect(ViewSideEffect.NavigationItemReselected)
     }
 
     @Stable
@@ -152,14 +176,23 @@ class DiscoverViewModel @Inject constructor(
 
     @Stable
     sealed interface ViewEvent : Event {
+        data class SelectableTrendingCategoriesReceived(
+            val selectableTrendingCategories: List<SelectableItem<Category>>,
+        ) : ViewEvent
+        data class TrendingPodcastsReceived(val trendingPodcasts: List<Podcast>) : ViewEvent
+        data class TrendingPodcastsReceivingFailed(val exception: Throwable) : ViewEvent
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object RefreshTrendingPodcasts : ViewEvent
+        object SearchPodcastsClicked : ViewEvent
+        object NavigationItemReselected : ViewEvent
     }
 
     @Stable
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
+        object NavigateToSearchRoute : ViewSideEffect
+        object NavigationItemReselected : ViewSideEffect
     }
 
     @Stable

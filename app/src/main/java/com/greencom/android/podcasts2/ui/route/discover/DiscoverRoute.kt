@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -16,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
@@ -36,16 +36,22 @@ private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
 @Composable
 fun DiscoverRoute(
-    onSearchPodcastsClicked: () -> Unit,
+    navigateToSearchRoute: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
-    val discoverState = rememberDiscoverState()
+    val discoverState = rememberDiscoverState(
+        navigateToSearchRoute = navigateToSearchRoute,
+    )
 
     val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {
-        onNavigationItemReselected = discoverState::onNavigationItemReselected
+        onNavigationItemReselected = {
+            val event = DiscoverViewModel.ViewEvent.NavigationItemReselected
+            viewModel.dispatchEvent(event)
+            true
+        }
     }
 
     LaunchedEffect(Unit) {
@@ -57,7 +63,14 @@ fun DiscoverRoute(
             .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End))
             .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.End)),
         scaffoldState = discoverState.scaffoldState,
-        topBar = { DiscoverTopBar(onSearchPodcastsClicked = onSearchPodcastsClicked) },
+        topBar = {
+            DiscoverTopBar(
+                onSearchPodcastsClicked = {
+                    val event = DiscoverViewModel.ViewEvent.SearchPodcastsClicked
+                    viewModel.dispatchEvent(event)
+                },
+            )
+        },
     ) { paddingValues ->
 
         CrossfadeTyped(
@@ -70,7 +83,7 @@ fun DiscoverRoute(
                 }
 
                 is DiscoverViewModel.ViewState.Success -> {
-                    SuccessScreen(
+                    Success(
                         state = state,
                         dispatchEvent = viewModel::dispatchEvent,
                         trendingPodcastsLazyColumnState = discoverState.trendingPodcastsLazyColumnState,
@@ -88,7 +101,7 @@ private fun DiscoverTopBar(
 ) {
     TopAppBar(
         modifier = modifier.windowInsetsPadding(WindowInsets.statusBars),
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = Color.Transparent,
         elevation = 0.dp,
         contentPadding = PaddingValues(0.dp),
     ) {
@@ -100,11 +113,11 @@ private fun DiscoverTopBar(
 }
 
 @Composable
-private fun SuccessScreen(
+private fun Success(
     state: DiscoverViewModel.ViewState.Success,
     dispatchEvent: (DiscoverViewModel.ViewEvent) -> Unit,
+    trendingPodcastsLazyColumnState: LazyListState,
     modifier: Modifier = Modifier,
-    trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) {
     Column(modifier = modifier) {
 
@@ -159,6 +172,7 @@ private fun SuccessScreen(
 
                 DiscoverViewModel.TrendingPodcastsState.Error -> {
                     ConnectionError(
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
                         onTryAgainClicked = {
                             dispatchEvent(DiscoverViewModel.ViewEvent.RefreshTrendingPodcasts)
                         },

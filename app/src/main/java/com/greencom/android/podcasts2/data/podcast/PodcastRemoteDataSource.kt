@@ -7,7 +7,7 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 import javax.inject.Inject
 
 class PodcastRemoteDataSource @Inject constructor(
-    private val service: PodcastService,
+    private val podcastService: PodcastService,
 ) {
 
     suspend fun getTrendingPodcasts(
@@ -15,11 +15,16 @@ class PodcastRemoteDataSource @Inject constructor(
         inCategories: List<Category>,
         notInCategories: List<Category>,
     ): List<Podcast> {
-        val dto = service.getTrendingPodcasts(
+        val dto = podcastService.getTrendingPodcasts(
             max = max,
             inCategories = inCategories.toApiCategoriesString(),
             notInCategories = notInCategories.toApiCategoriesString(),
         )
+        return dto.toPodcasts()
+    }
+
+    suspend fun searchPodcasts(query: String): List<Podcast> {
+        val dto = podcastService.searchPodcasts(query)
         return dto.toPodcasts()
     }
 

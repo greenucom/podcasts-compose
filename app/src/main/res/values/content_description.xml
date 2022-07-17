@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="content_desc_podcast_cover">Podcast cover</string>
+    <string name="content_desc_clear_text_field">Clear text field</string>
 </resources>

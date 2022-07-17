@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.greencom.android.podcasts2.ui.route.discover.DiscoverRoute
+import com.greencom.android.podcasts2.ui.route.search.SearchRoute
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
     navigation(
@@ -14,9 +15,15 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
 
         composable(route = Route.Discover.routeSchema) {
             DiscoverRoute(
-                onSearchPodcastsClicked = { /* TODO: Open search */ },
+                navigateToSearchRoute = {
+                    val route = Route.Search.createRoute(Unit)
+                    navController.navigate(route)
+                },
             )
         }
 
+        composable(route = Route.Search.routeSchema) {
+            SearchRoute()
+        }
     }
 }

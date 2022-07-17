@@ -21,4 +21,8 @@ sealed class Route<Args>(val routeSchema: String) {
         override fun createRoute(args: Unit): String = routeSchema
     }
 
+    object Search : Route<Unit>(routeSchema = "search") {
+        override fun createRoute(args: Unit): String = routeSchema
+    }
+
 }
