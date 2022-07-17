@@ -19,5 +19,6 @@
     <string name="subscribed">Subscribed</string>
 
     <!-- SearchRoute -->
+    <string name="enter_search_query">Enter a search query</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.greencom.android.podcasts2.ui.route.search
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -10,10 +11,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
@@ -53,8 +60,7 @@ fun SearchRoute(
         ) { searchResultsState ->
             when (searchResultsState) {
                 SearchViewModel.SearchResultsState.QueryIsEmpty -> {
-                    // TODO
-                    Text("QueryIsEmpty")
+                    QueryIsEmpty(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp))
                 }
 
                 SearchViewModel.SearchResultsState.Loading -> {
@@ -124,6 +130,30 @@ fun SearchTopBar(
                 val event = SearchViewModel.ViewEvent.SearchPodcasts
                 dispatchEvent(event)
             },
+        )
+    }
+}
+
+@Composable
+private fun QueryIsEmpty(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            modifier = Modifier
+                .widthIn(max = 240.dp)
+                .aspectRatio(1f),
+            painter = painterResource(id = R.drawable.vec_image_search),
+            contentDescription = stringResource(id = R.string.enter_search_query),
+        )
+
+        Text(
+            modifier = Modifier.alpha(0.87f),
+            text = stringResource(id = R.string.enter_search_query),
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Center,
         )
     }
 }

@@ -20,5 +20,6 @@
     <string name="subscribed">Вы подписаны</string>
 
     <!-- SearchRoute -->
+    <string name="enter_search_query">Введите поисковый запрос</string>
 
 </resources>
