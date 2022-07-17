@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.greencom.android.podcasts2.ui.common.fastScroll
-import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
 import kotlinx.coroutines.CoroutineScope
@@ -24,8 +23,13 @@ class DiscoverState(
 
     private val scrollToTopJob = MutableStateFlow<Job?>(null)
 
-    @Suppress("UNUSED_PARAMETER")
-    fun onNavigationItemReselected(navigationItem: NavigationItem): Boolean {
+    fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
+        DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
+        DiscoverViewModel.ViewSideEffect.NavigateToSearchRoute -> navigateToSearchRoute()
+        DiscoverViewModel.ViewSideEffect.NavigationItemReselected -> onNavigationItemReselected()
+    }
+
+    private fun onNavigationItemReselected() {
         scrollToTopJob.cancel()
         val isScrolledToTop = trendingPodcastsLazyColumnState.firstVisibleItemIndex == 0 &&
                 trendingPodcastsLazyColumnState.firstVisibleItemScrollOffset == 0
@@ -36,12 +40,6 @@ class DiscoverState(
             val firstVisibleItemIndex = trendingPodcastsLazyColumnState.firstVisibleItemIndex
             scrollToTop(animate = firstVisibleItemIndex <= MaxPositionForSmoothScroll)
         }
-
-        return true
-    }
-
-    fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
-        DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop(animate = false)
     }
 
     private fun scrollToTop(animate: Boolean) {

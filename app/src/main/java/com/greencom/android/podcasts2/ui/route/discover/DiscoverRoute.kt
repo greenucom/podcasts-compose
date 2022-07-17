@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -48,7 +47,11 @@ fun DiscoverRoute(
     val viewState = viewModel.state.collectAsState()
 
     SpecificScreenBehavior {
-        onNavigationItemReselected = discoverState::onNavigationItemReselected
+        onNavigationItemReselected = {
+            val event = DiscoverViewModel.ViewEvent.NavigationItemReselected
+            viewModel.dispatchEvent(event)
+            true
+        }
     }
 
     LaunchedEffect(Unit) {
@@ -60,7 +63,14 @@ fun DiscoverRoute(
             .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End))
             .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.End)),
         scaffoldState = discoverState.scaffoldState,
-        topBar = { DiscoverTopBar(onSearchPodcastsClicked = navigateToSearchRoute) },
+        topBar = {
+            DiscoverTopBar(
+                onSearchPodcastsClicked = {
+                    val event = DiscoverViewModel.ViewEvent.SearchPodcastsClicked
+                    viewModel.dispatchEvent(event)
+                },
+            )
+        },
     ) { paddingValues ->
 
         CrossfadeTyped(

@@ -46,6 +46,8 @@ class DiscoverViewModel @Inject constructor(
         is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        ViewEvent.SearchPodcastsClicked -> reduceSearchButtonClicked()
+        ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -153,6 +155,14 @@ class DiscoverViewModel @Inject constructor(
         collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
+    private fun reduceSearchButtonClicked() {
+        emitSideEffect(ViewSideEffect.NavigateToSearchRoute)
+    }
+
+    private fun reduceNavigationItemReselected() {
+        emitSideEffect(ViewSideEffect.NavigationItemReselected)
+    }
+
     @Stable
     sealed interface ViewState : State {
         object InitialLoading : ViewState
@@ -174,11 +184,15 @@ class DiscoverViewModel @Inject constructor(
         data class ToggleSelectableTrendingCategory(val category: CategoryUiModel) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object RefreshTrendingPodcasts : ViewEvent
+        object SearchPodcastsClicked : ViewEvent
+        object NavigationItemReselected : ViewEvent
     }
 
     @Stable
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
+        object NavigateToSearchRoute : ViewSideEffect
+        object NavigationItemReselected : ViewSideEffect
     }
 
     @Stable
