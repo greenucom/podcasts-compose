@@ -54,6 +54,7 @@ class SearchViewModel @Inject constructor(
 
     private fun reduceClearTextField() {
         updateState { it.copy(textFieldValue = emptyString()) }
+        emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
     }
 
     private fun reduceSearchPodcasts() {
