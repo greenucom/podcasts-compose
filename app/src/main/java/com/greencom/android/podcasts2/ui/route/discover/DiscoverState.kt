@@ -16,10 +16,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class DiscoverState(
-    val navigateToSearchRoute: () -> Unit,
     val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
+    private val navigateToSearchRoute: () -> Unit,
 ) {
 
     private val scrollToTopJob = MutableStateFlow<Job?>(null)
@@ -73,12 +73,15 @@ fun rememberDiscoverState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
 ) = remember(
-    navigateToSearchRoute, coroutineScope, scaffoldState, trendingPodcastsLazyColumnState
+    coroutineScope,
+    scaffoldState,
+    trendingPodcastsLazyColumnState,
+    navigateToSearchRoute,
 ) {
     DiscoverState(
-        navigateToSearchRoute = navigateToSearchRoute,
         coroutineScope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
+        navigateToSearchRoute = navigateToSearchRoute,
     )
 }
