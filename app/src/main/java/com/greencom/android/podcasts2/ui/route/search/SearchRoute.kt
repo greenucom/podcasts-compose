@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+import kotlinx.coroutines.flow.collect
 
 private const val PodcastItemPlaceholderCount = 5
 
@@ -42,6 +44,10 @@ fun SearchRoute(
     val searchState = rememberSearchState()
 
     val viewState = viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.sideEffects.collect(searchState::handleSideEffect)
+    }
 
     Scaffold(
         modifier = modifier,

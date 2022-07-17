@@ -53,6 +53,7 @@ class SearchViewModel @Inject constructor(
         val query = state.value.textFieldValue.trim()
         if (query.isNotBlank()) {
             updateState { it.copy(searchResultsState = SearchResultsState.Loading) }
+            emitSideEffect(ViewSideEffect.ClearTextFieldFocus)
             searchPodcasts()
         } else {
             searchPodcastsJob.cancel()
@@ -134,6 +135,8 @@ class SearchViewModel @Inject constructor(
     }
 
     @Stable
-    sealed interface ViewSideEffect : SideEffect
+    sealed interface ViewSideEffect : SideEffect {
+        object ClearTextFieldFocus : ViewSideEffect
+    }
 
 }
