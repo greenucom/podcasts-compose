@@ -62,8 +62,9 @@ class SearchViewModel @Inject constructor(
         val query = state.value.textFieldValue.trim()
         if (query.isNotBlank()) {
             updateState { it.copy(searchResultsState = SearchResultsState.Loading) }
-            emitSideEffect(ViewSideEffect.ClearTextFieldFocus)
             searchPodcasts()
+            emitSideEffect(ViewSideEffect.ClearTextFieldFocus)
+            emitSideEffect(ViewSideEffect.ScrollSearchResultsToTop)
         } else {
             searchPodcastsJob.cancel()
             updateState { it.copy(searchResultsState = SearchResultsState.QueryIsEmpty) }
