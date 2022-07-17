@@ -59,7 +59,6 @@ android {
     }
 
     buildTypes {
-
         getByName("debug") {
             resValue("string", "app_name", "Debug")
             applicationIdSuffix = ".debug"
@@ -90,7 +89,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-
     }
 
     compileOptions {
@@ -138,7 +136,6 @@ kapt {
 }
 
 dependencies {
-
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeMaterial)
     implementation(Dependencies.composeMaterial3WindowSize)
@@ -197,7 +194,6 @@ dependencies {
 
     testImplementation(Dependencies.mockk)
     androidTestImplementation(Dependencies.mockk)
-
 }
 
 fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputNames() {
