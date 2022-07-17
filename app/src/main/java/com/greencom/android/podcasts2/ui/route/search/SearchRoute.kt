@@ -60,7 +60,12 @@ fun SearchRoute(
         ) { searchResultsState ->
             when (searchResultsState) {
                 SearchViewModel.SearchResultsState.QueryIsEmpty -> {
-                    QueryIsEmpty(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp))
+                    QueryIsEmpty(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp)
+                            .windowInsetsPadding(WindowInsets.ime)
+                    )
                 }
 
                 SearchViewModel.SearchResultsState.Loading -> {
@@ -86,12 +91,20 @@ fun SearchRoute(
                 }
 
                 SearchViewModel.SearchResultsState.NothingFound -> {
-                    NothingFoundError(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp))
+                    NothingFoundError(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp)
+                            .windowInsetsPadding(WindowInsets.ime)
+                    )
                 }
 
                 is SearchViewModel.SearchResultsState.Error -> {
                     ConnectionError(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp)
+                            .windowInsetsPadding(WindowInsets.ime),
                         onTryAgainClicked = {
                             val event = SearchViewModel.ViewEvent.SearchPodcasts
                             viewModel.dispatchEvent(event)
