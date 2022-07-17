@@ -38,19 +38,19 @@ class DiscoverState(
             navigateToSearchRoute()
         } else {
             val firstVisibleItemIndex = trendingPodcastsLazyColumnState.firstVisibleItemIndex
-            scrollToTop(animate = firstVisibleItemIndex <= MaxPositionForSmoothScroll)
+            scrollToTop(animate = firstVisibleItemIndex <= MaxFirstVisibleItemIndexForSmoothScroll)
         }
     }
 
     private fun scrollToTop(animate: Boolean) {
         scrollToTopJob.cancelAndLaunchIn(coroutineScope) {
-            trendingPodcastsLazyColumnState.let {
+            trendingPodcastsLazyColumnState.run {
                 if (animate) {
-                    it.animateScrollToItem(0)
+                    animateScrollToItem(0)
                 } else {
-                    it.fastScroll(
-                        instantScrollIndex = ItemIndexInstantScrollBeforeSmooth,
-                        smoothScrollIndex = 0,
+                    fastScroll(
+                        instantScrollIndex = FastScrollInstantItemIndex,
+                        smoothScrollIndex = FastScrollSmoothItemIndex,
                     )
                 }
             }
@@ -58,8 +58,9 @@ class DiscoverState(
     }
 
     companion object {
-        private const val MaxPositionForSmoothScroll = 8
-        private const val ItemIndexInstantScrollBeforeSmooth = 2
+        private const val MaxFirstVisibleItemIndexForSmoothScroll = 6
+        private const val FastScrollInstantItemIndex = 2
+        private const val FastScrollSmoothItemIndex = 0
     }
 
 }
