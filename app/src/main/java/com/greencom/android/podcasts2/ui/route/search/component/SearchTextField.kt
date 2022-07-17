@@ -44,6 +44,7 @@ fun SearchTextField(
     onClearTextFieldClicked: () -> Unit,
     onImeSearch: () -> Unit,
     modifier: Modifier = Modifier,
+    focusRequester: FocusRequester = remember { FocusRequester() },
 ) {
     Surface(
         modifier = modifier,
@@ -51,7 +52,6 @@ fun SearchTextField(
         color = MaterialTheme.colors.searchBackground,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            val focusRequester = remember { FocusRequester() }
             val keyboardController = LocalSoftwareKeyboardController.current
             Icon(
                 modifier = Modifier
