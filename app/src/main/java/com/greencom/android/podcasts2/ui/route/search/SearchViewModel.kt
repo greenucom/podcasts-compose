@@ -39,6 +39,7 @@ class SearchViewModel @Inject constructor(
         is ViewEvent.SearchCompleted -> reduceSearchCompleted(event)
         is ViewEvent.SearchFailed -> reduceSearchFailed(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
+        ViewEvent.SearchResultsScrolled -> reduceSearchResultsScrolled()
     }
 
     private fun reduceTextFieldValueChanged(event: ViewEvent.TextFieldValueChanged) {
@@ -84,6 +85,10 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.updateSubscriptionToPodcast(event.podcast.toPodcast())
         }
+    }
+
+    private fun reduceSearchResultsScrolled() {
+        emitSideEffect(ViewSideEffect.ClearTextFieldFocus)
     }
 
     private fun searchPodcasts() {
@@ -132,6 +137,7 @@ class SearchViewModel @Inject constructor(
         data class SearchCompleted(val podcasts: List<Podcast>) : ViewEvent
         data class SearchFailed(val exception: Throwable) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
+        object SearchResultsScrolled : ViewEvent
     }
 
     @Stable

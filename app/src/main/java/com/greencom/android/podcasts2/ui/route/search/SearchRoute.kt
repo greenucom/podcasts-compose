@@ -30,6 +30,7 @@ import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
+import timber.log.Timber
 
 private const val PodcastItemPlaceholderCount = 5
 
@@ -183,6 +184,11 @@ private fun Success(
     searchResultsLazyColumnState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
+    if (searchResultsLazyColumnState.isScrollInProgress) {
+        val event = SearchViewModel.ViewEvent.SearchResultsScrolled
+        dispatchEvent(event)
+    }
+
     LazyColumn(
         modifier = modifier,
         state = searchResultsLazyColumnState,
