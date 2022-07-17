@@ -30,7 +30,6 @@ import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
-import kotlinx.coroutines.flow.collect
 
 private const val PodcastItemPlaceholderCount = 5
 
@@ -194,7 +193,7 @@ private fun Success(
             contentType = { _, _ -> ContentTypePodcastItem},
         ) { idx, podcast ->
             PodcastItem(
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 podcast = podcast,
                 onPodcastClicked = { /* TODO: Open podcast */ },
                 onIsUserSubscribedChanged = {
