@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +18,7 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     override val state by lazy { _state }
 
     private val _events = Channel<ViewEvent>(Channel.UNLIMITED)
-    private val events = _events.consumeAsFlow()
+    private val events = _events.receiveAsFlow()
 
     private val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
     override val sideEffects = _sideEffects.receiveAsFlow()
