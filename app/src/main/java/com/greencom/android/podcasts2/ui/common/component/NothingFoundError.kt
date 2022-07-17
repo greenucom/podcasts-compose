@@ -1,11 +1,9 @@
 package com.greencom.android.podcasts2.ui.common.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
-import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 
 private val MaxImageSize = 240.dp
 private const val TextAlpha = 0.87f
@@ -35,7 +32,7 @@ fun NothingFoundError(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .widthIn(max = MaxImageSize)
                 .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.vec_nothing_found_error),
+            painter = painterResource(id = R.drawable.vec_image_nothing_found_error),
             contentDescription = stringResource(id = R.string.nothing_found),
         )
 
