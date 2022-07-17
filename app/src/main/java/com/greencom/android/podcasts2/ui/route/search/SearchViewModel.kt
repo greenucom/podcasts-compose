@@ -19,9 +19,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -31,6 +33,10 @@ class SearchViewModel @Inject constructor(
     override val initialViewState = ViewState()
 
     private val searchPodcastsJob = MutableStateFlow<Job?>(null)
+
+    init {
+        requestInitialTextFieldFocus()
+    }
 
     override fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.TextFieldValueChanged -> reduceTextFieldValueChanged(event)
@@ -109,6 +115,11 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    private fun requestInitialTextFieldFocus() = viewModelScope.launch {
+        delay(75.milliseconds)
+        emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
+    }
+
     @Immutable
     data class ViewState(
         val textFieldValue: String = emptyString(),
@@ -142,6 +153,7 @@ class SearchViewModel @Inject constructor(
 
     @Stable
     sealed interface ViewSideEffect : SideEffect {
+        object RequestTextFieldFocus : ViewSideEffect
         object ClearTextFieldFocus : ViewSideEffect
     }
 

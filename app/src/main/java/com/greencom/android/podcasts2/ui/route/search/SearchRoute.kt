@@ -13,8 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,12 +32,12 @@ import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
-import timber.log.Timber
 
 private const val PodcastItemPlaceholderCount = 5
 
 private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchRoute(
     modifier: Modifier = Modifier,
@@ -56,6 +58,7 @@ fun SearchRoute(
             SearchTopBar(
                 textFieldValue = viewState.value.textFieldValue,
                 dispatchEvent = viewModel::dispatchEvent,
+                focusRequester = searchState.textFieldFocusRequester,
             )
         }
     ) { paddingValues ->
@@ -126,6 +129,7 @@ fun SearchRoute(
 fun SearchTopBar(
     textFieldValue: String,
     dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
+    focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -149,6 +153,7 @@ fun SearchTopBar(
                 val event = SearchViewModel.ViewEvent.SearchPodcasts
                 dispatchEvent(event)
             },
+            focusRequester = focusRequester,
         )
     }
 }
