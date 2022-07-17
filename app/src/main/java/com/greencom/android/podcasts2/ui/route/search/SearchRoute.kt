@@ -56,7 +56,18 @@ fun SearchRoute(
                     Text("QueryIsEmpty")
                 }
 
-                SearchViewModel.SearchResultsState.Loading -> Loading()
+                SearchViewModel.SearchResultsState.Loading -> {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        val placeholderLoadingColor by animatePlaceholderLoadingColor()
+                        repeat(PodcastItemPlaceholderCount) {
+                            PodcastItemPlaceholder(color = placeholderLoadingColor)
+
+                            if (it < PodcastItemPlaceholderCount - 1) {
+                                Divider(color = MaterialTheme.colors.onSurfaceUtil)
+                            }
+                        }
+                    }
+                }
 
                 is SearchViewModel.SearchResultsState.Success -> {
                     Success(
@@ -73,9 +84,12 @@ fun SearchRoute(
                 }
 
                 is SearchViewModel.SearchResultsState.Error -> {
-                    Error(
-                        state = searchResultsState,
-                        dispatchEvent = viewModel::dispatchEvent,
+                    ConnectionError(
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                        onTryAgainClicked = {
+                            val event = SearchViewModel.ViewEvent.SearchPodcasts
+                            viewModel.dispatchEvent(event)
+                        }
                     )
                 }
             }
@@ -115,20 +129,6 @@ fun SearchTopBar(
 }
 
 @Composable
-private fun Loading(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        val placeholderLoadingColor by animatePlaceholderLoadingColor()
-        repeat(PodcastItemPlaceholderCount) {
-            PodcastItemPlaceholder(color = placeholderLoadingColor)
-
-            if (it < PodcastItemPlaceholderCount - 1) {
-                Divider(color = MaterialTheme.colors.onSurfaceUtil)
-            }
-        }
-    }
-}
-
-@Composable
 private fun Success(
     state: SearchViewModel.SearchResultsState.Success,
     dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
@@ -159,20 +159,4 @@ private fun Success(
             }
         }
     }
-}
-
-@Suppress("UNUSED_PARAMETER")
-@Composable
-private fun Error(
-    state: SearchViewModel.SearchResultsState.Error,
-    dispatchEvent: (SearchViewModel.ViewEvent) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    ConnectionError(
-        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp),
-        onTryAgainClicked = {
-            val event = SearchViewModel.ViewEvent.SearchPodcasts
-            dispatchEvent(event)
-        }
-    )
 }
