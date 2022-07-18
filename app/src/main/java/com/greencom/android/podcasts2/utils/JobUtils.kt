@@ -10,7 +10,7 @@ fun MutableStateFlow<Job?>.cancel() {
     this.getAndUpdate { null }?.cancel()
 }
 
-inline fun MutableStateFlow<Job?>.cancelAndLaunchIn(
+inline fun MutableStateFlow<Job?>.relaunchIn(
     scope: CoroutineScope,
     crossinline block: suspend CoroutineScope.() -> Unit,
 ) {

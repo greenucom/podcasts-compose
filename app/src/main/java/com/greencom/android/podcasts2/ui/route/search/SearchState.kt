@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.greencom.android.podcasts2.utils.cancel
-import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
+import com.greencom.android.podcasts2.utils.relaunchIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +45,7 @@ class SearchState(
     }
 
     private fun scrollSearchResultsToTop() {
-        scrollSearchResultsToTopJob.cancelAndLaunchIn(coroutineScope) {
+        scrollSearchResultsToTopJob.relaunchIn(coroutineScope) {
             scrollSearchResultsToTopImpl()
         }
     }

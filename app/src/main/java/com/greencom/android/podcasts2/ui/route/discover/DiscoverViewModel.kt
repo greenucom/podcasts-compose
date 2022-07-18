@@ -12,7 +12,7 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
-import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
+import com.greencom.android.podcasts2.utils.relaunchIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -51,7 +51,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun collectSelectableTrendingCategories() {
-        collectSelectableTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+        collectSelectableTrendingCategoriesJob.relaunchIn(viewModelScope) {
             interactor.getSelectableTrendingCategories(Unit).collect { result ->
                 result.onSuccess {
                     val event = ViewEvent.SelectableTrendingCategoriesReceived(it)
@@ -62,7 +62,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun collectTrendingPodcastsForSelectedTrendingCategories() {
-        collectTrendingPodcastsForSelectedTrendingCategoriesJob.cancelAndLaunchIn(viewModelScope) {
+        collectTrendingPodcastsForSelectedTrendingCategoriesJob.relaunchIn(viewModelScope) {
             interactor.getTrendingPodcastsForSelectedTrendingCategories(Unit).collect { result ->
                 result
                     .onSuccess {

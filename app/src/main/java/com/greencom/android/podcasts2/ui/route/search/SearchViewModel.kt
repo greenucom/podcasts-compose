@@ -13,7 +13,7 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.utils.cancel
-import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
+import com.greencom.android.podcasts2.utils.relaunchIn
 import com.greencom.android.podcasts2.utils.emptyString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -101,7 +101,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchPodcasts() {
-        searchPodcastsJob.cancelAndLaunchIn(viewModelScope) {
+        searchPodcastsJob.relaunchIn(viewModelScope) {
             val query = state.value.textFieldValue.trim()
             val params = SearchPodcastsUseCase.Params(query)
             interactor.searchPodcasts(params).collect { result ->

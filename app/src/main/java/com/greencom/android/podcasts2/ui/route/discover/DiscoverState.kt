@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.greencom.android.podcasts2.utils.cancel
-import com.greencom.android.podcasts2.utils.cancelAndLaunchIn
+import com.greencom.android.podcasts2.utils.relaunchIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +41,7 @@ class DiscoverState(
     }
 
     private fun scrollToTop() {
-        scrollToTopJob.cancelAndLaunchIn(coroutineScope) {
+        scrollToTopJob.relaunchIn(coroutineScope) {
             trendingPodcastsLazyColumnState.run {
                 if (firstVisibleItemIndex > MaxFirstVisibleItemIndexForSmoothScroll) {
                     scrollToItem(ScrollToItemIndex)
