@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -134,7 +132,7 @@ private fun Success(
             when (trendingPodcastsState) {
 
                 DiscoverViewModel.TrendingPodcastsState.Loading -> {
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Column {
                         val placeholderLoadingColor by animatePlaceholderLoadingColor()
                         repeat(PodcastItemPlaceholderCount) {
                             PodcastItemPlaceholder(color = placeholderLoadingColor)
