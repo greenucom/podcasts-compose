@@ -9,36 +9,36 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SearchPodcastsResponseDto(
-    @SerialName("feeds") val podcasts: List<SearchPodcastsItemDto>? = null,
-    @SerialName("count") val count: Int? = null,
+    @SerialName("feeds") val podcasts: List<PodcastDto>? = null,
+    @SerialName("count") val podcastCount: Int? = null,
 ) {
 
     fun toPodcasts(): List<Podcast> {
         return podcasts?.map { it.toPodcast() } ?: emptyList()
     }
 
-}
+    @Serializable
+    data class PodcastDto(
+        @SerialName("id") val id: Long? = null,
+        @SerialName("url") val url: String? = null,
+        @SerialName("title") val title: String? = null,
+        @SerialName("description") val description: String? = null,
+        @SerialName("author") val author: String? = null,
+        @SerialName("image") val imageUrl: String? = null,
+        @SerialName("language") val language: String? = null,
+        @SerialName("categories") val categories: CategoriesDto? = null,
+    ) {
 
-@Serializable
-data class SearchPodcastsItemDto(
-    @SerialName("id") val id: Long? = null,
-    @SerialName("url") val url: String? = null,
-    @SerialName("title") val title: String? = null,
-    @SerialName("description") val description: String? = null,
-    @SerialName("author") val author: String? = null,
-    @SerialName("image") val image: String? = null,
-    @SerialName("language") val language: String? = null,
-    @SerialName("categories") val categories: CategoriesDto? = null,
-) {
+        fun toPodcast(): Podcast = Podcast(
+            id = checkNotNull(id),
+            title = checkNotNull(title),
+            description = checkNotNull(description),
+            author = checkNotNull(author),
+            imageUrl = Uri.decode(checkNotNull(imageUrl)),
+            categories = categories?.toCategories() ?: emptyList(),
+            isUserSubscribed = false,
+        )
 
-    fun toPodcast(): Podcast = Podcast(
-        id = checkNotNull(id),
-        title = checkNotNull(title),
-        description = checkNotNull(description),
-        author = checkNotNull(author),
-        imageUrl = Uri.decode(checkNotNull(image)),
-        categories = categories?.toCategories() ?: emptyList(),
-        isUserSubscribed = false,
-    )
+    }
 
 }
