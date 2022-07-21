@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetEpisodesByPodcastIdResponseDto(
-    @SerialName("items") val items: List<EpisodeDto>? = null,
-    @SerialName("count") val count: Int? = null,
+    @SerialName("items") val episodes: List<EpisodeDto>? = null,
+    @SerialName("count") val episodeCount: Int? = null,
 ) {
 
     @Serializable
