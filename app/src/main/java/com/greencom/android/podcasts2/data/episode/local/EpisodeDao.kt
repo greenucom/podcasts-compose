@@ -23,4 +23,16 @@ abstract class EpisodeDao {
     """)
     abstract fun getEpisodesByPodcastId(id: Long): PagingSource<Int, EpisodeEntity>
 
+    @Query("""
+        SELECT EXISTS(
+            SELECT episode_id 
+            FROM EPISODES 
+            WHERE episode_publication_date_unix_seconds >= :publicationDateUnixMillis
+            LIMIT 1
+        )
+    """)
+    abstract suspend fun areEpisodesAlreadyLoadedForPublicationDate(
+        publicationDateUnixMillis: Long,
+    ): Boolean
+
 }
