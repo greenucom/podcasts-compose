@@ -21,6 +21,6 @@ abstract class EpisodeDao {
         WHERE episode_podcast_id = :id
         ORDER BY episode_publication_date DESC
     """)
-    abstract fun getEpisodesByPodcastId(id: Long): PagingSource<Long, EpisodeEntity>
+    abstract fun getEpisodesByPodcastId(id: Long): PagingSource<Int, EpisodeEntity>
 
 }
