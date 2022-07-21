@@ -7,7 +7,9 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Episodes",
-    indices = [Index(value = ["episode_publication_date"], orders = [Index.Order.DESC])],
+    indices = [
+        Index(value = ["episode_publication_date_unix_seconds"], orders = [Index.Order.DESC])
+    ],
 )
 data class EpisodeEntity(
     @PrimaryKey
@@ -15,7 +17,7 @@ data class EpisodeEntity(
     @ColumnInfo(name = "episode_title") val title: String,
     @ColumnInfo(name = "episode_description") val description: String,
     @ColumnInfo(name = "episode_podcast_id") val podcastId: Long,
-    @ColumnInfo(name = "episode_publication_date") val publicationDate: Long,
+    @ColumnInfo(name = "episode_publication_date_unix_seconds") val publicationDateUnixSeconds: Long,
     @ColumnInfo(name = "episode_audio_url") val audioUrl: String,
     @ColumnInfo(name = "episode_audio_size_in_bytes") val audioSizeInBytes: Long,
     @ColumnInfo(name = "episode_audio_duration_in_seconds") val audioDurationInSeconds: Int,

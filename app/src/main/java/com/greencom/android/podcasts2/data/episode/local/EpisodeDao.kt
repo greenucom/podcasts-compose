@@ -14,12 +14,12 @@ abstract class EpisodeDao {
 
     @Query("""
         SELECT episode_id, episode_title, episode_description, episode_podcast_id, 
-            episode_publication_date, episode_audio_url, episode_audio_size_in_bytes,
+            episode_publication_date_unix_seconds, episode_audio_url, episode_audio_size_in_bytes,
             episode_audio_duration_in_seconds, episode_explicit, episode_season,
             episode_number, episode_type, episode_image_url, episode_chapters_url
         FROM Episodes
         WHERE episode_podcast_id = :id
-        ORDER BY episode_publication_date DESC
+        ORDER BY episode_publication_date_unix_seconds DESC
     """)
     abstract fun getEpisodesByPodcastId(id: Long): PagingSource<Int, EpisodeEntity>
 
