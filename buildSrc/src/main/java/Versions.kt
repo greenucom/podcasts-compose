@@ -13,7 +13,7 @@ object Versions {
 
     const val composeCompiler = "1.2.0"
     const val compose = "1.2.0-rc03"
-    const val composeMaterial3 = "1.0.0-alpha13"
+    const val composeMaterial3 = "1.0.0-alpha14"
 
     const val core = "1.8.0"
     const val coreSplashScreen = "1.0.0-rc01"
