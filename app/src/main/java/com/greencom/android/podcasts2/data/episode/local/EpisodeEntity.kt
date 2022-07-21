@@ -2,9 +2,13 @@ package com.greencom.android.podcasts2.data.episode.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Episodes")
+@Entity(
+    tableName = "Episodes",
+    indices = [Index(value = ["episode_publication_date"], orders = [Index.Order.DESC])],
+)
 data class EpisodeEntity(
     @PrimaryKey
     @ColumnInfo(name = "episode_id") val id: Long,
