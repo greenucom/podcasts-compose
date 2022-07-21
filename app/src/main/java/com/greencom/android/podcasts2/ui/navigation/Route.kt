@@ -2,9 +2,9 @@ package com.greencom.android.podcasts2.ui.navigation
 
 import androidx.navigation.NamedNavArgument
 
-sealed class Route<Args>(val routeSchema: String) {
+sealed class Route<P>(val routeSchema: String) {
 
-    abstract fun createRoute(args: Args): String
+    abstract fun createRoute(args: P): String
 
     open val arguments: List<NamedNavArgument>
         get() = emptyList()
