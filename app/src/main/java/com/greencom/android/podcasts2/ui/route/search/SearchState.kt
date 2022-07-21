@@ -13,7 +13,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import com.greencom.android.podcasts2.utils.cancel
+import com.greencom.android.podcasts2.utils.join
 import com.greencom.android.podcasts2.utils.relaunchIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -36,34 +36,24 @@ class SearchState(
         SearchViewModel.ViewSideEffect.RequestTextFieldFocus -> requestTextFieldFocus()
         SearchViewModel.ViewSideEffect.ClearTextFieldFocus -> focusManager.clearFocus()
         SearchViewModel.ViewSideEffect.ScrollSearchResultsToTop -> scrollSearchResultsToTop()
-        SearchViewModel.ViewSideEffect.NavigationItemReselected -> onNavigationItemReselected()
     }
 
     private fun requestTextFieldFocus() {
-        textFieldFocusRequester.requestFocus()
-        keyboardController?.show()
+        coroutineScope.launch {
+            scrollSearchResultsToTopJob.join()
+            textFieldFocusRequester.requestFocus()
+            keyboardController?.show()
+        }
     }
 
     private fun scrollSearchResultsToTop() {
         scrollSearchResultsToTopJob.relaunchIn(coroutineScope) {
-            scrollSearchResultsToTopImpl()
-        }
-    }
-
-    private fun onNavigationItemReselected() {
-        scrollSearchResultsToTopJob.cancel()
-        coroutineScope.launch {
-            scrollSearchResultsToTopImpl()
-            requestTextFieldFocus()
-        }
-    }
-
-    private suspend fun scrollSearchResultsToTopImpl() {
-        searchResultsLazyColumnState.run {
-            if (firstVisibleItemIndex > MaxFirstVisibleItemIndexForSmoothScroll) {
-                scrollToItem(ScrollToItemIndex)
+            searchResultsLazyColumnState.run {
+                if (firstVisibleItemIndex > MaxFirstVisibleItemIndexForSmoothScroll) {
+                    scrollToItem(ScrollToItemIndex)
+                }
+                animateScrollToItem(0)
             }
-            animateScrollToItem(0)
         }
     }
 

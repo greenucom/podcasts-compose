@@ -124,7 +124,12 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun reduceNavigationItemReselected() {
-        emitSideEffect(ViewSideEffect.NavigationItemReselected)
+        if (state.value.searchResultsState is SearchResultsState.Success) {
+            emitSideEffect(ViewSideEffect.ScrollSearchResultsToTop)
+            emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
+        } else {
+            emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
+        }
     }
 
     @Immutable
@@ -164,7 +169,6 @@ class SearchViewModel @Inject constructor(
         object RequestTextFieldFocus : ViewSideEffect
         object ClearTextFieldFocus : ViewSideEffect
         object ScrollSearchResultsToTop : ViewSideEffect
-        object NavigationItemReselected : ViewSideEffect
     }
 
 }
