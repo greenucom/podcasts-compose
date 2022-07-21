@@ -68,7 +68,7 @@ class SearchState(
     }
 
     companion object {
-        private const val MaxFirstVisibleItemIndexForSmoothScroll = 6
+        private const val MaxFirstVisibleItemIndexForSmoothScroll = 4
         private const val ScrollToItemIndex = 2
     }
 
