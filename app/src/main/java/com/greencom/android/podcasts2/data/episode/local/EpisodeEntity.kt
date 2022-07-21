@@ -10,6 +10,7 @@ data class EpisodeEntity(
     @ColumnInfo(name = "episode_id") val id: Long,
     @ColumnInfo(name = "episode_title") val title: String,
     @ColumnInfo(name = "episode_description") val description: String,
+    @ColumnInfo(name = "episode_podcast_id") val podcastId: Long,
     @ColumnInfo(name = "episode_publication_date") val publicationDate: Long,
     @ColumnInfo(name = "episode_audio_url") val audioUrl: String,
     @ColumnInfo(name = "episode_audio_size_in_bytes") val audioSizeInBytes: Long,
