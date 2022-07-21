@@ -33,6 +33,9 @@ object Dependencies {
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 
+    const val paging3 = "androidx.paging:paging-runtime:${Versions.paging3}"
+    const val paging3Compose = "androidx.paging:paging-compose:${Versions.paging3Compose}"
+
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitLoggingInterceptor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.retrofitLoggingInterceptor}"

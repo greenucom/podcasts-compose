@@ -164,6 +164,9 @@ dependencies {
     kapt(Dependencies.roomCompiler)
     implementation(Dependencies.roomKtx)
 
+    implementation(Dependencies.paging3)
+    implementation(Dependencies.paging3Compose)
+
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofitLoggingInterceptor)
     implementation(Dependencies.retrofitKotlinxSerializationConverter)

@@ -28,6 +28,9 @@ object Versions {
 
     const val room = "2.4.2"
 
+    const val paging3 = "3.1.1"
+    const val paging3Compose = "1.0.0-alpha15"
+
     const val retrofit = "2.9.0"
     const val retrofitLoggingInterceptor = "4.9.0"
     const val retrofitKotlinxSerializationConverter = "0.8.0"
