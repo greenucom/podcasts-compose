@@ -122,11 +122,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     // ./gradlew assembleRelease -P.enableComposeCompilerReports=true --rerun-tasks
     kotlinOptions.freeCompilerArgs += listOf(
         "-P",
-        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${project.buildDir.absolutePath}/compose_metrics"
+        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                "${project.buildDir.absolutePath}/compose_metrics"
     )
     kotlinOptions.freeCompilerArgs += listOf(
         "-P",
-        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${project.buildDir.absolutePath}/compose_metrics"
+        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                "${project.buildDir.absolutePath}/compose_metrics"
     )
 }
 
@@ -218,7 +220,10 @@ fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputName
                 append("Bundle")
                 toString()
             }
-            tasks.named(bundleFinalizeTaskName, com.android.build.gradle.internal.tasks.FinalizeBundleTask::class.java) {
+            tasks.named(
+                bundleFinalizeTaskName,
+                com.android.build.gradle.internal.tasks.FinalizeBundleTask::class.java
+            ) {
                 val file = finalBundleFile.asFile.get()
                 val finalFile = File(file.parentFile, aabPackageName)
                 finalBundleFile.set(finalFile)
