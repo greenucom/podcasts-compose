@@ -2,8 +2,8 @@ package com.greencom.android.podcasts2.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.greencom.android.podcasts2.ui.common.composableRoute
 import com.greencom.android.podcasts2.ui.route.discover.DiscoverRoute
 import com.greencom.android.podcasts2.ui.route.search.SearchRoute
 
@@ -13,7 +13,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
         startDestination = Route.Discover.routeSchema,
     ) {
 
-        composable(route = Route.Discover.routeSchema) {
+        composableRoute(Route.Discover) {
             DiscoverRoute(
                 navigateToSearchRoute = {
                     val route = Route.Search.createRoute(Unit)
@@ -22,8 +22,12 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
             )
         }
 
-        composable(route = Route.Search.routeSchema) {
+        composableRoute(Route.Search) {
             SearchRoute()
+        }
+
+        composableRoute(Route.Podcast) {
+            // TODO: Add route
         }
     }
 }
