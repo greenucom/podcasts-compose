@@ -17,6 +17,7 @@ object CategoryDisplayNameResolver {
         return categoryIdToDisplayNameResId[category.id]
     }
 
+    @Suppress("MagicNumber")
     private val categoryIdToDisplayNameResId: Map<Int, Int> = hashMapOf(
         1 to R.string.arts,
         2 to R.string.books,
