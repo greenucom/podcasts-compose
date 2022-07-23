@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.greencom.android.podcasts2.ui.common.composableRoute
 import com.greencom.android.podcasts2.ui.route.discover.DiscoverRoute
+import com.greencom.android.podcasts2.ui.route.podcast.PodcastRoute
 import com.greencom.android.podcasts2.ui.route.search.SearchRoute
 
 fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
@@ -27,7 +28,7 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
         }
 
         composableRoute(Route.Podcast) {
-            // TODO: Add route
+            PodcastRoute()
         }
     }
 }
