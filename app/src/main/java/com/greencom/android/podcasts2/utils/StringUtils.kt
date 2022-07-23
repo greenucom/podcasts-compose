@@ -1,3 +1,5 @@
 package com.greencom.android.podcasts2.utils
 
-fun emptyString(): String = ""
+private const val EMPTY_STRING = ""
+
+fun emptyString(): String = EMPTY_STRING
