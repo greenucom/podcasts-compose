@@ -38,9 +38,11 @@ sealed class Route<P>(val routeSchema: String) {
         }
 
         override val arguments: List<NamedNavArgument>
-            get() = listOf(navArgument("podcastId") { type = NavType.LongType })
+            get() = listOf(navArgument(KeyPodcastId) { type = NavType.LongType })
 
         data class Args(val podcastId: Long)
+
+        const val KeyPodcastId = "podcastId"
     }
 
 }
