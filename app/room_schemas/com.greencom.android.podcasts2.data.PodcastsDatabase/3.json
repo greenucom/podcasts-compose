@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "2bcdbdda6ba2a482480d552d0dc9f486",
+    "identityHash": "29c181b1197c10558086ef8f80826d50",
     "entities": [
       {
         "tableName": "Podcasts",
@@ -118,7 +118,7 @@
       },
       {
         "tableName": "Episodes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_id` INTEGER NOT NULL, `episode_title` TEXT NOT NULL, `episode_description` TEXT NOT NULL, `episode_podcast_id` INTEGER NOT NULL, `episode_publication_date` INTEGER NOT NULL, `episode_audio_url` TEXT NOT NULL, `episode_audio_size_in_bytes` INTEGER NOT NULL, `episode_audio_duration_in_seconds` INTEGER NOT NULL, `episode_explicit` INTEGER NOT NULL, `episode_season` INTEGER, `episode_number` INTEGER, `episode_type` TEXT, `episode_image_url` TEXT NOT NULL, `episode_chapters_url` TEXT, PRIMARY KEY(`episode_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_id` INTEGER NOT NULL, `episode_title` TEXT NOT NULL, `episode_description` TEXT NOT NULL, `episode_podcast_id` INTEGER NOT NULL, `episode_publication_date_unix_seconds` INTEGER NOT NULL, `episode_audio_url` TEXT NOT NULL, `episode_audio_size_in_bytes` INTEGER NOT NULL, `episode_audio_duration_in_seconds` INTEGER NOT NULL, `episode_explicit` INTEGER NOT NULL, `episode_season` INTEGER, `episode_number` INTEGER, `episode_type` TEXT, `episode_image_url` TEXT NOT NULL, `episode_chapters_url` TEXT, PRIMARY KEY(`episode_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -145,8 +145,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "publicationDate",
-            "columnName": "episode_publication_date",
+            "fieldPath": "publicationDateUnixSeconds",
+            "columnName": "episode_publication_date_unix_seconds",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -213,15 +213,15 @@
         },
         "indices": [
           {
-            "name": "index_Episodes_episode_publication_date",
+            "name": "index_Episodes_episode_publication_date_unix_seconds",
             "unique": false,
             "columnNames": [
-              "episode_publication_date"
+              "episode_publication_date_unix_seconds"
             ],
             "orders": [
               "DESC"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_Episodes_episode_publication_date` ON `${TABLE_NAME}` (`episode_publication_date` DESC)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Episodes_episode_publication_date_unix_seconds` ON `${TABLE_NAME}` (`episode_publication_date_unix_seconds` DESC)"
           }
         ],
         "foreignKeys": []
@@ -230,7 +230,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bcdbdda6ba2a482480d552d0dc9f486')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '29c181b1197c10558086ef8f80826d50')"
     ]
   }
 }
