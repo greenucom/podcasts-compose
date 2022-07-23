@@ -61,7 +61,9 @@ fun SearchRoute(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
+            .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.End))
+            .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.End)),
         scaffoldState = searchState.scaffoldState,
         topBar = {
             SearchTopBar(
