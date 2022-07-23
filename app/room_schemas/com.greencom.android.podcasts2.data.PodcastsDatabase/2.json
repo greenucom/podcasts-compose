@@ -1,0 +1,126 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "7ebb5f7e4f3ff424df2ab9c20bf02c8a",
+    "entities": [
+      {
+        "tableName": "Podcasts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_id` INTEGER NOT NULL, `podcast_title` TEXT NOT NULL, `podcast_description` TEXT NOT NULL, `podcast_author` TEXT NOT NULL, `podcast_image_url` TEXT NOT NULL, `podcast_categories` TEXT NOT NULL, `podcast_is_user_subscribed` INTEGER NOT NULL, PRIMARY KEY(`podcast_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "podcast_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "podcast_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "podcast_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "podcast_author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "podcast_image_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "podcast_categories",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUserSubscribed",
+            "columnName": "podcast_is_user_subscribed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "podcast_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PodcastsTemp",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_id` INTEGER NOT NULL, `podcast_title` TEXT NOT NULL, `podcast_description` TEXT NOT NULL, `podcast_author` TEXT NOT NULL, `podcast_image_url` TEXT NOT NULL, `podcast_categories` TEXT NOT NULL, `podcast_is_user_subscribed` INTEGER NOT NULL, PRIMARY KEY(`podcast_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "podcast_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "podcast_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "podcast_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "podcast_author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "podcast_image_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "podcast_categories",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUserSubscribed",
+            "columnName": "podcast_is_user_subscribed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "podcast_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7ebb5f7e4f3ff424df2ab9c20bf02c8a')"
+    ]
+  }
+}

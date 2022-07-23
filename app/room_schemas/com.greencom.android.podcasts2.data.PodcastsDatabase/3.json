@@ -1,0 +1,236 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "2bcdbdda6ba2a482480d552d0dc9f486",
+    "entities": [
+      {
+        "tableName": "Podcasts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_id` INTEGER NOT NULL, `podcast_title` TEXT NOT NULL, `podcast_description` TEXT NOT NULL, `podcast_author` TEXT NOT NULL, `podcast_image_url` TEXT NOT NULL, `podcast_categories` TEXT NOT NULL, `podcast_is_user_subscribed` INTEGER NOT NULL, PRIMARY KEY(`podcast_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "podcast_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "podcast_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "podcast_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "podcast_author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "podcast_image_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "podcast_categories",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUserSubscribed",
+            "columnName": "podcast_is_user_subscribed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "podcast_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PodcastsTemp",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_id` INTEGER NOT NULL, `podcast_title` TEXT NOT NULL, `podcast_description` TEXT NOT NULL, `podcast_author` TEXT NOT NULL, `podcast_image_url` TEXT NOT NULL, `podcast_categories` TEXT NOT NULL, `podcast_is_user_subscribed` INTEGER NOT NULL, PRIMARY KEY(`podcast_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "podcast_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "podcast_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "podcast_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "podcast_author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "podcast_image_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "podcast_categories",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUserSubscribed",
+            "columnName": "podcast_is_user_subscribed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "podcast_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Episodes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_id` INTEGER NOT NULL, `episode_title` TEXT NOT NULL, `episode_description` TEXT NOT NULL, `episode_podcast_id` INTEGER NOT NULL, `episode_publication_date` INTEGER NOT NULL, `episode_audio_url` TEXT NOT NULL, `episode_audio_size_in_bytes` INTEGER NOT NULL, `episode_audio_duration_in_seconds` INTEGER NOT NULL, `episode_explicit` INTEGER NOT NULL, `episode_season` INTEGER, `episode_number` INTEGER, `episode_type` TEXT, `episode_image_url` TEXT NOT NULL, `episode_chapters_url` TEXT, PRIMARY KEY(`episode_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "episode_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "episode_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "episode_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "podcastId",
+            "columnName": "episode_podcast_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicationDate",
+            "columnName": "episode_publication_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "audioUrl",
+            "columnName": "episode_audio_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "audioSizeInBytes",
+            "columnName": "episode_audio_size_in_bytes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "audioDurationInSeconds",
+            "columnName": "episode_audio_duration_in_seconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "explicit",
+            "columnName": "episode_explicit",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "season",
+            "columnName": "episode_season",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "episodeNumber",
+            "columnName": "episode_number",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "episodeType",
+            "columnName": "episode_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "episode_image_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chaptersUrl",
+            "columnName": "episode_chapters_url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "episode_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_Episodes_episode_publication_date",
+            "unique": false,
+            "columnNames": [
+              "episode_publication_date"
+            ],
+            "orders": [
+              "DESC"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Episodes_episode_publication_date` ON `${TABLE_NAME}` (`episode_publication_date` DESC)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bcdbdda6ba2a482480d552d0dc9f486')"
+    ]
+  }
+}
