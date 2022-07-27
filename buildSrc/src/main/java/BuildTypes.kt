@@ -30,6 +30,7 @@ abstract class BuildType(val name: String) {
 
     open val resValues = listOf<ResValue>()
     open val buildConfigValues = listOf<BuildConfigField>()
+    open val manifestPlaceholders = mapOf<String, Any>()
 }
 
 class ResValue(val type: String, val name: String, val value: String)

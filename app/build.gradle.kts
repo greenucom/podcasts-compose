@@ -73,6 +73,9 @@ android {
                 buildType.buildConfigValues.forEach {
                     buildConfigField(it.type, it.name, it.value)
                 }
+                buildType.manifestPlaceholders.forEach { (key, value) ->
+                    manifestPlaceholders[key] = value
+                }
             }
         }
 
