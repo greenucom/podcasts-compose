@@ -12,21 +12,21 @@ object Versions {
     const val coroutines = "1.6.4"
 
     const val composeCompiler = "1.2.0"
-    const val compose = "1.2.0-rc03"
-    const val composeMaterial3 = "1.0.0-alpha14"
+    const val compose = "1.2.0"
+    const val composeMaterial3 = "1.0.0-alpha15"
 
     const val core = "1.8.0"
-    const val coreSplashScreen = "1.0.0-rc01"
+    const val coreSplashScreen = "1.0.0"
     const val appCompat = "1.4.2"
-    const val activity = "1.5.0"
+    const val activity = "1.5.1"
 
-    const val lifecycle = "2.5.0"
+    const val lifecycle = "2.5.1"
 
-    const val navigation = "2.5.0"
+    const val navigation = "2.5.1"
 
     const val dataStore = "1.0.0"
 
-    const val room = "2.4.2"
+    const val room = "2.4.3"
 
     const val paging3 = "3.1.1"
     const val paging3Compose = "1.0.0-alpha15"
@@ -38,7 +38,7 @@ object Versions {
     const val kotlinxSerializationJson = "1.3.3"
     const val kotlinxImmutableCollections = "0.3.5"
 
-    const val hilt = "2.42"
+    const val hilt = "2.43"
     const val hiltComposeNavigation = "1.0.0"
 
     const val accompanist = "0.24.13-rc"
@@ -50,7 +50,7 @@ object Versions {
 
     const val googleServices = "4.3.10"
     const val crashlyticsPlugin = "2.9.0"
-    const val firebaseBom = "30.1.0"
+    const val firebaseBom = "30.3.1"
 
     const val junit = "4.13.2"
     const val androidJunit = "1.1.3"
