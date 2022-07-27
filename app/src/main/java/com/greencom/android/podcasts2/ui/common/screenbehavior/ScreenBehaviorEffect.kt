@@ -62,7 +62,7 @@ private inline fun SpecificScreenBehaviorImpl(
     crossinline builderAction: (ScreenBehaviorBuilder.() -> Unit),
 ) {
     val screenBehaviorController = LocalScreenBehaviorController.current ?: return
-    DisposableEffect(keys) {
+    DisposableEffect(*keys) {
         val screenBehaviorBuilder = ScreenBehaviorBuilder()
         screenBehaviorBuilder.builderAction()
         val screenBehavior = screenBehaviorBuilder.build()
