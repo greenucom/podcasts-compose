@@ -210,8 +210,6 @@ fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputName
             outputImpl.outputFileName = "$outputName.apk"
 
             // Rename .aab
-            // AAB file name that you want. Flavor name also can be accessed here.
-            val aabPackageName = "$outputName.aab"
             // Get final bundle task name for this variant
             val bundleFinalizeTaskName = StringBuilder("sign").run {
                 // Add each flavor dimension for this variant here
@@ -228,7 +226,7 @@ fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputName
                 com.android.build.gradle.internal.tasks.FinalizeBundleTask::class.java
             ) {
                 val file = finalBundleFile.asFile.get()
-                val finalFile = File(file.parentFile, aabPackageName)
+                val finalFile = File(file.parentFile, "$outputName.aab")
                 finalBundleFile.set(finalFile)
             }
         }
