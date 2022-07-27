@@ -16,7 +16,7 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val epochSeconds = (System.currentTimeMillis() / SECOND_IN_MILLIS).toString()
-        val authSha1Hash = createAuthSha1Hash(epochSeconds)
+        val authSha1Hash = calculateAuthSha1Checksum(epochSeconds)
 
         val request = chain.request().newBuilder()
             .addHeader("User-Agent", userAgent)
@@ -28,7 +28,7 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
         return chain.proceed(request)
     }
 
-    private fun createAuthSha1Hash(epochSeconds: String): String {
+    private fun calculateAuthSha1Checksum(epochSeconds: String): String {
         val input = key + secretKey + epochSeconds
         val bytes = MessageDigest
             .getInstance(SHA_1)
