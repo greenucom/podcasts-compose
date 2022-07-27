@@ -10,5 +10,6 @@ object Plugins {
     const val crashlytics = "com.google.firebase.crashlytics"
 
     const val androidGitVersion = "com.gladed.androidgitversion"
+    const val checkDependencyUpdates = "name.remal.check-dependency-updates"
 
 }

@@ -11,6 +11,7 @@ plugins {
     id(Plugins.crashlytics)
 
     id(Plugins.androidGitVersion).version(Versions.androidGitVersion)
+    id(Plugins.checkDependencyUpdates).version(Versions.checkDependencyUpdates)
 }
 
 androidGitVersion {

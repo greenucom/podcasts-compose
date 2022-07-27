@@ -8,6 +8,7 @@ object Versions {
     const val androidGradlePlugin = "7.2.1"
 
     const val androidGitVersion = "0.4.14"
+    const val checkDependencyUpdates = "1.5.0"
 
     const val coroutines = "1.6.4"
 
