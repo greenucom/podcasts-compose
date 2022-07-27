@@ -58,6 +58,6 @@ object Versions {
     const val androidEspresso = "3.4.0"
 
     const val truth = "1.1.3"
-    const val mockk = "1.12.4"
+    const val mockk = "1.12.5"
 
 }
