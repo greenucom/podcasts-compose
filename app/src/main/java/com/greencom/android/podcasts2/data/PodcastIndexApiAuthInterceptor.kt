@@ -11,21 +11,25 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
     private val key = BuildConfig.PODCAST_INDEX_API_KEY
     private val secretKey = BuildConfig.PODCAST_INDEX_API_SECRET_KEY
 
-    private val version = BuildConfig.VERSION_NAME.takeWhile { it.isDigit() || it == '.' }
-    private var userAgent = USER_AGENT_FORMAT.format(version)
+    private val versionName = BuildConfig.VERSION_NAME.takeWhile { it.isDigit() || it == '.' }
+    private var userAgent = createUserAgent(versionName)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val epochSeconds = (System.currentTimeMillis() / SECOND_IN_MILLIS).toString()
-        val authSha1Hash = calculateAuthSha1Checksum(epochSeconds)
+        val authSha1Checksum = calculateAuthSha1Checksum(epochSeconds)
 
         val request = chain.request().newBuilder()
             .addHeader("User-Agent", userAgent)
             .addHeader("X-Auth-Key", key)
             .addHeader("X-Auth-Date", epochSeconds)
-            .addHeader("Authorization", authSha1Hash)
+            .addHeader("Authorization", authSha1Checksum)
             .build()
 
         return chain.proceed(request)
+    }
+
+    private fun createUserAgent(versionName: String): String {
+        return "$USER_AGENT_NAME/$versionName ($USER_AGENT_LANGUAGE; $USER_AGENT_PLATFORM)"
     }
 
     private fun calculateAuthSha1Checksum(epochSeconds: String): String {
@@ -41,9 +45,6 @@ class PodcastIndexApiAuthInterceptor @Inject constructor(): Interceptor {
         private const val USER_AGENT_NAME = "Podcasts Compose"
         private const val USER_AGENT_LANGUAGE = "Language=Kotlin"
         private const val USER_AGENT_PLATFORM = "Platform=Android"
-
-        /** Format **Podcasts Compose/VERSION (Language=Kotlin; Platform=Android)** */
-        private const val USER_AGENT_FORMAT = "$USER_AGENT_NAME/%1\$s ($USER_AGENT_LANGUAGE; $USER_AGENT_PLATFORM)"
 
         private const val SECOND_IN_MILLIS = 1000
         private const val SHA_1 = "SHA-1"
