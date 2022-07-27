@@ -60,15 +60,20 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
-            resValue("string", "app_name", "Debug")
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "--debug"
-        }
+        appBuildTypes.forEach { buildType ->
+            maybeCreate(buildType.name).apply {
+                isDebuggable = buildType.isDebuggable
+                isMinifyEnabled = buildType.isMinifyEnabled
+                applicationIdSuffix = buildType.applicationIdSuffix
+                versionNameSuffix = buildType.versionNameSuffix
 
-        getByName("release") {
-            resValue("string", "app_name", "Podcasts")
-            isMinifyEnabled = true
+                buildType.resValues.forEach {
+                    resValue(it.type, it.name, it.value)
+                }
+                buildType.buildConfigValues.forEach {
+                    buildConfigField(it.type, it.name, it.value)
+                }
+            }
         }
 
         all {
