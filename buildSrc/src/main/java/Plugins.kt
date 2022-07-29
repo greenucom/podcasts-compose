@@ -1,5 +1,4 @@
 object Plugins {
-
     const val androidApplication = "com.android.application"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
     const val kapt = "kapt"
@@ -11,5 +10,4 @@ object Plugins {
 
     const val androidGitVersion = "com.gladed.androidgitversion"
     const val checkDependencyUpdates = "name.remal.check-dependency-updates"
-
 }
