@@ -39,10 +39,10 @@ object Versions {
     const val kotlinxSerializationJson = "1.3.3"
     const val kotlinxImmutableCollections = "0.3.5"
 
-    const val hilt = "2.43"
+    const val hilt = "2.43.1"
     const val hiltComposeNavigation = "1.0.0"
 
-    const val accompanist = "0.24.13-rc"
+    const val accompanist = "0.25.0"
 
     const val coil = "2.1.0"
     const val timber = "5.0.1"
