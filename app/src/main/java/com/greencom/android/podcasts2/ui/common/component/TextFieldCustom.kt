@@ -1,4 +1,4 @@
-package com.greencom.android.podcasts2.ui.common
+package com.greencom.android.podcasts2.ui.common.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource

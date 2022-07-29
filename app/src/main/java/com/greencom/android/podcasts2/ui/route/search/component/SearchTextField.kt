@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.common.PodcastsIcons
-import com.greencom.android.podcasts2.ui.common.TextFieldCustom
+import com.greencom.android.podcasts2.ui.common.component.TextFieldCustom
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 import com.greencom.android.podcasts2.ui.theme.searchBackground
 
