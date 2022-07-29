@@ -4,7 +4,7 @@ object Versions {
     const val minSdk = 24
     const val targetSdk = 32
 
-    const val kotlin = "1.7.0"
+    const val kotlin = "1.7.10"
     const val androidGradlePlugin = "7.2.1"
 
     const val androidGitVersion = "0.4.14"
@@ -12,7 +12,7 @@ object Versions {
 
     const val coroutines = "1.6.4"
 
-    const val composeCompiler = "1.2.0"
+    const val composeCompiler = "1.3.0-rc01"
     const val compose = "1.2.0"
     const val composeMaterial3 = "1.0.0-alpha15"
 
