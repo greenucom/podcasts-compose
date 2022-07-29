@@ -33,7 +33,7 @@ object Versions {
     const val paging3Compose = "1.0.0-alpha15"
 
     const val retrofit = "2.9.0"
-    const val retrofitLoggingInterceptor = "4.9.0"
+    const val retrofitLoggingInterceptor = "4.10.0"
     const val retrofitKotlinxSerializationConverter = "0.8.0"
 
     const val kotlinxSerializationJson = "1.3.3"
