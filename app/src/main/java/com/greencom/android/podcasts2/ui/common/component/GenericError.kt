@@ -29,10 +29,10 @@ private const val TextAlpha = 0.87f
 @Composable
 fun GenericError(
     description: String,
-    buttonText: String,
-    onButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
     image: Painter? = null,
+    buttonText: String? = null,
+    onButtonClicked: () -> Unit = {},
 ) {
     BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
         val maxHeight = maxHeight
@@ -58,12 +58,14 @@ fun GenericError(
                 textAlign = TextAlign.Center,
             )
 
-            OutlinedButton(
-                modifier = Modifier.padding(top = 12.dp),
-                onClick = onButtonClicked,
-                border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.onSurfaceUtil),
-            ) {
-                Text(text = buttonText)
+            if (buttonText != null) {
+                OutlinedButton(
+                    modifier = Modifier.padding(top = 12.dp),
+                    onClick = onButtonClicked,
+                    border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.onSurfaceUtil),
+                ) {
+                    Text(text = buttonText)
+                }
             }
         }
     }
