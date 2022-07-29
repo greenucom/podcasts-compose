@@ -1,6 +1,8 @@
 package com.greencom.android.podcasts2.ui.common.component
 
 import android.content.res.Configuration
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -25,6 +27,8 @@ import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
 private val MaxImageSize = 240.dp
 private val MinHeightForImage = 420.dp
 private const val TextAlpha = 0.87f
+private const val FadeInDuration = 200
+private const val FadeOutDuration = 100
 
 @Composable
 fun GenericError(
@@ -41,14 +45,21 @@ fun GenericError(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (image != null && maxHeight >= MinHeightForImage) {
-                Image(
-                    modifier = Modifier
-                        .widthIn(max = MaxImageSize)
-                        .aspectRatio(1f),
-                    painter = image,
-                    contentDescription = description,
-                )
+
+            if (image != null) {
+                AnimatedVisibility(
+                    visible = maxHeight >= MinHeightForImage,
+                    enter = fadeIn(tween(FadeInDuration)) + expandVertically(clip = false),
+                    exit = fadeOut(tween(FadeOutDuration)) + shrinkVertically(clip = false),
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .widthIn(max = MaxImageSize)
+                            .aspectRatio(1f),
+                        painter = image,
+                        contentDescription = description,
+                    )
+                }
             }
 
             Text(
