@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.capitalizeAsciiOnly
 import util.PodcastIndexApiKeyHolder
+import util.SigningConfig
 
 plugins {
     id(Plugins.androidApplication)
@@ -48,14 +49,14 @@ android {
         }
     }
 
-    val keystoreProperties = util.KeystoreHelper.createKeystoreProperties(project)
+    val defaultSigningConfig = SigningConfig.getDefault(project)
     signingConfigs {
-        if (keystoreProperties != null) {
-            create("defaultConfigs") {
-                storeFile = file(keystoreProperties.getProperty(util.KeystoreHelper.STORE_FILE))
-                storePassword = keystoreProperties.getProperty(util.KeystoreHelper.STORE_PASSWORD)
-                keyAlias = keystoreProperties.getProperty(util.KeystoreHelper.KEY_ALIAS)
-                keyPassword = keystoreProperties.getProperty(util.KeystoreHelper.KEY_PASSWORD)
+        if (defaultSigningConfig != null) {
+            create(defaultSigningConfig.name) {
+                storeFile = file(defaultSigningConfig.storeFile)
+                storePassword = defaultSigningConfig.storePassword
+                keyAlias = defaultSigningConfig.keyAlias
+                keyPassword = defaultSigningConfig.keyPassword
             }
         }
     }
@@ -81,8 +82,8 @@ android {
         }
 
         all {
-            if (keystoreProperties != null) {
-                signingConfig = signingConfigs.getByName("defaultConfigs")
+            if (defaultSigningConfig != null) {
+                signingConfig = signingConfigs.getByName(defaultSigningConfig.name)
             }
 
             // Add PodcastIndex API keys
