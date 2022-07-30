@@ -17,7 +17,7 @@ plugins {
 }
 
 androidGitVersion {
-    format = "%tag%%--branch%%--commit%"
+    format = "%tag%--%branch%--%commit%"
 }
 
 android {
