@@ -12,27 +12,29 @@ class PodcastIndexApiKeyHolder private constructor(
     companion object {
 
         fun init(project: Project): PodcastIndexApiKeyHolder {
-            val properties = Properties()
+            // Check local properties file first
             val localPropertiesFile =
                 project.rootProject.file(LOCAL_PODCAST_INDEX_API_PROPERTIES_FILE)
-
             if (localPropertiesFile.exists()) {
+                val properties = Properties()
                 properties.load(FileInputStream(localPropertiesFile))
-            } else {
-                properties[KEY] = System.getenv(CI_CD_KEY).orEmpty()
-                properties[SECRET_KEY] = System.getenv(CI_CD_SECRET_KEY).orEmpty()
+                return PodcastIndexApiKeyHolder(
+                    key = properties.getProperty(PROPERTIES_KEY, ""),
+                    secretKey = properties.getProperty(PROPERTIES_SECRET_KEY, ""),
+                )
             }
 
+            // If there is no local properties file, check CI/CD env variables
             return PodcastIndexApiKeyHolder(
-                key = properties.getProperty(KEY, ""),
-                secretKey = properties.getProperty(SECRET_KEY, ""),
+                key = System.getenv(CI_CD_KEY).orEmpty(),
+                secretKey = System.getenv(CI_CD_SECRET_KEY).orEmpty(),
             )
         }
 
-        private const val LOCAL_PODCAST_INDEX_API_PROPERTIES_FILE = "podcast_index_api.properties"
+        private const val PROPERTIES_KEY = "key"
+        private const val PROPERTIES_SECRET_KEY = "secretKey"
 
-        private const val KEY = "key"
-        private const val SECRET_KEY = "secretKey"
+        private const val LOCAL_PODCAST_INDEX_API_PROPERTIES_FILE = "podcast_index_api.properties"
 
         private const val CI_CD_KEY = "PODCAST_INDEX_API_KEY"
         private const val CI_CD_SECRET_KEY = "PODCAST_INDEX_API_SECRET_KEY"
