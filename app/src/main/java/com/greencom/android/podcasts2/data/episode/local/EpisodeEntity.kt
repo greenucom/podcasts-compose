@@ -13,7 +13,9 @@ import androidx.room.PrimaryKey
 )
 data class EpisodeEntity(
     @PrimaryKey
-    @ColumnInfo(name = "episode_id") val id: Long,
+    @ColumnInfo(name = "episode_id")
+    val id: Long,
+
     @ColumnInfo(name = "episode_title") val title: String,
     @ColumnInfo(name = "episode_description") val description: String,
     @ColumnInfo(name = "episode_podcast_id") val podcastId: Long,

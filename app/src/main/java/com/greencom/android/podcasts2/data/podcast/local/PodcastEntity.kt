@@ -12,7 +12,9 @@ import com.greencom.android.podcasts2.domain.podcast.Podcast
 @TypeConverters(CategoryDtoListTypeConverter::class)
 data class PodcastEntity(
     @PrimaryKey
-    @ColumnInfo(name = "podcast_id") val id: Long,
+    @ColumnInfo(name = "podcast_id")
+    val id: Long,
+
     @ColumnInfo(name = "podcast_title") val title: String,
     @ColumnInfo(name = "podcast_description") val description: String,
     @ColumnInfo(name = "podcast_author") val author: String,

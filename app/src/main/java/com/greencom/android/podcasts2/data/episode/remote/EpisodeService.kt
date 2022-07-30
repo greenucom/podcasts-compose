@@ -11,7 +11,10 @@ interface EpisodeService {
     fun getEpisodesByPodcastId(
         @Query("id") id: Long,
         @Query("since") since: Long,
-        @Query("max") @IntRange(from = 1, to = 1000) max: Int,
+
+        @Query("max")
+        @IntRange(from = 1, to = 1000)
+        max: Int,
     ): GetEpisodesByPodcastIdResponseDto
 
 }
