@@ -88,15 +88,13 @@ android {
 
             // Add PodcastIndex API keys
             val podcastIndexApiKeyHolder = PodcastIndexApiKeyHolder.init(project)
-            buildConfigField(
-                "String",
-                "PODCAST_INDEX_API_KEY",
-                "\"${podcastIndexApiKeyHolder.key}\""
+            buildConfigStringField(
+                name = "PODCAST_INDEX_API_KEY",
+                value = podcastIndexApiKeyHolder.key,
             )
-            buildConfigField(
-                "String",
-                "PODCAST_INDEX_API_SECRET_KEY",
-                "\"${podcastIndexApiKeyHolder.secretKey}\""
+            buildConfigStringField(
+                name = "PODCAST_INDEX_API_SECRET_KEY",
+                value = podcastIndexApiKeyHolder.secretKey,
             )
 
             proguardFiles(
@@ -246,4 +244,8 @@ fun com.android.build.gradle.internal.dsl.BaseAppModuleExtension.setupOutputName
             }
         }
     }
+}
+
+fun com.android.build.api.dsl.VariantDimension.buildConfigStringField(name: String, value: String) {
+    buildConfigField("String", name, "\"$value\"")
 }
