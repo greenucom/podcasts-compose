@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.capitalizeAsciiOnly
+import util.PodcastIndexApiKeyHolder
 
 plugins {
     id(Plugins.androidApplication)
@@ -84,14 +85,18 @@ android {
                 signingConfig = signingConfigs.getByName("defaultConfigs")
             }
 
-            val podcastIndexApiProperties = util.PodcastIndexApiHelper
-                .createPodcastIndexApiProperties(project)
-            val podcastIndexApiKey = podcastIndexApiProperties
-                .getProperty(util.PodcastIndexApiHelper.KEY, "")
-            val podcastIndexApiSecretKey = podcastIndexApiProperties
-                .getProperty(util.PodcastIndexApiHelper.SECRET_KEY, "")
-            buildConfigField("String", "PODCAST_INDEX_API_KEY", "\"$podcastIndexApiKey\"")
-            buildConfigField("String", "PODCAST_INDEX_API_SECRET_KEY", "\"$podcastIndexApiSecretKey\"")
+            // Add PodcastIndex API keys
+            val podcastIndexApiKeyHolder = PodcastIndexApiKeyHolder.init(project)
+            buildConfigField(
+                "String",
+                "PODCAST_INDEX_API_KEY",
+                "\"${podcastIndexApiKeyHolder.key}\""
+            )
+            buildConfigField(
+                "String",
+                "PODCAST_INDEX_API_SECRET_KEY",
+                "\"${podcastIndexApiKeyHolder.secretKey}\""
+            )
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
