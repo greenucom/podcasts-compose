@@ -6,6 +6,7 @@ import timber.log.Timber
 
 abstract class UseCase<in P, out R>(private val dispatcher: CoroutineDispatcher) {
 
+    @Suppress("TooGenericExceptionCaught")
     suspend operator fun invoke(params: P): Result<R> {
         return try {
             withContext(dispatcher) {
