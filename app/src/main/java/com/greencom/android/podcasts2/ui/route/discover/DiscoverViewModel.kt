@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.domain.category.Category
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.SelectableItem
-import com.greencom.android.podcasts2.ui.common.mvi.Event
-import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
-import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
-import com.greencom.android.podcasts2.ui.common.mvi.State
+import com.greencom.android.podcasts2.ui.common.mvi.*
 import com.greencom.android.podcasts2.ui.model.category.CategoryUiModel
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.utils.relaunchIn
@@ -167,8 +164,10 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun reducePodcastClicked(event: ViewEvent.PodcastClicked) {
-        val podcast = event.podcast.toPodcast()
-        emitSideEffect(ViewSideEffect.NavigateToPodcast(podcast))
+        reduceDebouncedEvent(event, DebouncedEventTimeouts.navigationTimeout) {
+            val podcast = event.podcast.toPodcast()
+            emitSideEffect(ViewSideEffect.NavigateToPodcast(podcast))
+        }
     }
 
     private fun reduceNavigationItemReselected() {
