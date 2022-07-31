@@ -171,7 +171,7 @@ class DiscoverViewModel @Inject constructor(
     private fun reducePodcastClicked(event: ViewEvent.PodcastClicked) {
         reduceDebouncedEvent(event, DebouncedEventTimeouts.navigationTimeout) {
             val podcast = event.podcast.toPodcast()
-            emitSideEffect(ViewSideEffect.NavigateToPodcast(podcast))
+            emitSideEffect(ViewSideEffect.NavigateToPodcastRoute(podcast))
         }
     }
 
@@ -209,7 +209,7 @@ class DiscoverViewModel @Inject constructor(
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
         object NavigateToSearchRoute : ViewSideEffect
-        data class NavigateToPodcast(val podcast: Podcast) : ViewSideEffect
+        data class NavigateToPodcastRoute(val podcast: Podcast) : ViewSideEffect
         object NavigationItemReselected : ViewSideEffect
     }
 

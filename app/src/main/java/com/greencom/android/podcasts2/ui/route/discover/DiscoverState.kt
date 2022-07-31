@@ -27,7 +27,7 @@ class DiscoverState(
     fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
         DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop()
         DiscoverViewModel.ViewSideEffect.NavigateToSearchRoute -> navigateToSearchRoute()
-        is DiscoverViewModel.ViewSideEffect.NavigateToPodcast ->
+        is DiscoverViewModel.ViewSideEffect.NavigateToPodcastRoute ->
             navigateToPodcastRoute(sideEffect.podcast)
         DiscoverViewModel.ViewSideEffect.NavigationItemReselected -> onNavigationItemReselected()
     }
