@@ -7,10 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.domain.podcast.usecase.SearchPodcastsUseCase
-import com.greencom.android.podcasts2.ui.common.mvi.Event
-import com.greencom.android.podcasts2.ui.common.mvi.MviViewModel
-import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
-import com.greencom.android.podcasts2.ui.common.mvi.State
+import com.greencom.android.podcasts2.ui.common.mvi.*
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.emptyString
@@ -51,6 +48,7 @@ class SearchViewModel @Inject constructor(
         is ViewEvent.SearchFailed -> reduceSearchFailed(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.SearchResultsScrolled -> reduceSearchResultsScrolled()
+        is ViewEvent.PodcastClicked -> reducePodcastClicked(event)
         ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
@@ -128,6 +126,13 @@ class SearchViewModel @Inject constructor(
         emitSideEffect(ViewSideEffect.RequestTextFieldFocus)
     }
 
+    private fun reducePodcastClicked(event: ViewEvent.PodcastClicked) {
+        reduceDebouncedEvent(event, DebouncedEventTimeouts.navigationTimeout) {
+            val podcast = event.podcast.toPodcast()
+            emitSideEffect(ViewSideEffect.NavigateToPodcastRoute(podcast))
+        }
+    }
+
     private fun reduceNavigationItemReselected() {
         if (state.value.searchResultsState is SearchResultsState.Success) {
             emitSideEffect(ViewSideEffect.ScrollSearchResultsToTop)
@@ -166,6 +171,7 @@ class SearchViewModel @Inject constructor(
         data class SearchFailed(val exception: Throwable) : ViewEvent
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object SearchResultsScrolled : ViewEvent
+        data class PodcastClicked(val podcast: PodcastUiModel) : ViewEvent
         object NavigationItemReselected : ViewEvent
     }
 
@@ -174,6 +180,7 @@ class SearchViewModel @Inject constructor(
         object RequestTextFieldFocus : ViewSideEffect
         object ClearTextFieldFocus : ViewSideEffect
         object ScrollSearchResultsToTop : ViewSideEffect
+        data class NavigateToPodcastRoute(val podcast: Podcast) : ViewSideEffect
     }
 
 }

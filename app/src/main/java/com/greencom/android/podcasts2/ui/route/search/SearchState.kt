@@ -13,6 +13,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.utils.join
 import com.greencom.android.podcasts2.utils.relaunchIn
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +29,7 @@ class SearchState(
     val textFieldFocusRequester: FocusRequester,
     private val focusManager: FocusManager,
     private val keyboardController: SoftwareKeyboardController?,
+    private val navigateToPodcastRoute: (Podcast) -> Unit,
 ) {
 
     private val scrollSearchResultsToTopJob = MutableStateFlow<Job?>(null)
@@ -36,6 +38,8 @@ class SearchState(
         SearchViewModel.ViewSideEffect.RequestTextFieldFocus -> requestTextFieldFocus()
         SearchViewModel.ViewSideEffect.ClearTextFieldFocus -> focusManager.clearFocus()
         SearchViewModel.ViewSideEffect.ScrollSearchResultsToTop -> scrollSearchResultsToTop()
+        is SearchViewModel.ViewSideEffect.NavigateToPodcastRoute ->
+            navigateToPodcastRoute(sideEffect.podcast)
     }
 
     private fun requestTextFieldFocus() {
@@ -67,6 +71,7 @@ class SearchState(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun rememberSearchState(
+    navigateToPodcastRoute: (Podcast) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     searchResultsLazyColumnState: LazyListState = rememberLazyListState(),
@@ -80,6 +85,7 @@ fun rememberSearchState(
     textFieldFocusRequester,
     focusManager,
     keyboardController,
+    navigateToPodcastRoute,
 ) {
     SearchState(
         coroutineScope = coroutineScope,
@@ -88,5 +94,6 @@ fun rememberSearchState(
         textFieldFocusRequester = textFieldFocusRequester,
         focusManager = focusManager,
         keyboardController = keyboardController,
+        navigateToPodcastRoute = navigateToPodcastRoute,
     )
 }
