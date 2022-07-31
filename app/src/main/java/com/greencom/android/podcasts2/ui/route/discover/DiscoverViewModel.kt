@@ -160,7 +160,12 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun reduceSearchButtonClicked() {
-        emitSideEffect(ViewSideEffect.NavigateToSearchRoute)
+        reduceDebouncedEvent(
+            event = ViewEvent.SearchPodcastsClicked,
+            timeout = DebouncedEventTimeouts.navigationTimeout,
+        ) {
+            emitSideEffect(ViewSideEffect.NavigateToSearchRoute)
+        }
     }
 
     private fun reducePodcastClicked(event: ViewEvent.PodcastClicked) {
