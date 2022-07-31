@@ -40,13 +40,15 @@ class DiscoverViewModel @Inject constructor(
     }
 
     override fun handleEvent(event: ViewEvent) = when (event) {
-        is ViewEvent.SelectableTrendingCategoriesReceived -> reduceSelectableTrendingCategoriesReceived(event)
+        is ViewEvent.SelectableTrendingCategoriesReceived ->
+            reduceSelectableTrendingCategoriesReceived(event)
         is ViewEvent.TrendingPodcastsReceived -> reduceTrendingPodcastsReceived(event)
         is ViewEvent.TrendingPodcastsReceivingFailed -> reduceTrendingPodcastsReceivingFailed(event)
         is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
         is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
         ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
         ViewEvent.SearchPodcastsClicked -> reduceSearchButtonClicked()
+        is ViewEvent.PodcastClicked -> reducePodcastClicked(event)
         ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
@@ -159,6 +161,11 @@ class DiscoverViewModel @Inject constructor(
         emitSideEffect(ViewSideEffect.NavigateToSearchRoute)
     }
 
+    private fun reducePodcastClicked(event: ViewEvent.PodcastClicked) {
+        val podcast = event.podcast.toPodcast()
+        emitSideEffect(ViewSideEffect.NavigateToPodcast(podcast))
+    }
+
     private fun reduceNavigationItemReselected() {
         emitSideEffect(ViewSideEffect.NavigationItemReselected)
     }
@@ -185,6 +192,7 @@ class DiscoverViewModel @Inject constructor(
         data class UpdateSubscriptionToPodcast(val podcast: PodcastUiModel) : ViewEvent
         object RefreshTrendingPodcasts : ViewEvent
         object SearchPodcastsClicked : ViewEvent
+        data class PodcastClicked(val podcast: PodcastUiModel) : ViewEvent
         object NavigationItemReselected : ViewEvent
     }
 
@@ -192,6 +200,7 @@ class DiscoverViewModel @Inject constructor(
     sealed interface ViewSideEffect : SideEffect {
         object ScrollToTop : ViewSideEffect
         object NavigateToSearchRoute : ViewSideEffect
+        data class NavigateToPodcast(val podcast: Podcast) : ViewSideEffect
         object NavigationItemReselected : ViewSideEffect
     }
 

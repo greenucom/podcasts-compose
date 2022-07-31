@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
@@ -35,11 +36,13 @@ private const val ContentTypePodcastItem = "ContentTypePodcastItem"
 @Composable
 fun DiscoverRoute(
     navigateToSearchRoute: () -> Unit,
+    navigateToPodcastRoute: (Podcast) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DiscoverViewModel = hiltViewModel(),
 ) {
     val discoverState = rememberDiscoverState(
         navigateToSearchRoute = navigateToSearchRoute,
+        navigateToPodcastRoute = navigateToPodcastRoute,
     )
 
     val viewState = viewModel.state.collectAsState()
@@ -154,7 +157,10 @@ private fun Success(
                             PodcastItem(
                                 modifier = Modifier.fillMaxWidth(),
                                 podcast = podcast,
-                                onPodcastClicked = { /* TODO: Open podcast */ },
+                                onPodcastClicked = {
+                                    val event = DiscoverViewModel.ViewEvent.PodcastClicked(it)
+                                    dispatchEvent(event)
+                                },
                                 onIsUserSubscribedChanged = {
                                     val event = DiscoverViewModel.ViewEvent.UpdateSubscriptionToPodcast(it)
                                     dispatchEvent(event)

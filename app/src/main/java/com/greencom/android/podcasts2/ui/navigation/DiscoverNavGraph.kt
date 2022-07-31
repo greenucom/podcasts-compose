@@ -20,6 +20,10 @@ fun NavGraphBuilder.discoverNavGraph(navController: NavHostController) {
                     val route = Route.Search.createRoute(Unit)
                     navController.navigate(route)
                 },
+                navigateToPodcastRoute = {
+                    val route = Route.Podcast.createRoute(it)
+                    navController.navigate(route)
+                }
             )
         }
 

@@ -7,6 +7,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.utils.cancel
 import com.greencom.android.podcasts2.utils.relaunchIn
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +19,7 @@ class DiscoverState(
     val scaffoldState: ScaffoldState,
     val trendingPodcastsLazyColumnState: LazyListState,
     private val navigateToSearchRoute: () -> Unit,
+    private val navigateToPodcastRoute: (Podcast) -> Unit,
 ) {
 
     private val scrollToTopJob = MutableStateFlow<Job?>(null)
@@ -25,6 +27,8 @@ class DiscoverState(
     fun handleSideEffect(sideEffect: DiscoverViewModel.ViewSideEffect) = when (sideEffect) {
         DiscoverViewModel.ViewSideEffect.ScrollToTop -> scrollToTop()
         DiscoverViewModel.ViewSideEffect.NavigateToSearchRoute -> navigateToSearchRoute()
+        is DiscoverViewModel.ViewSideEffect.NavigateToPodcast ->
+            navigateToPodcastRoute(sideEffect.podcast)
         DiscoverViewModel.ViewSideEffect.NavigationItemReselected -> onNavigationItemReselected()
     }
 
@@ -61,6 +65,7 @@ class DiscoverState(
 @Composable
 fun rememberDiscoverState(
     navigateToSearchRoute: () -> Unit,
+    navigateToPodcastRoute: (Podcast) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     trendingPodcastsLazyColumnState: LazyListState = rememberLazyListState(),
@@ -69,11 +74,13 @@ fun rememberDiscoverState(
     scaffoldState,
     trendingPodcastsLazyColumnState,
     navigateToSearchRoute,
+    navigateToPodcastRoute,
 ) {
     DiscoverState(
         coroutineScope = coroutineScope,
         scaffoldState = scaffoldState,
         trendingPodcastsLazyColumnState = trendingPodcastsLazyColumnState,
         navigateToSearchRoute = navigateToSearchRoute,
+        navigateToPodcastRoute = navigateToPodcastRoute,
     )
 }

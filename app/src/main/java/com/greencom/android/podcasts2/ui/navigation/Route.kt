@@ -4,6 +4,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.greencom.android.podcasts2.domain.podcast.Podcast as PodcastModel
 
 sealed class Route<P>(val routeSchema: String) {
 
@@ -31,16 +32,14 @@ sealed class Route<P>(val routeSchema: String) {
         override fun createRoute(args: Unit): String = routeSchema
     }
 
-    object Podcast : Route<Podcast.Args>(routeSchema = "podcast/{podcastId}") {
-        override fun createRoute(args: Args): String {
-            val (podcastId) = args
+    object Podcast : Route<PodcastModel>(routeSchema = "podcast/{podcastId}") {
+        override fun createRoute(args: PodcastModel): String {
+            val podcastId = args.id
             return "podcast/$podcastId"
         }
 
         override val arguments: List<NamedNavArgument>
             get() = listOf(navArgument(KeyPodcastId) { type = NavType.LongType })
-
-        data class Args(val podcastId: Long)
 
         const val KeyPodcastId = "podcastId"
     }
