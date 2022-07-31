@@ -2,11 +2,13 @@ package com.greencom.android.podcasts2.ui.common.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.greencom.android.podcasts2.utils.relaunchIn
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect : SideEffect> :
@@ -23,20 +25,21 @@ abstract class MviViewModel<ViewState : State, ViewEvent : Event, ViewSideEffect
     private val _sideEffects = Channel<ViewSideEffect>(Channel.UNLIMITED)
     override val sideEffects = _sideEffects.receiveAsFlow()
 
+    private val consumeEventsJob = MutableStateFlow<Job?>(null)
+
     init {
         Timber.d("${this.javaClass.simpleName} init")
-        consumeEvents()
+
+        consumeEventsJob.relaunchIn(viewModelScope) {
+            consumeEvents(events)
+        }
     }
+
+    protected abstract suspend fun consumeEvents(events: Flow<ViewEvent>)
 
     override fun dispatchEvent(event: ViewEvent) {
         _events.trySend(event)
     }
-
-    private fun consumeEvents() = viewModelScope.launch {
-        events.collect(::handleEvent)
-    }
-
-    protected abstract fun handleEvent(event: ViewEvent)
 
     protected inline fun updateState(function: (state: ViewState) -> ViewState) {
         _state.update(function)

@@ -13,13 +13,14 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.model.podcast.PodcastUiModel
 import com.greencom.android.podcasts2.utils.cancel
-import com.greencom.android.podcasts2.utils.relaunchIn
 import com.greencom.android.podcasts2.utils.emptyString
+import com.greencom.android.podcasts2.utils.relaunchIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +39,11 @@ class SearchViewModel @Inject constructor(
         requestInitialTextFieldFocus()
     }
 
-    override fun handleEvent(event: ViewEvent) = when (event) {
+    override suspend fun consumeEvents(events: Flow<ViewEvent>) {
+        events.collect(::handleEvent)
+    }
+
+    private fun handleEvent(event: ViewEvent) = when (event) {
         is ViewEvent.TextFieldValueChanged -> reduceTextFieldValueChanged(event)
         ViewEvent.ClearTextField -> reduceClearTextField()
         ViewEvent.SearchPodcasts -> reduceSearchPodcasts()

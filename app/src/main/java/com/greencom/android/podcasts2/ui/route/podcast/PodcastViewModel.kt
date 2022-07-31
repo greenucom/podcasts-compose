@@ -8,6 +8,7 @@ import com.greencom.android.podcasts2.ui.common.mvi.SideEffect
 import com.greencom.android.podcasts2.ui.common.mvi.State
 import com.greencom.android.podcasts2.ui.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
@@ -24,8 +25,8 @@ class PodcastViewModel @Inject constructor(
         podcastId = savedStateHandle.getStateFlow(key = Route.Podcast.KeyPodcastId, initialValue = 0L)
     }
 
-    override fun handleEvent(event: ViewEvent) {
-        TODO("Not yet implemented")
+    override suspend fun consumeEvents(events: Flow<ViewEvent>) {
+        // TODO("Not yet implemented")
     }
 
     // TODO: Implement, add annotations

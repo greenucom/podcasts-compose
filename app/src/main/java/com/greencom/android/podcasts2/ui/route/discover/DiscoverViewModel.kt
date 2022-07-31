@@ -17,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,17 +40,8 @@ class DiscoverViewModel @Inject constructor(
         collectTrendingPodcastsForSelectedTrendingCategories()
     }
 
-    override fun handleEvent(event: ViewEvent) = when (event) {
-        is ViewEvent.SelectableTrendingCategoriesReceived ->
-            reduceSelectableTrendingCategoriesReceived(event)
-        is ViewEvent.TrendingPodcastsReceived -> reduceTrendingPodcastsReceived(event)
-        is ViewEvent.TrendingPodcastsReceivingFailed -> reduceTrendingPodcastsReceivingFailed(event)
-        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
-        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
-        ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
-        ViewEvent.SearchPodcastsClicked -> reduceSearchButtonClicked()
-        is ViewEvent.PodcastClicked -> reducePodcastClicked(event)
-        ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
+    override suspend fun consumeEvents(events: Flow<ViewEvent>) {
+        events.collect(::handleEvent)
     }
 
     private fun collectSelectableTrendingCategories() {
@@ -77,6 +69,19 @@ class DiscoverViewModel @Inject constructor(
                     }
             }
         }
+    }
+
+    private fun handleEvent(event: ViewEvent) = when (event) {
+        is ViewEvent.SelectableTrendingCategoriesReceived ->
+            reduceSelectableTrendingCategoriesReceived(event)
+        is ViewEvent.TrendingPodcastsReceived -> reduceTrendingPodcastsReceived(event)
+        is ViewEvent.TrendingPodcastsReceivingFailed -> reduceTrendingPodcastsReceivingFailed(event)
+        is ViewEvent.ToggleSelectableTrendingCategory -> reduceToggleSelectableTrendingCategory(event)
+        is ViewEvent.UpdateSubscriptionToPodcast -> reduceUpdateSubscriptionToPodcast(event)
+        ViewEvent.RefreshTrendingPodcasts -> reduceRefreshTrendingPodcasts()
+        ViewEvent.SearchPodcastsClicked -> reduceSearchButtonClicked()
+        is ViewEvent.PodcastClicked -> reducePodcastClicked(event)
+        ViewEvent.NavigationItemReselected -> reduceNavigationItemReselected()
     }
 
     private fun reduceSelectableTrendingCategoriesReceived(
