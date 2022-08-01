@@ -1,12 +1,14 @@
 package com.greencom.android.podcasts2.ui.common.component
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.ui.theme.PodcastsTheme
 
@@ -16,7 +18,7 @@ fun ConnectionError(
     modifier: Modifier = Modifier,
 ) {
     GenericError(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 24.dp),
         image = painterResource(id = R.drawable.vec_image_connection_error),
         description = stringResource(id = R.string.something_went_wrong_check_connection),
         buttonText = stringResource(id = R.string.try_again),
