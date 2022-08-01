@@ -18,10 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.LocalContentBottomPadding
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.screenbehavior.NavigationBarState
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.route.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.route.discover.component.TrendingCategorySelector
@@ -148,7 +150,10 @@ private fun Success(
                 }
 
                 is DiscoverViewModel.TrendingPodcastsState.Success -> {
-                    LazyColumn(state = trendingPodcastsLazyColumnState) {
+                    LazyColumn(
+                        state = trendingPodcastsLazyColumnState,
+                        contentPadding = PaddingValues(bottom = LocalContentBottomPadding.current),
+                    ) {
                         itemsIndexed(
                             items = trendingPodcastsState.trendingPodcasts,
                             key = { _, podcast -> podcast.id },
@@ -176,7 +181,10 @@ private fun Success(
 
                 DiscoverViewModel.TrendingPodcastsState.Error -> {
                     ConnectionError(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = LocalContentBottomPadding.current)
+                            .padding(horizontal = 16.dp),
                         onTryAgainClicked = {
                             dispatchEvent(DiscoverViewModel.ViewEvent.RefreshTrendingPodcasts)
                         },
