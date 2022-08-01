@@ -52,16 +52,31 @@ fun BottomNavigationRespectingWindowInsets(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        PodcastsBottomNavigation(navController = navController)
+    val currentScreenBehavior =
+        LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
 
-        val spacerColor = MaterialTheme.colors.surface
-        Spacer(
-            modifier = Modifier
-                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                .fillMaxWidth()
-                .drawBehind { drawRect(color = spacerColor) }
-        )
+    val isBottomNavigationVisible =
+        currentScreenBehavior?.navigationBarState !is NavigationBarState.Gone
+    val animateVisibility =
+        currentScreenBehavior?.navigationBarState?.animateTransition == true
+
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = isBottomNavigationVisible,
+        enter = if (animateVisibility) slideInVertically { it } else EnterTransition.None,
+        exit = if (animateVisibility) slideOutVertically { it } else ExitTransition.None,
+    ) {
+        Column {
+            PodcastsBottomNavigation(navController = navController)
+
+            val spacerColor = MaterialTheme.colors.surface
+            Spacer(
+                modifier = Modifier
+                    .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                    .fillMaxWidth()
+                    .drawBehind { drawRect(color = spacerColor) }
+            )
+        }
     }
 }
 
