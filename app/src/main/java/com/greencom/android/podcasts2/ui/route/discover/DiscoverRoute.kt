@@ -23,7 +23,6 @@ import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
-import com.greencom.android.podcasts2.ui.common.screenbehavior.NavigationBarState
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.route.discover.component.SearchPodcastsButton
 import com.greencom.android.podcasts2.ui.route.discover.component.TrendingCategorySelector
@@ -183,8 +182,8 @@ private fun Success(
                     ConnectionError(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(bottom = LocalContentBottomPadding.current)
-                            .padding(horizontal = 16.dp),
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = LocalContentBottomPadding.current),
                         onTryAgainClicked = {
                             dispatchEvent(DiscoverViewModel.ViewEvent.RefreshTrendingPodcasts)
                         },
