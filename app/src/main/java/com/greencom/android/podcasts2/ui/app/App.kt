@@ -1,21 +1,32 @@
 package com.greencom.android.podcasts2.ui.app
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.greencom.android.podcasts2.ui.app.component.PodcastsBottomNavigation
 import com.greencom.android.podcasts2.ui.app.component.PodcastsNavigationRail
+import com.greencom.android.podcasts2.ui.common.LocalContentBottomPadding
+import com.greencom.android.podcasts2.ui.common.copy
+import com.greencom.android.podcasts2.ui.common.screenbehavior.LocalScreenBehaviorController
+import com.greencom.android.podcasts2.ui.common.screenbehavior.NavigationBarState
 import com.greencom.android.podcasts2.ui.navigation.NavigationItem
 import com.greencom.android.podcasts2.ui.navigation.discoverNavGraph
 import com.greencom.android.podcasts2.ui.navigation.libraryNavGraph
 import com.greencom.android.podcasts2.ui.navigation.podcastsNavGraph
+
+private val BottomNavigationHeight = 56.dp
 
 @Composable
 fun App(
@@ -33,15 +44,20 @@ fun App(
         },
     ) { paddingValues ->
 
-        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-            PodcastsNavHost(
-                modifier = Modifier.padding(paddingValues),
-                navController = appState.navController,
-            )
-        } else {
-            Row(modifier = Modifier.padding(paddingValues)) {
-                NavigationRailRespectingWindowInsets(navController = appState.navController)
-                PodcastsNavHost(navController = appState.navController)
+        val contentBottomPadding = getContentBottomPadding()
+        CompositionLocalProvider(LocalContentBottomPadding provides contentBottomPadding) {
+
+            if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                PodcastsNavHost(
+                    // Let the content be overlapped by the bottom navigation bar
+                    modifier = Modifier.padding(paddingValues.copy(bottom = 0.dp)),
+                    navController = appState.navController,
+                )
+            } else {
+                Row(modifier = Modifier.padding(paddingValues)) {
+                    NavigationRailRespectingWindowInsets(navController = appState.navController)
+                    PodcastsNavHost(navController = appState.navController)
+                }
             }
         }
     }
@@ -110,4 +126,22 @@ fun PodcastsNavHost(
 
         libraryNavGraph(navController = navController)
     }
+}
+
+@Composable
+private fun getContentBottomPadding(): Dp {
+    val currentScreenBehavior = LocalScreenBehaviorController.current
+    val navigationBarState =
+        currentScreenBehavior?.currentScreenBehaviorAsState?.value?.navigationBarState
+
+    val systemNavigationBarHeight =
+        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    val bottomNavigationHeight = if (navigationBarState is NavigationBarState.Visible) {
+        BottomNavigationHeight
+    } else {
+        0.dp
+    }
+
+    val totalHeight = systemNavigationBarHeight + bottomNavigationHeight
+    return animateDpAsState(totalHeight).value
 }
