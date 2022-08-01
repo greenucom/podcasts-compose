@@ -23,12 +23,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.greencom.android.podcasts2.R
 import com.greencom.android.podcasts2.domain.podcast.Podcast
 import com.greencom.android.podcasts2.ui.common.CrossfadeTyped
+import com.greencom.android.podcasts2.ui.common.LocalContentBottomPadding
 import com.greencom.android.podcasts2.ui.common.animatePlaceholderLoadingColor
 import com.greencom.android.podcasts2.ui.common.component.ConnectionError
 import com.greencom.android.podcasts2.ui.common.component.GenericError
 import com.greencom.android.podcasts2.ui.common.component.NothingFoundError
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItem
 import com.greencom.android.podcasts2.ui.common.component.podcast.PodcastItemPlaceholder
+import com.greencom.android.podcasts2.ui.common.screenbehavior.NavigationBarState
 import com.greencom.android.podcasts2.ui.common.screenbehavior.SpecificScreenBehavior
 import com.greencom.android.podcasts2.ui.route.search.component.SearchTextField
 import com.greencom.android.podcasts2.ui.theme.onSurfaceUtil
@@ -87,7 +89,9 @@ fun SearchRoute(
                     GenericError(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(bottom = 24.dp)
                             .padding(horizontal = 16.dp)
+                            .padding(bottom = LocalContentBottomPadding.current)
                             .windowInsetsPadding(WindowInsets.ime),
                         description = stringResource(id = R.string.enter_search_query),
                         image = painterResource(id = R.drawable.vec_image_search),
@@ -121,6 +125,7 @@ fun SearchRoute(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp)
+                            .padding(bottom = LocalContentBottomPadding.current)
                             .windowInsetsPadding(WindowInsets.ime)
                     )
                 }
@@ -130,6 +135,7 @@ fun SearchRoute(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp)
+                            .padding(bottom = LocalContentBottomPadding.current)
                             .windowInsetsPadding(WindowInsets.ime),
                         onTryAgainClicked = {
                             val event = SearchViewModel.ViewEvent.SearchPodcasts
@@ -190,6 +196,7 @@ private fun Success(
     LazyColumn(
         modifier = modifier,
         state = searchResultsLazyColumnState,
+        contentPadding = PaddingValues(bottom = LocalContentBottomPadding.current),
     ) {
         itemsIndexed(
             items = state.podcasts,
