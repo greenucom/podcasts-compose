@@ -35,16 +35,22 @@ fun App(
 ) {
     val appState = rememberAppState()
 
+    val isLayoutWithBottomNavigation =
+        windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+            if (isLayoutWithBottomNavigation) {
                 BottomNavigationRespectingWindowInsets(navController = appState.navController)
             }
         },
     ) { paddingValues ->
 
-        val contentBottomPadding = getContentBottomPadding()
+        val contentBottomPadding = getContentBottomPadding(
+            isLayoutWithBottomNavigation = isLayoutWithBottomNavigation,
+        )
+
         CompositionLocalProvider(LocalContentBottomPadding provides contentBottomPadding) {
 
             if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
@@ -129,19 +135,25 @@ fun PodcastsNavHost(
 }
 
 @Composable
-private fun getContentBottomPadding(): Dp {
-    val currentScreenBehavior = LocalScreenBehaviorController.current
-    val navigationBarState =
-        currentScreenBehavior?.currentScreenBehaviorAsState?.value?.navigationBarState
-
-    val systemNavigationBarHeight =
-        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-    val bottomNavigationHeight = if (navigationBarState is NavigationBarState.Visible) {
-        BottomNavigationHeight
+private fun getContentBottomPadding(
+    isLayoutWithBottomNavigation: Boolean,
+): Dp {
+    val bottomNavigationHeight = if (isLayoutWithBottomNavigation) {
+        val currentScreenBehavior = LocalScreenBehaviorController.current
+        val bottomNavigationState =
+            currentScreenBehavior?.currentScreenBehaviorAsState?.value?.navigationBarState
+        if (bottomNavigationState is NavigationBarState.Visible) {
+            BottomNavigationHeight
+        } else {
+            0.dp
+        }
     } else {
         0.dp
     }
 
-    val totalHeight = systemNavigationBarHeight + bottomNavigationHeight
+    val systemNavigationBarHeight =
+        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+
+    val totalHeight = bottomNavigationHeight + systemNavigationBarHeight
     return animateDpAsState(totalHeight).value
 }
