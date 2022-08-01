@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class ScreenBehavior(
-    val navigationBarState: NavigationBarState = NavigationBarState.Visible(),
+    val bottomNavigationState: NavigationBarState = NavigationBarState.Visible(),
     val navigationRailState: NavigationBarState = NavigationBarState.Visible(),
     val onNavigationItemReselected: OnNavigationItemReselected? = null,
 ) {
@@ -17,13 +17,13 @@ data class ScreenBehavior(
 
 class ScreenBehaviorBuilder {
 
-    var navigationBarState: NavigationBarState = ScreenBehavior.Default.navigationBarState
+    var bottomNavigationState: NavigationBarState = ScreenBehavior.Default.bottomNavigationState
     var navigationRailState: NavigationBarState = ScreenBehavior.Default.navigationRailState
     var onNavigationItemReselected: OnNavigationItemReselected? =
         ScreenBehavior.Default.onNavigationItemReselected
 
     fun build(): ScreenBehavior = ScreenBehavior(
-        navigationBarState = navigationBarState,
+        bottomNavigationState = bottomNavigationState,
         navigationRailState = navigationRailState,
         onNavigationItemReselected = onNavigationItemReselected,
     )

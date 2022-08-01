@@ -78,9 +78,9 @@ fun BottomNavigationRespectingWindowInsets(
         LocalScreenBehaviorController.current?.currentScreenBehaviorAsState?.value
 
     val isBottomNavigationVisible =
-        currentScreenBehavior?.navigationBarState !is NavigationBarState.Gone
+        currentScreenBehavior?.bottomNavigationState !is NavigationBarState.Gone
     val animateVisibility =
-        currentScreenBehavior?.navigationBarState?.animateTransition == true
+        currentScreenBehavior?.bottomNavigationState?.animateTransition == true
 
     AnimatedVisibility(
         modifier = modifier,
@@ -141,7 +141,7 @@ private fun getContentBottomPadding(
     val bottomNavigationHeight = if (isLayoutWithBottomNavigation) {
         val currentScreenBehavior = LocalScreenBehaviorController.current
         val bottomNavigationState =
-            currentScreenBehavior?.currentScreenBehaviorAsState?.value?.navigationBarState
+            currentScreenBehavior?.currentScreenBehaviorAsState?.value?.bottomNavigationState
         if (bottomNavigationState is NavigationBarState.Visible) {
             BottomNavigationHeight
         } else {
